@@ -1,7 +1,25 @@
 {
   "tasks": {
-    "parse-xml": "deno run --allow-read --allow-write parse-xml.ts",
-    "gen": "deno run --allow-read --allow-write gen.ts",
+    "parse-xml": "deno run -A parse_xml.ts",
+    "gen": "deno run -A gen.ts",
     "test": "deno run -A --unstable test.ts"
+  },
+
+  "fmt": {
+    "files": {
+      "exclude": [
+        "vk.ts",
+        "vk.min.js"
+      ]
+    }
+  },
+
+  "lint": {
+    "files": {
+      "exclude": [
+        "vk.ts",
+        "vk.min.js"
+      ]
+    }
   }
 }
