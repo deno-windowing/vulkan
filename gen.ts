@@ -425,6 +425,9 @@ for (const ty of api.registry.types.type) {
       const fieldSize = getTypeSize(field.ffi);
       alignment = Math.max(alignment, fieldSize);
       size = Math.ceil(size / fieldSize) * fieldSize;
+
+      field.offset = size;
+
       size += fieldSize;
       return field;
     });

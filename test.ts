@@ -42,13 +42,15 @@ const appInfo = vk.VkApplicationInfo.create({
 });
 
 const createInfo = vk.VkInstanceCreateInfo.create({
-  // TODO: Why does this segfault?
   pApplicationInfo: Deno.UnsafePointer.of(appInfo[vk.BUFFER]),
-  enabledExtensionCount: 0 ?? extCount[0],
-  ppEnabledExtensionNames: 0 ?? Deno.UnsafePointer.of(extensions),
-  enabledLayerCount: 0,
-  ppEnabledLayerNames: 0,
+  enabledExtensionCount: extCount[0],
+  ppEnabledExtensionNames: Deno.UnsafePointer.of(extensions),
+  enabledLayerCount: 1,
+  ppEnabledLayerNames: Deno.UnsafePointer.of(
+    new BigUint64Array([BigInt(Deno.UnsafePointer.of(new TextEncoder().encode("VK_LAYER_KHRONOS_validation\0")))]),
+  ),
 });
+
 const instOut = new BigUint64Array(1);
 vk.vkCreateInstance(createInfo, null, new Uint8Array(instOut.buffer));
 
@@ -84,5 +86,3 @@ vk.vkGetPhysicalDeviceFeatures(
   physicalDevice,
   physicalDeviceFeatures,
 );
-
-console.log(physicalDeviceProperties.apiVersion >> 22);
