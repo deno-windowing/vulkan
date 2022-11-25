@@ -192,7 +192,8 @@ interface Field {
   optional: boolean;
   text?: string;
   ffi: any;
-  len?: string;
+  len?: number | number[];
+  enum?: string | string[];
   comment?: string;
   values?: string[];
 }
@@ -291,6 +292,22 @@ function isUnion(type: any) {
   return typeof type === "object" && type !== null && ("union" in type);
 }
 
+function isArray(type: any) {
+  return typeof type === "object" && type !== null && ("array" in type);
+}
+
+function getAlignSize(type: any, cache?: WeakMap<any, number | null>): number {
+  if (isStruct(type)) {
+    return getAlignSize(type.struct[0], cache);
+  } else if (isUnion(type)) {
+    return getAlignSize(type.union[0], cache);
+  } else if (isArray(type)) {
+    return getAlignSize(type.array, cache);
+  } else {
+    return getTypeSize(type, cache);
+  }
+}
+
 function getTypeSize(type: any, cache = new WeakMap<any, number | null>()) {
   if (isStruct(type)) {
     const cached = cache.get(type);
@@ -305,6 +322,29 @@ function getTypeSize(type: any, cache = new WeakMap<any, number | null>()) {
     let alignment = 1;
     for (const field of type.struct) {
       const fieldSize = getTypeSize(field, cache);
+      const alignSize = getAlignSize(field, cache);
+      alignment = Math.max(alignment, alignSize);
+      size = Math.ceil(size / alignSize) * alignSize;
+      size += fieldSize;
+    }
+    size = Math.ceil(size / alignment) * alignment;
+    cache.set(type, size);
+    return size;
+  }
+
+  if (isArray(type)) {
+    const cached = cache.get(type);
+    if (cached !== undefined) {
+      if (cached === null) {
+        throw new TypeError("Recursive array definition");
+      }
+      return cached;
+    }
+    cache.set(type, null);
+    let size = 0;
+    let alignment = 1;
+    for (let i = 0; i < type.len; i++) {
+      const fieldSize = getTypeSize(type.array, cache);
       alignment = Math.max(alignment, fieldSize);
       size = Math.ceil(size / fieldSize) * fieldSize;
       size += fieldSize;
@@ -354,6 +394,78 @@ function getTypeSize(type: any, cache = new WeakMap<any, number | null>()) {
       return 8;
     default:
       throw new TypeError(`Unsupported type: ${Deno.inspect(type)}`);
+  }
+}
+
+function extendEnum(ext: {
+  $extends: string;
+  $alias?: string;
+  $bitpos?: number;
+  $value?: number;
+  $extnumber?: number;
+  $offset?: number;
+  $name: string;
+  $comment?: string;
+}) {
+  const base = enums.find((e) => e.name === ext.$extends);
+  if (!base) {
+    throw new Error(`Enum ${ext.$extends} not found`);
+  }
+  if (base.enums.some((e) => e.name === ext.$name)) return;
+  base.enums.push({
+    name: ext.$name,
+    value: ext.$alias ??
+      (ext.$bitpos !== undefined ? `1 << ${ext.$bitpos}` : ext.$value ??
+        `1${String(ext.$extnumber! - 1).padStart(6, "0")}${
+          ext.$offset!.toString().padStart(3, "0")
+        }`),
+    comment: ext.$comment,
+  });
+}
+
+function extendConstants(name: string, ext: any) {
+  let base = constants.find((e) => e.name === name);
+  if (!base) {
+    base = {
+      name,
+      constants: [],
+    };
+    constants.push(base);
+  }
+  base.constants.push({
+    name: ext.$name,
+    value: valueToJS(ext.$value),
+  });
+}
+
+for (const ft of api.registry.feature) {
+  for (const x of ft.require) {
+    if ("enum" in x) {
+      if (!Array.isArray(x.enum)) x.enum = [x.enum];
+      for (const e of x.enum) {
+        if (e.$extends) {
+          extendEnum(e);
+        }
+      }
+    }
+  }
+}
+
+for (const ext of api.registry.extensions.extension) {
+  if (!Array.isArray(ext.require)) ext.require = [ext.require];
+  for (const x of ext.require) {
+    if ("enum" in x) {
+      if (!Array.isArray(x.enum)) x.enum = [x.enum];
+      for (const e of x.enum) {
+        if (e.$extends) {
+          extendEnum(Object.assign({
+            $extnumber: ext.$number,
+          }, e));
+        } else if (e.$name && e.$value) {
+          extendConstants(ext.$name, e);
+        }
+      }
+    }
   }
 }
 
@@ -410,10 +522,11 @@ for (const ty of api.registry.types.type) {
         offset: size,
         optional: member.$optional,
         text: member["#text"],
-        len: member.$len,
+        len: undefined,
         comment: member.$comment,
         ffi: "void",
         values: member.$values?.split(","),
+        enum: member.enum ? (Array.isArray(member.enum) ? member.enum.map((e: any) => e["#text"]) : member.enum?.["#text"]) : undefined,
       };
 
       if (field.text?.endsWith("*")) {
@@ -422,9 +535,29 @@ for (const ty of api.registry.types.type) {
         field.ffi = typeToFFI(field.type);
       }
 
+      if (field.text?.startsWith("[")) {
+        if (field.enum) {
+          if (Array.isArray(field.enum)) {
+            field.len = field.enum.map(en => {
+              return constants.map((c) => c.constants.find((c) => c.name === en)).find((e) => e !== undefined)?.value!;
+            });
+          } else field.len = constants.map((c) => c.constants.find((c) => c.name === field.enum)).find((e) => e !== undefined)?.value;
+        } else {
+          const match = field.text.match(/^\[(\d+)\]*/);
+          if (match) {
+            field.len = match.slice(1).map((e) => parseInt(e));
+          }
+        }
+        if (!field.len) {
+          throw new Error(`Invalid length: ${Deno.inspect(field)}`);
+        }
+        field.ffi = { array: field.ffi, len: Array.isArray(field.len) ? field.len.reduce((p, a) => p * a, 1) : field.len };
+      }
+
       const fieldSize = getTypeSize(field.ffi);
-      alignment = Math.max(alignment, fieldSize);
-      size = Math.ceil(size / fieldSize) * fieldSize;
+      const alignSize = getAlignSize(field.ffi);
+      alignment = Math.max(alignment, alignSize);
+      size = Math.ceil(size / alignSize) * alignSize;
 
       field.offset = size;
 
@@ -458,61 +591,6 @@ for (const ty of api.registry.types.type) {
       type: ty.$alias,
       ffi: typeToFFI(ty.$alias),
     });
-  }
-}
-
-function extendEnum(ext: {
-  $extends: string;
-  $alias?: string;
-  $bitpos?: number;
-  $value?: number;
-  $extnumber?: number;
-  $offset?: number;
-  $name: string;
-  $comment?: string;
-}) {
-  const base = enums.find((e) => e.name === ext.$extends);
-  if (!base) {
-    throw new Error(`Enum ${ext.$extends} not found`);
-  }
-  if (base.enums.some((e) => e.name === ext.$name)) return;
-  base.enums.push({
-    name: ext.$name,
-    value: ext.$alias ??
-      (ext.$bitpos !== undefined ? `1 << ${ext.$bitpos}` : ext.$value ??
-        `1${String(ext.$extnumber! - 1).padStart(6, "0")}${
-          ext.$offset!.toString().padStart(3, "0")
-        }`),
-    comment: ext.$comment,
-  });
-}
-
-for (const ft of api.registry.feature) {
-  for (const x of ft.require) {
-    if ("enum" in x) {
-      if (!Array.isArray(x.enum)) x.enum = [x.enum];
-      for (const e of x.enum) {
-        if (e.$extends) {
-          extendEnum(e);
-        }
-      }
-    }
-  }
-}
-
-for (const ext of api.registry.extensions.extension) {
-  if (!Array.isArray(ext.require)) ext.require = [ext.require];
-  for (const x of ext.require) {
-    if ("enum" in x) {
-      if (!Array.isArray(x.enum)) x.enum = [x.enum];
-      for (const e of x.enum) {
-        if (e.$extends) {
-          extendEnum(Object.assign({
-            $extnumber: ext.$number,
-          }, e));
-        }
-      }
-    }
   }
 }
 
@@ -572,6 +650,7 @@ for (const e of constants) {
   if (e.comment) emit(`/// ${e.comment}`);
   newline();
   for (const c of e.constants) {
+    if (c.name.includes("_SPEC_VERSION")) continue;
     if (c.comment) emit(`/** ${c.comment} */`);
     emit(`export const ${c.name} = ${c.value};`);
   }
@@ -649,7 +728,7 @@ for (const s of structs) {
       });
       emit("}");
       emit("this.#data = data;");
-      emit("this.#view = new DataView(data.buffer);");
+      emit("this.#view = new DataView(data.buffer, data.byteOffset);");
     });
     emit("}");
 
@@ -668,9 +747,9 @@ for (const s of structs) {
       for (const f of s.fields) {
         if (f.name === "sType" && f.values?.length === 1) continue;
         emit(
-          `${jsify(f.name)}${f.optional ? "?" : ""}: ${
+          `${jsify(f.name)}?: ${
             f.text?.endsWith("*") ? "Deno.PointerValue" : typeToJS(f.type)
-          };`,
+          }${f.len ? "[]" : ""};`,
         );
       }
     });
@@ -694,7 +773,7 @@ for (const s of structs) {
       if (f.comment) emit(`/** ${f.comment} */`);
       const isptr = f.text?.endsWith("*");
       emit(`get ${jsify(f.name)}() {`);
-      block(() => {
+      function emitFieldGetter(f: Field) {
         if (isptr) {
           emit(`return this.#view.getBigUint64(${f.offset}, LE);`);
         } else {
@@ -741,69 +820,24 @@ for (const s of structs) {
                 );
                 break;
               }
-              emit(
-                `throw new Error(\`Unknown type: ${JSON.stringify(f.ffi)}\`);`,
-              );
-              break;
-            }
-          }
-        }
-      });
-      emit(`}`);
-      newline();
-      emit(
-        `set ${jsify(f.name)}(value: ${
-          isptr ? "Deno.PointerValue" : typeToJS(f.type)
-        }) {`,
-      );
-      block(() => {
-        if (isptr) {
-          emit(`this.#view.setBigUint64(${f.offset}, BigInt(value), LE);`);
-        } else {
-          switch (f.ffi) {
-            case "i8":
-              emit(`this.#view.setInt8(${f.offset}, Number(value));`);
-              break;
-            case "u8":
-              emit(`this.#view.setUint8(${f.offset}, Number(value));`);
-              break;
-            case "i16":
-              emit(`this.#view.setInt16(${f.offset}, Number(value), LE);`);
-              break;
-            case "u16":
-              emit(`this.#view.setUint16(${f.offset}, Number(value), LE);`);
-              break;
-            case "i32":
-              emit(`this.#view.setInt32(${f.offset}, Number(value), LE);`);
-              break;
-            case "u32":
-              emit(`this.#view.setUint32(${f.offset}, Number(value), LE);`);
-              break;
-            case "isize":
-            case "i64":
-              emit(`this.#view.setBigInt64(${f.offset}, BigInt(value), LE);`);
-              break;
-            case "usize":
-            case "buffer":
-            case "pointer":
-            case "u64":
-              emit(`this.#view.setBigUint64(${f.offset}, BigInt(value), LE);`);
-              break;
-            case "f32":
-              emit(`this.#view.setFloat32(${f.offset}, Number(value), LE);`);
-              break;
-            case "f64":
-              emit(`this.#view.setFloat64(${f.offset}, Number(value), LE);`);
-              break;
-            default: {
-              if (isStruct(f.ffi)) {
-                const name = f.type;
-                emit(`if (value[BUFFER].byteLength < ${name}.size) {`);
+              if (isArray(f.ffi)) {
+                emit(`const result: ${typeToJS(f.type)}[] = [];`);
+                emit(`for (let i = 0; i < ${f.ffi.len}; i++) {`);
                 block(() => {
-                  emit(`throw new Error("Data buffer too small");`);
+                  emit(`result.push((() => {`);
+                  block(() => {
+                    const tysize = getTypeSize(f.ffi.array);
+                    emitFieldGetter({
+                      name: f.name,
+                      offset: `${f.offset} + i * ${tysize}` as any,
+                      type: f.type,
+                      ffi: f.ffi.array,
+                    } as any);
+                  });
+                  emit(`})());`);
                 });
-                emit("}");
-                emit(`this.#data.set(value[BUFFER], ${f.offset});`);
+                emit(`}`);
+                emit(`return result;`);
                 break;
               }
               emit(
@@ -813,6 +847,91 @@ for (const s of structs) {
             }
           }
         }
+      }
+      block(() => {
+        emitFieldGetter(f);
+      });
+      emit(`}`);
+      newline();
+      emit(
+        `set ${jsify(f.name)}(value: ${
+          isptr ? "Deno.PointerValue" : typeToJS(f.type)
+        }${f.len ? "[]" : ""}) {`,
+      );
+      function emitFieldSetter(f: Field, vname = "value") {
+        if (isptr) {
+          emit(`this.#view.setBigUint64(${f.offset}, BigInt(${vname}), LE);`);
+        } else {
+          switch (f.ffi) {
+            case "i8":
+              emit(`this.#view.setInt8(${f.offset}, Number(${vname}));`);
+              break;
+            case "u8":
+              emit(`this.#view.setUint8(${f.offset}, Number(${vname}));`);
+              break;
+            case "i16":
+              emit(`this.#view.setInt16(${f.offset}, Number(${vname}), LE);`);
+              break;
+            case "u16":
+              emit(`this.#view.setUint16(${f.offset}, Number(${vname}), LE);`);
+              break;
+            case "i32":
+              emit(`this.#view.setInt32(${f.offset}, Number(${vname}), LE);`);
+              break;
+            case "u32":
+              emit(`this.#view.setUint32(${f.offset}, Number(${vname}), LE);`);
+              break;
+            case "isize":
+            case "i64":
+              emit(`this.#view.setBigInt64(${f.offset}, BigInt(${vname}), LE);`);
+              break;
+            case "usize":
+            case "buffer":
+            case "pointer":
+            case "u64":
+              emit(`this.#view.setBigUint64(${f.offset}, BigInt(${vname}), LE);`);
+              break;
+            case "f32":
+              emit(`this.#view.setFloat32(${f.offset}, Number(${vname}), LE);`);
+              break;
+            case "f64":
+              emit(`this.#view.setFloat64(${f.offset}, Number(${vname}), LE);`);
+              break;
+            default: {
+              if (isStruct(f.ffi)) {
+                const name = f.type;
+                emit(`if (${vname}[BUFFER].byteLength < ${name}.size) {`);
+                block(() => {
+                  emit(`throw new Error("Data buffer too small");`);
+                });
+                emit("}");
+                emit(`this.#data.set(${vname}[BUFFER], ${f.offset});`);
+                break;
+              }
+              if (isArray(f.ffi)) {
+                const tysize = getTypeSize(f.ffi.array);
+                emit(`for (let i = 0; i < ${vname}.length; i++) {`);
+                block(() => {
+                  emitFieldSetter({
+                    name: f.name,
+                    offset: `${f.offset} + i * ${tysize}` as any,
+                    type: f.type,
+                    ffi: f.ffi.array,
+                  } as any, `${vname}[i]`);
+                });
+                emit("}");
+                break;
+              }
+              emit(
+                `throw new Error(\`Unknown type: ${JSON.stringify(f.ffi)}\`);`,
+              );
+              break;
+            }
+          }
+        }
+      }
+      block(() => {
+        emitFieldSetter(f);
       });
       emit(`}`);
     }
@@ -854,6 +973,14 @@ for (const s of unions) {
 
 function toSkipCMD(name: string) {
   if (name === "vkCreateSwapchainKHR") return false;
+  if (name === "vkGetPhysicalDeviceSurfaceSupportKHR") return false;
+  if (name === "vkGetPhysicalDeviceSurfaceCapabilitiesKHR") return false;
+  if (name === "vkGetPhysicalDeviceSurfaceFormatsKHR") return false;
+  if (name === "vkGetPhysicalDeviceSurfacePresentModesKHR") return false;
+  if (name === "vkDestroySwapchainKHR") return false;
+  if (name === "vkGetSwapchainImagesKHR") return false;
+  if (name === "vkAcquireNextImageKHR") return false;
+  if (name === "vkQueuePresentKHR") return false;
 
   if (name.endsWith("NV")) return true;
   if (name.endsWith("NX")) return true;
@@ -894,6 +1021,18 @@ block(() => {
 emit(`} as const).symbols;`);
 
 newline();
+
+emit(`export class VkError extends Error {`);
+block(() => {
+  emit(`constructor(public code: VkResult) {`);
+  block(() => {
+    emit(`super(\`Vulkan error: \${code} (\${VkResult[code]})\`);`);
+  });
+  emit(`}`);
+});
+emit(`}`);
+
+newline();
 emit("/// Commands");
 
 for (const cmd of commands) {
@@ -912,7 +1051,7 @@ for (const cmd of commands) {
       );
     }
   });
-  emit(`) ${cmd.type === "VkResult" ? "" : `: ${typeToJS(cmd.type)} `}{`);
+  emit(`): ${typeToJS(cmd.type)} {`);
   block(() => {
     emit(`${cmd.type !== "void" ? "const ret = " : ""}lib.${cmd.name}(`);
     block(() => {
@@ -936,12 +1075,12 @@ for (const cmd of commands) {
           }) {`,
         );
         block(() => {
-          emit("return;");
+          emit("return ret;");
         });
         emit(`} else {`);
         block(() => {
           emit(
-            `throw new Error("Vulkan Error: " + ret + " (" + VkResult[ret] + ")");`,
+            `throw new VkError(ret as VkResult);`,
           );
         });
         emit("}");
