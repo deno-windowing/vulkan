@@ -19,30 +19,39 @@ import {
   Field,
 } from "./process_xml.ts";
 
+function stripVk(name: any) {
+  if (typeof name !== "string") return name;
+  if (name.startsWith("Vk") || name.startsWith("vk")) return name.slice(2);
+  else if (name.startsWith("VK_")) return name.slice(3);
+  return name;
+}
+
 console.log("Emitting...");
 
 newline();
 emit(`export const BUFFER = Symbol("vkStructBuffer");`);
 emit(`export const DATAVIEW = Symbol("vkStructDataView");`);
+emit(
+  "export const LE = new Uint8Array(new Uint32Array([0x12345678]).buffer)[0] === 0x78;",
+);
 newline();
 
-emit("export interface IVkStructure {");
+emit("export interface BaseStruct {");
 block(() => {
   emit(`readonly [BUFFER]: Uint8Array;`);
-  emit(`readonly [DATAVIEW]: DataView;`);
 });
 emit("}");
 
 newline();
 
-emit("export type AnyBuffer = ArrayBuffer | Uint8Array | Uint16Array | Uint32Array | Int8Array | Int16Array | Int32Array | Float32Array | Float64Array | BigUint64Array | BigInt64Array | null | IVkStructure;");
+emit("export type AnyBuffer = ArrayBuffer | Uint8Array | Uint16Array | Uint32Array | Int8Array | Int16Array | Int32Array | Float32Array | Float64Array | BigUint64Array | BigInt64Array | null | BaseStruct;");
 
 newline();
 
 emit("export function anyBuffer(buffer: AnyBuffer) {");
 block(() => {
   emit("if (!buffer) return null;");
-  emit(`else if (typeof buffer === "object" && BUFFER in buffer) return (buffer as IVkStructure)[BUFFER];`);
+  emit(`else if (typeof buffer === "object" && BUFFER in buffer) return (buffer as BaseStruct)[BUFFER];`);
   emit("else if (buffer instanceof Uint8Array) return buffer;");
   emit("return new Uint8Array(buffer instanceof ArrayBuffer ? buffer : (buffer as unknown as ArrayBufferView).buffer);");
 });
@@ -68,7 +77,7 @@ emit("/// Type definitions");
 
 for (const ty of typedefs) {
   newline();
-  emit(`export type ${ty.name} = ${ty.type};`);
+  emit(`export type ${stripVk(ty.name)} = ${stripVk(ty.type)};`);
 }
 
 newline();
@@ -82,7 +91,7 @@ for (const e of constants) {
   for (const c of e.constants) {
     if (c.name.includes("_SPEC_VERSION")) continue;
     if (c.comment) emit(`/** ${c.comment} */`);
-    emit(`export const ${c.name} = ${c.value};`);
+    emit(`export const ${stripVk(c.name)} = ${stripVk(c.value)};`);
   }
 }
 
@@ -92,14 +101,14 @@ emit("/// Enums");
 for (const e of enums) {
   newline();
   if (e.comment) emit(`/** ${e.comment} */`);
-  emit(`export enum ${e.name} {`);
+  emit(`export enum ${stripVk(e.name)} {`);
   block(() => {
     for (const c of e.enums) {
       if (c.comment) emit(`/** ${c.comment} */`);
       emit(
-        `${c.name} = ${
+        `${stripVk(c.name)} = ${
           typeof c.value === "string" && c.value.startsWith("VK")
-            ? (e.enums.find((x) => x.name === c.value)?.value ?? c.value)
+            ? stripVk(e.enums.find((x) => x.name === c.value)?.value ?? c.value)
             : c.value
         },`,
       );
@@ -111,23 +120,30 @@ for (const e of enums) {
 newline();
 emit("/// Structs");
 
-emit(
-  "export const LE = new Uint8Array(new Uint32Array([0x12345678]).buffer)[0] === 0x78;",
-);
-
-newline();
-
 for (const s of structs) {
   newline();
+  emit(`export interface Init${stripVk(s.name)} {`);
+  block(() => {
+    for (const f of s.fields) {
+      if (f.name === "sType" && f.values?.length === 1) continue;
+      emit(
+        `${jsify(f.name)}?: ${
+          f.text?.endsWith("*") ? "AnyPointer" : stripVk(typeToJS(f.type))
+        }${f.len ? "[]" : ""};`,
+      );
+    }
+  });
+  emit("}");
+  newline();
   if (s.comment) emit(`/** ${s.comment} */`);
-  emit(`export class ${s.name} implements IVkStructure {`);
+  emit(`export class ${stripVk(s.name)} implements BaseStruct {`);
   block(() => {
     emit(`static size = ${s.size};`);
 
     newline();
 
-    emit("#data: Uint8Array;");
-    emit("#view: DataView;");
+    emit("#data!: Uint8Array;");
+    emit("#view!: DataView;");
 
     newline();
 
@@ -136,53 +152,42 @@ for (const s of structs) {
 
     newline();
 
-    emit("constructor(data: Uint8Array) {");
+    emit(`constructor();`);
+    emit(`constructor(init: Init${stripVk(s.name)});`);
+    emit(`constructor(data: Uint8Array);`)
+    emit(`constructor(data?: Uint8Array | Init${stripVk(s.name)}) {`);
     block(() => {
-      emit(`if (data.byteLength < ${s.name}.size) {`);
+      emit(`if (!data) {`);
       block(() => {
-        emit(`throw new Error("Data buffer too small");`);
+        emit(`this.#data = new Uint8Array(${stripVk(s.name)}.size);`);
+        emit("this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);");
+      });
+      emit("} else if (data instanceof Uint8Array) {");
+      block(() => {
+        emit(`if (data.byteLength < ${stripVk(s.name)}.size) {`);
+        block(() => {
+          emit(`throw new Error("Data buffer too small");`);
+        });
+        emit("}");
+        emit("this.#data = data;");
+        emit("this.#view = new DataView(data.buffer, data.byteOffset);");
+      });
+      emit("} else {");
+      block(() => {
+        emit(`this.#data = new Uint8Array(${stripVk(s.name)}.size);`);
+        emit("this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);");
+        for (const f of s.fields) {
+          if (f.name === "sType" && f.values?.length === 1) {
+            emit(`this.sType = StructureType.${stripVk(f.values?.[0])};`);
+          } else {
+            const name = jsify(f.name);
+            emit(`if (data.${name} !== undefined) this.${name} = data.${name};`);
+          }
+        }
       });
       emit("}");
-      emit("this.#data = data;");
-      emit("this.#view = new DataView(data.buffer, data.byteOffset);");
     });
     emit("}");
-
-    newline();
-
-    emit("static alloc() {");
-    block(() => {
-      emit(`return new ${s.name}(new Uint8Array(${s.name}.size));`);
-    });
-    emit("}");
-
-    newline();
-
-    emit(`static create(data: {`);
-    block(() => {
-      for (const f of s.fields) {
-        if (f.name === "sType" && f.values?.length === 1) continue;
-        emit(
-          `${jsify(f.name)}?: ${
-            f.text?.endsWith("*") ? "AnyPointer" : typeToJS(f.type)
-          }${f.len ? "[]" : ""};`,
-        );
-      }
-    });
-    emit(`}) {`);
-    block(() => {
-      emit(`const s = ${s.name}.alloc();`);
-      for (const f of s.fields) {
-        if (f.name === "sType" && f.values?.length === 1) {
-          emit(`s.sType = VkStructureType.${f.values?.[0]};`);
-        } else {
-          const name = jsify(f.name);
-          emit(`if (data.${name} !== undefined) s.${name} = data.${name};`);
-        }
-      }
-      emit(`return s;`);
-    });
-    emit(`}`);
 
     for (const f of s.fields) {
       newline();
@@ -232,12 +237,12 @@ for (const s of structs) {
               if (isStruct(f.ffi)) {
                 const name = f.type;
                 emit(
-                  `return new ${name}(this.#data.subarray(${f.offset}, ${f.offset} + ${name}.size));`,
+                  `return new ${stripVk(name)}(this.#data.subarray(${f.offset}, ${f.offset} + ${stripVk(name)}.size));`,
                 );
                 break;
               }
               if (isArray(f.ffi)) {
-                emit(`const result: ${typeToJS(f.type)}[] = [];`);
+                emit(`const result: ${stripVk(typeToJS(f.type))}[] = [];`);
                 emit(`for (let i = 0; i < ${f.ffi.len}; i++) {`);
                 block(() => {
                   emit(`result.push((() => {`);
@@ -271,7 +276,7 @@ for (const s of structs) {
       newline();
       emit(
         `set ${jsify(f.name)}(value: ${
-          isptr ? "AnyPointer" : typeToJS(f.type)
+          isptr ? "AnyPointer" : stripVk(typeToJS(f.type))
         }${f.len ? "[]" : ""}) {`,
       );
       function emitFieldSetter(f: Field, vname = "value") {
@@ -318,7 +323,7 @@ for (const s of structs) {
             default: {
               if (isStruct(f.ffi)) {
                 const name = f.type;
-                emit(`if (${vname}[BUFFER].byteLength < ${name}.size) {`);
+                emit(`if (${vname}[BUFFER].byteLength < ${stripVk(name)}.size) {`);
                 block(() => {
                   emit(`throw new Error("Data buffer too small");`);
                 });
@@ -363,7 +368,7 @@ emit("/// Unions");
 for (const s of unions) {
   newline();
   if (s.comment) emit(`/** ${s.comment} */`);
-  emit(`export class ${s.name} {`);
+  emit(`export class ${stripVk(s.name)} {`);
   block(() => {
     emit(`static size = ${s.size};`);
 
@@ -376,7 +381,7 @@ for (const s of unions) {
 
     emit("constructor(data: Uint8Array) {");
     block(() => {
-      emit(`if (data.byteLength < ${s.name}.size) {`);
+      emit(`if (data.byteLength < ${stripVk(s.name)}.size) {`);
       block(() => {
         emit(`throw new Error("Data buffer too small");`);
       });
@@ -440,11 +445,11 @@ emit(`} as const).symbols;`);
 
 newline();
 
-emit(`export class VkError extends Error {`);
+emit(`export class VulkanError extends Error {`);
 block(() => {
-  emit(`constructor(public code: VkResult) {`);
+  emit(`constructor(public code: Result) {`);
   block(() => {
-    emit(`super(\`Vulkan error: \${code} (\${VkResult[code]})\`);`);
+    emit(`super(\`Vulkan error: \${code} (\${Result[code]})\`);`);
   });
   emit(`}`);
 });
@@ -457,19 +462,19 @@ for (const cmd of commands) {
   if (toSkipCMD(cmd.name)) continue;
   newline();
   if (cmd.comment) emit(`/** ${cmd.comment} */`);
-  emit(`export function ${cmd.name}(`);
+  emit(`export function ${stripVk(cmd.name)}(`);
   block(() => {
     for (const p of cmd.params) {
       emit(
         `${jsify(p.name)}: ${
           p.text?.endsWith("*")
             ? `AnyBuffer`
-            : typeToJS(p.type)
+            : stripVk(typeToJS(p.type))
         },`,
       );
     }
   });
-  emit(`): ${typeToJS(cmd.type)} {`);
+  emit(`): ${stripVk(typeToJS(cmd.type))} {`);
   block(() => {
     emit(`${cmd.type !== "void" ? "const ret = " : ""}lib.${cmd.name}(`);
     block(() => {
@@ -489,7 +494,7 @@ for (const cmd of commands) {
       if (cmd.type === "VkResult") {
         emit(
           `if (${
-            cmd.successCodes.map((e) => `ret === VkResult.${e}`).join(" || ")
+            cmd.successCodes.map((e) => `ret === Result.${stripVk(e)}`).join(" || ")
           }) {`,
         );
         block(() => {
@@ -498,7 +503,7 @@ for (const cmd of commands) {
         emit(`} else {`);
         block(() => {
           emit(
-            `throw new VkError(ret as VkResult);`,
+            `throw new VulkanError(ret as Result);`,
           );
         });
         emit("}");

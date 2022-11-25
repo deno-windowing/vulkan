@@ -2,7 +2,9 @@
   "tasks": {
     "parse-xml": "deno run -A ./generator/parse_xml.ts",
     "gen": "deno run -A ./generator/emitter.ts",
-    "test": "deno run -A --unstable ./examples/triangle/main.ts"
+    "test": "deno run -A --unstable ./examples/triangle/main.ts",
+    "test-compute": "deno run -A --unstable ./examples/compute/main.ts",
+    "check": "deno check --unstable ./api/vk.ts"
   },
 
   "fmt": {
