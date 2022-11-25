@@ -1,15 +1,15 @@
 {
   "tasks": {
-    "parse-xml": "deno run -A parse_xml.ts",
-    "gen": "deno run -A gen.ts",
-    "test": "deno run -A --unstable test.ts"
+    "parse-xml": "deno run -A ./generator/parse_xml.ts",
+    "gen": "deno run -A ./generator/emitter.ts",
+    "test": "deno run -A --unstable ./examples/triangle/main.ts"
   },
 
   "fmt": {
     "files": {
       "exclude": [
-        "vk.ts",
-        "vk.min.js"
+        "api/vk.ts",
+        "api/vk.min.js"
       ]
     }
   },
@@ -17,8 +17,8 @@
   "lint": {
     "files": {
       "exclude": [
-        "vk.ts",
-        "vk.min.js"
+        "api/vk.ts",
+        "api/vk.min.js"
       ]
     }
   }

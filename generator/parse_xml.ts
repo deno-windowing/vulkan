@@ -8,8 +8,8 @@ const parser = new XMLParser({
   alwaysCreateTextNode: true,
   attributeNamePrefix: "$",
 });
-const xml = Deno.readTextFileSync(new URL("./vk.xml", import.meta.url));
-const videoXml = Deno.readTextFileSync(new URL("./video.xml", import.meta.url));
+const xml = Deno.readTextFileSync(new URL("../data/vk.xml", import.meta.url));
+const videoXml = Deno.readTextFileSync(new URL("../data/video.xml", import.meta.url));
 
 console.log("Parsing...");
 const json = parser.parse(xml);
@@ -27,6 +27,6 @@ json.registry.extensions.extension = [
 ];
 
 Deno.writeTextFileSync(
-  new URL("./vk.json", import.meta.url),
+  new URL("../data/vk.json", import.meta.url),
   JSON.stringify(json, null, 2),
 );

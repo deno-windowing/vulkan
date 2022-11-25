@@ -1,6 +1,6 @@
-import * as vk from "./vk.ts";
-import * as dwm from "../../../Projects/dwm/mod.ts";
-import { ffi } from "../../../Projects/dwm/src/platform/glfw/ffi.ts";
+import * as vk from "../../api/vk.ts";
+import * as dwm from "../../../../../Projects/dwm/mod.ts";
+import { ffi } from "../../../../../Projects/dwm/src/platform/glfw/ffi.ts";
 
 export class TriangleApplication {
   window!: dwm.DwmWindow;
@@ -64,7 +64,14 @@ export class TriangleApplication {
       title: "Test",
       width: 800,
       height: 600,
+      resizable: true,
       noClientAPI: true,
+    });
+
+    addEventListener("framebuffersize", (event) => {
+      if (event.match(this.window)) {
+        this.onWindowResized();
+      }
     });
 
     this.setupVulkan();
@@ -122,13 +129,60 @@ export class TriangleApplication {
     this.createCommandBuffers();
   }
 
-  cleanup(fullClean: boolean) {}
+  cleanup(fullClean: boolean) {
+    vk.vkDeviceWaitIdle(this.device);
+
+    vk.vkFreeCommandBuffers(
+      this.device,
+      this.commandPool,
+      this.graphicsCommandBuffers.length,
+      this.graphicsCommandBuffers,
+    );
+
+    vk.vkDestroyPipeline(this.device, this.graphicsPipeline, null);
+    vk.vkDestroyRenderPass(this.device, this.renderPass, null);
+
+    for (let i = 0; i < this.swapChainFramebuffers.length; i++) {
+      vk.vkDestroyFramebuffer(this.device, this.swapChainFramebuffers[i], null);
+      vk.vkDestroyImageView(this.device, this.swapChainImageViews[i], null);
+    }
+
+    vk.vkDestroyDescriptorSetLayout(
+      this.device,
+      this.descriptorSetLayout,
+      null,
+    );
+
+    if (fullClean) {
+      vk.vkDestroySemaphore(this.device, this.imageAvailableSemaphore, null);
+      vk.vkDestroySemaphore(this.device, this.renderingFinishedSemaphore, null);
+
+      vk.vkDestroyCommandPool(this.device, this.commandPool, null);
+
+      vk.vkDestroyDescriptorPool(this.device, this.descriptorPool, null);
+      vk.vkDestroyBuffer(this.device, this.uniformBuffer, null);
+      vk.vkFreeMemory(this.device, this.uniformBufferMemory, null);
+
+      vk.vkDestroyBuffer(this.device, this.vertexBuffer, null);
+      vk.vkFreeMemory(this.device, this.vertexBufferMemory, null);
+      vk.vkDestroyBuffer(this.device, this.indexBuffer, null);
+      vk.vkFreeMemory(this.device, this.indexBufferMemory, null);
+
+      vk.vkDestroySwapchainKHR(this.device, this.swapChain, null);
+
+      vk.vkDestroyDevice(this.device, null);
+
+      // vk.vkDestroySurfaceKHR(this.instance, this.surface, null);
+
+      vk.vkDestroyInstance(this.instance, null);
+    }
+  }
 
   createInstance() {
     const extCount = new Uint32Array(1);
     vk.vkEnumerateInstanceExtensionProperties(
       null,
-      new Uint8Array(extCount.buffer),
+      extCount,
       null,
     );
 
@@ -139,8 +193,8 @@ export class TriangleApplication {
     const exts = new Uint8Array(260 * extCount[0]);
     vk.vkEnumerateInstanceExtensionProperties(
       null,
-      new Uint8Array(extCount.buffer),
-      new Uint8Array(exts.buffer),
+      extCount,
+      exts,
     );
 
     const extNames: string[] = [];
@@ -157,10 +211,8 @@ export class TriangleApplication {
       applicationVersion: 1 << 22,
       engineVersion: 1 << 22,
       apiVersion: 1 << 22,
-      pApplicationName: Deno.UnsafePointer.of(
-        new TextEncoder().encode("test\0"),
-      ),
-      pEngineName: Deno.UnsafePointer.of(new TextEncoder().encode("test\0")),
+      pApplicationName: new TextEncoder().encode("Test\0"),
+      pEngineName: new TextEncoder().encode("No Engine\0"),
     });
 
     const glfwExtCount = new Uint32Array(1);
@@ -179,24 +231,21 @@ export class TriangleApplication {
     );
 
     const createInfo = vk.VkInstanceCreateInfo.create({
-      pApplicationInfo: Deno.UnsafePointer.of(appInfo[vk.BUFFER]),
+      pApplicationInfo: appInfo,
       enabledExtensionCount: extensions.length,
-      ppEnabledExtensionNames: Deno.UnsafePointer.of(extensions),
+      ppEnabledExtensionNames: extensions,
       enabledLayerCount: 1,
-      ppEnabledLayerNames: Deno.UnsafePointer.of(
-        new BigUint64Array([
-          BigInt(
-            Deno.UnsafePointer.of(
-              new TextEncoder().encode("VK_LAYER_KHRONOS_validation\0"),
-            ),
+      ppEnabledLayerNames: new BigUint64Array([
+        BigInt(
+          Deno.UnsafePointer.of(
+            new TextEncoder().encode("VK_LAYER_KHRONOS_validation\0"),
           ),
-        ]),
-      ),
+        ),
+      ]),
     });
 
     const instOut = new BigUint64Array(1);
-    vk.vkCreateInstance(createInfo, null, new Uint8Array(instOut.buffer));
-
+    vk.vkCreateInstance(createInfo, null, instOut.buffer);
     this.instance = instOut[0];
   }
 
@@ -206,7 +255,7 @@ export class TriangleApplication {
       this.instance,
       this.window.nativeHandle,
       null,
-      new Uint8Array(surfaceOut.buffer),
+      surfaceOut,
     );
     this.surface = surfaceOut[0];
   }
@@ -215,7 +264,7 @@ export class TriangleApplication {
     const deviceCount = new Uint32Array(1);
     vk.vkEnumeratePhysicalDevices(
       this.instance,
-      new Uint8Array(deviceCount.buffer),
+      deviceCount,
       null,
     );
 
@@ -227,10 +276,9 @@ export class TriangleApplication {
     deviceCount[0] = 1;
     vk.vkEnumeratePhysicalDevices(
       this.instance,
-      new Uint8Array(deviceCount.buffer),
-      new Uint8Array(physicalDeviceOut.buffer),
+      deviceCount,
+      physicalDeviceOut,
     );
-
     this.physicalDevice = physicalDeviceOut[0];
   }
 
@@ -240,7 +288,7 @@ export class TriangleApplication {
     const queueFamilyCount = new Uint32Array(1);
     vk.vkGetPhysicalDeviceQueueFamilyProperties(
       this.physicalDevice,
-      new Uint8Array(queueFamilyCount.buffer),
+      queueFamilyCount.buffer,
       null,
     );
 
@@ -248,15 +296,19 @@ export class TriangleApplication {
       throw new Error("No queue families found");
     }
 
-    const queueFamilyPropertiesPtr = new Uint8Array(vk.VkQueueFamilyProperties.size * queueFamilyCount[0]);
+    const queueFamilyPropertiesPtr = new Uint8Array(
+      vk.VkQueueFamilyProperties.size * queueFamilyCount[0],
+    );
     vk.vkGetPhysicalDeviceQueueFamilyProperties(
       this.physicalDevice,
-      new Uint8Array(queueFamilyCount.buffer),
+      queueFamilyCount,
       queueFamilyPropertiesPtr,
     );
 
     const queueFamilies = new Array(queueFamilyCount[0]).fill(0).map((_, i) => {
-      return new vk.VkQueueFamilyProperties(queueFamilyPropertiesPtr.subarray(i * vk.VkQueueFamilyProperties.size));
+      return new vk.VkQueueFamilyProperties(
+        queueFamilyPropertiesPtr.subarray(i * vk.VkQueueFamilyProperties.size),
+      );
     });
 
     let foundGraphicsQueueFamily = false;
@@ -268,21 +320,24 @@ export class TriangleApplication {
         this.physicalDevice,
         i,
         this.surface,
-        new Uint8Array(presentSupport.buffer),
+        presentSupport,
       );
 
-      if(queueFamilies[i].queueCount > 0 && queueFamilies[i].queueFlags & vk.VkQueueFlagBits.VK_QUEUE_GRAPHICS_BIT) {
+      if (
+        queueFamilies[i].queueCount > 0 &&
+        queueFamilies[i].queueFlags & vk.VkQueueFlagBits.VK_QUEUE_GRAPHICS_BIT
+      ) {
         this.graphicsQueueFamily = i;
         foundGraphicsQueueFamily = true;
 
-        if(presentSupport[0] > 0) {
+        if (presentSupport[0] > 0) {
           this.presentQueueFamily = i;
           foundPresentQueueFamily = true;
           break;
         }
       }
 
-      if(!foundPresentQueueFamily && presentSupport[0] > 0) {
+      if (!foundPresentQueueFamily && presentSupport[0] > 0) {
         this.presentQueueFamily = i;
         foundPresentQueueFamily = true;
       }
@@ -296,19 +351,30 @@ export class TriangleApplication {
   createLogicalDevice() {
     let queuePriority = new Float32Array([1.0]);
 
-    const pQueueCreateInfos = new Uint8Array(vk.VkDeviceQueueCreateInfo.size * 2);
+    const pQueueCreateInfos = new Uint8Array(
+      vk.VkDeviceQueueCreateInfo.size * 2,
+    );
 
     const queueCreateInfo = [
-      new vk.VkDeviceQueueCreateInfo(pQueueCreateInfos.subarray(0, vk.VkDeviceQueueCreateInfo.size)),
-      new vk.VkDeviceQueueCreateInfo(pQueueCreateInfos.subarray(vk.VkDeviceQueueCreateInfo.size, vk.VkDeviceQueueCreateInfo.size * 2)),
+      new vk.VkDeviceQueueCreateInfo(
+        pQueueCreateInfos.subarray(0, vk.VkDeviceQueueCreateInfo.size),
+      ),
+      new vk.VkDeviceQueueCreateInfo(
+        pQueueCreateInfos.subarray(
+          vk.VkDeviceQueueCreateInfo.size,
+          vk.VkDeviceQueueCreateInfo.size * 2,
+        ),
+      ),
     ];
 
-    queueCreateInfo[0].sType = vk.VkStructureType.VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+    queueCreateInfo[0].sType =
+      vk.VkStructureType.VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
     queueCreateInfo[0].queueFamilyIndex = this.graphicsQueueFamily;
     queueCreateInfo[0].queueCount = 1;
     queueCreateInfo[0].pQueuePriorities = Deno.UnsafePointer.of(queuePriority);
 
-    queueCreateInfo[1].sType = vk.VkStructureType.VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+    queueCreateInfo[1].sType =
+      vk.VkStructureType.VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
     queueCreateInfo[1].queueFamilyIndex = this.presentQueueFamily;
     queueCreateInfo[1].queueCount = 1;
     queueCreateInfo[1].pQueuePriorities = Deno.UnsafePointer.of(queuePriority);
@@ -318,29 +384,27 @@ export class TriangleApplication {
     enabledFeatures.shaderCullDistance = 1;
 
     const deviceCreateInfo = vk.VkDeviceCreateInfo.create({
-      pQueueCreateInfos: Deno.UnsafePointer.of(pQueueCreateInfos),
-      queueCreateInfoCount: this.graphicsQueueFamily === this.presentQueueFamily ? 1 : 2,
-      pEnabledFeatures: Deno.UnsafePointer.of(enabledFeatures[vk.BUFFER]),
+      pQueueCreateInfos,
+      queueCreateInfoCount: this.graphicsQueueFamily === this.presentQueueFamily
+        ? 1
+        : 2,
+      pEnabledFeatures: enabledFeatures,
       enabledExtensionCount: 1,
-      ppEnabledExtensionNames: Deno.UnsafePointer.of(
-        new BigUint64Array([
-          BigInt(
-            Deno.UnsafePointer.of(
-              new TextEncoder().encode("VK_KHR_swapchain\0"),
-            ),
+      ppEnabledExtensionNames: new BigUint64Array([
+        BigInt(
+          Deno.UnsafePointer.of(
+            new TextEncoder().encode("VK_KHR_swapchain\0"),
           ),
-        ]),
-      ),
+        ),
+      ]),
       enabledLayerCount: 1,
-      ppEnabledLayerNames: Deno.UnsafePointer.of(
-        new BigUint64Array([
-          BigInt(
-            Deno.UnsafePointer.of(
-              new TextEncoder().encode("VK_LAYER_KHRONOS_validation\0"),
-            ),
+      ppEnabledLayerNames: new BigUint64Array([
+        BigInt(
+          Deno.UnsafePointer.of(
+            new TextEncoder().encode("VK_LAYER_KHRONOS_validation\0"),
           ),
-        ]),
-      ),
+        ),
+      ]),
     });
 
     const deviceOut = new BigUint64Array(1);
@@ -348,16 +412,16 @@ export class TriangleApplication {
       this.physicalDevice,
       deviceCreateInfo,
       null,
-      new Uint8Array(deviceOut.buffer),
+      deviceOut,
     );
     this.device = deviceOut[0];
-    
+
     const graphicsQueueOut = new BigUint64Array(1);
     vk.vkGetDeviceQueue(
       this.device,
       this.graphicsQueueFamily,
       0,
-      new Uint8Array(graphicsQueueOut.buffer),
+      graphicsQueueOut,
     );
     this.graphicsQueue = graphicsQueueOut[0];
     const presentQueueOut = new BigUint64Array(1);
@@ -365,7 +429,7 @@ export class TriangleApplication {
       this.device,
       this.presentQueueFamily,
       0,
-      new Uint8Array(presentQueueOut.buffer),
+      presentQueueOut,
     );
     this.presentQueue = presentQueueOut[0];
 
@@ -389,13 +453,13 @@ export class TriangleApplication {
       this.device,
       createInfo,
       null,
-      new Uint8Array(imageAvailableSemaphoreOut.buffer),
+      imageAvailableSemaphoreOut,
     );
     vk.vkCreateSemaphore(
       this.device,
       createInfo,
       null,
-      new Uint8Array(renderingFinishedSemaphoreOut.buffer),
+      renderingFinishedSemaphoreOut,
     );
 
     this.imageAvailableSemaphore = imageAvailableSemaphoreOut[0];
@@ -412,7 +476,7 @@ export class TriangleApplication {
       this.device,
       poolCreateInfo,
       null,
-      new Uint8Array(commandPoolOut.buffer),
+      commandPoolOut,
     );
     this.commandPool = commandPoolOut[0];
   }
@@ -440,7 +504,7 @@ export class TriangleApplication {
     vk.vkAllocateCommandBuffers(
       this.device,
       cmdBufInfo,
-      new Uint8Array(copyCommandBufferOut.buffer),
+      copyCommandBufferOut,
     );
 
     const copyCommandBuffer = copyCommandBufferOut[0];
@@ -455,7 +519,7 @@ export class TriangleApplication {
       this.device,
       vertexBufferInfo,
       null,
-      new Uint8Array(vertexBufferOut.buffer),
+      vertexBufferOut,
     );
     const vertexBuffer = vertexBufferOut[0];
 
@@ -465,13 +529,16 @@ export class TriangleApplication {
       memReqs,
     );
     memAlloc.allocationSize = memReqs.size;
-    memAlloc.memoryTypeIndex = this.getMemoryType(memReqs.memoryTypeBits, vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+    memAlloc.memoryTypeIndex = this.getMemoryType(
+      memReqs.memoryTypeBits,
+      vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+    );
     const vertexBufferMemoryOut = new BigUint64Array(1);
     vk.vkAllocateMemory(
       this.device,
       memAlloc,
       null,
-      new Uint8Array(vertexBufferMemoryOut.buffer),
+      vertexBufferMemoryOut,
     );
     const vertexBufferMemory = vertexBufferMemoryOut[0];
 
@@ -482,9 +549,11 @@ export class TriangleApplication {
       0,
       vertices.byteLength,
       0,
-      new Uint8Array(dataOut.buffer),
+      dataOut,
     );
-    const data = new Float32Array(Deno.UnsafePointerView.getArrayBuffer(dataOut[0], vertices.byteLength));
+    const data = new Float32Array(
+      Deno.UnsafePointerView.getArrayBuffer(dataOut[0], vertices.byteLength),
+    );
     data.set(vertices);
     vk.vkUnmapMemory(this.device, vertexBufferMemory);
     vk.vkBindBufferMemory(
@@ -494,12 +563,14 @@ export class TriangleApplication {
       0,
     );
 
-    vertexBufferInfo.usage = vk.VkBufferUsageFlagBits.VK_BUFFER_USAGE_TRANSFER_DST_BIT | vk.VkBufferUsageFlagBits.VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
+    vertexBufferInfo.usage =
+      vk.VkBufferUsageFlagBits.VK_BUFFER_USAGE_TRANSFER_DST_BIT |
+      vk.VkBufferUsageFlagBits.VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
     vk.vkCreateBuffer(
       this.device,
       vertexBufferInfo,
       null,
-      new Uint8Array(vertexBufferOut.buffer),
+      vertexBufferOut,
     );
     this.vertexBuffer = vertexBufferOut[0];
     vk.vkGetBufferMemoryRequirements(
@@ -508,12 +579,15 @@ export class TriangleApplication {
       memReqs,
     );
     memAlloc.allocationSize = memReqs.size;
-    memAlloc.memoryTypeIndex = this.getMemoryType(memReqs.memoryTypeBits, vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+    memAlloc.memoryTypeIndex = this.getMemoryType(
+      memReqs.memoryTypeBits,
+      vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+    );
     vk.vkAllocateMemory(
       this.device,
       memAlloc,
       null,
-      new Uint8Array(vertexBufferMemoryOut.buffer),
+      vertexBufferMemoryOut,
     );
     this.vertexBufferMemory = vertexBufferMemoryOut[0];
     vk.vkBindBufferMemory(
@@ -533,7 +607,7 @@ export class TriangleApplication {
       this.device,
       indexBufferInfo,
       null,
-      new Uint8Array(indexBufferOut.buffer),
+      indexBufferOut,
     );
     const indexBuffer = indexBufferOut[0];
     vk.vkGetBufferMemoryRequirements(
@@ -542,13 +616,16 @@ export class TriangleApplication {
       memReqs,
     );
     memAlloc.allocationSize = memReqs.size;
-    memAlloc.memoryTypeIndex = this.getMemoryType(memReqs.memoryTypeBits, vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
+    memAlloc.memoryTypeIndex = this.getMemoryType(
+      memReqs.memoryTypeBits,
+      vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+    );
     const indexBufferMemoryOut = new BigUint64Array(1);
     vk.vkAllocateMemory(
       this.device,
       memAlloc,
       null,
-      new Uint8Array(indexBufferMemoryOut.buffer),
+      indexBufferMemoryOut,
     );
     const indexBufferMemory = indexBufferMemoryOut[0];
     vk.vkMapMemory(
@@ -557,9 +634,11 @@ export class TriangleApplication {
       0,
       indices.byteLength,
       0,
-      new Uint8Array(dataOut.buffer),
+      dataOut,
     );
-    const indexData = new Uint16Array(Deno.UnsafePointerView.getArrayBuffer(dataOut[0], indices.byteLength));
+    const indexData = new Uint16Array(
+      Deno.UnsafePointerView.getArrayBuffer(dataOut[0], indices.byteLength),
+    );
     indexData.set(indices);
     vk.vkUnmapMemory(this.device, indexBufferMemory);
     vk.vkBindBufferMemory(
@@ -569,12 +648,14 @@ export class TriangleApplication {
       0,
     );
 
-    indexBufferInfo.usage = vk.VkBufferUsageFlagBits.VK_BUFFER_USAGE_TRANSFER_DST_BIT | vk.VkBufferUsageFlagBits.VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
+    indexBufferInfo.usage =
+      vk.VkBufferUsageFlagBits.VK_BUFFER_USAGE_TRANSFER_DST_BIT |
+      vk.VkBufferUsageFlagBits.VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
     vk.vkCreateBuffer(
       this.device,
       indexBufferInfo,
       null,
-      new Uint8Array(indexBufferOut.buffer),
+      indexBufferOut,
     );
     this.indexBuffer = indexBufferOut[0];
     vk.vkGetBufferMemoryRequirements(
@@ -583,12 +664,15 @@ export class TriangleApplication {
       memReqs,
     );
     memAlloc.allocationSize = memReqs.size;
-    memAlloc.memoryTypeIndex = this.getMemoryType(memReqs.memoryTypeBits, vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+    memAlloc.memoryTypeIndex = this.getMemoryType(
+      memReqs.memoryTypeBits,
+      vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+    );
     vk.vkAllocateMemory(
       this.device,
       memAlloc,
       null,
-      new Uint8Array(indexBufferMemoryOut.buffer),
+      indexBufferMemoryOut,
     );
     this.indexBufferMemory = indexBufferMemoryOut[0];
     vk.vkBindBufferMemory(
@@ -599,9 +683,10 @@ export class TriangleApplication {
     );
 
     const bufferBeginInfo = vk.VkCommandBufferBeginInfo.create({
-      flags: vk.VkCommandBufferUsageFlagBits.VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
+      flags: vk.VkCommandBufferUsageFlagBits
+        .VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
     });
-    
+
     vk.vkBeginCommandBuffer(copyCommandBuffer, bufferBeginInfo);
 
     const copyRegion = vk.VkBufferCopy.create({
@@ -627,7 +712,7 @@ export class TriangleApplication {
 
     const submitInfo = vk.VkSubmitInfo.create({
       commandBufferCount: 1,
-      pCommandBuffers: Deno.UnsafePointer.of(new BigUint64Array([copyCommandBuffer])),
+      pCommandBuffers: new BigUint64Array([copyCommandBuffer]),
     });
 
     vk.vkQueueSubmit(this.graphicsQueue, 1, submitInfo, 0);
@@ -637,14 +722,14 @@ export class TriangleApplication {
       this.device,
       this.commandPool,
       1,
-      new Uint8Array(new BigUint64Array([copyCommandBuffer]).buffer),
+      new BigUint64Array([copyCommandBuffer]),
     );
 
     vk.vkDestroyBuffer(this.device, vertexBuffer, null);
     vk.vkFreeMemory(this.device, vertexBufferMemory, null);
     vk.vkDestroyBuffer(this.device, indexBuffer, null);
     vk.vkFreeMemory(this.device, indexBufferMemory, null);
-  
+
     this.vertexBindingDescription = vk.VkVertexInputBindingDescription.create({
       binding: 0,
       stride: 4 * 3,
@@ -679,7 +764,7 @@ export class TriangleApplication {
       this.device,
       bufferInfo,
       null,
-      new Uint8Array(bufferOut.buffer),
+      bufferOut,
     );
     this.uniformBuffer = bufferOut[0];
 
@@ -692,7 +777,11 @@ export class TriangleApplication {
 
     const memAlloc = vk.VkMemoryAllocateInfo.create({
       allocationSize: memReqs.size,
-      memoryTypeIndex: this.getMemoryType(memReqs.memoryTypeBits, vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_HOST_COHERENT_BIT),
+      memoryTypeIndex: this.getMemoryType(
+        memReqs.memoryTypeBits,
+        vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+          vk.VkMemoryPropertyFlagBits.VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+      ),
     });
 
     const bufferMemoryOut = new BigUint64Array(1);
@@ -700,7 +789,7 @@ export class TriangleApplication {
       this.device,
       memAlloc,
       null,
-      new Uint8Array(bufferMemoryOut.buffer),
+      bufferMemoryOut,
     );
     this.uniformBufferMemory = bufferMemoryOut[0];
 
@@ -726,9 +815,11 @@ export class TriangleApplication {
       0,
       4 * 4 * 4,
       0,
-      new Uint8Array(dataOut.buffer),
+      dataOut,
     );
-    const data = new Float32Array(Deno.UnsafePointerView.getArrayBuffer(dataOut[0], 4 * 4 * 4));
+    const data = new Float32Array(
+      Deno.UnsafePointerView.getArrayBuffer(dataOut[0], 4 * 4 * 4),
+    );
     data.set(this.uniformBufferData);
     vk.vkUnmapMemory(this.device, this.uniformBufferMemory);
   }
@@ -739,7 +830,10 @@ export class TriangleApplication {
   ) {
     for (let i = 0; i < 32; i++) {
       if ((typeBits & 1) === 1) {
-        if ((this.deviceMemoryProperties.memoryTypes[i].propertyFlags & properties) === properties) {
+        if (
+          (this.deviceMemoryProperties.memoryTypes[i].propertyFlags &
+            properties) === properties
+        ) {
           return i;
         }
       }
@@ -760,15 +854,17 @@ export class TriangleApplication {
     vk.vkGetPhysicalDeviceSurfaceFormatsKHR(
       this.physicalDevice,
       this.surface,
-      new Uint8Array(formatCountOut.buffer),
+      formatCountOut,
       null,
     );
 
-    const surfaceFormats = new Uint8Array(formatCountOut[0] * vk.VkSurfaceFormatKHR.size);
+    const surfaceFormats = new Uint8Array(
+      formatCountOut[0] * vk.VkSurfaceFormatKHR.size,
+    );
     vk.vkGetPhysicalDeviceSurfaceFormatsKHR(
       this.physicalDevice,
       this.surface,
-      new Uint8Array(formatCountOut.buffer),
+      formatCountOut,
       surfaceFormats,
     );
 
@@ -776,7 +872,7 @@ export class TriangleApplication {
     vk.vkGetPhysicalDeviceSurfacePresentModesKHR(
       this.physicalDevice,
       this.surface,
-      new Uint8Array(presentModeCountOut.buffer),
+      presentModeCountOut,
       null,
     );
 
@@ -784,32 +880,46 @@ export class TriangleApplication {
     vk.vkGetPhysicalDeviceSurfacePresentModesKHR(
       this.physicalDevice,
       this.surface,
-      new Uint8Array(presentModeCountOut.buffer),
+      presentModeCountOut,
       presentModes,
     );
 
     let imageCount = surfaceCapabilities.minImageCount + 1;
-    if (surfaceCapabilities.maxImageCount > 0 && imageCount > surfaceCapabilities.maxImageCount) {
+    if (
+      surfaceCapabilities.maxImageCount > 0 &&
+      imageCount > surfaceCapabilities.maxImageCount
+    ) {
       imageCount = surfaceCapabilities.maxImageCount;
     }
 
-    console.log("Swapchain: Using Image Count:", imageCount);
-    
     const surfaceFormat = this.chooseSurfaceFormat(
-      new Array(formatCountOut[0]).fill(0).map((_, i) => new vk.VkSurfaceFormatKHR(surfaceFormats.subarray(i * vk.VkSurfaceFormatKHR.size, (i + 1) * vk.VkSurfaceFormatKHR.size))),
+      new Array(formatCountOut[0]).fill(0).map((_, i) =>
+        new vk.VkSurfaceFormatKHR(
+          surfaceFormats.subarray(
+            i * vk.VkSurfaceFormatKHR.size,
+            (i + 1) * vk.VkSurfaceFormatKHR.size,
+          ),
+        )
+      ),
     );
 
     this.swapChainExtent = this.chooseSwapExtent(surfaceCapabilities);
 
     let surfaceTransform = 0;
-    if (surfaceCapabilities.supportedTransforms & vk.VkSurfaceTransformFlagBitsKHR.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR) {
-      surfaceTransform = vk.VkSurfaceTransformFlagBitsKHR.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
+    if (
+      surfaceCapabilities.supportedTransforms &
+      vk.VkSurfaceTransformFlagBitsKHR.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR
+    ) {
+      surfaceTransform =
+        vk.VkSurfaceTransformFlagBitsKHR.VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
     } else {
       surfaceTransform = surfaceCapabilities.currentTransform;
     }
 
     const presentMode = this.choosePresentMode(
-      new Array(presentModeCountOut[0]).fill(0).map((_, i) => new Uint32Array(presentModes.subarray(i * 4, (i + 1) * 4))[0]),
+      new Array(presentModeCountOut[0]).fill(0).map((_, i) =>
+        new Uint32Array(presentModes.subarray(i * 4, (i + 1) * 4))[0]
+      ),
     );
 
     const createInfo = vk.VkSwapchainCreateInfoKHR.create({
@@ -824,7 +934,8 @@ export class TriangleApplication {
       queueFamilyIndexCount: 0,
       pQueueFamilyIndices: 0,
       preTransform: surfaceTransform,
-      compositeAlpha: vk.VkCompositeAlphaFlagBitsKHR.VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
+      compositeAlpha:
+        vk.VkCompositeAlphaFlagBitsKHR.VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
       presentMode,
       clipped: 1,
       oldSwapchain: this.oldSwapChain,
@@ -835,7 +946,7 @@ export class TriangleApplication {
       this.device,
       createInfo,
       null,
-      new Uint8Array(swapChainOut.buffer),
+      swapChainOut,
     );
     this.swapChain = swapChainOut[0];
 
@@ -851,7 +962,7 @@ export class TriangleApplication {
     vk.vkGetSwapchainImagesKHR(
       this.device,
       this.swapChain,
-      new Uint8Array(actualImageCount.buffer),
+      actualImageCount,
       null,
     );
 
@@ -859,15 +970,16 @@ export class TriangleApplication {
     vk.vkGetSwapchainImagesKHR(
       this.device,
       this.swapChain,
-      new Uint8Array(actualImageCount.buffer),
+      actualImageCount,
       new Uint8Array(this.swapChainImages.buffer),
     );
-
-    console.log("Swapchain: Acquired Images");
   }
 
   chooseSurfaceFormat(availableFormats: vk.VkSurfaceFormatKHR[]) {
-    if (availableFormats.length === 1 && availableFormats[0].format === vk.VkFormat.VK_FORMAT_UNDEFINED) {
+    if (
+      availableFormats.length === 1 &&
+      availableFormats[0].format === vk.VkFormat.VK_FORMAT_UNDEFINED
+    ) {
       return vk.VkSurfaceFormatKHR.create({
         format: vk.VkFormat.VK_FORMAT_B8G8R8A8_UNORM,
         colorSpace: vk.VkColorSpaceKHR.VK_COLOR_SPACE_SRGB_NONLINEAR_KHR,
@@ -875,8 +987,11 @@ export class TriangleApplication {
     }
 
     for (const availableFormat of availableFormats) {
-      if (availableFormat.format === vk.VkFormat.VK_FORMAT_B8G8R8A8_UNORM &&
-        availableFormat.colorSpace === vk.VkColorSpaceKHR.VK_COLOR_SPACE_SRGB_NONLINEAR_KHR) {
+      if (
+        availableFormat.format === vk.VkFormat.VK_FORMAT_B8G8R8A8_UNORM &&
+        availableFormat.colorSpace ===
+          vk.VkColorSpaceKHR.VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+      ) {
         return availableFormat;
       }
     }
@@ -887,8 +1002,20 @@ export class TriangleApplication {
   chooseSwapExtent(surfaceCapabilities: vk.VkSurfaceCapabilitiesKHR) {
     if (surfaceCapabilities.currentExtent.width === -1) {
       return vk.VkExtent2D.create({
-        width: Math.min(Math.max(this.window.size.width, surfaceCapabilities.minImageExtent.width), surfaceCapabilities.maxImageExtent.width),
-        height: Math.min(Math.max(this.window.size.height, surfaceCapabilities.minImageExtent.height), surfaceCapabilities.maxImageExtent.height),
+        width: Math.min(
+          Math.max(
+            this.window.size.width,
+            surfaceCapabilities.minImageExtent.width,
+          ),
+          surfaceCapabilities.maxImageExtent.width,
+        ),
+        height: Math.min(
+          Math.max(
+            this.window.size.height,
+            surfaceCapabilities.minImageExtent.height,
+          ),
+          surfaceCapabilities.maxImageExtent.height,
+        ),
       });
     } else {
       return surfaceCapabilities.currentExtent;
@@ -924,14 +1051,14 @@ export class TriangleApplication {
     const subPassDescription = vk.VkSubpassDescription.create({
       pipelineBindPoint: vk.VkPipelineBindPoint.VK_PIPELINE_BIND_POINT_GRAPHICS,
       colorAttachmentCount: 1,
-      pColorAttachments: Deno.UnsafePointer.of(colorAttachment[vk.BUFFER]),
+      pColorAttachments: colorAttachment,
     });
 
     const createInfo = vk.VkRenderPassCreateInfo.create({
       attachmentCount: 1,
-      pAttachments: Deno.UnsafePointer.of(attachmentDescription[vk.BUFFER]),
+      pAttachments: attachmentDescription,
       subpassCount: 1,
-      pSubpasses: Deno.UnsafePointer.of(subPassDescription[vk.BUFFER]),
+      pSubpasses: subPassDescription,
     });
 
     const renderPassOut = new BigUint64Array(1);
@@ -939,7 +1066,7 @@ export class TriangleApplication {
       this.device,
       createInfo,
       null,
-      new Uint8Array(renderPassOut.buffer),
+      renderPassOut,
     );
 
     this.renderPass = renderPassOut[0];
@@ -963,7 +1090,7 @@ export class TriangleApplication {
         baseArrayLayer: 0,
         layerCount: 1,
       });
-      
+
       const createInfo = vk.VkImageViewCreateInfo.create({
         image: this.swapChainImages[i],
         viewType: vk.VkImageViewType.VK_IMAGE_VIEW_TYPE_2D,
@@ -977,7 +1104,7 @@ export class TriangleApplication {
         this.device,
         createInfo,
         null,
-        new Uint8Array(imageViewOut.buffer),
+        imageViewOut,
       );
 
       this.swapChainImageViews[i] = imageViewOut[0];
@@ -985,13 +1112,16 @@ export class TriangleApplication {
   }
 
   createFramebuffers() {
-    this.swapChainFramebuffers = new BigUint64Array(this.swapChainImages.length);
+    this.swapChainFramebuffers = new BigUint64Array(
+      this.swapChainImages.length,
+    );
 
     for (let i = 0; i < this.swapChainImages.length; i++) {
       const createInfo = vk.VkFramebufferCreateInfo.create({
         renderPass: this.renderPass,
         attachmentCount: 1,
-        pAttachments: Deno.UnsafePointer.of(new BigUint64Array([this.swapChainImageViews[i]])),
+        pAttachments: 
+          new BigUint64Array([this.swapChainImageViews[i]]),
         width: this.swapChainExtent.width,
         height: this.swapChainExtent.height,
         layers: 1,
@@ -1002,19 +1132,19 @@ export class TriangleApplication {
         this.device,
         createInfo,
         null,
-        new Uint8Array(framebufferOut.buffer),
+        framebufferOut,
       );
 
       this.swapChainFramebuffers[i] = framebufferOut[0];
     }
   }
 
-  createShaderModule(file: string) {
+  createShaderModule(file: string | URL) {
     const data = Deno.readFileSync(file);
 
     const createInfo = vk.VkShaderModuleCreateInfo.create({
       codeSize: data.byteLength,
-      pCode: Deno.UnsafePointer.of(data),
+      pCode: data,
     });
 
     const shaderModuleOut = new BigUint64Array(1);
@@ -1022,48 +1152,65 @@ export class TriangleApplication {
       this.device,
       createInfo,
       null,
-      new Uint8Array(shaderModuleOut.buffer),
+      shaderModuleOut,
     );
 
     return shaderModuleOut[0];
   }
 
   createGraphicsPipeline() {
-    const vertexShaderModule = this.createShaderModule("vert.spv");
-    const fragmentShaderModule = this.createShaderModule("frag.spv");
+    const vertexShaderModule = this.createShaderModule(new URL("./vert.spv", import.meta.url));
+    const fragmentShaderModule = this.createShaderModule(new URL("./frag.spv", import.meta.url));
 
     const vertexShaderCreateInfo = vk.VkPipelineShaderStageCreateInfo.create({
       stage: vk.VkShaderStageFlagBits.VK_SHADER_STAGE_VERTEX_BIT,
       module: vertexShaderModule,
-      pName: Deno.UnsafePointer.of(new TextEncoder().encode("main\0")),
+      pName: new TextEncoder().encode("main\0"),
     });
 
     const fragmentShaderCreateInfo = vk.VkPipelineShaderStageCreateInfo.create({
       stage: vk.VkShaderStageFlagBits.VK_SHADER_STAGE_FRAGMENT_BIT,
       module: fragmentShaderModule,
-      pName: Deno.UnsafePointer.of(new TextEncoder().encode("main\0")),
+      pName: new TextEncoder().encode("main\0"),
     });
 
-    const shaderStages = new Uint8Array(2 * vk.VkPipelineShaderStageCreateInfo.size);
+    const shaderStages = new Uint8Array(
+      2 * vk.VkPipelineShaderStageCreateInfo.size,
+    );
     shaderStages.set(vertexShaderCreateInfo[vk.BUFFER]);
-    shaderStages.set(fragmentShaderCreateInfo[vk.BUFFER], vk.VkPipelineShaderStageCreateInfo.size);
+    shaderStages.set(
+      fragmentShaderCreateInfo[vk.BUFFER],
+      vk.VkPipelineShaderStageCreateInfo.size,
+    );
 
-    const vertexAttributeDescriptions = new Uint8Array(this.vertexAttributeDescriptions.length * vk.VkVertexInputAttributeDescription.size);
+    const vertexAttributeDescriptions = new Uint8Array(
+      this.vertexAttributeDescriptions.length *
+        vk.VkVertexInputAttributeDescription.size,
+    );
     for (let i = 0; i < this.vertexAttributeDescriptions.length; i++) {
-      vertexAttributeDescriptions.set(this.vertexAttributeDescriptions[i][vk.BUFFER], i * vk.VkVertexInputAttributeDescription.size);
+      vertexAttributeDescriptions.set(
+        this.vertexAttributeDescriptions[i][vk.BUFFER],
+        i * vk.VkVertexInputAttributeDescription.size,
+      );
     }
 
-    const vertexInputCreateInfo = vk.VkPipelineVertexInputStateCreateInfo.create({
-      vertexBindingDescriptionCount: 1,
-      pVertexBindingDescriptions: Deno.UnsafePointer.of(this.vertexBindingDescription[vk.BUFFER]),
-      vertexAttributeDescriptionCount: 2,
-      pVertexAttributeDescriptions: Deno.UnsafePointer.of(vertexAttributeDescriptions),
-    });
+    const vertexInputCreateInfo = vk.VkPipelineVertexInputStateCreateInfo
+      .create({
+        vertexBindingDescriptionCount: 1,
+        pVertexBindingDescriptions: Deno.UnsafePointer.of(
+          this.vertexBindingDescription[vk.BUFFER],
+        ),
+        vertexAttributeDescriptionCount: 2,
+        pVertexAttributeDescriptions: Deno.UnsafePointer.of(
+          vertexAttributeDescriptions,
+        ),
+      });
 
-    const inputAssemblyCreateInfo = vk.VkPipelineInputAssemblyStateCreateInfo.create({
-      topology: vk.VkPrimitiveTopology.VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
-      primitiveRestartEnable: 0,
-    });
+    const inputAssemblyCreateInfo = vk.VkPipelineInputAssemblyStateCreateInfo
+      .create({
+        topology: vk.VkPrimitiveTopology.VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+        primitiveRestartEnable: 0,
+      });
 
     const viewport = vk.VkViewport.create({
       x: 0,
@@ -1081,51 +1228,54 @@ export class TriangleApplication {
 
     const viewportCreateInfo = vk.VkPipelineViewportStateCreateInfo.create({
       viewportCount: 1,
-      pViewports: Deno.UnsafePointer.of(viewport[vk.BUFFER]),
+      pViewports: viewport,
       scissorCount: 1,
-      pScissors: Deno.UnsafePointer.of(scissor[vk.BUFFER]),
+      pScissors: scissor,
     });
 
-    const rasterizerCreateInfo = vk.VkPipelineRasterizationStateCreateInfo.create({
-      depthClampEnable: 0,
-      rasterizerDiscardEnable: 0,
-      polygonMode: vk.VkPolygonMode.VK_POLYGON_MODE_FILL,
-      cullMode: vk.VkCullModeFlagBits.VK_CULL_MODE_BACK_BIT,
-      frontFace: vk.VkFrontFace.VK_FRONT_FACE_CLOCKWISE,
-      depthBiasEnable: 0,
-      depthBiasConstantFactor: 0,
-      depthBiasClamp: 0,
-      depthBiasSlopeFactor: 0,
-      lineWidth: 1,
-    });
+    const rasterizerCreateInfo = vk.VkPipelineRasterizationStateCreateInfo
+      .create({
+        depthClampEnable: 0,
+        rasterizerDiscardEnable: 0,
+        polygonMode: vk.VkPolygonMode.VK_POLYGON_MODE_FILL,
+        cullMode: vk.VkCullModeFlagBits.VK_CULL_MODE_BACK_BIT,
+        frontFace: vk.VkFrontFace.VK_FRONT_FACE_CLOCKWISE,
+        depthBiasEnable: 0,
+        depthBiasConstantFactor: 0,
+        depthBiasClamp: 0,
+        depthBiasSlopeFactor: 0,
+        lineWidth: 1,
+      });
 
-    const multisampleCreateInfo = vk.VkPipelineMultisampleStateCreateInfo.create({
-      sampleShadingEnable: 0,
-      rasterizationSamples: vk.VkSampleCountFlagBits.VK_SAMPLE_COUNT_1_BIT,
-      minSampleShading: 1,
-      alphaToCoverageEnable: 0,
-      alphaToOneEnable: 0,
-    });
+    const multisampleCreateInfo = vk.VkPipelineMultisampleStateCreateInfo
+      .create({
+        sampleShadingEnable: 0,
+        rasterizationSamples: vk.VkSampleCountFlagBits.VK_SAMPLE_COUNT_1_BIT,
+        minSampleShading: 1,
+        alphaToCoverageEnable: 0,
+        alphaToOneEnable: 0,
+      });
 
-    const colorBlendAttachmentState = vk.VkPipelineColorBlendAttachmentState.create({
-      blendEnable: 0,
-      srcColorBlendFactor: vk.VkBlendFactor.VK_BLEND_FACTOR_ONE,
-      dstColorBlendFactor: vk.VkBlendFactor.VK_BLEND_FACTOR_ZERO,
-      colorBlendOp: vk.VkBlendOp.VK_BLEND_OP_ADD,
-      srcAlphaBlendFactor: vk.VkBlendFactor.VK_BLEND_FACTOR_ONE,
-      dstAlphaBlendFactor: vk.VkBlendFactor.VK_BLEND_FACTOR_ZERO,
-      alphaBlendOp: vk.VkBlendOp.VK_BLEND_OP_ADD,
-      colorWriteMask: vk.VkColorComponentFlagBits.VK_COLOR_COMPONENT_R_BIT |
-        vk.VkColorComponentFlagBits.VK_COLOR_COMPONENT_G_BIT |
-        vk.VkColorComponentFlagBits.VK_COLOR_COMPONENT_B_BIT |
-        vk.VkColorComponentFlagBits.VK_COLOR_COMPONENT_A_BIT,
-    });
+    const colorBlendAttachmentState = vk.VkPipelineColorBlendAttachmentState
+      .create({
+        blendEnable: 0,
+        srcColorBlendFactor: vk.VkBlendFactor.VK_BLEND_FACTOR_ONE,
+        dstColorBlendFactor: vk.VkBlendFactor.VK_BLEND_FACTOR_ZERO,
+        colorBlendOp: vk.VkBlendOp.VK_BLEND_OP_ADD,
+        srcAlphaBlendFactor: vk.VkBlendFactor.VK_BLEND_FACTOR_ONE,
+        dstAlphaBlendFactor: vk.VkBlendFactor.VK_BLEND_FACTOR_ZERO,
+        alphaBlendOp: vk.VkBlendOp.VK_BLEND_OP_ADD,
+        colorWriteMask: vk.VkColorComponentFlagBits.VK_COLOR_COMPONENT_R_BIT |
+          vk.VkColorComponentFlagBits.VK_COLOR_COMPONENT_G_BIT |
+          vk.VkColorComponentFlagBits.VK_COLOR_COMPONENT_B_BIT |
+          vk.VkColorComponentFlagBits.VK_COLOR_COMPONENT_A_BIT,
+      });
 
     const colorBlendCreateInfo = vk.VkPipelineColorBlendStateCreateInfo.create({
       logicOpEnable: 0,
       logicOp: vk.VkLogicOp.VK_LOGIC_OP_COPY,
       attachmentCount: 1,
-      pAttachments: Deno.UnsafePointer.of(colorBlendAttachmentState[vk.BUFFER]),
+      pAttachments: colorBlendAttachmentState,
       blendConstants: [0, 0, 0, 0],
     });
 
@@ -1135,33 +1285,44 @@ export class TriangleApplication {
       stageFlags: vk.VkShaderStageFlagBits.VK_SHADER_STAGE_VERTEX_BIT,
     });
 
-    const descriptorLayoutCreateInfo = vk.VkDescriptorSetLayoutCreateInfo.create({
-      bindingCount: 1,
-      pBindings: Deno.UnsafePointer.of(layoutBinding[vk.BUFFER]),
-    });
+    const descriptorLayoutCreateInfo = vk.VkDescriptorSetLayoutCreateInfo
+      .create({
+        bindingCount: 1,
+        pBindings: layoutBinding,
+      });
 
     const descriptorSetLayoutOut = new BigUint64Array(1);
-    vk.vkCreateDescriptorSetLayout(this.device, descriptorLayoutCreateInfo, null, new Uint8Array(descriptorSetLayoutOut.buffer));
+    vk.vkCreateDescriptorSetLayout(
+      this.device,
+      descriptorLayoutCreateInfo,
+      null,
+      descriptorSetLayoutOut,
+    );
     this.descriptorSetLayout = descriptorSetLayoutOut[0];
-  
+
     const layoutCreateInfo = vk.VkPipelineLayoutCreateInfo.create({
       setLayoutCount: 1,
-      pSetLayouts: Deno.UnsafePointer.of(new BigUint64Array([this.descriptorSetLayout])),
+      pSetLayouts: new BigUint64Array([this.descriptorSetLayout]),
     });
 
     const pipelineLayoutOut = new BigUint64Array(1);
-    vk.vkCreatePipelineLayout(this.device, layoutCreateInfo, null, new Uint8Array(pipelineLayoutOut.buffer));
+    vk.vkCreatePipelineLayout(
+      this.device,
+      layoutCreateInfo,
+      null,
+      pipelineLayoutOut,
+    );
     this.pipelineLayout = pipelineLayoutOut[0];
 
     const pipelineCreateInfo = vk.VkGraphicsPipelineCreateInfo.create({
       stageCount: 2,
-      pStages: Deno.UnsafePointer.of(shaderStages),
-      pVertexInputState: Deno.UnsafePointer.of(vertexInputCreateInfo[vk.BUFFER]),
-      pInputAssemblyState: Deno.UnsafePointer.of(inputAssemblyCreateInfo[vk.BUFFER]),
-      pViewportState: Deno.UnsafePointer.of(viewportCreateInfo[vk.BUFFER]),
-      pRasterizationState: Deno.UnsafePointer.of(rasterizerCreateInfo[vk.BUFFER]),
-      pMultisampleState: Deno.UnsafePointer.of(multisampleCreateInfo[vk.BUFFER]),
-      pColorBlendState: Deno.UnsafePointer.of(colorBlendCreateInfo[vk.BUFFER]),
+      pStages: shaderStages,
+      pVertexInputState: vertexInputCreateInfo,
+      pInputAssemblyState: inputAssemblyCreateInfo,
+      pViewportState: viewportCreateInfo,
+      pRasterizationState: rasterizerCreateInfo,
+      pMultisampleState: multisampleCreateInfo,
+      pColorBlendState: colorBlendCreateInfo,
       layout: this.pipelineLayout,
       renderPass: this.renderPass,
       subpass: 0,
@@ -1170,7 +1331,14 @@ export class TriangleApplication {
     });
 
     const pipelineOut = new BigUint64Array(1);
-    vk.vkCreateGraphicsPipelines(this.device, 0, 1, pipelineCreateInfo, null, new Uint8Array(pipelineOut.buffer));
+    vk.vkCreateGraphicsPipelines(
+      this.device,
+      0,
+      1,
+      pipelineCreateInfo,
+      null,
+      pipelineOut,
+    );
     this.graphicsPipeline = pipelineOut[0];
 
     vk.vkDestroyShaderModule(this.device, vertexShaderModule, null);
@@ -1185,12 +1353,17 @@ export class TriangleApplication {
 
     const createInfo = vk.VkDescriptorPoolCreateInfo.create({
       poolSizeCount: 1,
-      pPoolSizes: Deno.UnsafePointer.of(typeCount[vk.BUFFER]),
+      pPoolSizes: typeCount,
       maxSets: 1,
     });
 
     const poolOut = new BigUint64Array(1);
-    vk.vkCreateDescriptorPool(this.device, createInfo, null, new Uint8Array(poolOut.buffer));
+    vk.vkCreateDescriptorPool(
+      this.device,
+      createInfo,
+      null,
+      poolOut,
+    );
     this.descriptorPool = poolOut[0];
   }
 
@@ -1198,11 +1371,15 @@ export class TriangleApplication {
     const allocInfo = vk.VkDescriptorSetAllocateInfo.create({
       descriptorPool: this.descriptorPool,
       descriptorSetCount: 1,
-      pSetLayouts: Deno.UnsafePointer.of(new BigUint64Array([BigInt(this.descriptorSetLayout)])),
+      pSetLayouts: new BigUint64Array([BigInt(this.descriptorSetLayout)]),
     });
 
     const descriptorSetOut = new BigUint64Array(1);
-    vk.vkAllocateDescriptorSets(this.device, allocInfo, new Uint8Array(descriptorSetOut.buffer));
+    vk.vkAllocateDescriptorSets(
+      this.device,
+      allocInfo,
+      descriptorSetOut,
+    );
     this.descriptorSet = descriptorSetOut[0];
 
     const descriptorBufferInfo = vk.VkDescriptorBufferInfo.create({
@@ -1215,15 +1392,23 @@ export class TriangleApplication {
       dstSet: this.descriptorSet,
       descriptorCount: 1,
       descriptorType: vk.VkDescriptorType.VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-      pBufferInfo: Deno.UnsafePointer.of(descriptorBufferInfo[vk.BUFFER]),
+      pBufferInfo: descriptorBufferInfo,
       dstBinding: 0,
     });
 
-    vk.vkUpdateDescriptorSets(this.device, 1, writeDescriptorSet, 0, new Uint8Array());
+    vk.vkUpdateDescriptorSets(
+      this.device,
+      1,
+      writeDescriptorSet,
+      0,
+      null,
+    );
   }
 
   createCommandBuffers() {
-    this.graphicsCommandBuffers = new BigUint64Array(this.swapChainImages.length);
+    this.graphicsCommandBuffers = new BigUint64Array(
+      this.swapChainImages.length,
+    );
 
     const allocInfo = vk.VkCommandBufferAllocateInfo.create({
       commandPool: this.commandPool,
@@ -1231,10 +1416,15 @@ export class TriangleApplication {
       commandBufferCount: this.graphicsCommandBuffers.length,
     });
 
-    vk.vkAllocateCommandBuffers(this.device, allocInfo, new Uint8Array(this.graphicsCommandBuffers.buffer));
+    vk.vkAllocateCommandBuffers(
+      this.device,
+      allocInfo,
+      this.graphicsCommandBuffers,
+    );
 
     const beginInfo = vk.VkCommandBufferBeginInfo.create({
-      flags: vk.VkCommandBufferUsageFlagBits.VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT,
+      flags: vk.VkCommandBufferUsageFlagBits
+        .VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT,
     });
 
     const subResourceRange = vk.VkImageSubresourceRange.create({
@@ -1270,8 +1460,10 @@ export class TriangleApplication {
 
       vk.vkCmdPipelineBarrier(
         this.graphicsCommandBuffers[i],
-        vk.VkPipelineStageFlagBits.VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
-        vk.VkPipelineStageFlagBits.VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        vk.VkPipelineStageFlagBits
+          .VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        vk.VkPipelineStageFlagBits
+          .VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
         0,
         0,
         new Uint8Array(),
@@ -1289,10 +1481,14 @@ export class TriangleApplication {
           extent: this.swapChainExtent,
         }),
         clearValueCount: 1,
-        pClearValues: Deno.UnsafePointer.of(clearValues),
+        pClearValues: clearValues,
       });
 
-      vk.vkCmdBeginRenderPass(this.graphicsCommandBuffers[i], renderPassBeginInfo, vk.VkSubpassContents.VK_SUBPASS_CONTENTS_INLINE);
+      vk.vkCmdBeginRenderPass(
+        this.graphicsCommandBuffers[i],
+        renderPassBeginInfo,
+        vk.VkSubpassContents.VK_SUBPASS_CONTENTS_INLINE,
+      );
 
       vk.vkCmdBindDescriptorSets(
         this.graphicsCommandBuffers[i],
@@ -1300,19 +1496,32 @@ export class TriangleApplication {
         this.pipelineLayout,
         0,
         1,
-        new Uint8Array(new BigUint64Array([BigInt(this.descriptorSet)]).buffer),
+        new BigUint64Array([BigInt(this.descriptorSet)]),
         0,
-        new Uint8Array(),
+        null,
       );
 
-      vk.vkCmdBindPipeline(this.graphicsCommandBuffers[i], vk.VkPipelineBindPoint.VK_PIPELINE_BIND_POINT_GRAPHICS, this.graphicsPipeline);
+      vk.vkCmdBindPipeline(
+        this.graphicsCommandBuffers[i],
+        vk.VkPipelineBindPoint.VK_PIPELINE_BIND_POINT_GRAPHICS,
+        this.graphicsPipeline,
+      );
 
       const offset = new BigUint64Array(1);
-      vk.vkCmdBindVertexBuffers(this.graphicsCommandBuffers[i], 0, 1, new Uint8Array(
-        new BigUint64Array([BigInt(this.vertexBuffer)]).buffer,
-      ), new Uint8Array(offset.buffer));
+      vk.vkCmdBindVertexBuffers(
+        this.graphicsCommandBuffers[i],
+        0,
+        1,
+        new BigUint64Array([BigInt(this.vertexBuffer)]),
+        offset,
+      );
 
-      vk.vkCmdBindIndexBuffer(this.graphicsCommandBuffers[i], this.indexBuffer, 0, vk.VkIndexType.VK_INDEX_TYPE_UINT16);  
+      vk.vkCmdBindIndexBuffer(
+        this.graphicsCommandBuffers[i],
+        this.indexBuffer,
+        0,
+        vk.VkIndexType.VK_INDEX_TYPE_UINT16,
+      );
 
       vk.vkCmdDrawIndexed(this.graphicsCommandBuffers[i], 3, 1, 0, 0, 0);
 
@@ -1320,7 +1529,8 @@ export class TriangleApplication {
 
       if (this.presentQueueFamily !== this.graphicsQueueFamily) {
         const drawToPresentBarrier = vk.VkImageMemoryBarrier.create({
-          srcAccessMask: vk.VkAccessFlagBits.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+          srcAccessMask:
+            vk.VkAccessFlagBits.VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
           dstAccessMask: vk.VkAccessFlagBits.VK_ACCESS_MEMORY_READ_BIT,
           oldLayout: vk.VkImageLayout.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
           newLayout: vk.VkImageLayout.VK_IMAGE_LAYOUT_PRESENT_SRC_KHR,
@@ -1332,13 +1542,14 @@ export class TriangleApplication {
 
         vk.vkCmdPipelineBarrier(
           this.graphicsCommandBuffers[i],
-          vk.VkPipelineStageFlagBits.VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+          vk.VkPipelineStageFlagBits
+            .VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
           vk.VkPipelineStageFlagBits.VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
           0,
           0,
-          new Uint8Array(),
+          null,
           0,
-          new Uint8Array(),
+          null,
           1,
           drawToPresentBarrier,
         );
@@ -1359,9 +1570,9 @@ export class TriangleApplication {
         1000000000,
         this.imageAvailableSemaphore,
         0,
-        new Uint8Array(imageIndex.buffer),
+        imageIndex,
       );
-    } catch(e: any) {
+    } catch (e: any) {
       if (e.code === vk.VkResult.VK_ERROR_OUT_OF_DATE_KHR) {
         this.onWindowSizeChanged();
         return;
@@ -1372,34 +1583,25 @@ export class TriangleApplication {
 
     const submitInfo = vk.VkSubmitInfo.create({
       waitSemaphoreCount: 1,
-      pWaitSemaphores: Deno.UnsafePointer.of(
-        new BigUint64Array([BigInt(this.imageAvailableSemaphore)]).buffer,
-      ),
+      pWaitSemaphores: new BigUint64Array([BigInt(this.imageAvailableSemaphore)]),
       signalSemaphoreCount: 1,
-      pSignalSemaphores: Deno.UnsafePointer.of(
-        new BigUint64Array([BigInt(this.renderingFinishedSemaphore)]).buffer,
-      ),
-      pWaitDstStageMask: Deno.UnsafePointer.of(
-        new Uint32Array([vk.VkPipelineStageFlagBits.VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT]).buffer,
-      ),
+      pSignalSemaphores: new BigUint64Array([BigInt(this.renderingFinishedSemaphore)]),
+      pWaitDstStageMask: new Uint32Array([
+          vk.VkPipelineStageFlagBits
+            .VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        ]),
       commandBufferCount: 1,
-      pCommandBuffers: Deno.UnsafePointer.of(
-        new BigUint64Array([BigInt(this.graphicsCommandBuffers[imageIndex[0]])]).buffer,
-      ),
+      pCommandBuffers: new BigUint64Array([BigInt(this.graphicsCommandBuffers[imageIndex[0]])]),
     });
 
     vk.vkQueueSubmit(this.graphicsQueue, 1, submitInfo, 0);
 
     const presentInfo = vk.VkPresentInfoKHR.create({
       waitSemaphoreCount: 1,
-      pWaitSemaphores: Deno.UnsafePointer.of(
-        new BigUint64Array([BigInt(this.renderingFinishedSemaphore)]).buffer,
-      ),
+      pWaitSemaphores: new BigUint64Array([BigInt(this.renderingFinishedSemaphore)]),
       swapchainCount: 1,
-      pSwapchains: Deno.UnsafePointer.of(
-        new BigUint64Array([BigInt(this.swapChain)]).buffer,
-      ),
-      pImageIndices: Deno.UnsafePointer.of(imageIndex),
+      pSwapchains: new BigUint64Array([BigInt(this.swapChain)]),
+      pImageIndices: imageIndex,
     });
 
     try {
@@ -1407,7 +1609,7 @@ export class TriangleApplication {
       if (res === vk.VkResult.VK_SUBOPTIMAL_KHR || this.resized) {
         this.onWindowSizeChanged();
       }
-    } catch(e: any) {
+    } catch (e: any) {
       if (e.code === vk.VkResult.VK_ERROR_OUT_OF_DATE_KHR) {
         this.onWindowSizeChanged();
       } else {

@@ -1,5 +1,31 @@
 /// This file is auto-generated. Do not edit.
 
+export const BUFFER = Symbol("vkStructBuffer");
+export const DATAVIEW = Symbol("vkStructDataView");
+
+export interface IVkStructure {
+  readonly [BUFFER]: Uint8Array;
+  readonly [DATAVIEW]: DataView;
+}
+
+export type AnyBuffer = ArrayBuffer | Uint8Array | Uint16Array | Uint32Array | Int8Array | Int16Array | Int32Array | Float32Array | Float64Array | BigUint64Array | BigInt64Array | null | IVkStructure;
+
+export function anyBuffer(buffer: AnyBuffer) {
+  if (!buffer) return null;
+  else if (typeof buffer === "object" && BUFFER in buffer) return (buffer as IVkStructure)[BUFFER];
+  else if (buffer instanceof Uint8Array) return buffer;
+  return new Uint8Array(buffer instanceof ArrayBuffer ? buffer : (buffer as unknown as ArrayBufferView).buffer);
+}
+
+export type AnyPointer = Deno.PointerValue | null | AnyBuffer;
+
+export function anyPointer(buffer: AnyPointer): Deno.PointerValue {
+  if (!buffer) return 0;
+  else if (typeof buffer === "number" || typeof buffer === "bigint") return buffer;
+  const u8 = anyBuffer(buffer);
+  return u8!.length === 0 ? 0 : Deno.UnsafePointer.of(u8 ?? new Uint8Array());
+}
+
 /// Type definitions
 
 export type MTLDevice_id = Deno.PointerValue;
@@ -7484,15 +7510,6 @@ export enum VkDeviceFaultVendorBinaryHeaderVersionEXT {
 }
 
 /// Structs
-
-export const BUFFER = Symbol("vkStructBuffer");
-export const DATAVIEW = Symbol("vkStructDataView");
-
-export interface IVkStructure {
-  readonly [BUFFER]: Uint8Array;
-  readonly [DATAVIEW]: DataView;
-}
-
 export const LE = new Uint8Array(new Uint32Array([0x12345678]).buffer)[0] === 0x78;
 
 
@@ -7844,7 +7861,7 @@ export class StdVideoH264SequenceParameterSetVui implements IVkStructure {
     chroma_sample_loc_type_top_field?: number;
     chroma_sample_loc_type_bottom_field?: number;
     reserved1?: number;
-    pHrdParameters?: Deno.PointerValue;
+    pHrdParameters?: AnyPointer;
   }) {
     const s = StdVideoH264SequenceParameterSetVui.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -7993,8 +8010,8 @@ export class StdVideoH264SequenceParameterSetVui implements IVkStructure {
     return this.#view.getBigUint64(80, LE);
   }
   
-  set pHrdParameters(value: Deno.PointerValue) {
-    this.#view.setBigUint64(80, BigInt(value), LE);
+  set pHrdParameters(value: AnyPointer) {
+    this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -8314,9 +8331,9 @@ export class StdVideoH264SequenceParameterSet implements IVkStructure {
     frame_crop_top_offset?: number;
     frame_crop_bottom_offset?: number;
     reserved2?: number;
-    pOffsetForRefFrame?: Deno.PointerValue;
-    pScalingLists?: Deno.PointerValue;
-    pSequenceParameterSetVui?: Deno.PointerValue;
+    pOffsetForRefFrame?: AnyPointer;
+    pScalingLists?: AnyPointer;
+    pSequenceParameterSetVui?: AnyPointer;
   }) {
     const s = StdVideoH264SequenceParameterSet.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -8530,24 +8547,24 @@ export class StdVideoH264SequenceParameterSet implements IVkStructure {
     return this.#view.getBigUint64(128, LE);
   }
   
-  set pOffsetForRefFrame(value: Deno.PointerValue) {
-    this.#view.setBigUint64(128, BigInt(value), LE);
+  set pOffsetForRefFrame(value: AnyPointer) {
+    this.#view.setBigUint64(128, BigInt(anyPointer(value)), LE);
   }
   
   get pScalingLists() {
     return this.#view.getBigUint64(136, LE);
   }
   
-  set pScalingLists(value: Deno.PointerValue) {
-    this.#view.setBigUint64(136, BigInt(value), LE);
+  set pScalingLists(value: AnyPointer) {
+    this.#view.setBigUint64(136, BigInt(anyPointer(value)), LE);
   }
   
   get pSequenceParameterSetVui() {
     return this.#view.getBigUint64(144, LE);
   }
   
-  set pSequenceParameterSetVui(value: Deno.PointerValue) {
-    this.#view.setBigUint64(144, BigInt(value), LE);
+  set pSequenceParameterSetVui(value: AnyPointer) {
+    this.#view.setBigUint64(144, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -8691,7 +8708,7 @@ export class StdVideoH264PictureParameterSet implements IVkStructure {
     pic_init_qs_minus26?: number;
     chroma_qp_index_offset?: number;
     second_chroma_qp_index_offset?: number;
-    pScalingLists?: Deno.PointerValue;
+    pScalingLists?: AnyPointer;
   }) {
     const s = StdVideoH264PictureParameterSet.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -8795,8 +8812,8 @@ export class StdVideoH264PictureParameterSet implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pScalingLists(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pScalingLists(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -9810,11 +9827,11 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements IVkStructure 
   static create(data: {
     flags?: StdVideoEncodeH264RefMgmtFlags;
     refList0ModOpCount?: number;
-    pRefList0ModOperations?: Deno.PointerValue;
+    pRefList0ModOperations?: AnyPointer;
     refList1ModOpCount?: number;
-    pRefList1ModOperations?: Deno.PointerValue;
+    pRefList1ModOperations?: AnyPointer;
     refPicMarkingOpCount?: number;
-    pRefPicMarkingOperations?: Deno.PointerValue;
+    pRefPicMarkingOperations?: AnyPointer;
   }) {
     const s = StdVideoEncodeH264RefMemMgmtCtrlOperations.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -9850,8 +9867,8 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements IVkStructure 
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pRefList0ModOperations(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pRefList0ModOperations(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get refList1ModOpCount() {
@@ -9866,8 +9883,8 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements IVkStructure 
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pRefList1ModOperations(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pRefList1ModOperations(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get refPicMarkingOpCount() {
@@ -9882,8 +9899,8 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements IVkStructure 
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pRefPicMarkingOperations(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pRefPicMarkingOperations(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -10091,7 +10108,7 @@ export class StdVideoEncodeH264SliceHeader implements IVkStructure {
     disable_deblocking_filter_idc?: StdVideoH264DisableDeblockingFilterIdc;
     slice_alpha_c0_offset_div2?: number;
     slice_beta_offset_div2?: number;
-    pWeightTable?: Deno.PointerValue;
+    pWeightTable?: AnyPointer;
   }) {
     const s = StdVideoEncodeH264SliceHeader.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -10195,8 +10212,8 @@ export class StdVideoEncodeH264SliceHeader implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pWeightTable(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pWeightTable(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -10667,8 +10684,8 @@ export class StdVideoH265HrdParameters implements IVkStructure {
     cpb_cnt_minus1?: number[];
     elemental_duration_in_tc_minus1?: number[];
     reserved?: number[];
-    pSubLayerHrdParametersNal?: Deno.PointerValue;
-    pSubLayerHrdParametersVcl?: Deno.PointerValue;
+    pSubLayerHrdParametersNal?: AnyPointer;
+    pSubLayerHrdParametersVcl?: AnyPointer;
   }) {
     const s = StdVideoH265HrdParameters.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -10824,16 +10841,16 @@ export class StdVideoH265HrdParameters implements IVkStructure {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pSubLayerHrdParametersNal(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pSubLayerHrdParametersNal(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
   
   get pSubLayerHrdParametersVcl() {
     return this.#view.getBigUint64(72, LE);
   }
   
-  set pSubLayerHrdParametersVcl(value: Deno.PointerValue) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+  set pSubLayerHrdParametersVcl(value: AnyPointer) {
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -10936,9 +10953,9 @@ export class StdVideoH265VideoParameterSet implements IVkStructure {
     vps_time_scale?: number;
     vps_num_ticks_poc_diff_one_minus1?: number;
     reserved3?: number;
-    pDecPicBufMgr?: Deno.PointerValue;
-    pHrdParameters?: Deno.PointerValue;
-    pProfileTierLevel?: Deno.PointerValue;
+    pDecPicBufMgr?: AnyPointer;
+    pHrdParameters?: AnyPointer;
+    pProfileTierLevel?: AnyPointer;
   }) {
     const s = StdVideoH265VideoParameterSet.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -11035,24 +11052,24 @@ export class StdVideoH265VideoParameterSet implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pDecPicBufMgr(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pDecPicBufMgr(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get pHrdParameters() {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pHrdParameters(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pHrdParameters(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get pProfileTierLevel() {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pProfileTierLevel(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pProfileTierLevel(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -11738,7 +11755,7 @@ export class StdVideoH265SequenceParameterSetVui implements IVkStructure {
     max_bits_per_min_cu_denom?: number;
     log2_max_mv_length_horizontal?: number;
     log2_max_mv_length_vertical?: number;
-    pHrdParameters?: Deno.PointerValue;
+    pHrdParameters?: AnyPointer;
   }) {
     const s = StdVideoH265SequenceParameterSetVui.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -11977,8 +11994,8 @@ export class StdVideoH265SequenceParameterSetVui implements IVkStructure {
     return this.#view.getBigUint64(120, LE);
   }
   
-  set pHrdParameters(value: Deno.PointerValue) {
-    this.#view.setBigUint64(120, BigInt(value), LE);
+  set pHrdParameters(value: AnyPointer) {
+    this.#view.setBigUint64(120, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -12410,13 +12427,13 @@ export class StdVideoH265SequenceParameterSet implements IVkStructure {
     conf_win_right_offset?: number;
     conf_win_top_offset?: number;
     conf_win_bottom_offset?: number;
-    pProfileTierLevel?: Deno.PointerValue;
-    pDecPicBufMgr?: Deno.PointerValue;
-    pScalingLists?: Deno.PointerValue;
-    pShortTermRefPicSet?: Deno.PointerValue;
-    pLongTermRefPicsSps?: Deno.PointerValue;
-    pSequenceParameterSetVui?: Deno.PointerValue;
-    pPredictorPaletteEntries?: Deno.PointerValue;
+    pProfileTierLevel?: AnyPointer;
+    pDecPicBufMgr?: AnyPointer;
+    pScalingLists?: AnyPointer;
+    pShortTermRefPicSet?: AnyPointer;
+    pLongTermRefPicsSps?: AnyPointer;
+    pSequenceParameterSetVui?: AnyPointer;
+    pPredictorPaletteEntries?: AnyPointer;
   }) {
     const s = StdVideoH265SequenceParameterSet.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -12724,56 +12741,56 @@ export class StdVideoH265SequenceParameterSet implements IVkStructure {
     return this.#view.getBigUint64(176, LE);
   }
   
-  set pProfileTierLevel(value: Deno.PointerValue) {
-    this.#view.setBigUint64(176, BigInt(value), LE);
+  set pProfileTierLevel(value: AnyPointer) {
+    this.#view.setBigUint64(176, BigInt(anyPointer(value)), LE);
   }
   
   get pDecPicBufMgr() {
     return this.#view.getBigUint64(184, LE);
   }
   
-  set pDecPicBufMgr(value: Deno.PointerValue) {
-    this.#view.setBigUint64(184, BigInt(value), LE);
+  set pDecPicBufMgr(value: AnyPointer) {
+    this.#view.setBigUint64(184, BigInt(anyPointer(value)), LE);
   }
   
   get pScalingLists() {
     return this.#view.getBigUint64(192, LE);
   }
   
-  set pScalingLists(value: Deno.PointerValue) {
-    this.#view.setBigUint64(192, BigInt(value), LE);
+  set pScalingLists(value: AnyPointer) {
+    this.#view.setBigUint64(192, BigInt(anyPointer(value)), LE);
   }
   
   get pShortTermRefPicSet() {
     return this.#view.getBigUint64(200, LE);
   }
   
-  set pShortTermRefPicSet(value: Deno.PointerValue) {
-    this.#view.setBigUint64(200, BigInt(value), LE);
+  set pShortTermRefPicSet(value: AnyPointer) {
+    this.#view.setBigUint64(200, BigInt(anyPointer(value)), LE);
   }
   
   get pLongTermRefPicsSps() {
     return this.#view.getBigUint64(208, LE);
   }
   
-  set pLongTermRefPicsSps(value: Deno.PointerValue) {
-    this.#view.setBigUint64(208, BigInt(value), LE);
+  set pLongTermRefPicsSps(value: AnyPointer) {
+    this.#view.setBigUint64(208, BigInt(anyPointer(value)), LE);
   }
   
   get pSequenceParameterSetVui() {
     return this.#view.getBigUint64(216, LE);
   }
   
-  set pSequenceParameterSetVui(value: Deno.PointerValue) {
-    this.#view.setBigUint64(216, BigInt(value), LE);
+  set pSequenceParameterSetVui(value: AnyPointer) {
+    this.#view.setBigUint64(216, BigInt(anyPointer(value)), LE);
   }
   
   get pPredictorPaletteEntries() {
     return this.#view.getBigUint64(224, LE);
   }
   
-  set pPredictorPaletteEntries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(224, BigInt(value), LE);
+  set pPredictorPaletteEntries(value: AnyPointer) {
+    this.#view.setBigUint64(224, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -13171,8 +13188,8 @@ export class StdVideoH265PictureParameterSet implements IVkStructure {
     column_width_minus1?: number[];
     row_height_minus1?: number[];
     reserved3?: number;
-    pScalingLists?: Deno.PointerValue;
-    pPredictorPaletteEntries?: Deno.PointerValue;
+    pScalingLists?: AnyPointer;
+    pPredictorPaletteEntries?: AnyPointer;
   }) {
     const s = StdVideoH265PictureParameterSet.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -13525,16 +13542,16 @@ export class StdVideoH265PictureParameterSet implements IVkStructure {
     return this.#view.getBigUint64(248, LE);
   }
   
-  set pScalingLists(value: Deno.PointerValue) {
-    this.#view.setBigUint64(248, BigInt(value), LE);
+  set pScalingLists(value: AnyPointer) {
+    this.#view.setBigUint64(248, BigInt(anyPointer(value)), LE);
   }
   
   get pPredictorPaletteEntries() {
     return this.#view.getBigUint64(256, LE);
   }
   
-  set pPredictorPaletteEntries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(256, BigInt(value), LE);
+  set pPredictorPaletteEntries(value: AnyPointer) {
+    this.#view.setBigUint64(256, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -14498,9 +14515,9 @@ export class StdVideoEncodeH265SliceSegmentHeader implements IVkStructure {
     slice_act_y_qp_offset?: number;
     slice_act_cb_qp_offset?: number;
     slice_act_cr_qp_offset?: number;
-    pShortTermRefPicSet?: Deno.PointerValue;
-    pLongTermRefPics?: Deno.PointerValue;
-    pWeightTable?: Deno.PointerValue;
+    pShortTermRefPicSet?: AnyPointer;
+    pLongTermRefPics?: AnyPointer;
+    pWeightTable?: AnyPointer;
   }) {
     const s = StdVideoEncodeH265SliceSegmentHeader.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -14651,24 +14668,24 @@ export class StdVideoEncodeH265SliceSegmentHeader implements IVkStructure {
     return this.#view.getBigUint64(88, LE);
   }
   
-  set pShortTermRefPicSet(value: Deno.PointerValue) {
-    this.#view.setBigUint64(88, BigInt(value), LE);
+  set pShortTermRefPicSet(value: AnyPointer) {
+    this.#view.setBigUint64(88, BigInt(anyPointer(value)), LE);
   }
   
   get pLongTermRefPics() {
     return this.#view.getBigUint64(96, LE);
   }
   
-  set pLongTermRefPics(value: Deno.PointerValue) {
-    this.#view.setBigUint64(96, BigInt(value), LE);
+  set pLongTermRefPics(value: AnyPointer) {
+    this.#view.setBigUint64(96, BigInt(anyPointer(value)), LE);
   }
   
   get pWeightTable() {
     return this.#view.getBigUint64(104, LE);
   }
   
-  set pWeightTable(value: Deno.PointerValue) {
-    this.#view.setBigUint64(104, BigInt(value), LE);
+  set pWeightTable(value: AnyPointer) {
+    this.#view.setBigUint64(104, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -14744,9 +14761,9 @@ export class StdVideoEncodeH265ReferenceModifications implements IVkStructure {
   static create(data: {
     flags?: StdVideoEncodeH265ReferenceModificationFlags;
     referenceList0ModificationsCount?: number;
-    pReferenceList0Modifications?: Deno.PointerValue;
+    pReferenceList0Modifications?: AnyPointer;
     referenceList1ModificationsCount?: number;
-    pReferenceList1Modifications?: Deno.PointerValue;
+    pReferenceList1Modifications?: AnyPointer;
   }) {
     const s = StdVideoEncodeH265ReferenceModifications.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -14780,8 +14797,8 @@ export class StdVideoEncodeH265ReferenceModifications implements IVkStructure {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pReferenceList0Modifications(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pReferenceList0Modifications(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get referenceList1ModificationsCount() {
@@ -14796,8 +14813,8 @@ export class StdVideoEncodeH265ReferenceModifications implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pReferenceList1Modifications(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pReferenceList1Modifications(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -15112,7 +15129,7 @@ export class VkBaseOutStructure implements IVkStructure {
   
   static create(data: {
     sType?: VkStructureType;
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
   }) {
     const s = VkBaseOutStructure.alloc();
     if (data.sType !== undefined) s.sType = data.sType;
@@ -15132,8 +15149,8 @@ export class VkBaseOutStructure implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -15160,7 +15177,7 @@ export class VkBaseInStructure implements IVkStructure {
   
   static create(data: {
     sType?: VkStructureType;
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
   }) {
     const s = VkBaseInStructure.alloc();
     if (data.sType !== undefined) s.sType = data.sType;
@@ -15180,8 +15197,8 @@ export class VkBaseInStructure implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -15970,10 +15987,10 @@ export class VkApplicationInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pApplicationName?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pApplicationName?: AnyPointer;
     applicationVersion?: number;
-    pEngineName?: Deno.PointerValue;
+    pEngineName?: AnyPointer;
     engineVersion?: number;
     apiVersion?: number;
   }) {
@@ -16000,16 +16017,16 @@ export class VkApplicationInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pApplicationName() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pApplicationName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pApplicationName(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get applicationVersion() {
@@ -16024,8 +16041,8 @@ export class VkApplicationInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pEngineName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pEngineName(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get engineVersion() {
@@ -16067,7 +16084,7 @@ export class VkAllocationCallbacks implements IVkStructure {
   }
   
   static create(data: {
-    pUserData?: Deno.PointerValue;
+    pUserData?: AnyPointer;
     pfnAllocation?: Deno.PointerValue;
     pfnReallocation?: Deno.PointerValue;
     pfnFree?: Deno.PointerValue;
@@ -16088,8 +16105,8 @@ export class VkAllocationCallbacks implements IVkStructure {
     return this.#view.getBigUint64(0, LE);
   }
   
-  set pUserData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+  set pUserData(value: AnyPointer) {
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get pfnAllocation() {
@@ -16155,11 +16172,11 @@ export class VkDeviceQueueCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDeviceQueueCreateFlags;
     queueFamilyIndex?: number;
     queueCount?: number;
-    pQueuePriorities?: Deno.PointerValue;
+    pQueuePriorities?: AnyPointer;
   }) {
     const s = VkDeviceQueueCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
@@ -16183,8 +16200,8 @@ export class VkDeviceQueueCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -16215,8 +16232,8 @@ export class VkDeviceQueueCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pQueuePriorities(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pQueuePriorities(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -16242,15 +16259,15 @@ export class VkDeviceCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDeviceCreateFlags;
     queueCreateInfoCount?: number;
-    pQueueCreateInfos?: Deno.PointerValue;
+    pQueueCreateInfos?: AnyPointer;
     enabledLayerCount?: number;
-    ppEnabledLayerNames?: Deno.PointerValue;
+    ppEnabledLayerNames?: AnyPointer;
     enabledExtensionCount?: number;
-    ppEnabledExtensionNames?: Deno.PointerValue;
-    pEnabledFeatures?: Deno.PointerValue;
+    ppEnabledExtensionNames?: AnyPointer;
+    pEnabledFeatures?: AnyPointer;
   }) {
     const s = VkDeviceCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
@@ -16278,8 +16295,8 @@ export class VkDeviceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -16302,8 +16319,8 @@ export class VkDeviceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pQueueCreateInfos(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pQueueCreateInfos(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get enabledLayerCount() {
@@ -16318,8 +16335,8 @@ export class VkDeviceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set ppEnabledLayerNames(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set ppEnabledLayerNames(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get enabledExtensionCount() {
@@ -16334,16 +16351,16 @@ export class VkDeviceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set ppEnabledExtensionNames(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set ppEnabledExtensionNames(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get pEnabledFeatures() {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pEnabledFeatures(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pEnabledFeatures(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -16369,13 +16386,13 @@ export class VkInstanceCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkInstanceCreateFlags;
-    pApplicationInfo?: Deno.PointerValue;
+    pApplicationInfo?: AnyPointer;
     enabledLayerCount?: number;
-    ppEnabledLayerNames?: Deno.PointerValue;
+    ppEnabledLayerNames?: AnyPointer;
     enabledExtensionCount?: number;
-    ppEnabledExtensionNames?: Deno.PointerValue;
+    ppEnabledExtensionNames?: AnyPointer;
   }) {
     const s = VkInstanceCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
@@ -16401,8 +16418,8 @@ export class VkInstanceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -16417,8 +16434,8 @@ export class VkInstanceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pApplicationInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pApplicationInfo(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get enabledLayerCount() {
@@ -16433,8 +16450,8 @@ export class VkInstanceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set ppEnabledLayerNames(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set ppEnabledLayerNames(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get enabledExtensionCount() {
@@ -16449,8 +16466,8 @@ export class VkInstanceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set ppEnabledExtensionNames(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set ppEnabledExtensionNames(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -16637,7 +16654,7 @@ export class VkMemoryAllocateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     allocationSize?: VkDeviceSize;
     memoryTypeIndex?: number;
   }) {
@@ -16661,8 +16678,8 @@ export class VkMemoryAllocateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get allocationSize() {
@@ -17000,7 +17017,7 @@ export class VkMappedMemoryRange implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memory?: VkDeviceMemory;
     offset?: VkDeviceSize;
     size?: VkDeviceSize;
@@ -17026,8 +17043,8 @@ export class VkMappedMemoryRange implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -17035,7 +17052,7 @@ export class VkMappedMemoryRange implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get offset() {
@@ -17232,7 +17249,7 @@ export class VkDescriptorBufferInfo implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get offset() {
@@ -17290,7 +17307,7 @@ export class VkDescriptorImageInfo implements IVkStructure {
   }
   
   set sampler(value: VkSampler) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get imageView() {
@@ -17298,7 +17315,7 @@ export class VkDescriptorImageInfo implements IVkStructure {
   }
   
   set imageView(value: VkImageView) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageLayout() {
@@ -17332,15 +17349,15 @@ export class VkWriteDescriptorSet implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     dstSet?: VkDescriptorSet;
     dstBinding?: number;
     dstArrayElement?: number;
     descriptorCount?: number;
     descriptorType?: VkDescriptorType;
-    pImageInfo?: Deno.PointerValue;
-    pBufferInfo?: Deno.PointerValue;
-    pTexelBufferView?: Deno.PointerValue;
+    pImageInfo?: AnyPointer;
+    pBufferInfo?: AnyPointer;
+    pTexelBufferView?: AnyPointer;
   }) {
     const s = VkWriteDescriptorSet.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
@@ -17368,8 +17385,8 @@ export class VkWriteDescriptorSet implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dstSet() {
@@ -17377,7 +17394,7 @@ export class VkWriteDescriptorSet implements IVkStructure {
   }
   
   set dstSet(value: VkDescriptorSet) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dstBinding() {
@@ -17416,24 +17433,24 @@ export class VkWriteDescriptorSet implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pImageInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pImageInfo(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get pBufferInfo() {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pBufferInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pBufferInfo(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get pTexelBufferView() {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pTexelBufferView(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pTexelBufferView(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -17459,7 +17476,7 @@ export class VkCopyDescriptorSet implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcSet?: VkDescriptorSet;
     srcBinding?: number;
     srcArrayElement?: number;
@@ -17493,8 +17510,8 @@ export class VkCopyDescriptorSet implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcSet() {
@@ -17502,7 +17519,7 @@ export class VkCopyDescriptorSet implements IVkStructure {
   }
   
   set srcSet(value: VkDescriptorSet) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get srcBinding() {
@@ -17526,7 +17543,7 @@ export class VkCopyDescriptorSet implements IVkStructure {
   }
   
   set dstSet(value: VkDescriptorSet) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get dstBinding() {
@@ -17576,13 +17593,13 @@ export class VkBufferCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkBufferCreateFlags;
     size?: VkDeviceSize;
     usage?: VkBufferUsageFlags;
     sharingMode?: VkSharingMode;
     queueFamilyIndexCount?: number;
-    pQueueFamilyIndices?: Deno.PointerValue;
+    pQueueFamilyIndices?: AnyPointer;
   }) {
     const s = VkBufferCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -17608,8 +17625,8 @@ export class VkBufferCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -17656,8 +17673,8 @@ export class VkBufferCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pQueueFamilyIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pQueueFamilyIndices(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -17683,7 +17700,7 @@ export class VkBufferViewCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkBufferViewCreateFlags;
     buffer?: VkBuffer;
     format?: VkFormat;
@@ -17713,8 +17730,8 @@ export class VkBufferViewCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -17730,7 +17747,7 @@ export class VkBufferViewCreateInfo implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get format() {
@@ -17984,7 +18001,7 @@ export class VkMemoryBarrier implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcAccessMask?: VkAccessFlags;
     dstAccessMask?: VkAccessFlags;
   }) {
@@ -18008,8 +18025,8 @@ export class VkMemoryBarrier implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcAccessMask() {
@@ -18051,7 +18068,7 @@ export class VkBufferMemoryBarrier implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcAccessMask?: VkAccessFlags;
     dstAccessMask?: VkAccessFlags;
     srcQueueFamilyIndex?: number;
@@ -18085,8 +18102,8 @@ export class VkBufferMemoryBarrier implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcAccessMask() {
@@ -18126,7 +18143,7 @@ export class VkBufferMemoryBarrier implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get offset() {
@@ -18168,7 +18185,7 @@ export class VkImageMemoryBarrier implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcAccessMask?: VkAccessFlags;
     dstAccessMask?: VkAccessFlags;
     oldLayout?: VkImageLayout;
@@ -18204,8 +18221,8 @@ export class VkImageMemoryBarrier implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcAccessMask() {
@@ -18261,7 +18278,7 @@ export class VkImageMemoryBarrier implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get subresourceRange() {
@@ -18298,7 +18315,7 @@ export class VkImageCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkImageCreateFlags;
     imageType?: VkImageType;
     format?: VkFormat;
@@ -18310,7 +18327,7 @@ export class VkImageCreateInfo implements IVkStructure {
     usage?: VkImageUsageFlags;
     sharingMode?: VkSharingMode;
     queueFamilyIndexCount?: number;
-    pQueueFamilyIndices?: Deno.PointerValue;
+    pQueueFamilyIndices?: AnyPointer;
     initialLayout?: VkImageLayout;
   }) {
     const s = VkImageCreateInfo.alloc();
@@ -18344,8 +18361,8 @@ export class VkImageCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -18443,8 +18460,8 @@ export class VkImageCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(72, LE);
   }
   
-  set pQueueFamilyIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+  set pQueueFamilyIndices(value: AnyPointer) {
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
   
   get initialLayout() {
@@ -18556,7 +18573,7 @@ export class VkImageViewCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkImageViewCreateFlags;
     image?: VkImage;
     viewType?: VkImageViewType;
@@ -18588,8 +18605,8 @@ export class VkImageViewCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -18605,7 +18622,7 @@ export class VkImageViewCreateInfo implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get viewType() {
@@ -18763,7 +18780,7 @@ export class VkSparseMemoryBind implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get memoryOffset() {
@@ -18860,7 +18877,7 @@ export class VkSparseImageMemoryBind implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get memoryOffset() {
@@ -18904,7 +18921,7 @@ export class VkSparseBufferMemoryBindInfo implements IVkStructure {
   static create(data: {
     buffer?: VkBuffer;
     bindCount?: number;
-    pBinds?: Deno.PointerValue;
+    pBinds?: AnyPointer;
   }) {
     const s = VkSparseBufferMemoryBindInfo.alloc();
     if (data.buffer !== undefined) s.buffer = data.buffer;
@@ -18918,7 +18935,7 @@ export class VkSparseBufferMemoryBindInfo implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get bindCount() {
@@ -18933,8 +18950,8 @@ export class VkSparseBufferMemoryBindInfo implements IVkStructure {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pBinds(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pBinds(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -18962,7 +18979,7 @@ export class VkSparseImageOpaqueMemoryBindInfo implements IVkStructure {
   static create(data: {
     image?: VkImage;
     bindCount?: number;
-    pBinds?: Deno.PointerValue;
+    pBinds?: AnyPointer;
   }) {
     const s = VkSparseImageOpaqueMemoryBindInfo.alloc();
     if (data.image !== undefined) s.image = data.image;
@@ -18976,7 +18993,7 @@ export class VkSparseImageOpaqueMemoryBindInfo implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get bindCount() {
@@ -18991,8 +19008,8 @@ export class VkSparseImageOpaqueMemoryBindInfo implements IVkStructure {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pBinds(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pBinds(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -19020,7 +19037,7 @@ export class VkSparseImageMemoryBindInfo implements IVkStructure {
   static create(data: {
     image?: VkImage;
     bindCount?: number;
-    pBinds?: Deno.PointerValue;
+    pBinds?: AnyPointer;
   }) {
     const s = VkSparseImageMemoryBindInfo.alloc();
     if (data.image !== undefined) s.image = data.image;
@@ -19034,7 +19051,7 @@ export class VkSparseImageMemoryBindInfo implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get bindCount() {
@@ -19049,8 +19066,8 @@ export class VkSparseImageMemoryBindInfo implements IVkStructure {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pBinds(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pBinds(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -19076,17 +19093,17 @@ export class VkBindSparseInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     waitSemaphoreCount?: number;
-    pWaitSemaphores?: Deno.PointerValue;
+    pWaitSemaphores?: AnyPointer;
     bufferBindCount?: number;
-    pBufferBinds?: Deno.PointerValue;
+    pBufferBinds?: AnyPointer;
     imageOpaqueBindCount?: number;
-    pImageOpaqueBinds?: Deno.PointerValue;
+    pImageOpaqueBinds?: AnyPointer;
     imageBindCount?: number;
-    pImageBinds?: Deno.PointerValue;
+    pImageBinds?: AnyPointer;
     signalSemaphoreCount?: number;
-    pSignalSemaphores?: Deno.PointerValue;
+    pSignalSemaphores?: AnyPointer;
   }) {
     const s = VkBindSparseInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_BIND_SPARSE_INFO;
@@ -19116,8 +19133,8 @@ export class VkBindSparseInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get waitSemaphoreCount() {
@@ -19132,8 +19149,8 @@ export class VkBindSparseInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pWaitSemaphores(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pWaitSemaphores(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get bufferBindCount() {
@@ -19148,8 +19165,8 @@ export class VkBindSparseInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pBufferBinds(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pBufferBinds(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get imageOpaqueBindCount() {
@@ -19164,8 +19181,8 @@ export class VkBindSparseInfo implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pImageOpaqueBinds(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pImageOpaqueBinds(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get imageBindCount() {
@@ -19180,8 +19197,8 @@ export class VkBindSparseInfo implements IVkStructure {
     return this.#view.getBigUint64(72, LE);
   }
   
-  set pImageBinds(value: Deno.PointerValue) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+  set pImageBinds(value: AnyPointer) {
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
   
   get signalSemaphoreCount() {
@@ -19196,8 +19213,8 @@ export class VkBindSparseInfo implements IVkStructure {
     return this.#view.getBigUint64(88, LE);
   }
   
-  set pSignalSemaphores(value: Deno.PointerValue) {
-    this.#view.setBigUint64(88, BigInt(value), LE);
+  set pSignalSemaphores(value: AnyPointer) {
+    this.#view.setBigUint64(88, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -19757,10 +19774,10 @@ export class VkShaderModuleCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkShaderModuleCreateFlags;
     codeSize?: Deno.PointerValue;
-    pCode?: Deno.PointerValue;
+    pCode?: AnyPointer;
   }) {
     const s = VkShaderModuleCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -19783,8 +19800,8 @@ export class VkShaderModuleCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -19807,8 +19824,8 @@ export class VkShaderModuleCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pCode(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pCode(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -19838,7 +19855,7 @@ export class VkDescriptorSetLayoutBinding implements IVkStructure {
     descriptorType?: VkDescriptorType;
     descriptorCount?: number;
     stageFlags?: VkShaderStageFlags;
-    pImmutableSamplers?: Deno.PointerValue;
+    pImmutableSamplers?: AnyPointer;
   }) {
     const s = VkDescriptorSetLayoutBinding.alloc();
     if (data.binding !== undefined) s.binding = data.binding;
@@ -19885,8 +19902,8 @@ export class VkDescriptorSetLayoutBinding implements IVkStructure {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pImmutableSamplers(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pImmutableSamplers(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -19912,10 +19929,10 @@ export class VkDescriptorSetLayoutCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDescriptorSetLayoutCreateFlags;
     bindingCount?: number;
-    pBindings?: Deno.PointerValue;
+    pBindings?: AnyPointer;
   }) {
     const s = VkDescriptorSetLayoutCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
@@ -19938,8 +19955,8 @@ export class VkDescriptorSetLayoutCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -19962,8 +19979,8 @@ export class VkDescriptorSetLayoutCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pBindings(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pBindings(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -20037,11 +20054,11 @@ export class VkDescriptorPoolCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDescriptorPoolCreateFlags;
     maxSets?: number;
     poolSizeCount?: number;
-    pPoolSizes?: Deno.PointerValue;
+    pPoolSizes?: AnyPointer;
   }) {
     const s = VkDescriptorPoolCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
@@ -20065,8 +20082,8 @@ export class VkDescriptorPoolCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -20097,8 +20114,8 @@ export class VkDescriptorPoolCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pPoolSizes(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pPoolSizes(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -20124,10 +20141,10 @@ export class VkDescriptorSetAllocateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     descriptorPool?: VkDescriptorPool;
     descriptorSetCount?: number;
-    pSetLayouts?: Deno.PointerValue;
+    pSetLayouts?: AnyPointer;
   }) {
     const s = VkDescriptorSetAllocateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
@@ -20150,8 +20167,8 @@ export class VkDescriptorSetAllocateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get descriptorPool() {
@@ -20159,7 +20176,7 @@ export class VkDescriptorSetAllocateInfo implements IVkStructure {
   }
   
   set descriptorPool(value: VkDescriptorPool) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get descriptorSetCount() {
@@ -20174,8 +20191,8 @@ export class VkDescriptorSetAllocateInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pSetLayouts(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pSetLayouts(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -20260,9 +20277,9 @@ export class VkSpecializationInfo implements IVkStructure {
   
   static create(data: {
     mapEntryCount?: number;
-    pMapEntries?: Deno.PointerValue;
+    pMapEntries?: AnyPointer;
     dataSize?: Deno.PointerValue;
-    pData?: Deno.PointerValue;
+    pData?: AnyPointer;
   }) {
     const s = VkSpecializationInfo.alloc();
     if (data.mapEntryCount !== undefined) s.mapEntryCount = data.mapEntryCount;
@@ -20284,8 +20301,8 @@ export class VkSpecializationInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pMapEntries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pMapEntries(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dataSize() {
@@ -20300,8 +20317,8 @@ export class VkSpecializationInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pData(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -20327,12 +20344,12 @@ export class VkPipelineShaderStageCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineShaderStageCreateFlags;
     stage?: VkShaderStageFlagBits;
     module?: VkShaderModule;
-    pName?: Deno.PointerValue;
-    pSpecializationInfo?: Deno.PointerValue;
+    pName?: AnyPointer;
+    pSpecializationInfo?: AnyPointer;
   }) {
     const s = VkPipelineShaderStageCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -20357,8 +20374,8 @@ export class VkPipelineShaderStageCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -20382,23 +20399,23 @@ export class VkPipelineShaderStageCreateInfo implements IVkStructure {
   }
   
   set module(value: VkShaderModule) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pName() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pName(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get pSpecializationInfo() {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pSpecializationInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pSpecializationInfo(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -20424,7 +20441,7 @@ export class VkComputePipelineCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineCreateFlags;
     stage?: VkPipelineShaderStageCreateInfo;
     layout?: VkPipelineLayout;
@@ -20454,8 +20471,8 @@ export class VkComputePipelineCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -20482,7 +20499,7 @@ export class VkComputePipelineCreateInfo implements IVkStructure {
   }
   
   set layout(value: VkPipelineLayout) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
   
   get basePipelineHandle() {
@@ -20490,7 +20507,7 @@ export class VkComputePipelineCreateInfo implements IVkStructure {
   }
   
   set basePipelineHandle(value: VkPipeline) {
-    this.#view.setBigUint64(80, BigInt(value), LE);
+    this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
   
   get basePipelineIndex() {
@@ -20650,12 +20667,12 @@ export class VkPipelineVertexInputStateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineVertexInputStateCreateFlags;
     vertexBindingDescriptionCount?: number;
-    pVertexBindingDescriptions?: Deno.PointerValue;
+    pVertexBindingDescriptions?: AnyPointer;
     vertexAttributeDescriptionCount?: number;
-    pVertexAttributeDescriptions?: Deno.PointerValue;
+    pVertexAttributeDescriptions?: AnyPointer;
   }) {
     const s = VkPipelineVertexInputStateCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -20680,8 +20697,8 @@ export class VkPipelineVertexInputStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -20704,8 +20721,8 @@ export class VkPipelineVertexInputStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pVertexBindingDescriptions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pVertexBindingDescriptions(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get vertexAttributeDescriptionCount() {
@@ -20720,8 +20737,8 @@ export class VkPipelineVertexInputStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pVertexAttributeDescriptions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pVertexAttributeDescriptions(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -20747,7 +20764,7 @@ export class VkPipelineInputAssemblyStateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineInputAssemblyStateCreateFlags;
     topology?: VkPrimitiveTopology;
     primitiveRestartEnable?: VkBool32;
@@ -20773,8 +20790,8 @@ export class VkPipelineInputAssemblyStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -20824,7 +20841,7 @@ export class VkPipelineTessellationStateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineTessellationStateCreateFlags;
     patchControlPoints?: number;
   }) {
@@ -20848,8 +20865,8 @@ export class VkPipelineTessellationStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -20891,12 +20908,12 @@ export class VkPipelineViewportStateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineViewportStateCreateFlags;
     viewportCount?: number;
-    pViewports?: Deno.PointerValue;
+    pViewports?: AnyPointer;
     scissorCount?: number;
-    pScissors?: Deno.PointerValue;
+    pScissors?: AnyPointer;
   }) {
     const s = VkPipelineViewportStateCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -20921,8 +20938,8 @@ export class VkPipelineViewportStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -20945,8 +20962,8 @@ export class VkPipelineViewportStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pViewports(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pViewports(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get scissorCount() {
@@ -20961,8 +20978,8 @@ export class VkPipelineViewportStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pScissors(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pScissors(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -20988,7 +21005,7 @@ export class VkPipelineRasterizationStateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineRasterizationStateCreateFlags;
     depthClampEnable?: VkBool32;
     rasterizerDiscardEnable?: VkBool32;
@@ -21030,8 +21047,8 @@ export class VkPipelineRasterizationStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -21145,12 +21162,12 @@ export class VkPipelineMultisampleStateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineMultisampleStateCreateFlags;
     rasterizationSamples?: VkSampleCountFlagBits;
     sampleShadingEnable?: VkBool32;
     minSampleShading?: number;
-    pSampleMask?: Deno.PointerValue;
+    pSampleMask?: AnyPointer;
     alphaToCoverageEnable?: VkBool32;
     alphaToOneEnable?: VkBool32;
   }) {
@@ -21179,8 +21196,8 @@ export class VkPipelineMultisampleStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -21219,8 +21236,8 @@ export class VkPipelineMultisampleStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pSampleMask(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pSampleMask(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get alphaToCoverageEnable() {
@@ -21370,12 +21387,12 @@ export class VkPipelineColorBlendStateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineColorBlendStateCreateFlags;
     logicOpEnable?: VkBool32;
     logicOp?: VkLogicOp;
     attachmentCount?: number;
-    pAttachments?: Deno.PointerValue;
+    pAttachments?: AnyPointer;
     blendConstants?: number[];
   }) {
     const s = VkPipelineColorBlendStateCreateInfo.alloc();
@@ -21402,8 +21419,8 @@ export class VkPipelineColorBlendStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -21442,8 +21459,8 @@ export class VkPipelineColorBlendStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get blendConstants() {
@@ -21485,10 +21502,10 @@ export class VkPipelineDynamicStateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineDynamicStateCreateFlags;
     dynamicStateCount?: number;
-    pDynamicStates?: Deno.PointerValue;
+    pDynamicStates?: AnyPointer;
   }) {
     const s = VkPipelineDynamicStateCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
@@ -21511,8 +21528,8 @@ export class VkPipelineDynamicStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -21535,8 +21552,8 @@ export class VkPipelineDynamicStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDynamicStates(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDynamicStates(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -21660,7 +21677,7 @@ export class VkPipelineDepthStencilStateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineDepthStencilStateCreateFlags;
     depthTestEnable?: VkBool32;
     depthWriteEnable?: VkBool32;
@@ -21700,8 +21717,8 @@ export class VkPipelineDepthStencilStateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -21813,19 +21830,19 @@ export class VkGraphicsPipelineCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineCreateFlags;
     stageCount?: number;
-    pStages?: Deno.PointerValue;
-    pVertexInputState?: Deno.PointerValue;
-    pInputAssemblyState?: Deno.PointerValue;
-    pTessellationState?: Deno.PointerValue;
-    pViewportState?: Deno.PointerValue;
-    pRasterizationState?: Deno.PointerValue;
-    pMultisampleState?: Deno.PointerValue;
-    pDepthStencilState?: Deno.PointerValue;
-    pColorBlendState?: Deno.PointerValue;
-    pDynamicState?: Deno.PointerValue;
+    pStages?: AnyPointer;
+    pVertexInputState?: AnyPointer;
+    pInputAssemblyState?: AnyPointer;
+    pTessellationState?: AnyPointer;
+    pViewportState?: AnyPointer;
+    pRasterizationState?: AnyPointer;
+    pMultisampleState?: AnyPointer;
+    pDepthStencilState?: AnyPointer;
+    pColorBlendState?: AnyPointer;
+    pDynamicState?: AnyPointer;
     layout?: VkPipelineLayout;
     renderPass?: VkRenderPass;
     subpass?: number;
@@ -21867,8 +21884,8 @@ export class VkGraphicsPipelineCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -21891,80 +21908,80 @@ export class VkGraphicsPipelineCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStages(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStages(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pVertexInputState() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pVertexInputState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pVertexInputState(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get pInputAssemblyState() {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pInputAssemblyState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pInputAssemblyState(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get pTessellationState() {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pTessellationState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pTessellationState(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get pViewportState() {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pViewportState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pViewportState(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get pRasterizationState() {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pRasterizationState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pRasterizationState(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
   
   get pMultisampleState() {
     return this.#view.getBigUint64(72, LE);
   }
   
-  set pMultisampleState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+  set pMultisampleState(value: AnyPointer) {
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
   
   get pDepthStencilState() {
     return this.#view.getBigUint64(80, LE);
   }
   
-  set pDepthStencilState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(80, BigInt(value), LE);
+  set pDepthStencilState(value: AnyPointer) {
+    this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
   
   get pColorBlendState() {
     return this.#view.getBigUint64(88, LE);
   }
   
-  set pColorBlendState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(88, BigInt(value), LE);
+  set pColorBlendState(value: AnyPointer) {
+    this.#view.setBigUint64(88, BigInt(anyPointer(value)), LE);
   }
   
   get pDynamicState() {
     return this.#view.getBigUint64(96, LE);
   }
   
-  set pDynamicState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(96, BigInt(value), LE);
+  set pDynamicState(value: AnyPointer) {
+    this.#view.setBigUint64(96, BigInt(anyPointer(value)), LE);
   }
   
   get layout() {
@@ -21972,7 +21989,7 @@ export class VkGraphicsPipelineCreateInfo implements IVkStructure {
   }
   
   set layout(value: VkPipelineLayout) {
-    this.#view.setBigUint64(104, BigInt(value), LE);
+    this.#view.setBigUint64(104, BigInt(anyPointer(value)), LE);
   }
   
   get renderPass() {
@@ -21980,7 +21997,7 @@ export class VkGraphicsPipelineCreateInfo implements IVkStructure {
   }
   
   set renderPass(value: VkRenderPass) {
-    this.#view.setBigUint64(112, BigInt(value), LE);
+    this.#view.setBigUint64(112, BigInt(anyPointer(value)), LE);
   }
   
   get subpass() {
@@ -21996,7 +22013,7 @@ export class VkGraphicsPipelineCreateInfo implements IVkStructure {
   }
   
   set basePipelineHandle(value: VkPipeline) {
-    this.#view.setBigUint64(128, BigInt(value), LE);
+    this.#view.setBigUint64(128, BigInt(anyPointer(value)), LE);
   }
   
   get basePipelineIndex() {
@@ -22030,10 +22047,10 @@ export class VkPipelineCacheCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineCacheCreateFlags;
     initialDataSize?: Deno.PointerValue;
-    pInitialData?: Deno.PointerValue;
+    pInitialData?: AnyPointer;
   }) {
     const s = VkPipelineCacheCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
@@ -22056,8 +22073,8 @@ export class VkPipelineCacheCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -22080,8 +22097,8 @@ export class VkPipelineCacheCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pInitialData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pInitialData(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -22251,12 +22268,12 @@ export class VkPipelineLayoutCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineLayoutCreateFlags;
     setLayoutCount?: number;
-    pSetLayouts?: Deno.PointerValue;
+    pSetLayouts?: AnyPointer;
     pushConstantRangeCount?: number;
-    pPushConstantRanges?: Deno.PointerValue;
+    pPushConstantRanges?: AnyPointer;
   }) {
     const s = VkPipelineLayoutCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -22281,8 +22298,8 @@ export class VkPipelineLayoutCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -22305,8 +22322,8 @@ export class VkPipelineLayoutCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pSetLayouts(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pSetLayouts(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pushConstantRangeCount() {
@@ -22321,8 +22338,8 @@ export class VkPipelineLayoutCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pPushConstantRanges(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pPushConstantRanges(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -22348,7 +22365,7 @@ export class VkSamplerCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkSamplerCreateFlags;
     magFilter?: VkFilter;
     minFilter?: VkFilter;
@@ -22400,8 +22417,8 @@ export class VkSamplerCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -22555,7 +22572,7 @@ export class VkCommandPoolCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkCommandPoolCreateFlags;
     queueFamilyIndex?: number;
   }) {
@@ -22579,8 +22596,8 @@ export class VkCommandPoolCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -22622,7 +22639,7 @@ export class VkCommandBufferAllocateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     commandPool?: VkCommandPool;
     level?: VkCommandBufferLevel;
     commandBufferCount?: number;
@@ -22648,8 +22665,8 @@ export class VkCommandBufferAllocateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get commandPool() {
@@ -22657,7 +22674,7 @@ export class VkCommandBufferAllocateInfo implements IVkStructure {
   }
   
   set commandPool(value: VkCommandPool) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get level() {
@@ -22699,7 +22716,7 @@ export class VkCommandBufferInheritanceInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     renderPass?: VkRenderPass;
     subpass?: number;
     framebuffer?: VkFramebuffer;
@@ -22731,8 +22748,8 @@ export class VkCommandBufferInheritanceInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get renderPass() {
@@ -22740,7 +22757,7 @@ export class VkCommandBufferInheritanceInfo implements IVkStructure {
   }
   
   set renderPass(value: VkRenderPass) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get subpass() {
@@ -22756,7 +22773,7 @@ export class VkCommandBufferInheritanceInfo implements IVkStructure {
   }
   
   set framebuffer(value: VkFramebuffer) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get occlusionQueryEnable() {
@@ -22806,9 +22823,9 @@ export class VkCommandBufferBeginInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkCommandBufferUsageFlags;
-    pInheritanceInfo?: Deno.PointerValue;
+    pInheritanceInfo?: AnyPointer;
   }) {
     const s = VkCommandBufferBeginInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -22830,8 +22847,8 @@ export class VkCommandBufferBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -22846,8 +22863,8 @@ export class VkCommandBufferBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pInheritanceInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pInheritanceInfo(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -22873,12 +22890,12 @@ export class VkRenderPassBeginInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     renderPass?: VkRenderPass;
     framebuffer?: VkFramebuffer;
     renderArea?: VkRect2D;
     clearValueCount?: number;
-    pClearValues?: Deno.PointerValue;
+    pClearValues?: AnyPointer;
   }) {
     const s = VkRenderPassBeginInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -22903,8 +22920,8 @@ export class VkRenderPassBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get renderPass() {
@@ -22912,7 +22929,7 @@ export class VkRenderPassBeginInfo implements IVkStructure {
   }
   
   set renderPass(value: VkRenderPass) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get framebuffer() {
@@ -22920,7 +22937,7 @@ export class VkRenderPassBeginInfo implements IVkStructure {
   }
   
   set framebuffer(value: VkFramebuffer) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get renderArea() {
@@ -22946,8 +22963,8 @@ export class VkRenderPassBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pClearValues(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pClearValues(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -23248,13 +23265,13 @@ export class VkSubpassDescription implements IVkStructure {
     flags?: VkSubpassDescriptionFlags;
     pipelineBindPoint?: VkPipelineBindPoint;
     inputAttachmentCount?: number;
-    pInputAttachments?: Deno.PointerValue;
+    pInputAttachments?: AnyPointer;
     colorAttachmentCount?: number;
-    pColorAttachments?: Deno.PointerValue;
-    pResolveAttachments?: Deno.PointerValue;
-    pDepthStencilAttachment?: Deno.PointerValue;
+    pColorAttachments?: AnyPointer;
+    pResolveAttachments?: AnyPointer;
+    pDepthStencilAttachment?: AnyPointer;
     preserveAttachmentCount?: number;
-    pPreserveAttachments?: Deno.PointerValue;
+    pPreserveAttachments?: AnyPointer;
   }) {
     const s = VkSubpassDescription.alloc();
     if (data.flags !== undefined) s.flags = data.flags;
@@ -23298,8 +23315,8 @@ export class VkSubpassDescription implements IVkStructure {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pInputAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pInputAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get colorAttachmentCount() {
@@ -23314,24 +23331,24 @@ export class VkSubpassDescription implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pColorAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pColorAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get pResolveAttachments() {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pResolveAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pResolveAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get pDepthStencilAttachment() {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pDepthStencilAttachment(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pDepthStencilAttachment(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get preserveAttachmentCount() {
@@ -23346,8 +23363,8 @@ export class VkSubpassDescription implements IVkStructure {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pPreserveAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pPreserveAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -23471,14 +23488,14 @@ export class VkRenderPassCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkRenderPassCreateFlags;
     attachmentCount?: number;
-    pAttachments?: Deno.PointerValue;
+    pAttachments?: AnyPointer;
     subpassCount?: number;
-    pSubpasses?: Deno.PointerValue;
+    pSubpasses?: AnyPointer;
     dependencyCount?: number;
-    pDependencies?: Deno.PointerValue;
+    pDependencies?: AnyPointer;
   }) {
     const s = VkRenderPassCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
@@ -23505,8 +23522,8 @@ export class VkRenderPassCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -23529,8 +23546,8 @@ export class VkRenderPassCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get subpassCount() {
@@ -23545,8 +23562,8 @@ export class VkRenderPassCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pSubpasses(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pSubpasses(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get dependencyCount() {
@@ -23561,8 +23578,8 @@ export class VkRenderPassCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pDependencies(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pDependencies(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -23588,7 +23605,7 @@ export class VkEventCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkEventCreateFlags;
   }) {
     const s = VkEventCreateInfo.alloc();
@@ -23610,8 +23627,8 @@ export class VkEventCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -23645,7 +23662,7 @@ export class VkFenceCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkFenceCreateFlags;
   }) {
     const s = VkFenceCreateInfo.alloc();
@@ -23667,8 +23684,8 @@ export class VkFenceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -25494,7 +25511,7 @@ export class VkSemaphoreCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkSemaphoreCreateFlags;
   }) {
     const s = VkSemaphoreCreateInfo.alloc();
@@ -25516,8 +25533,8 @@ export class VkSemaphoreCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -25551,7 +25568,7 @@ export class VkQueryPoolCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkQueryPoolCreateFlags;
     queryType?: VkQueryType;
     queryCount?: number;
@@ -25579,8 +25596,8 @@ export class VkQueryPoolCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -25638,11 +25655,11 @@ export class VkFramebufferCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkFramebufferCreateFlags;
     renderPass?: VkRenderPass;
     attachmentCount?: number;
-    pAttachments?: Deno.PointerValue;
+    pAttachments?: AnyPointer;
     width?: number;
     height?: number;
     layers?: number;
@@ -25672,8 +25689,8 @@ export class VkFramebufferCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -25689,7 +25706,7 @@ export class VkFramebufferCreateInfo implements IVkStructure {
   }
   
   set renderPass(value: VkRenderPass) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get attachmentCount() {
@@ -25704,8 +25721,8 @@ export class VkFramebufferCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get width() {
@@ -26065,14 +26082,14 @@ export class VkSubmitInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     waitSemaphoreCount?: number;
-    pWaitSemaphores?: Deno.PointerValue;
-    pWaitDstStageMask?: Deno.PointerValue;
+    pWaitSemaphores?: AnyPointer;
+    pWaitDstStageMask?: AnyPointer;
     commandBufferCount?: number;
-    pCommandBuffers?: Deno.PointerValue;
+    pCommandBuffers?: AnyPointer;
     signalSemaphoreCount?: number;
-    pSignalSemaphores?: Deno.PointerValue;
+    pSignalSemaphores?: AnyPointer;
   }) {
     const s = VkSubmitInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -26099,8 +26116,8 @@ export class VkSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get waitSemaphoreCount() {
@@ -26115,16 +26132,16 @@ export class VkSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pWaitSemaphores(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pWaitSemaphores(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pWaitDstStageMask() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pWaitDstStageMask(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pWaitDstStageMask(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get commandBufferCount() {
@@ -26139,8 +26156,8 @@ export class VkSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pCommandBuffers(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pCommandBuffers(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get signalSemaphoreCount() {
@@ -26155,8 +26172,8 @@ export class VkSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pSignalSemaphores(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pSignalSemaphores(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -26183,7 +26200,7 @@ export class VkDisplayPropertiesKHR implements IVkStructure {
   
   static create(data: {
     display?: VkDisplayKHR;
-    displayName?: Deno.PointerValue;
+    displayName?: AnyPointer;
     physicalDimensions?: VkExtent2D;
     physicalResolution?: VkExtent2D;
     supportedTransforms?: VkSurfaceTransformFlagsKHR;
@@ -26206,15 +26223,15 @@ export class VkDisplayPropertiesKHR implements IVkStructure {
   }
   
   set display(value: VkDisplayKHR) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get displayName() {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set displayName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set displayName(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get physicalDimensions() {
@@ -26300,7 +26317,7 @@ export class VkDisplayPlanePropertiesKHR implements IVkStructure {
   }
   
   set currentDisplay(value: VkDisplayKHR) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get currentStackIndex() {
@@ -26399,7 +26416,7 @@ export class VkDisplayModePropertiesKHR implements IVkStructure {
   }
   
   set displayMode(value: VkDisplayModeKHR) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get parameters() {
@@ -26436,7 +26453,7 @@ export class VkDisplayModeCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDisplayModeCreateFlagsKHR;
     parameters?: VkDisplayModeParametersKHR;
   }) {
@@ -26460,8 +26477,8 @@ export class VkDisplayModeCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -26648,7 +26665,7 @@ export class VkDisplaySurfaceCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDisplaySurfaceCreateFlagsKHR;
     displayMode?: VkDisplayModeKHR;
     planeIndex?: number;
@@ -26684,8 +26701,8 @@ export class VkDisplaySurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -26701,7 +26718,7 @@ export class VkDisplaySurfaceCreateInfoKHR implements IVkStructure {
   }
   
   set displayMode(value: VkDisplayModeKHR) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get planeIndex() {
@@ -26778,7 +26795,7 @@ export class VkDisplayPresentInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcRect?: VkRect2D;
     dstRect?: VkRect2D;
     persistent?: VkBool32;
@@ -26804,8 +26821,8 @@ export class VkDisplayPresentInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcRect() {
@@ -26998,9 +27015,9 @@ export class VkAndroidSurfaceCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkAndroidSurfaceCreateFlagsKHR;
-    window?: Deno.PointerValue;
+    window?: AnyPointer;
   }) {
     const s = VkAndroidSurfaceCreateInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR;
@@ -27022,8 +27039,8 @@ export class VkAndroidSurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27038,8 +27055,8 @@ export class VkAndroidSurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set window(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set window(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27065,9 +27082,9 @@ export class VkViSurfaceCreateInfoNN implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkViSurfaceCreateFlagsNN;
-    window?: Deno.PointerValue;
+    window?: AnyPointer;
   }) {
     const s = VkViSurfaceCreateInfoNN.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VI_SURFACE_CREATE_INFO_NN;
@@ -27089,8 +27106,8 @@ export class VkViSurfaceCreateInfoNN implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27105,8 +27122,8 @@ export class VkViSurfaceCreateInfoNN implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set window(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set window(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27132,10 +27149,10 @@ export class VkWaylandSurfaceCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkWaylandSurfaceCreateFlagsKHR;
-    display?: Deno.PointerValue;
-    surface?: Deno.PointerValue;
+    display?: AnyPointer;
+    surface?: AnyPointer;
   }) {
     const s = VkWaylandSurfaceCreateInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR;
@@ -27158,8 +27175,8 @@ export class VkWaylandSurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27174,16 +27191,16 @@ export class VkWaylandSurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set display(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set display(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get surface() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set surface(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set surface(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27209,7 +27226,7 @@ export class VkWin32SurfaceCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkWin32SurfaceCreateFlagsKHR;
     hinstance?: Deno.PointerValue;
     hwnd?: Deno.PointerValue;
@@ -27235,8 +27252,8 @@ export class VkWin32SurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27252,7 +27269,7 @@ export class VkWin32SurfaceCreateInfoKHR implements IVkStructure {
   }
   
   set hinstance(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get hwnd() {
@@ -27260,7 +27277,7 @@ export class VkWin32SurfaceCreateInfoKHR implements IVkStructure {
   }
   
   set hwnd(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27286,9 +27303,9 @@ export class VkXlibSurfaceCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkXlibSurfaceCreateFlagsKHR;
-    dpy?: Deno.PointerValue;
+    dpy?: AnyPointer;
     window?: Deno.PointerValue;
   }) {
     const s = VkXlibSurfaceCreateInfoKHR.alloc();
@@ -27312,8 +27329,8 @@ export class VkXlibSurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27328,8 +27345,8 @@ export class VkXlibSurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set dpy(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set dpy(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get window() {
@@ -27337,7 +27354,7 @@ export class VkXlibSurfaceCreateInfoKHR implements IVkStructure {
   }
   
   set window(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27363,9 +27380,9 @@ export class VkXcbSurfaceCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkXcbSurfaceCreateFlagsKHR;
-    connection?: Deno.PointerValue;
+    connection?: AnyPointer;
     window?: Deno.PointerValue;
   }) {
     const s = VkXcbSurfaceCreateInfoKHR.alloc();
@@ -27389,8 +27406,8 @@ export class VkXcbSurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27405,8 +27422,8 @@ export class VkXcbSurfaceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set connection(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set connection(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get window() {
@@ -27414,7 +27431,7 @@ export class VkXcbSurfaceCreateInfoKHR implements IVkStructure {
   }
   
   set window(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27440,10 +27457,10 @@ export class VkDirectFBSurfaceCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDirectFBSurfaceCreateFlagsEXT;
-    dfb?: Deno.PointerValue;
-    surface?: Deno.PointerValue;
+    dfb?: AnyPointer;
+    surface?: AnyPointer;
   }) {
     const s = VkDirectFBSurfaceCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DIRECTFB_SURFACE_CREATE_INFO_EXT;
@@ -27466,8 +27483,8 @@ export class VkDirectFBSurfaceCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27482,16 +27499,16 @@ export class VkDirectFBSurfaceCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set dfb(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set dfb(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get surface() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set surface(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set surface(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27517,7 +27534,7 @@ export class VkImagePipeSurfaceCreateInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkImagePipeSurfaceCreateFlagsFUCHSIA;
     imagePipeHandle?: Deno.PointerValue;
   }) {
@@ -27541,8 +27558,8 @@ export class VkImagePipeSurfaceCreateInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27558,7 +27575,7 @@ export class VkImagePipeSurfaceCreateInfoFUCHSIA implements IVkStructure {
   }
   
   set imagePipeHandle(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27584,7 +27601,7 @@ export class VkStreamDescriptorSurfaceCreateInfoGGP implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkStreamDescriptorSurfaceCreateFlagsGGP;
     streamDescriptor?: Deno.PointerValue;
   }) {
@@ -27608,8 +27625,8 @@ export class VkStreamDescriptorSurfaceCreateInfoGGP implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27625,7 +27642,7 @@ export class VkStreamDescriptorSurfaceCreateInfoGGP implements IVkStructure {
   }
   
   set streamDescriptor(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27651,10 +27668,10 @@ export class VkScreenSurfaceCreateInfoQNX implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkScreenSurfaceCreateFlagsQNX;
-    context?: Deno.PointerValue;
-    window?: Deno.PointerValue;
+    context?: AnyPointer;
+    window?: AnyPointer;
   }) {
     const s = VkScreenSurfaceCreateInfoQNX.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SCREEN_SURFACE_CREATE_INFO_QNX;
@@ -27677,8 +27694,8 @@ export class VkScreenSurfaceCreateInfoQNX implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27693,16 +27710,16 @@ export class VkScreenSurfaceCreateInfoQNX implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set context(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set context(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get window() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set window(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set window(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27776,7 +27793,7 @@ export class VkSwapchainCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkSwapchainCreateFlagsKHR;
     surface?: VkSurfaceKHR;
     minImageCount?: number;
@@ -27787,7 +27804,7 @@ export class VkSwapchainCreateInfoKHR implements IVkStructure {
     imageUsage?: VkImageUsageFlags;
     imageSharingMode?: VkSharingMode;
     queueFamilyIndexCount?: number;
-    pQueueFamilyIndices?: Deno.PointerValue;
+    pQueueFamilyIndices?: AnyPointer;
     preTransform?: VkSurfaceTransformFlagBitsKHR;
     compositeAlpha?: VkCompositeAlphaFlagBitsKHR;
     presentMode?: VkPresentModeKHR;
@@ -27828,8 +27845,8 @@ export class VkSwapchainCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -27845,7 +27862,7 @@ export class VkSwapchainCreateInfoKHR implements IVkStructure {
   }
   
   set surface(value: VkSurfaceKHR) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get minImageCount() {
@@ -27919,8 +27936,8 @@ export class VkSwapchainCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(72, LE);
   }
   
-  set pQueueFamilyIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+  set pQueueFamilyIndices(value: AnyPointer) {
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
   
   get preTransform() {
@@ -27960,7 +27977,7 @@ export class VkSwapchainCreateInfoKHR implements IVkStructure {
   }
   
   set oldSwapchain(value: VkSwapchainKHR) {
-    this.#view.setBigUint64(96, BigInt(value), LE);
+    this.#view.setBigUint64(96, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -27986,13 +28003,13 @@ export class VkPresentInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     waitSemaphoreCount?: number;
-    pWaitSemaphores?: Deno.PointerValue;
+    pWaitSemaphores?: AnyPointer;
     swapchainCount?: number;
-    pSwapchains?: Deno.PointerValue;
-    pImageIndices?: Deno.PointerValue;
-    pResults?: Deno.PointerValue;
+    pSwapchains?: AnyPointer;
+    pImageIndices?: AnyPointer;
+    pResults?: AnyPointer;
   }) {
     const s = VkPresentInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -28018,8 +28035,8 @@ export class VkPresentInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get waitSemaphoreCount() {
@@ -28034,8 +28051,8 @@ export class VkPresentInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pWaitSemaphores(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pWaitSemaphores(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get swapchainCount() {
@@ -28050,24 +28067,24 @@ export class VkPresentInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pSwapchains(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pSwapchains(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get pImageIndices() {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pImageIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pImageIndices(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get pResults() {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pResults(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pResults(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -28093,10 +28110,10 @@ export class VkDebugReportCallbackCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDebugReportFlagsEXT;
     pfnCallback?: Deno.PointerValue;
-    pUserData?: Deno.PointerValue;
+    pUserData?: AnyPointer;
   }) {
     const s = VkDebugReportCallbackCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
@@ -28119,8 +28136,8 @@ export class VkDebugReportCallbackCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -28143,8 +28160,8 @@ export class VkDebugReportCallbackCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pUserData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pUserData(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -28170,9 +28187,9 @@ export class VkValidationFlagsEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     disabledValidationCheckCount?: number;
-    pDisabledValidationChecks?: Deno.PointerValue;
+    pDisabledValidationChecks?: AnyPointer;
   }) {
     const s = VkValidationFlagsEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VALIDATION_FLAGS_EXT;
@@ -28194,8 +28211,8 @@ export class VkValidationFlagsEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get disabledValidationCheckCount() {
@@ -28210,8 +28227,8 @@ export class VkValidationFlagsEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDisabledValidationChecks(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDisabledValidationChecks(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -28237,11 +28254,11 @@ export class VkValidationFeaturesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     enabledValidationFeatureCount?: number;
-    pEnabledValidationFeatures?: Deno.PointerValue;
+    pEnabledValidationFeatures?: AnyPointer;
     disabledValidationFeatureCount?: number;
-    pDisabledValidationFeatures?: Deno.PointerValue;
+    pDisabledValidationFeatures?: AnyPointer;
   }) {
     const s = VkValidationFeaturesEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VALIDATION_FEATURES_EXT;
@@ -28265,8 +28282,8 @@ export class VkValidationFeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get enabledValidationFeatureCount() {
@@ -28281,8 +28298,8 @@ export class VkValidationFeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pEnabledValidationFeatures(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pEnabledValidationFeatures(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get disabledValidationFeatureCount() {
@@ -28297,8 +28314,8 @@ export class VkValidationFeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pDisabledValidationFeatures(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pDisabledValidationFeatures(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -28324,7 +28341,7 @@ export class VkPipelineRasterizationStateRasterizationOrderAMD implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     rasterizationOrder?: VkRasterizationOrderAMD;
   }) {
     const s = VkPipelineRasterizationStateRasterizationOrderAMD.alloc();
@@ -28346,8 +28363,8 @@ export class VkPipelineRasterizationStateRasterizationOrderAMD implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get rasterizationOrder() {
@@ -28381,10 +28398,10 @@ export class VkDebugMarkerObjectNameInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     objectType?: VkDebugReportObjectTypeEXT;
     object?: Deno.PointerValue;
-    pObjectName?: Deno.PointerValue;
+    pObjectName?: AnyPointer;
   }) {
     const s = VkDebugMarkerObjectNameInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_NAME_INFO_EXT;
@@ -28407,8 +28424,8 @@ export class VkDebugMarkerObjectNameInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get objectType() {
@@ -28431,8 +28448,8 @@ export class VkDebugMarkerObjectNameInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pObjectName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pObjectName(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -28458,12 +28475,12 @@ export class VkDebugMarkerObjectTagInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     objectType?: VkDebugReportObjectTypeEXT;
     object?: Deno.PointerValue;
     tagName?: Deno.PointerValue;
     tagSize?: Deno.PointerValue;
-    pTag?: Deno.PointerValue;
+    pTag?: AnyPointer;
   }) {
     const s = VkDebugMarkerObjectTagInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_TAG_INFO_EXT;
@@ -28488,8 +28505,8 @@ export class VkDebugMarkerObjectTagInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get objectType() {
@@ -28528,8 +28545,8 @@ export class VkDebugMarkerObjectTagInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pTag(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pTag(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -28555,8 +28572,8 @@ export class VkDebugMarkerMarkerInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pMarkerName?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pMarkerName?: AnyPointer;
     color?: number[];
   }) {
     const s = VkDebugMarkerMarkerInfoEXT.alloc();
@@ -28579,16 +28596,16 @@ export class VkDebugMarkerMarkerInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pMarkerName() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pMarkerName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pMarkerName(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get color() {
@@ -28630,7 +28647,7 @@ export class VkDedicatedAllocationImageCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     dedicatedAllocation?: VkBool32;
   }) {
     const s = VkDedicatedAllocationImageCreateInfoNV.alloc();
@@ -28652,8 +28669,8 @@ export class VkDedicatedAllocationImageCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dedicatedAllocation() {
@@ -28687,7 +28704,7 @@ export class VkDedicatedAllocationBufferCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     dedicatedAllocation?: VkBool32;
   }) {
     const s = VkDedicatedAllocationBufferCreateInfoNV.alloc();
@@ -28709,8 +28726,8 @@ export class VkDedicatedAllocationBufferCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dedicatedAllocation() {
@@ -28744,7 +28761,7 @@ export class VkDedicatedAllocationMemoryAllocateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     image?: VkImage;
     buffer?: VkBuffer;
   }) {
@@ -28768,8 +28785,8 @@ export class VkDedicatedAllocationMemoryAllocateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get image() {
@@ -28777,7 +28794,7 @@ export class VkDedicatedAllocationMemoryAllocateInfoNV implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get buffer() {
@@ -28785,7 +28802,7 @@ export class VkDedicatedAllocationMemoryAllocateInfoNV implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -28882,7 +28899,7 @@ export class VkExternalMemoryImageCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleTypes?: VkExternalMemoryHandleTypeFlagsNV;
   }) {
     const s = VkExternalMemoryImageCreateInfoNV.alloc();
@@ -28904,8 +28921,8 @@ export class VkExternalMemoryImageCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleTypes() {
@@ -28939,7 +28956,7 @@ export class VkExportMemoryAllocateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleTypes?: VkExternalMemoryHandleTypeFlagsNV;
   }) {
     const s = VkExportMemoryAllocateInfoNV.alloc();
@@ -28961,8 +28978,8 @@ export class VkExportMemoryAllocateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleTypes() {
@@ -28996,7 +29013,7 @@ export class VkImportMemoryWin32HandleInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleType?: VkExternalMemoryHandleTypeFlagsNV;
     handle?: Deno.PointerValue;
   }) {
@@ -29020,8 +29037,8 @@ export class VkImportMemoryWin32HandleInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -29037,7 +29054,7 @@ export class VkImportMemoryWin32HandleInfoNV implements IVkStructure {
   }
   
   set handle(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -29063,8 +29080,8 @@ export class VkExportMemoryWin32HandleInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pAttributes?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pAttributes?: AnyPointer;
     dwAccess?: number;
   }) {
     const s = VkExportMemoryWin32HandleInfoNV.alloc();
@@ -29087,16 +29104,16 @@ export class VkExportMemoryWin32HandleInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pAttributes() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pAttributes(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pAttributes(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dwAccess() {
@@ -29130,14 +29147,14 @@ export class VkWin32KeyedMutexAcquireReleaseInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     acquireCount?: number;
-    pAcquireSyncs?: Deno.PointerValue;
-    pAcquireKeys?: Deno.PointerValue;
-    pAcquireTimeoutMilliseconds?: Deno.PointerValue;
+    pAcquireSyncs?: AnyPointer;
+    pAcquireKeys?: AnyPointer;
+    pAcquireTimeoutMilliseconds?: AnyPointer;
     releaseCount?: number;
-    pReleaseSyncs?: Deno.PointerValue;
-    pReleaseKeys?: Deno.PointerValue;
+    pReleaseSyncs?: AnyPointer;
+    pReleaseKeys?: AnyPointer;
   }) {
     const s = VkWin32KeyedMutexAcquireReleaseInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV;
@@ -29164,8 +29181,8 @@ export class VkWin32KeyedMutexAcquireReleaseInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get acquireCount() {
@@ -29180,24 +29197,24 @@ export class VkWin32KeyedMutexAcquireReleaseInfoNV implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAcquireSyncs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAcquireSyncs(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pAcquireKeys() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pAcquireKeys(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pAcquireKeys(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get pAcquireTimeoutMilliseconds() {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pAcquireTimeoutMilliseconds(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pAcquireTimeoutMilliseconds(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get releaseCount() {
@@ -29212,16 +29229,16 @@ export class VkWin32KeyedMutexAcquireReleaseInfoNV implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pReleaseSyncs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pReleaseSyncs(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get pReleaseKeys() {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pReleaseKeys(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pReleaseKeys(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -29247,7 +29264,7 @@ export class VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceGeneratedCommands?: VkBool32;
   }) {
     const s = VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV.alloc();
@@ -29269,8 +29286,8 @@ export class VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceGeneratedCommands() {
@@ -29304,7 +29321,7 @@ export class VkDevicePrivateDataCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     privateDataSlotRequestCount?: number;
   }) {
     const s = VkDevicePrivateDataCreateInfo.alloc();
@@ -29326,8 +29343,8 @@ export class VkDevicePrivateDataCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get privateDataSlotRequestCount() {
@@ -29361,7 +29378,7 @@ export class VkPrivateDataSlotCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPrivateDataSlotCreateFlags;
   }) {
     const s = VkPrivateDataSlotCreateInfo.alloc();
@@ -29383,8 +29400,8 @@ export class VkPrivateDataSlotCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -29418,7 +29435,7 @@ export class VkPhysicalDevicePrivateDataFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     privateData?: VkBool32;
   }) {
     const s = VkPhysicalDevicePrivateDataFeatures.alloc();
@@ -29440,8 +29457,8 @@ export class VkPhysicalDevicePrivateDataFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get privateData() {
@@ -29475,7 +29492,7 @@ export class VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxGraphicsShaderGroupCount?: number;
     maxIndirectSequenceCount?: number;
     maxIndirectCommandsTokenCount?: number;
@@ -29513,8 +29530,8 @@ export class VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxGraphicsShaderGroupCount() {
@@ -29612,7 +29629,7 @@ export class VkPhysicalDeviceMultiDrawPropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxMultiDrawCount?: number;
   }) {
     const s = VkPhysicalDeviceMultiDrawPropertiesEXT.alloc();
@@ -29634,8 +29651,8 @@ export class VkPhysicalDeviceMultiDrawPropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxMultiDrawCount() {
@@ -29669,11 +29686,11 @@ export class VkGraphicsShaderGroupCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stageCount?: number;
-    pStages?: Deno.PointerValue;
-    pVertexInputState?: Deno.PointerValue;
-    pTessellationState?: Deno.PointerValue;
+    pStages?: AnyPointer;
+    pVertexInputState?: AnyPointer;
+    pTessellationState?: AnyPointer;
   }) {
     const s = VkGraphicsShaderGroupCreateInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_GRAPHICS_SHADER_GROUP_CREATE_INFO_NV;
@@ -29697,8 +29714,8 @@ export class VkGraphicsShaderGroupCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stageCount() {
@@ -29713,24 +29730,24 @@ export class VkGraphicsShaderGroupCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStages(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStages(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pVertexInputState() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pVertexInputState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pVertexInputState(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get pTessellationState() {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pTessellationState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pTessellationState(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -29756,11 +29773,11 @@ export class VkGraphicsPipelineShaderGroupsCreateInfoNV implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     groupCount?: number;
-    pGroups?: Deno.PointerValue;
+    pGroups?: AnyPointer;
     pipelineCount?: number;
-    pPipelines?: Deno.PointerValue;
+    pPipelines?: AnyPointer;
   }) {
     const s = VkGraphicsPipelineShaderGroupsCreateInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV;
@@ -29784,8 +29801,8 @@ export class VkGraphicsPipelineShaderGroupsCreateInfoNV implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get groupCount() {
@@ -29800,8 +29817,8 @@ export class VkGraphicsPipelineShaderGroupsCreateInfoNV implements IVkStructure 
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pGroups(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pGroups(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineCount() {
@@ -29816,8 +29833,8 @@ export class VkGraphicsPipelineShaderGroupsCreateInfoNV implements IVkStructure 
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pPipelines(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pPipelines(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -30049,7 +30066,7 @@ export class VkIndirectCommandsStreamNV implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(0, BigInt(value), LE);
+    this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
   
   get offset() {
@@ -30083,7 +30100,7 @@ export class VkIndirectCommandsLayoutTokenNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     tokenType?: VkIndirectCommandsTokenTypeNV;
     stream?: number;
     offset?: number;
@@ -30095,8 +30112,8 @@ export class VkIndirectCommandsLayoutTokenNV implements IVkStructure {
     pushconstantSize?: number;
     indirectStateFlags?: VkIndirectStateFlagsNV;
     indexTypeCount?: number;
-    pIndexTypes?: Deno.PointerValue;
-    pIndexTypeValues?: Deno.PointerValue;
+    pIndexTypes?: AnyPointer;
+    pIndexTypeValues?: AnyPointer;
   }) {
     const s = VkIndirectCommandsLayoutTokenNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_INDIRECT_COMMANDS_LAYOUT_TOKEN_NV;
@@ -30129,8 +30146,8 @@ export class VkIndirectCommandsLayoutTokenNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get tokenType() {
@@ -30178,7 +30195,7 @@ export class VkIndirectCommandsLayoutTokenNV implements IVkStructure {
   }
   
   set pushconstantPipelineLayout(value: VkPipelineLayout) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get pushconstantShaderStageFlags() {
@@ -30225,16 +30242,16 @@ export class VkIndirectCommandsLayoutTokenNV implements IVkStructure {
     return this.#view.getBigUint64(72, LE);
   }
   
-  set pIndexTypes(value: Deno.PointerValue) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+  set pIndexTypes(value: AnyPointer) {
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
   
   get pIndexTypeValues() {
     return this.#view.getBigUint64(80, LE);
   }
   
-  set pIndexTypeValues(value: Deno.PointerValue) {
-    this.#view.setBigUint64(80, BigInt(value), LE);
+  set pIndexTypeValues(value: AnyPointer) {
+    this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -30260,13 +30277,13 @@ export class VkIndirectCommandsLayoutCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkIndirectCommandsLayoutUsageFlagsNV;
     pipelineBindPoint?: VkPipelineBindPoint;
     tokenCount?: number;
-    pTokens?: Deno.PointerValue;
+    pTokens?: AnyPointer;
     streamCount?: number;
-    pStreamStrides?: Deno.PointerValue;
+    pStreamStrides?: AnyPointer;
   }) {
     const s = VkIndirectCommandsLayoutCreateInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NV;
@@ -30292,8 +30309,8 @@ export class VkIndirectCommandsLayoutCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -30324,8 +30341,8 @@ export class VkIndirectCommandsLayoutCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pTokens(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pTokens(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get streamCount() {
@@ -30340,8 +30357,8 @@ export class VkIndirectCommandsLayoutCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pStreamStrides(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pStreamStrides(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -30367,12 +30384,12 @@ export class VkGeneratedCommandsInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipelineBindPoint?: VkPipelineBindPoint;
     pipeline?: VkPipeline;
     indirectCommandsLayout?: VkIndirectCommandsLayoutNV;
     streamCount?: number;
-    pStreams?: Deno.PointerValue;
+    pStreams?: AnyPointer;
     sequencesCount?: number;
     preprocessBuffer?: VkBuffer;
     preprocessOffset?: VkDeviceSize;
@@ -30413,8 +30430,8 @@ export class VkGeneratedCommandsInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineBindPoint() {
@@ -30430,7 +30447,7 @@ export class VkGeneratedCommandsInfoNV implements IVkStructure {
   }
   
   set pipeline(value: VkPipeline) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get indirectCommandsLayout() {
@@ -30438,7 +30455,7 @@ export class VkGeneratedCommandsInfoNV implements IVkStructure {
   }
   
   set indirectCommandsLayout(value: VkIndirectCommandsLayoutNV) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get streamCount() {
@@ -30453,8 +30470,8 @@ export class VkGeneratedCommandsInfoNV implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pStreams(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pStreams(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get sequencesCount() {
@@ -30470,7 +30487,7 @@ export class VkGeneratedCommandsInfoNV implements IVkStructure {
   }
   
   set preprocessBuffer(value: VkBuffer) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
   
   get preprocessOffset() {
@@ -30494,7 +30511,7 @@ export class VkGeneratedCommandsInfoNV implements IVkStructure {
   }
   
   set sequencesCountBuffer(value: VkBuffer) {
-    this.#view.setBigUint64(88, BigInt(value), LE);
+    this.#view.setBigUint64(88, BigInt(anyPointer(value)), LE);
   }
   
   get sequencesCountOffset() {
@@ -30510,7 +30527,7 @@ export class VkGeneratedCommandsInfoNV implements IVkStructure {
   }
   
   set sequencesIndexBuffer(value: VkBuffer) {
-    this.#view.setBigUint64(104, BigInt(value), LE);
+    this.#view.setBigUint64(104, BigInt(anyPointer(value)), LE);
   }
   
   get sequencesIndexOffset() {
@@ -30544,7 +30561,7 @@ export class VkGeneratedCommandsMemoryRequirementsInfoNV implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipelineBindPoint?: VkPipelineBindPoint;
     pipeline?: VkPipeline;
     indirectCommandsLayout?: VkIndirectCommandsLayoutNV;
@@ -30572,8 +30589,8 @@ export class VkGeneratedCommandsMemoryRequirementsInfoNV implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineBindPoint() {
@@ -30589,7 +30606,7 @@ export class VkGeneratedCommandsMemoryRequirementsInfoNV implements IVkStructure
   }
   
   set pipeline(value: VkPipeline) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get indirectCommandsLayout() {
@@ -30597,7 +30614,7 @@ export class VkGeneratedCommandsMemoryRequirementsInfoNV implements IVkStructure
   }
   
   set indirectCommandsLayout(value: VkIndirectCommandsLayoutNV) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get maxSequencesCount() {
@@ -30631,7 +30648,7 @@ export class VkPhysicalDeviceFeatures2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     features?: VkPhysicalDeviceFeatures;
   }) {
     const s = VkPhysicalDeviceFeatures2.alloc();
@@ -30653,8 +30670,8 @@ export class VkPhysicalDeviceFeatures2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get features() {
@@ -30691,7 +30708,7 @@ export class VkPhysicalDeviceProperties2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     properties?: VkPhysicalDeviceProperties;
   }) {
     const s = VkPhysicalDeviceProperties2.alloc();
@@ -30713,8 +30730,8 @@ export class VkPhysicalDeviceProperties2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get properties() {
@@ -30751,7 +30768,7 @@ export class VkFormatProperties2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     formatProperties?: VkFormatProperties;
   }) {
     const s = VkFormatProperties2.alloc();
@@ -30773,8 +30790,8 @@ export class VkFormatProperties2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get formatProperties() {
@@ -30811,7 +30828,7 @@ export class VkImageFormatProperties2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageFormatProperties?: VkImageFormatProperties;
   }) {
     const s = VkImageFormatProperties2.alloc();
@@ -30833,8 +30850,8 @@ export class VkImageFormatProperties2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageFormatProperties() {
@@ -30871,7 +30888,7 @@ export class VkPhysicalDeviceImageFormatInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     format?: VkFormat;
     type?: VkImageType;
     tiling?: VkImageTiling;
@@ -30901,8 +30918,8 @@ export class VkPhysicalDeviceImageFormatInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get format() {
@@ -30968,7 +30985,7 @@ export class VkQueueFamilyProperties2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     queueFamilyProperties?: VkQueueFamilyProperties;
   }) {
     const s = VkQueueFamilyProperties2.alloc();
@@ -30990,8 +31007,8 @@ export class VkQueueFamilyProperties2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get queueFamilyProperties() {
@@ -31028,7 +31045,7 @@ export class VkPhysicalDeviceMemoryProperties2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryProperties?: VkPhysicalDeviceMemoryProperties;
   }) {
     const s = VkPhysicalDeviceMemoryProperties2.alloc();
@@ -31050,8 +31067,8 @@ export class VkPhysicalDeviceMemoryProperties2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryProperties() {
@@ -31088,7 +31105,7 @@ export class VkSparseImageFormatProperties2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     properties?: VkSparseImageFormatProperties;
   }) {
     const s = VkSparseImageFormatProperties2.alloc();
@@ -31110,8 +31127,8 @@ export class VkSparseImageFormatProperties2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get properties() {
@@ -31148,7 +31165,7 @@ export class VkPhysicalDeviceSparseImageFormatInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     format?: VkFormat;
     type?: VkImageType;
     samples?: VkSampleCountFlagBits;
@@ -31178,8 +31195,8 @@ export class VkPhysicalDeviceSparseImageFormatInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get format() {
@@ -31245,7 +31262,7 @@ export class VkPhysicalDevicePushDescriptorPropertiesKHR implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxPushDescriptors?: number;
   }) {
     const s = VkPhysicalDevicePushDescriptorPropertiesKHR.alloc();
@@ -31267,8 +31284,8 @@ export class VkPhysicalDevicePushDescriptorPropertiesKHR implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxPushDescriptors() {
@@ -31370,7 +31387,7 @@ export class VkPhysicalDeviceDriverProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     driverID?: VkDriverId;
     driverName?: number[];
     driverInfo?: number[];
@@ -31398,8 +31415,8 @@ export class VkPhysicalDeviceDriverProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get driverID() {
@@ -31476,9 +31493,9 @@ export class VkPresentRegionsKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     swapchainCount?: number;
-    pRegions?: Deno.PointerValue;
+    pRegions?: AnyPointer;
   }) {
     const s = VkPresentRegionsKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PRESENT_REGIONS_KHR;
@@ -31500,8 +31517,8 @@ export class VkPresentRegionsKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get swapchainCount() {
@@ -31516,8 +31533,8 @@ export class VkPresentRegionsKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pRegions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pRegions(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -31544,7 +31561,7 @@ export class VkPresentRegionKHR implements IVkStructure {
   
   static create(data: {
     rectangleCount?: number;
-    pRectangles?: Deno.PointerValue;
+    pRectangles?: AnyPointer;
   }) {
     const s = VkPresentRegionKHR.alloc();
     if (data.rectangleCount !== undefined) s.rectangleCount = data.rectangleCount;
@@ -31564,8 +31581,8 @@ export class VkPresentRegionKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pRectangles(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pRectangles(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -31655,7 +31672,7 @@ export class VkPhysicalDeviceVariablePointersFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     variablePointersStorageBuffer?: VkBool32;
     variablePointers?: VkBool32;
   }) {
@@ -31679,8 +31696,8 @@ export class VkPhysicalDeviceVariablePointersFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get variablePointersStorageBuffer() {
@@ -31780,7 +31797,7 @@ export class VkPhysicalDeviceExternalImageFormatInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
   }) {
     const s = VkPhysicalDeviceExternalImageFormatInfo.alloc();
@@ -31802,8 +31819,8 @@ export class VkPhysicalDeviceExternalImageFormatInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -31837,7 +31854,7 @@ export class VkExternalImageFormatProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     externalMemoryProperties?: VkExternalMemoryProperties;
   }) {
     const s = VkExternalImageFormatProperties.alloc();
@@ -31859,8 +31876,8 @@ export class VkExternalImageFormatProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get externalMemoryProperties() {
@@ -31897,7 +31914,7 @@ export class VkPhysicalDeviceExternalBufferInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkBufferCreateFlags;
     usage?: VkBufferUsageFlags;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
@@ -31923,8 +31940,8 @@ export class VkPhysicalDeviceExternalBufferInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -31974,7 +31991,7 @@ export class VkExternalBufferProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     externalMemoryProperties?: VkExternalMemoryProperties;
   }) {
     const s = VkExternalBufferProperties.alloc();
@@ -31996,8 +32013,8 @@ export class VkExternalBufferProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get externalMemoryProperties() {
@@ -32034,7 +32051,7 @@ export class VkPhysicalDeviceIDProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceUUID?: number[];
     driverUUID?: number[];
     deviceLUID?: number[];
@@ -32064,8 +32081,8 @@ export class VkPhysicalDeviceIDProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceUUID() {
@@ -32155,7 +32172,7 @@ export class VkExternalMemoryImageCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleTypes?: VkExternalMemoryHandleTypeFlags;
   }) {
     const s = VkExternalMemoryImageCreateInfo.alloc();
@@ -32177,8 +32194,8 @@ export class VkExternalMemoryImageCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleTypes() {
@@ -32212,7 +32229,7 @@ export class VkExternalMemoryBufferCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleTypes?: VkExternalMemoryHandleTypeFlags;
   }) {
     const s = VkExternalMemoryBufferCreateInfo.alloc();
@@ -32234,8 +32251,8 @@ export class VkExternalMemoryBufferCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleTypes() {
@@ -32269,7 +32286,7 @@ export class VkExportMemoryAllocateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleTypes?: VkExternalMemoryHandleTypeFlags;
   }) {
     const s = VkExportMemoryAllocateInfo.alloc();
@@ -32291,8 +32308,8 @@ export class VkExportMemoryAllocateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleTypes() {
@@ -32326,7 +32343,7 @@ export class VkImportMemoryWin32HandleInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
     handle?: Deno.PointerValue;
     name?: Deno.PointerValue;
@@ -32352,8 +32369,8 @@ export class VkImportMemoryWin32HandleInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -32369,7 +32386,7 @@ export class VkImportMemoryWin32HandleInfoKHR implements IVkStructure {
   }
   
   set handle(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get name() {
@@ -32377,7 +32394,7 @@ export class VkImportMemoryWin32HandleInfoKHR implements IVkStructure {
   }
   
   set name(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -32403,8 +32420,8 @@ export class VkExportMemoryWin32HandleInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pAttributes?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pAttributes?: AnyPointer;
     dwAccess?: number;
     name?: Deno.PointerValue;
   }) {
@@ -32429,16 +32446,16 @@ export class VkExportMemoryWin32HandleInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pAttributes() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pAttributes(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pAttributes(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dwAccess() {
@@ -32454,7 +32471,7 @@ export class VkExportMemoryWin32HandleInfoKHR implements IVkStructure {
   }
   
   set name(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -32480,7 +32497,7 @@ export class VkImportMemoryZirconHandleInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
     handle?: Deno.PointerValue;
   }) {
@@ -32504,8 +32521,8 @@ export class VkImportMemoryZirconHandleInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -32521,7 +32538,7 @@ export class VkImportMemoryZirconHandleInfoFUCHSIA implements IVkStructure {
   }
   
   set handle(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -32547,7 +32564,7 @@ export class VkMemoryZirconHandlePropertiesFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryTypeBits?: number;
   }) {
     const s = VkMemoryZirconHandlePropertiesFUCHSIA.alloc();
@@ -32569,8 +32586,8 @@ export class VkMemoryZirconHandlePropertiesFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryTypeBits() {
@@ -32604,7 +32621,7 @@ export class VkMemoryGetZirconHandleInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memory?: VkDeviceMemory;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
   }) {
@@ -32628,8 +32645,8 @@ export class VkMemoryGetZirconHandleInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -32637,7 +32654,7 @@ export class VkMemoryGetZirconHandleInfoFUCHSIA implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -32671,7 +32688,7 @@ export class VkMemoryWin32HandlePropertiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryTypeBits?: number;
   }) {
     const s = VkMemoryWin32HandlePropertiesKHR.alloc();
@@ -32693,8 +32710,8 @@ export class VkMemoryWin32HandlePropertiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryTypeBits() {
@@ -32728,7 +32745,7 @@ export class VkMemoryGetWin32HandleInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memory?: VkDeviceMemory;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
   }) {
@@ -32752,8 +32769,8 @@ export class VkMemoryGetWin32HandleInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -32761,7 +32778,7 @@ export class VkMemoryGetWin32HandleInfoKHR implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -32795,7 +32812,7 @@ export class VkImportMemoryFdInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
     fd?: number;
   }) {
@@ -32819,8 +32836,8 @@ export class VkImportMemoryFdInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -32862,7 +32879,7 @@ export class VkMemoryFdPropertiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryTypeBits?: number;
   }) {
     const s = VkMemoryFdPropertiesKHR.alloc();
@@ -32884,8 +32901,8 @@ export class VkMemoryFdPropertiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryTypeBits() {
@@ -32919,7 +32936,7 @@ export class VkMemoryGetFdInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memory?: VkDeviceMemory;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
   }) {
@@ -32943,8 +32960,8 @@ export class VkMemoryGetFdInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -32952,7 +32969,7 @@ export class VkMemoryGetFdInfoKHR implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -32986,14 +33003,14 @@ export class VkWin32KeyedMutexAcquireReleaseInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     acquireCount?: number;
-    pAcquireSyncs?: Deno.PointerValue;
-    pAcquireKeys?: Deno.PointerValue;
-    pAcquireTimeouts?: Deno.PointerValue;
+    pAcquireSyncs?: AnyPointer;
+    pAcquireKeys?: AnyPointer;
+    pAcquireTimeouts?: AnyPointer;
     releaseCount?: number;
-    pReleaseSyncs?: Deno.PointerValue;
-    pReleaseKeys?: Deno.PointerValue;
+    pReleaseSyncs?: AnyPointer;
+    pReleaseKeys?: AnyPointer;
   }) {
     const s = VkWin32KeyedMutexAcquireReleaseInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR;
@@ -33020,8 +33037,8 @@ export class VkWin32KeyedMutexAcquireReleaseInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get acquireCount() {
@@ -33036,24 +33053,24 @@ export class VkWin32KeyedMutexAcquireReleaseInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAcquireSyncs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAcquireSyncs(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pAcquireKeys() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pAcquireKeys(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pAcquireKeys(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get pAcquireTimeouts() {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pAcquireTimeouts(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pAcquireTimeouts(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get releaseCount() {
@@ -33068,16 +33085,16 @@ export class VkWin32KeyedMutexAcquireReleaseInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pReleaseSyncs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pReleaseSyncs(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get pReleaseKeys() {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pReleaseKeys(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pReleaseKeys(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -33103,7 +33120,7 @@ export class VkPhysicalDeviceExternalSemaphoreInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleType?: VkExternalSemaphoreHandleTypeFlagBits;
   }) {
     const s = VkPhysicalDeviceExternalSemaphoreInfo.alloc();
@@ -33125,8 +33142,8 @@ export class VkPhysicalDeviceExternalSemaphoreInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -33160,7 +33177,7 @@ export class VkExternalSemaphoreProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     exportFromImportedHandleTypes?: VkExternalSemaphoreHandleTypeFlags;
     compatibleHandleTypes?: VkExternalSemaphoreHandleTypeFlags;
     externalSemaphoreFeatures?: VkExternalSemaphoreFeatureFlags;
@@ -33186,8 +33203,8 @@ export class VkExternalSemaphoreProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get exportFromImportedHandleTypes() {
@@ -33237,7 +33254,7 @@ export class VkExportSemaphoreCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleTypes?: VkExternalSemaphoreHandleTypeFlags;
   }) {
     const s = VkExportSemaphoreCreateInfo.alloc();
@@ -33259,8 +33276,8 @@ export class VkExportSemaphoreCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleTypes() {
@@ -33294,7 +33311,7 @@ export class VkImportSemaphoreWin32HandleInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphore?: VkSemaphore;
     flags?: VkSemaphoreImportFlags;
     handleType?: VkExternalSemaphoreHandleTypeFlagBits;
@@ -33324,8 +33341,8 @@ export class VkImportSemaphoreWin32HandleInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphore() {
@@ -33333,7 +33350,7 @@ export class VkImportSemaphoreWin32HandleInfoKHR implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -33357,7 +33374,7 @@ export class VkImportSemaphoreWin32HandleInfoKHR implements IVkStructure {
   }
   
   set handle(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get name() {
@@ -33365,7 +33382,7 @@ export class VkImportSemaphoreWin32HandleInfoKHR implements IVkStructure {
   }
   
   set name(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -33391,8 +33408,8 @@ export class VkExportSemaphoreWin32HandleInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pAttributes?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pAttributes?: AnyPointer;
     dwAccess?: number;
     name?: Deno.PointerValue;
   }) {
@@ -33417,16 +33434,16 @@ export class VkExportSemaphoreWin32HandleInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pAttributes() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pAttributes(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pAttributes(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dwAccess() {
@@ -33442,7 +33459,7 @@ export class VkExportSemaphoreWin32HandleInfoKHR implements IVkStructure {
   }
   
   set name(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -33468,11 +33485,11 @@ export class VkD3D12FenceSubmitInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     waitSemaphoreValuesCount?: number;
-    pWaitSemaphoreValues?: Deno.PointerValue;
+    pWaitSemaphoreValues?: AnyPointer;
     signalSemaphoreValuesCount?: number;
-    pSignalSemaphoreValues?: Deno.PointerValue;
+    pSignalSemaphoreValues?: AnyPointer;
   }) {
     const s = VkD3D12FenceSubmitInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_D3D12_FENCE_SUBMIT_INFO_KHR;
@@ -33496,8 +33513,8 @@ export class VkD3D12FenceSubmitInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get waitSemaphoreValuesCount() {
@@ -33512,8 +33529,8 @@ export class VkD3D12FenceSubmitInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pWaitSemaphoreValues(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pWaitSemaphoreValues(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get signalSemaphoreValuesCount() {
@@ -33528,8 +33545,8 @@ export class VkD3D12FenceSubmitInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pSignalSemaphoreValues(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pSignalSemaphoreValues(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -33555,7 +33572,7 @@ export class VkSemaphoreGetWin32HandleInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphore?: VkSemaphore;
     handleType?: VkExternalSemaphoreHandleTypeFlagBits;
   }) {
@@ -33579,8 +33596,8 @@ export class VkSemaphoreGetWin32HandleInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphore() {
@@ -33588,7 +33605,7 @@ export class VkSemaphoreGetWin32HandleInfoKHR implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -33622,7 +33639,7 @@ export class VkImportSemaphoreFdInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphore?: VkSemaphore;
     flags?: VkSemaphoreImportFlags;
     handleType?: VkExternalSemaphoreHandleTypeFlagBits;
@@ -33650,8 +33667,8 @@ export class VkImportSemaphoreFdInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphore() {
@@ -33659,7 +33676,7 @@ export class VkImportSemaphoreFdInfoKHR implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -33709,7 +33726,7 @@ export class VkSemaphoreGetFdInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphore?: VkSemaphore;
     handleType?: VkExternalSemaphoreHandleTypeFlagBits;
   }) {
@@ -33733,8 +33750,8 @@ export class VkSemaphoreGetFdInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphore() {
@@ -33742,7 +33759,7 @@ export class VkSemaphoreGetFdInfoKHR implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -33776,7 +33793,7 @@ export class VkImportSemaphoreZirconHandleInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphore?: VkSemaphore;
     flags?: VkSemaphoreImportFlags;
     handleType?: VkExternalSemaphoreHandleTypeFlagBits;
@@ -33804,8 +33821,8 @@ export class VkImportSemaphoreZirconHandleInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphore() {
@@ -33813,7 +33830,7 @@ export class VkImportSemaphoreZirconHandleInfoFUCHSIA implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -33837,7 +33854,7 @@ export class VkImportSemaphoreZirconHandleInfoFUCHSIA implements IVkStructure {
   }
   
   set zirconHandle(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -33863,7 +33880,7 @@ export class VkSemaphoreGetZirconHandleInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphore?: VkSemaphore;
     handleType?: VkExternalSemaphoreHandleTypeFlagBits;
   }) {
@@ -33887,8 +33904,8 @@ export class VkSemaphoreGetZirconHandleInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphore() {
@@ -33896,7 +33913,7 @@ export class VkSemaphoreGetZirconHandleInfoFUCHSIA implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -33930,7 +33947,7 @@ export class VkPhysicalDeviceExternalFenceInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleType?: VkExternalFenceHandleTypeFlagBits;
   }) {
     const s = VkPhysicalDeviceExternalFenceInfo.alloc();
@@ -33952,8 +33969,8 @@ export class VkPhysicalDeviceExternalFenceInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -33987,7 +34004,7 @@ export class VkExternalFenceProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     exportFromImportedHandleTypes?: VkExternalFenceHandleTypeFlags;
     compatibleHandleTypes?: VkExternalFenceHandleTypeFlags;
     externalFenceFeatures?: VkExternalFenceFeatureFlags;
@@ -34013,8 +34030,8 @@ export class VkExternalFenceProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get exportFromImportedHandleTypes() {
@@ -34064,7 +34081,7 @@ export class VkExportFenceCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleTypes?: VkExternalFenceHandleTypeFlags;
   }) {
     const s = VkExportFenceCreateInfo.alloc();
@@ -34086,8 +34103,8 @@ export class VkExportFenceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleTypes() {
@@ -34121,7 +34138,7 @@ export class VkImportFenceWin32HandleInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fence?: VkFence;
     flags?: VkFenceImportFlags;
     handleType?: VkExternalFenceHandleTypeFlagBits;
@@ -34151,8 +34168,8 @@ export class VkImportFenceWin32HandleInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fence() {
@@ -34160,7 +34177,7 @@ export class VkImportFenceWin32HandleInfoKHR implements IVkStructure {
   }
   
   set fence(value: VkFence) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -34184,7 +34201,7 @@ export class VkImportFenceWin32HandleInfoKHR implements IVkStructure {
   }
   
   set handle(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get name() {
@@ -34192,7 +34209,7 @@ export class VkImportFenceWin32HandleInfoKHR implements IVkStructure {
   }
   
   set name(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -34218,8 +34235,8 @@ export class VkExportFenceWin32HandleInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pAttributes?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pAttributes?: AnyPointer;
     dwAccess?: number;
     name?: Deno.PointerValue;
   }) {
@@ -34244,16 +34261,16 @@ export class VkExportFenceWin32HandleInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pAttributes() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pAttributes(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pAttributes(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dwAccess() {
@@ -34269,7 +34286,7 @@ export class VkExportFenceWin32HandleInfoKHR implements IVkStructure {
   }
   
   set name(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -34295,7 +34312,7 @@ export class VkFenceGetWin32HandleInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fence?: VkFence;
     handleType?: VkExternalFenceHandleTypeFlagBits;
   }) {
@@ -34319,8 +34336,8 @@ export class VkFenceGetWin32HandleInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fence() {
@@ -34328,7 +34345,7 @@ export class VkFenceGetWin32HandleInfoKHR implements IVkStructure {
   }
   
   set fence(value: VkFence) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -34362,7 +34379,7 @@ export class VkImportFenceFdInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fence?: VkFence;
     flags?: VkFenceImportFlags;
     handleType?: VkExternalFenceHandleTypeFlagBits;
@@ -34390,8 +34407,8 @@ export class VkImportFenceFdInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fence() {
@@ -34399,7 +34416,7 @@ export class VkImportFenceFdInfoKHR implements IVkStructure {
   }
   
   set fence(value: VkFence) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -34449,7 +34466,7 @@ export class VkFenceGetFdInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fence?: VkFence;
     handleType?: VkExternalFenceHandleTypeFlagBits;
   }) {
@@ -34473,8 +34490,8 @@ export class VkFenceGetFdInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fence() {
@@ -34482,7 +34499,7 @@ export class VkFenceGetFdInfoKHR implements IVkStructure {
   }
   
   set fence(value: VkFence) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -34516,7 +34533,7 @@ export class VkPhysicalDeviceMultiviewFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     multiview?: VkBool32;
     multiviewGeometryShader?: VkBool32;
     multiviewTessellationShader?: VkBool32;
@@ -34542,8 +34559,8 @@ export class VkPhysicalDeviceMultiviewFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get multiview() {
@@ -34593,7 +34610,7 @@ export class VkPhysicalDeviceMultiviewProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxMultiviewViewCount?: number;
     maxMultiviewInstanceIndex?: number;
   }) {
@@ -34617,8 +34634,8 @@ export class VkPhysicalDeviceMultiviewProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxMultiviewViewCount() {
@@ -34660,13 +34677,13 @@ export class VkRenderPassMultiviewCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     subpassCount?: number;
-    pViewMasks?: Deno.PointerValue;
+    pViewMasks?: AnyPointer;
     dependencyCount?: number;
-    pViewOffsets?: Deno.PointerValue;
+    pViewOffsets?: AnyPointer;
     correlationMaskCount?: number;
-    pCorrelationMasks?: Deno.PointerValue;
+    pCorrelationMasks?: AnyPointer;
   }) {
     const s = VkRenderPassMultiviewCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO;
@@ -34692,8 +34709,8 @@ export class VkRenderPassMultiviewCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get subpassCount() {
@@ -34708,8 +34725,8 @@ export class VkRenderPassMultiviewCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pViewMasks(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pViewMasks(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get dependencyCount() {
@@ -34724,8 +34741,8 @@ export class VkRenderPassMultiviewCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pViewOffsets(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pViewOffsets(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get correlationMaskCount() {
@@ -34740,8 +34757,8 @@ export class VkRenderPassMultiviewCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pCorrelationMasks(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pCorrelationMasks(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -34767,7 +34784,7 @@ export class VkSurfaceCapabilities2EXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minImageCount?: number;
     maxImageCount?: number;
     currentExtent?: VkExtent2D;
@@ -34809,8 +34826,8 @@ export class VkSurfaceCapabilities2EXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minImageCount() {
@@ -34933,7 +34950,7 @@ export class VkDisplayPowerInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     powerState?: VkDisplayPowerStateEXT;
   }) {
     const s = VkDisplayPowerInfoEXT.alloc();
@@ -34955,8 +34972,8 @@ export class VkDisplayPowerInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get powerState() {
@@ -34990,7 +35007,7 @@ export class VkDeviceEventInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceEvent?: VkDeviceEventTypeEXT;
   }) {
     const s = VkDeviceEventInfoEXT.alloc();
@@ -35012,8 +35029,8 @@ export class VkDeviceEventInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceEvent() {
@@ -35047,7 +35064,7 @@ export class VkDisplayEventInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     displayEvent?: VkDisplayEventTypeEXT;
   }) {
     const s = VkDisplayEventInfoEXT.alloc();
@@ -35069,8 +35086,8 @@ export class VkDisplayEventInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get displayEvent() {
@@ -35104,7 +35121,7 @@ export class VkSwapchainCounterCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     surfaceCounters?: VkSurfaceCounterFlagsEXT;
   }) {
     const s = VkSwapchainCounterCreateInfoEXT.alloc();
@@ -35126,8 +35143,8 @@ export class VkSwapchainCounterCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get surfaceCounters() {
@@ -35161,7 +35178,7 @@ export class VkPhysicalDeviceGroupProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     physicalDeviceCount?: number;
     physicalDevices?: VkPhysicalDevice[];
     subsetAllocation?: VkBool32;
@@ -35187,8 +35204,8 @@ export class VkPhysicalDeviceGroupProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get physicalDeviceCount() {
@@ -35211,7 +35228,7 @@ export class VkPhysicalDeviceGroupProperties implements IVkStructure {
   
   set physicalDevices(value: VkPhysicalDevice[]) {
     for (let i = 0; i < value.length; i++) {
-      this.#view.setBigUint64(24 + i * 8, BigInt(value[i]), LE);
+      this.#view.setBigUint64(24 + i * 8, BigInt(anyPointer(value[i])), LE);
     }
   }
   
@@ -35246,7 +35263,7 @@ export class VkMemoryAllocateFlagsInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkMemoryAllocateFlags;
     deviceMask?: number;
   }) {
@@ -35270,8 +35287,8 @@ export class VkMemoryAllocateFlagsInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -35313,7 +35330,7 @@ export class VkBindBufferMemoryInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     buffer?: VkBuffer;
     memory?: VkDeviceMemory;
     memoryOffset?: VkDeviceSize;
@@ -35339,8 +35356,8 @@ export class VkBindBufferMemoryInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get buffer() {
@@ -35348,7 +35365,7 @@ export class VkBindBufferMemoryInfo implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -35356,7 +35373,7 @@ export class VkBindBufferMemoryInfo implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get memoryOffset() {
@@ -35390,9 +35407,9 @@ export class VkBindBufferMemoryDeviceGroupInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceIndexCount?: number;
-    pDeviceIndices?: Deno.PointerValue;
+    pDeviceIndices?: AnyPointer;
   }) {
     const s = VkBindBufferMemoryDeviceGroupInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO;
@@ -35414,8 +35431,8 @@ export class VkBindBufferMemoryDeviceGroupInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceIndexCount() {
@@ -35430,8 +35447,8 @@ export class VkBindBufferMemoryDeviceGroupInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDeviceIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDeviceIndices(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -35457,7 +35474,7 @@ export class VkBindImageMemoryInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     image?: VkImage;
     memory?: VkDeviceMemory;
     memoryOffset?: VkDeviceSize;
@@ -35483,8 +35500,8 @@ export class VkBindImageMemoryInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get image() {
@@ -35492,7 +35509,7 @@ export class VkBindImageMemoryInfo implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -35500,7 +35517,7 @@ export class VkBindImageMemoryInfo implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get memoryOffset() {
@@ -35534,11 +35551,11 @@ export class VkBindImageMemoryDeviceGroupInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceIndexCount?: number;
-    pDeviceIndices?: Deno.PointerValue;
+    pDeviceIndices?: AnyPointer;
     splitInstanceBindRegionCount?: number;
-    pSplitInstanceBindRegions?: Deno.PointerValue;
+    pSplitInstanceBindRegions?: AnyPointer;
   }) {
     const s = VkBindImageMemoryDeviceGroupInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO;
@@ -35562,8 +35579,8 @@ export class VkBindImageMemoryDeviceGroupInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceIndexCount() {
@@ -35578,8 +35595,8 @@ export class VkBindImageMemoryDeviceGroupInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDeviceIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDeviceIndices(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get splitInstanceBindRegionCount() {
@@ -35594,8 +35611,8 @@ export class VkBindImageMemoryDeviceGroupInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pSplitInstanceBindRegions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pSplitInstanceBindRegions(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -35621,10 +35638,10 @@ export class VkDeviceGroupRenderPassBeginInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceMask?: number;
     deviceRenderAreaCount?: number;
-    pDeviceRenderAreas?: Deno.PointerValue;
+    pDeviceRenderAreas?: AnyPointer;
   }) {
     const s = VkDeviceGroupRenderPassBeginInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO;
@@ -35647,8 +35664,8 @@ export class VkDeviceGroupRenderPassBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceMask() {
@@ -35671,8 +35688,8 @@ export class VkDeviceGroupRenderPassBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDeviceRenderAreas(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDeviceRenderAreas(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -35698,7 +35715,7 @@ export class VkDeviceGroupCommandBufferBeginInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceMask?: number;
   }) {
     const s = VkDeviceGroupCommandBufferBeginInfo.alloc();
@@ -35720,8 +35737,8 @@ export class VkDeviceGroupCommandBufferBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceMask() {
@@ -35755,13 +35772,13 @@ export class VkDeviceGroupSubmitInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     waitSemaphoreCount?: number;
-    pWaitSemaphoreDeviceIndices?: Deno.PointerValue;
+    pWaitSemaphoreDeviceIndices?: AnyPointer;
     commandBufferCount?: number;
-    pCommandBufferDeviceMasks?: Deno.PointerValue;
+    pCommandBufferDeviceMasks?: AnyPointer;
     signalSemaphoreCount?: number;
-    pSignalSemaphoreDeviceIndices?: Deno.PointerValue;
+    pSignalSemaphoreDeviceIndices?: AnyPointer;
   }) {
     const s = VkDeviceGroupSubmitInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO;
@@ -35787,8 +35804,8 @@ export class VkDeviceGroupSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get waitSemaphoreCount() {
@@ -35803,8 +35820,8 @@ export class VkDeviceGroupSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pWaitSemaphoreDeviceIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pWaitSemaphoreDeviceIndices(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get commandBufferCount() {
@@ -35819,8 +35836,8 @@ export class VkDeviceGroupSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pCommandBufferDeviceMasks(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pCommandBufferDeviceMasks(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get signalSemaphoreCount() {
@@ -35835,8 +35852,8 @@ export class VkDeviceGroupSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pSignalSemaphoreDeviceIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pSignalSemaphoreDeviceIndices(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -35862,7 +35879,7 @@ export class VkDeviceGroupBindSparseInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     resourceDeviceIndex?: number;
     memoryDeviceIndex?: number;
   }) {
@@ -35886,8 +35903,8 @@ export class VkDeviceGroupBindSparseInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get resourceDeviceIndex() {
@@ -35929,7 +35946,7 @@ export class VkDeviceGroupPresentCapabilitiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     presentMask?: number[];
     modes?: VkDeviceGroupPresentModeFlagsKHR;
   }) {
@@ -35953,8 +35970,8 @@ export class VkDeviceGroupPresentCapabilitiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get presentMask() {
@@ -36004,7 +36021,7 @@ export class VkImageSwapchainCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     swapchain?: VkSwapchainKHR;
   }) {
     const s = VkImageSwapchainCreateInfoKHR.alloc();
@@ -36026,8 +36043,8 @@ export class VkImageSwapchainCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get swapchain() {
@@ -36035,7 +36052,7 @@ export class VkImageSwapchainCreateInfoKHR implements IVkStructure {
   }
   
   set swapchain(value: VkSwapchainKHR) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -36061,7 +36078,7 @@ export class VkBindImageMemorySwapchainInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     swapchain?: VkSwapchainKHR;
     imageIndex?: number;
   }) {
@@ -36085,8 +36102,8 @@ export class VkBindImageMemorySwapchainInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get swapchain() {
@@ -36094,7 +36111,7 @@ export class VkBindImageMemorySwapchainInfoKHR implements IVkStructure {
   }
   
   set swapchain(value: VkSwapchainKHR) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get imageIndex() {
@@ -36128,7 +36145,7 @@ export class VkAcquireNextImageInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     swapchain?: VkSwapchainKHR;
     timeout?: Deno.PointerValue;
     semaphore?: VkSemaphore;
@@ -36158,8 +36175,8 @@ export class VkAcquireNextImageInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get swapchain() {
@@ -36167,7 +36184,7 @@ export class VkAcquireNextImageInfoKHR implements IVkStructure {
   }
   
   set swapchain(value: VkSwapchainKHR) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get timeout() {
@@ -36183,7 +36200,7 @@ export class VkAcquireNextImageInfoKHR implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get fence() {
@@ -36191,7 +36208,7 @@ export class VkAcquireNextImageInfoKHR implements IVkStructure {
   }
   
   set fence(value: VkFence) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get deviceMask() {
@@ -36225,9 +36242,9 @@ export class VkDeviceGroupPresentInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     swapchainCount?: number;
-    pDeviceMasks?: Deno.PointerValue;
+    pDeviceMasks?: AnyPointer;
     mode?: VkDeviceGroupPresentModeFlagBitsKHR;
   }) {
     const s = VkDeviceGroupPresentInfoKHR.alloc();
@@ -36251,8 +36268,8 @@ export class VkDeviceGroupPresentInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get swapchainCount() {
@@ -36267,8 +36284,8 @@ export class VkDeviceGroupPresentInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDeviceMasks(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDeviceMasks(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get mode() {
@@ -36302,9 +36319,9 @@ export class VkDeviceGroupDeviceCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     physicalDeviceCount?: number;
-    pPhysicalDevices?: Deno.PointerValue;
+    pPhysicalDevices?: AnyPointer;
   }) {
     const s = VkDeviceGroupDeviceCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO;
@@ -36326,8 +36343,8 @@ export class VkDeviceGroupDeviceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get physicalDeviceCount() {
@@ -36342,8 +36359,8 @@ export class VkDeviceGroupDeviceCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pPhysicalDevices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pPhysicalDevices(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -36369,7 +36386,7 @@ export class VkDeviceGroupSwapchainCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     modes?: VkDeviceGroupPresentModeFlagsKHR;
   }) {
     const s = VkDeviceGroupSwapchainCreateInfoKHR.alloc();
@@ -36391,8 +36408,8 @@ export class VkDeviceGroupSwapchainCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get modes() {
@@ -36514,10 +36531,10 @@ export class VkDescriptorUpdateTemplateCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDescriptorUpdateTemplateCreateFlags;
     descriptorUpdateEntryCount?: number;
-    pDescriptorUpdateEntries?: Deno.PointerValue;
+    pDescriptorUpdateEntries?: AnyPointer;
     templateType?: VkDescriptorUpdateTemplateType;
     descriptorSetLayout?: VkDescriptorSetLayout;
     pipelineBindPoint?: VkPipelineBindPoint;
@@ -36550,8 +36567,8 @@ export class VkDescriptorUpdateTemplateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -36574,8 +36591,8 @@ export class VkDescriptorUpdateTemplateCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDescriptorUpdateEntries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDescriptorUpdateEntries(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get templateType() {
@@ -36591,7 +36608,7 @@ export class VkDescriptorUpdateTemplateCreateInfo implements IVkStructure {
   }
   
   set descriptorSetLayout(value: VkDescriptorSetLayout) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineBindPoint() {
@@ -36607,7 +36624,7 @@ export class VkDescriptorUpdateTemplateCreateInfo implements IVkStructure {
   }
   
   set pipelineLayout(value: VkPipelineLayout) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get set() {
@@ -36690,7 +36707,7 @@ export class VkPhysicalDevicePresentIdFeaturesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     presentId?: VkBool32;
   }) {
     const s = VkPhysicalDevicePresentIdFeaturesKHR.alloc();
@@ -36712,8 +36729,8 @@ export class VkPhysicalDevicePresentIdFeaturesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get presentId() {
@@ -36747,9 +36764,9 @@ export class VkPresentIdKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     swapchainCount?: number;
-    pPresentIds?: Deno.PointerValue;
+    pPresentIds?: AnyPointer;
   }) {
     const s = VkPresentIdKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PRESENT_ID_KHR;
@@ -36771,8 +36788,8 @@ export class VkPresentIdKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get swapchainCount() {
@@ -36787,8 +36804,8 @@ export class VkPresentIdKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pPresentIds(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pPresentIds(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -36814,7 +36831,7 @@ export class VkPhysicalDevicePresentWaitFeaturesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     presentWait?: VkBool32;
   }) {
     const s = VkPhysicalDevicePresentWaitFeaturesKHR.alloc();
@@ -36836,8 +36853,8 @@ export class VkPhysicalDevicePresentWaitFeaturesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get presentWait() {
@@ -36871,7 +36888,7 @@ export class VkHdrMetadataEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     displayPrimaryRed?: VkXYColorEXT;
     displayPrimaryGreen?: VkXYColorEXT;
     displayPrimaryBlue?: VkXYColorEXT;
@@ -36907,8 +36924,8 @@ export class VkHdrMetadataEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get displayPrimaryRed() {
@@ -37010,7 +37027,7 @@ export class VkDisplayNativeHdrSurfaceCapabilitiesAMD implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     localDimmingSupport?: VkBool32;
   }) {
     const s = VkDisplayNativeHdrSurfaceCapabilitiesAMD.alloc();
@@ -37032,8 +37049,8 @@ export class VkDisplayNativeHdrSurfaceCapabilitiesAMD implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get localDimmingSupport() {
@@ -37067,7 +37084,7 @@ export class VkSwapchainDisplayNativeHdrCreateInfoAMD implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     localDimmingEnable?: VkBool32;
   }) {
     const s = VkSwapchainDisplayNativeHdrCreateInfoAMD.alloc();
@@ -37089,8 +37106,8 @@ export class VkSwapchainDisplayNativeHdrCreateInfoAMD implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get localDimmingEnable() {
@@ -37240,9 +37257,9 @@ export class VkPresentTimesInfoGOOGLE implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     swapchainCount?: number;
-    pTimes?: Deno.PointerValue;
+    pTimes?: AnyPointer;
   }) {
     const s = VkPresentTimesInfoGOOGLE.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PRESENT_TIMES_INFO_GOOGLE;
@@ -37264,8 +37281,8 @@ export class VkPresentTimesInfoGOOGLE implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get swapchainCount() {
@@ -37280,8 +37297,8 @@ export class VkPresentTimesInfoGOOGLE implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pTimes(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pTimes(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -37355,9 +37372,9 @@ export class VkIOSSurfaceCreateInfoMVK implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkIOSSurfaceCreateFlagsMVK;
-    pView?: Deno.PointerValue;
+    pView?: AnyPointer;
   }) {
     const s = VkIOSSurfaceCreateInfoMVK.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_IOS_SURFACE_CREATE_INFO_MVK;
@@ -37379,8 +37396,8 @@ export class VkIOSSurfaceCreateInfoMVK implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -37395,8 +37412,8 @@ export class VkIOSSurfaceCreateInfoMVK implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pView(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pView(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -37422,9 +37439,9 @@ export class VkMacOSSurfaceCreateInfoMVK implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkMacOSSurfaceCreateFlagsMVK;
-    pView?: Deno.PointerValue;
+    pView?: AnyPointer;
   }) {
     const s = VkMacOSSurfaceCreateInfoMVK.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK;
@@ -37446,8 +37463,8 @@ export class VkMacOSSurfaceCreateInfoMVK implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -37462,8 +37479,8 @@ export class VkMacOSSurfaceCreateInfoMVK implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pView(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pView(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -37489,9 +37506,9 @@ export class VkMetalSurfaceCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkMetalSurfaceCreateFlagsEXT;
-    pLayer?: Deno.PointerValue;
+    pLayer?: AnyPointer;
   }) {
     const s = VkMetalSurfaceCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_METAL_SURFACE_CREATE_INFO_EXT;
@@ -37513,8 +37530,8 @@ export class VkMetalSurfaceCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -37529,8 +37546,8 @@ export class VkMetalSurfaceCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pLayer(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pLayer(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -37604,10 +37621,10 @@ export class VkPipelineViewportWScalingStateCreateInfoNV implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     viewportWScalingEnable?: VkBool32;
     viewportCount?: number;
-    pViewportWScalings?: Deno.PointerValue;
+    pViewportWScalings?: AnyPointer;
   }) {
     const s = VkPipelineViewportWScalingStateCreateInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV;
@@ -37630,8 +37647,8 @@ export class VkPipelineViewportWScalingStateCreateInfoNV implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get viewportWScalingEnable() {
@@ -37654,8 +37671,8 @@ export class VkPipelineViewportWScalingStateCreateInfoNV implements IVkStructure
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pViewportWScalings(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pViewportWScalings(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -37749,10 +37766,10 @@ export class VkPipelineViewportSwizzleStateCreateInfoNV implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineViewportSwizzleStateCreateFlagsNV;
     viewportCount?: number;
-    pViewportSwizzles?: Deno.PointerValue;
+    pViewportSwizzles?: AnyPointer;
   }) {
     const s = VkPipelineViewportSwizzleStateCreateInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV;
@@ -37775,8 +37792,8 @@ export class VkPipelineViewportSwizzleStateCreateInfoNV implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -37799,8 +37816,8 @@ export class VkPipelineViewportSwizzleStateCreateInfoNV implements IVkStructure 
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pViewportSwizzles(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pViewportSwizzles(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -37826,7 +37843,7 @@ export class VkPhysicalDeviceDiscardRectanglePropertiesEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxDiscardRectangles?: number;
   }) {
     const s = VkPhysicalDeviceDiscardRectanglePropertiesEXT.alloc();
@@ -37848,8 +37865,8 @@ export class VkPhysicalDeviceDiscardRectanglePropertiesEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxDiscardRectangles() {
@@ -37883,11 +37900,11 @@ export class VkPipelineDiscardRectangleStateCreateInfoEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineDiscardRectangleStateCreateFlagsEXT;
     discardRectangleMode?: VkDiscardRectangleModeEXT;
     discardRectangleCount?: number;
-    pDiscardRectangles?: Deno.PointerValue;
+    pDiscardRectangles?: AnyPointer;
   }) {
     const s = VkPipelineDiscardRectangleStateCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT;
@@ -37911,8 +37928,8 @@ export class VkPipelineDiscardRectangleStateCreateInfoEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -37943,8 +37960,8 @@ export class VkPipelineDiscardRectangleStateCreateInfoEXT implements IVkStructur
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pDiscardRectangles(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pDiscardRectangles(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -37970,7 +37987,7 @@ export class VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX implements 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     perViewPositionAllComponents?: VkBool32;
   }) {
     const s = VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX.alloc();
@@ -37992,8 +38009,8 @@ export class VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX implements 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get perViewPositionAllComponents() {
@@ -38085,9 +38102,9 @@ export class VkRenderPassInputAttachmentAspectCreateInfo implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     aspectReferenceCount?: number;
-    pAspectReferences?: Deno.PointerValue;
+    pAspectReferences?: AnyPointer;
   }) {
     const s = VkRenderPassInputAttachmentAspectCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO;
@@ -38109,8 +38126,8 @@ export class VkRenderPassInputAttachmentAspectCreateInfo implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get aspectReferenceCount() {
@@ -38125,8 +38142,8 @@ export class VkRenderPassInputAttachmentAspectCreateInfo implements IVkStructure
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAspectReferences(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAspectReferences(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -38152,7 +38169,7 @@ export class VkPhysicalDeviceSurfaceInfo2KHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     surface?: VkSurfaceKHR;
   }) {
     const s = VkPhysicalDeviceSurfaceInfo2KHR.alloc();
@@ -38174,8 +38191,8 @@ export class VkPhysicalDeviceSurfaceInfo2KHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get surface() {
@@ -38183,7 +38200,7 @@ export class VkPhysicalDeviceSurfaceInfo2KHR implements IVkStructure {
   }
   
   set surface(value: VkSurfaceKHR) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -38209,7 +38226,7 @@ export class VkSurfaceCapabilities2KHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     surfaceCapabilities?: VkSurfaceCapabilitiesKHR;
   }) {
     const s = VkSurfaceCapabilities2KHR.alloc();
@@ -38231,8 +38248,8 @@ export class VkSurfaceCapabilities2KHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get surfaceCapabilities() {
@@ -38269,7 +38286,7 @@ export class VkSurfaceFormat2KHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     surfaceFormat?: VkSurfaceFormatKHR;
   }) {
     const s = VkSurfaceFormat2KHR.alloc();
@@ -38291,8 +38308,8 @@ export class VkSurfaceFormat2KHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get surfaceFormat() {
@@ -38329,7 +38346,7 @@ export class VkDisplayProperties2KHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     displayProperties?: VkDisplayPropertiesKHR;
   }) {
     const s = VkDisplayProperties2KHR.alloc();
@@ -38351,8 +38368,8 @@ export class VkDisplayProperties2KHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get displayProperties() {
@@ -38389,7 +38406,7 @@ export class VkDisplayPlaneProperties2KHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     displayPlaneProperties?: VkDisplayPlanePropertiesKHR;
   }) {
     const s = VkDisplayPlaneProperties2KHR.alloc();
@@ -38411,8 +38428,8 @@ export class VkDisplayPlaneProperties2KHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get displayPlaneProperties() {
@@ -38449,7 +38466,7 @@ export class VkDisplayModeProperties2KHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     displayModeProperties?: VkDisplayModePropertiesKHR;
   }) {
     const s = VkDisplayModeProperties2KHR.alloc();
@@ -38471,8 +38488,8 @@ export class VkDisplayModeProperties2KHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get displayModeProperties() {
@@ -38509,7 +38526,7 @@ export class VkDisplayPlaneInfo2KHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     mode?: VkDisplayModeKHR;
     planeIndex?: number;
   }) {
@@ -38533,8 +38550,8 @@ export class VkDisplayPlaneInfo2KHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get mode() {
@@ -38542,7 +38559,7 @@ export class VkDisplayPlaneInfo2KHR implements IVkStructure {
   }
   
   set mode(value: VkDisplayModeKHR) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get planeIndex() {
@@ -38576,7 +38593,7 @@ export class VkDisplayPlaneCapabilities2KHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     capabilities?: VkDisplayPlaneCapabilitiesKHR;
   }) {
     const s = VkDisplayPlaneCapabilities2KHR.alloc();
@@ -38598,8 +38615,8 @@ export class VkDisplayPlaneCapabilities2KHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get capabilities() {
@@ -38636,7 +38653,7 @@ export class VkSharedPresentSurfaceCapabilitiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     sharedPresentSupportedUsageFlags?: VkImageUsageFlags;
   }) {
     const s = VkSharedPresentSurfaceCapabilitiesKHR.alloc();
@@ -38658,8 +38675,8 @@ export class VkSharedPresentSurfaceCapabilitiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get sharedPresentSupportedUsageFlags() {
@@ -38693,7 +38710,7 @@ export class VkPhysicalDevice16BitStorageFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     storageBuffer16BitAccess?: VkBool32;
     uniformAndStorageBuffer16BitAccess?: VkBool32;
     storagePushConstant16?: VkBool32;
@@ -38721,8 +38738,8 @@ export class VkPhysicalDevice16BitStorageFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get storageBuffer16BitAccess() {
@@ -38780,7 +38797,7 @@ export class VkPhysicalDeviceSubgroupProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     subgroupSize?: number;
     supportedStages?: VkShaderStageFlags;
     supportedOperations?: VkSubgroupFeatureFlags;
@@ -38808,8 +38825,8 @@ export class VkPhysicalDeviceSubgroupProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get subgroupSize() {
@@ -38867,7 +38884,7 @@ export class VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderSubgroupExtendedTypes?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures.alloc();
@@ -38889,8 +38906,8 @@ export class VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderSubgroupExtendedTypes() {
@@ -38924,7 +38941,7 @@ export class VkBufferMemoryRequirementsInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     buffer?: VkBuffer;
   }) {
     const s = VkBufferMemoryRequirementsInfo2.alloc();
@@ -38946,8 +38963,8 @@ export class VkBufferMemoryRequirementsInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get buffer() {
@@ -38955,7 +38972,7 @@ export class VkBufferMemoryRequirementsInfo2 implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -38981,8 +38998,8 @@ export class VkDeviceBufferMemoryRequirements implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pCreateInfo?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pCreateInfo?: AnyPointer;
   }) {
     const s = VkDeviceBufferMemoryRequirements.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEVICE_BUFFER_MEMORY_REQUIREMENTS;
@@ -39003,16 +39020,16 @@ export class VkDeviceBufferMemoryRequirements implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pCreateInfo() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pCreateInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pCreateInfo(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -39038,7 +39055,7 @@ export class VkImageMemoryRequirementsInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     image?: VkImage;
   }) {
     const s = VkImageMemoryRequirementsInfo2.alloc();
@@ -39060,8 +39077,8 @@ export class VkImageMemoryRequirementsInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get image() {
@@ -39069,7 +39086,7 @@ export class VkImageMemoryRequirementsInfo2 implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -39095,7 +39112,7 @@ export class VkImageSparseMemoryRequirementsInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     image?: VkImage;
   }) {
     const s = VkImageSparseMemoryRequirementsInfo2.alloc();
@@ -39117,8 +39134,8 @@ export class VkImageSparseMemoryRequirementsInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get image() {
@@ -39126,7 +39143,7 @@ export class VkImageSparseMemoryRequirementsInfo2 implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -39152,8 +39169,8 @@ export class VkDeviceImageMemoryRequirements implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pCreateInfo?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pCreateInfo?: AnyPointer;
     planeAspect?: VkImageAspectFlagBits;
   }) {
     const s = VkDeviceImageMemoryRequirements.alloc();
@@ -39176,16 +39193,16 @@ export class VkDeviceImageMemoryRequirements implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pCreateInfo() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pCreateInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pCreateInfo(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get planeAspect() {
@@ -39219,7 +39236,7 @@ export class VkMemoryRequirements2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryRequirements?: VkMemoryRequirements;
   }) {
     const s = VkMemoryRequirements2.alloc();
@@ -39241,8 +39258,8 @@ export class VkMemoryRequirements2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryRequirements() {
@@ -39279,7 +39296,7 @@ export class VkSparseImageMemoryRequirements2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryRequirements?: VkSparseImageMemoryRequirements;
   }) {
     const s = VkSparseImageMemoryRequirements2.alloc();
@@ -39301,8 +39318,8 @@ export class VkSparseImageMemoryRequirements2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryRequirements() {
@@ -39339,7 +39356,7 @@ export class VkPhysicalDevicePointClippingProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pointClippingBehavior?: VkPointClippingBehavior;
   }) {
     const s = VkPhysicalDevicePointClippingProperties.alloc();
@@ -39361,8 +39378,8 @@ export class VkPhysicalDevicePointClippingProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pointClippingBehavior() {
@@ -39396,7 +39413,7 @@ export class VkMemoryDedicatedRequirements implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     prefersDedicatedAllocation?: VkBool32;
     requiresDedicatedAllocation?: VkBool32;
   }) {
@@ -39420,8 +39437,8 @@ export class VkMemoryDedicatedRequirements implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get prefersDedicatedAllocation() {
@@ -39463,7 +39480,7 @@ export class VkMemoryDedicatedAllocateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     image?: VkImage;
     buffer?: VkBuffer;
   }) {
@@ -39487,8 +39504,8 @@ export class VkMemoryDedicatedAllocateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get image() {
@@ -39496,7 +39513,7 @@ export class VkMemoryDedicatedAllocateInfo implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get buffer() {
@@ -39504,7 +39521,7 @@ export class VkMemoryDedicatedAllocateInfo implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -39530,7 +39547,7 @@ export class VkImageViewUsageCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     usage?: VkImageUsageFlags;
   }) {
     const s = VkImageViewUsageCreateInfo.alloc();
@@ -39552,8 +39569,8 @@ export class VkImageViewUsageCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get usage() {
@@ -39587,7 +39604,7 @@ export class VkPipelineTessellationDomainOriginStateCreateInfo implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     domainOrigin?: VkTessellationDomainOrigin;
   }) {
     const s = VkPipelineTessellationDomainOriginStateCreateInfo.alloc();
@@ -39609,8 +39626,8 @@ export class VkPipelineTessellationDomainOriginStateCreateInfo implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get domainOrigin() {
@@ -39644,7 +39661,7 @@ export class VkSamplerYcbcrConversionInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     conversion?: VkSamplerYcbcrConversion;
   }) {
     const s = VkSamplerYcbcrConversionInfo.alloc();
@@ -39666,8 +39683,8 @@ export class VkSamplerYcbcrConversionInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get conversion() {
@@ -39675,7 +39692,7 @@ export class VkSamplerYcbcrConversionInfo implements IVkStructure {
   }
   
   set conversion(value: VkSamplerYcbcrConversion) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -39701,7 +39718,7 @@ export class VkSamplerYcbcrConversionCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     format?: VkFormat;
     ycbcrModel?: VkSamplerYcbcrModelConversion;
     ycbcrRange?: VkSamplerYcbcrRange;
@@ -39737,8 +39754,8 @@ export class VkSamplerYcbcrConversionCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get format() {
@@ -39831,7 +39848,7 @@ export class VkBindImagePlaneMemoryInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     planeAspect?: VkImageAspectFlagBits;
   }) {
     const s = VkBindImagePlaneMemoryInfo.alloc();
@@ -39853,8 +39870,8 @@ export class VkBindImagePlaneMemoryInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get planeAspect() {
@@ -39888,7 +39905,7 @@ export class VkImagePlaneMemoryRequirementsInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     planeAspect?: VkImageAspectFlagBits;
   }) {
     const s = VkImagePlaneMemoryRequirementsInfo.alloc();
@@ -39910,8 +39927,8 @@ export class VkImagePlaneMemoryRequirementsInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get planeAspect() {
@@ -39945,7 +39962,7 @@ export class VkPhysicalDeviceSamplerYcbcrConversionFeatures implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     samplerYcbcrConversion?: VkBool32;
   }) {
     const s = VkPhysicalDeviceSamplerYcbcrConversionFeatures.alloc();
@@ -39967,8 +39984,8 @@ export class VkPhysicalDeviceSamplerYcbcrConversionFeatures implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get samplerYcbcrConversion() {
@@ -40002,7 +40019,7 @@ export class VkSamplerYcbcrConversionImageFormatProperties implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     combinedImageSamplerDescriptorCount?: number;
   }) {
     const s = VkSamplerYcbcrConversionImageFormatProperties.alloc();
@@ -40024,8 +40041,8 @@ export class VkSamplerYcbcrConversionImageFormatProperties implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get combinedImageSamplerDescriptorCount() {
@@ -40059,7 +40076,7 @@ export class VkTextureLODGatherFormatPropertiesAMD implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     supportsTextureGatherLODBiasAMD?: VkBool32;
   }) {
     const s = VkTextureLODGatherFormatPropertiesAMD.alloc();
@@ -40081,8 +40098,8 @@ export class VkTextureLODGatherFormatPropertiesAMD implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get supportsTextureGatherLODBiasAMD() {
@@ -40116,7 +40133,7 @@ export class VkConditionalRenderingBeginInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     buffer?: VkBuffer;
     offset?: VkDeviceSize;
     flags?: VkConditionalRenderingFlagsEXT;
@@ -40142,8 +40159,8 @@ export class VkConditionalRenderingBeginInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get buffer() {
@@ -40151,7 +40168,7 @@ export class VkConditionalRenderingBeginInfoEXT implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get offset() {
@@ -40193,7 +40210,7 @@ export class VkProtectedSubmitInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     protectedSubmit?: VkBool32;
   }) {
     const s = VkProtectedSubmitInfo.alloc();
@@ -40215,8 +40232,8 @@ export class VkProtectedSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get protectedSubmit() {
@@ -40250,7 +40267,7 @@ export class VkPhysicalDeviceProtectedMemoryFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     protectedMemory?: VkBool32;
   }) {
     const s = VkPhysicalDeviceProtectedMemoryFeatures.alloc();
@@ -40272,8 +40289,8 @@ export class VkPhysicalDeviceProtectedMemoryFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get protectedMemory() {
@@ -40307,7 +40324,7 @@ export class VkPhysicalDeviceProtectedMemoryProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     protectedNoFault?: VkBool32;
   }) {
     const s = VkPhysicalDeviceProtectedMemoryProperties.alloc();
@@ -40329,8 +40346,8 @@ export class VkPhysicalDeviceProtectedMemoryProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get protectedNoFault() {
@@ -40364,7 +40381,7 @@ export class VkDeviceQueueInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDeviceQueueCreateFlags;
     queueFamilyIndex?: number;
     queueIndex?: number;
@@ -40390,8 +40407,8 @@ export class VkDeviceQueueInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -40441,7 +40458,7 @@ export class VkPipelineCoverageToColorStateCreateInfoNV implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineCoverageToColorStateCreateFlagsNV;
     coverageToColorEnable?: VkBool32;
     coverageToColorLocation?: number;
@@ -40467,8 +40484,8 @@ export class VkPipelineCoverageToColorStateCreateInfoNV implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -40518,7 +40535,7 @@ export class VkPhysicalDeviceSamplerFilterMinmaxProperties implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     filterMinmaxSingleComponentFormats?: VkBool32;
     filterMinmaxImageComponentMapping?: VkBool32;
   }) {
@@ -40542,8 +40559,8 @@ export class VkPhysicalDeviceSamplerFilterMinmaxProperties implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get filterMinmaxSingleComponentFormats() {
@@ -40633,11 +40650,11 @@ export class VkSampleLocationsInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     sampleLocationsPerPixel?: VkSampleCountFlagBits;
     sampleLocationGridSize?: VkExtent2D;
     sampleLocationsCount?: number;
-    pSampleLocations?: Deno.PointerValue;
+    pSampleLocations?: AnyPointer;
   }) {
     const s = VkSampleLocationsInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SAMPLE_LOCATIONS_INFO_EXT;
@@ -40661,8 +40678,8 @@ export class VkSampleLocationsInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get sampleLocationsPerPixel() {
@@ -40696,8 +40713,8 @@ export class VkSampleLocationsInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pSampleLocations(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pSampleLocations(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -40825,11 +40842,11 @@ export class VkRenderPassSampleLocationsBeginInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     attachmentInitialSampleLocationsCount?: number;
-    pAttachmentInitialSampleLocations?: Deno.PointerValue;
+    pAttachmentInitialSampleLocations?: AnyPointer;
     postSubpassSampleLocationsCount?: number;
-    pPostSubpassSampleLocations?: Deno.PointerValue;
+    pPostSubpassSampleLocations?: AnyPointer;
   }) {
     const s = VkRenderPassSampleLocationsBeginInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT;
@@ -40853,8 +40870,8 @@ export class VkRenderPassSampleLocationsBeginInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get attachmentInitialSampleLocationsCount() {
@@ -40869,8 +40886,8 @@ export class VkRenderPassSampleLocationsBeginInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAttachmentInitialSampleLocations(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAttachmentInitialSampleLocations(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get postSubpassSampleLocationsCount() {
@@ -40885,8 +40902,8 @@ export class VkRenderPassSampleLocationsBeginInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pPostSubpassSampleLocations(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pPostSubpassSampleLocations(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -40912,7 +40929,7 @@ export class VkPipelineSampleLocationsStateCreateInfoEXT implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     sampleLocationsEnable?: VkBool32;
     sampleLocationsInfo?: VkSampleLocationsInfoEXT;
   }) {
@@ -40936,8 +40953,8 @@ export class VkPipelineSampleLocationsStateCreateInfoEXT implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get sampleLocationsEnable() {
@@ -40982,7 +40999,7 @@ export class VkPhysicalDeviceSampleLocationsPropertiesEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     sampleLocationSampleCounts?: VkSampleCountFlags;
     maxSampleLocationGridSize?: VkExtent2D;
     sampleLocationCoordinateRange?: number[];
@@ -41012,8 +41029,8 @@ export class VkPhysicalDeviceSampleLocationsPropertiesEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get sampleLocationSampleCounts() {
@@ -41090,7 +41107,7 @@ export class VkMultisamplePropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxSampleLocationGridSize?: VkExtent2D;
   }) {
     const s = VkMultisamplePropertiesEXT.alloc();
@@ -41112,8 +41129,8 @@ export class VkMultisamplePropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxSampleLocationGridSize() {
@@ -41150,7 +41167,7 @@ export class VkSamplerReductionModeCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     reductionMode?: VkSamplerReductionMode;
   }) {
     const s = VkSamplerReductionModeCreateInfo.alloc();
@@ -41172,8 +41189,8 @@ export class VkSamplerReductionModeCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get reductionMode() {
@@ -41207,7 +41224,7 @@ export class VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     advancedBlendCoherentOperations?: VkBool32;
   }) {
     const s = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.alloc();
@@ -41229,8 +41246,8 @@ export class VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get advancedBlendCoherentOperations() {
@@ -41264,7 +41281,7 @@ export class VkPhysicalDeviceMultiDrawFeaturesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     multiDraw?: VkBool32;
   }) {
     const s = VkPhysicalDeviceMultiDrawFeaturesEXT.alloc();
@@ -41286,8 +41303,8 @@ export class VkPhysicalDeviceMultiDrawFeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get multiDraw() {
@@ -41321,7 +41338,7 @@ export class VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     advancedBlendMaxColorAttachments?: number;
     advancedBlendIndependentBlend?: VkBool32;
     advancedBlendNonPremultipliedSrcColor?: VkBool32;
@@ -41353,8 +41370,8 @@ export class VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get advancedBlendMaxColorAttachments() {
@@ -41428,7 +41445,7 @@ export class VkPipelineColorBlendAdvancedStateCreateInfoEXT implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcPremultiplied?: VkBool32;
     dstPremultiplied?: VkBool32;
     blendOverlap?: VkBlendOverlapEXT;
@@ -41454,8 +41471,8 @@ export class VkPipelineColorBlendAdvancedStateCreateInfoEXT implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcPremultiplied() {
@@ -41505,7 +41522,7 @@ export class VkPhysicalDeviceInlineUniformBlockFeatures implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     inlineUniformBlock?: VkBool32;
     descriptorBindingInlineUniformBlockUpdateAfterBind?: VkBool32;
   }) {
@@ -41529,8 +41546,8 @@ export class VkPhysicalDeviceInlineUniformBlockFeatures implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get inlineUniformBlock() {
@@ -41572,7 +41589,7 @@ export class VkPhysicalDeviceInlineUniformBlockProperties implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxInlineUniformBlockSize?: number;
     maxPerStageDescriptorInlineUniformBlocks?: number;
     maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks?: number;
@@ -41602,8 +41619,8 @@ export class VkPhysicalDeviceInlineUniformBlockProperties implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxInlineUniformBlockSize() {
@@ -41669,9 +41686,9 @@ export class VkWriteDescriptorSetInlineUniformBlock implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     dataSize?: number;
-    pData?: Deno.PointerValue;
+    pData?: AnyPointer;
   }) {
     const s = VkWriteDescriptorSetInlineUniformBlock.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK;
@@ -41693,8 +41710,8 @@ export class VkWriteDescriptorSetInlineUniformBlock implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dataSize() {
@@ -41709,8 +41726,8 @@ export class VkWriteDescriptorSetInlineUniformBlock implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pData(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -41736,7 +41753,7 @@ export class VkDescriptorPoolInlineUniformBlockCreateInfo implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxInlineUniformBlockBindings?: number;
   }) {
     const s = VkDescriptorPoolInlineUniformBlockCreateInfo.alloc();
@@ -41758,8 +41775,8 @@ export class VkDescriptorPoolInlineUniformBlockCreateInfo implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxInlineUniformBlockBindings() {
@@ -41793,12 +41810,12 @@ export class VkPipelineCoverageModulationStateCreateInfoNV implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineCoverageModulationStateCreateFlagsNV;
     coverageModulationMode?: VkCoverageModulationModeNV;
     coverageModulationTableEnable?: VkBool32;
     coverageModulationTableCount?: number;
-    pCoverageModulationTable?: Deno.PointerValue;
+    pCoverageModulationTable?: AnyPointer;
   }) {
     const s = VkPipelineCoverageModulationStateCreateInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV;
@@ -41823,8 +41840,8 @@ export class VkPipelineCoverageModulationStateCreateInfoNV implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -41863,8 +41880,8 @@ export class VkPipelineCoverageModulationStateCreateInfoNV implements IVkStructu
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pCoverageModulationTable(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pCoverageModulationTable(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -41890,9 +41907,9 @@ export class VkImageFormatListCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     viewFormatCount?: number;
-    pViewFormats?: Deno.PointerValue;
+    pViewFormats?: AnyPointer;
   }) {
     const s = VkImageFormatListCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO;
@@ -41914,8 +41931,8 @@ export class VkImageFormatListCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get viewFormatCount() {
@@ -41930,8 +41947,8 @@ export class VkImageFormatListCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pViewFormats(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pViewFormats(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -41957,10 +41974,10 @@ export class VkValidationCacheCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkValidationCacheCreateFlagsEXT;
     initialDataSize?: Deno.PointerValue;
-    pInitialData?: Deno.PointerValue;
+    pInitialData?: AnyPointer;
   }) {
     const s = VkValidationCacheCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VALIDATION_CACHE_CREATE_INFO_EXT;
@@ -41983,8 +42000,8 @@ export class VkValidationCacheCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -42007,8 +42024,8 @@ export class VkValidationCacheCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pInitialData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pInitialData(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -42034,7 +42051,7 @@ export class VkShaderModuleValidationCacheCreateInfoEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     validationCache?: VkValidationCacheEXT;
   }) {
     const s = VkShaderModuleValidationCacheCreateInfoEXT.alloc();
@@ -42056,8 +42073,8 @@ export class VkShaderModuleValidationCacheCreateInfoEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get validationCache() {
@@ -42065,7 +42082,7 @@ export class VkShaderModuleValidationCacheCreateInfoEXT implements IVkStructure 
   }
   
   set validationCache(value: VkValidationCacheEXT) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -42091,7 +42108,7 @@ export class VkPhysicalDeviceMaintenance3Properties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxPerSetDescriptors?: number;
     maxMemoryAllocationSize?: VkDeviceSize;
   }) {
@@ -42115,8 +42132,8 @@ export class VkPhysicalDeviceMaintenance3Properties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxPerSetDescriptors() {
@@ -42158,7 +42175,7 @@ export class VkPhysicalDeviceMaintenance4Features implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maintenance4?: VkBool32;
   }) {
     const s = VkPhysicalDeviceMaintenance4Features.alloc();
@@ -42180,8 +42197,8 @@ export class VkPhysicalDeviceMaintenance4Features implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maintenance4() {
@@ -42215,7 +42232,7 @@ export class VkPhysicalDeviceMaintenance4Properties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxBufferSize?: VkDeviceSize;
   }) {
     const s = VkPhysicalDeviceMaintenance4Properties.alloc();
@@ -42237,8 +42254,8 @@ export class VkPhysicalDeviceMaintenance4Properties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxBufferSize() {
@@ -42272,7 +42289,7 @@ export class VkDescriptorSetLayoutSupport implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     supported?: VkBool32;
   }) {
     const s = VkDescriptorSetLayoutSupport.alloc();
@@ -42294,8 +42311,8 @@ export class VkDescriptorSetLayoutSupport implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get supported() {
@@ -42329,7 +42346,7 @@ export class VkPhysicalDeviceShaderDrawParametersFeatures implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderDrawParameters?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderDrawParametersFeatures.alloc();
@@ -42351,8 +42368,8 @@ export class VkPhysicalDeviceShaderDrawParametersFeatures implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderDrawParameters() {
@@ -42386,7 +42403,7 @@ export class VkPhysicalDeviceShaderFloat16Int8Features implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderFloat16?: VkBool32;
     shaderInt8?: VkBool32;
   }) {
@@ -42410,8 +42427,8 @@ export class VkPhysicalDeviceShaderFloat16Int8Features implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderFloat16() {
@@ -42453,7 +42470,7 @@ export class VkPhysicalDeviceFloatControlsProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     denormBehaviorIndependence?: VkShaderFloatControlsIndependence;
     roundingModeIndependence?: VkShaderFloatControlsIndependence;
     shaderSignedZeroInfNanPreserveFloat16?: VkBool32;
@@ -42507,8 +42524,8 @@ export class VkPhysicalDeviceFloatControlsProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get denormBehaviorIndependence() {
@@ -42670,7 +42687,7 @@ export class VkPhysicalDeviceHostQueryResetFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     hostQueryReset?: VkBool32;
   }) {
     const s = VkPhysicalDeviceHostQueryResetFeatures.alloc();
@@ -42692,8 +42709,8 @@ export class VkPhysicalDeviceHostQueryResetFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get hostQueryReset() {
@@ -42775,8 +42792,8 @@ export class VkNativeBufferANDROID implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    handle?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    handle?: AnyPointer;
     stride?: number;
     format?: number;
     usage?: number;
@@ -42805,16 +42822,16 @@ export class VkNativeBufferANDROID implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handle() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set handle(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set handle(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get stride() {
@@ -42875,7 +42892,7 @@ export class VkSwapchainImageCreateInfoANDROID implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     usage?: VkSwapchainImageUsageFlagsANDROID;
   }) {
     const s = VkSwapchainImageCreateInfoANDROID.alloc();
@@ -42897,8 +42914,8 @@ export class VkSwapchainImageCreateInfoANDROID implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get usage() {
@@ -42932,7 +42949,7 @@ export class VkPhysicalDevicePresentationPropertiesANDROID implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     sharedImage?: VkBool32;
   }) {
     const s = VkPhysicalDevicePresentationPropertiesANDROID.alloc();
@@ -42954,8 +42971,8 @@ export class VkPhysicalDevicePresentationPropertiesANDROID implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get sharedImage() {
@@ -43176,7 +43193,7 @@ export class VkDeviceQueueGlobalPriorityCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     globalPriority?: VkQueueGlobalPriorityKHR;
   }) {
     const s = VkDeviceQueueGlobalPriorityCreateInfoKHR.alloc();
@@ -43198,8 +43215,8 @@ export class VkDeviceQueueGlobalPriorityCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get globalPriority() {
@@ -43233,7 +43250,7 @@ export class VkPhysicalDeviceGlobalPriorityQueryFeaturesKHR implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     globalPriorityQuery?: VkBool32;
   }) {
     const s = VkPhysicalDeviceGlobalPriorityQueryFeaturesKHR.alloc();
@@ -43255,8 +43272,8 @@ export class VkPhysicalDeviceGlobalPriorityQueryFeaturesKHR implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get globalPriorityQuery() {
@@ -43290,7 +43307,7 @@ export class VkQueueFamilyGlobalPriorityPropertiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     priorityCount?: number;
     priorities?: VkQueueGlobalPriorityKHR[];
   }) {
@@ -43314,8 +43331,8 @@ export class VkQueueFamilyGlobalPriorityPropertiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get priorityCount() {
@@ -43365,10 +43382,10 @@ export class VkDebugUtilsObjectNameInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     objectType?: VkObjectType;
     objectHandle?: Deno.PointerValue;
-    pObjectName?: Deno.PointerValue;
+    pObjectName?: AnyPointer;
   }) {
     const s = VkDebugUtilsObjectNameInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT;
@@ -43391,8 +43408,8 @@ export class VkDebugUtilsObjectNameInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get objectType() {
@@ -43415,8 +43432,8 @@ export class VkDebugUtilsObjectNameInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pObjectName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pObjectName(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -43442,12 +43459,12 @@ export class VkDebugUtilsObjectTagInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     objectType?: VkObjectType;
     objectHandle?: Deno.PointerValue;
     tagName?: Deno.PointerValue;
     tagSize?: Deno.PointerValue;
-    pTag?: Deno.PointerValue;
+    pTag?: AnyPointer;
   }) {
     const s = VkDebugUtilsObjectTagInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEBUG_UTILS_OBJECT_TAG_INFO_EXT;
@@ -43472,8 +43489,8 @@ export class VkDebugUtilsObjectTagInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get objectType() {
@@ -43512,8 +43529,8 @@ export class VkDebugUtilsObjectTagInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pTag(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pTag(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -43539,8 +43556,8 @@ export class VkDebugUtilsLabelEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pLabelName?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pLabelName?: AnyPointer;
     color?: number[];
   }) {
     const s = VkDebugUtilsLabelEXT.alloc();
@@ -43563,16 +43580,16 @@ export class VkDebugUtilsLabelEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pLabelName() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pLabelName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pLabelName(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get color() {
@@ -43614,12 +43631,12 @@ export class VkDebugUtilsMessengerCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDebugUtilsMessengerCreateFlagsEXT;
     messageSeverity?: VkDebugUtilsMessageSeverityFlagsEXT;
     messageType?: VkDebugUtilsMessageTypeFlagsEXT;
     pfnUserCallback?: Deno.PointerValue;
-    pUserData?: Deno.PointerValue;
+    pUserData?: AnyPointer;
   }) {
     const s = VkDebugUtilsMessengerCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
@@ -43644,8 +43661,8 @@ export class VkDebugUtilsMessengerCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -43684,8 +43701,8 @@ export class VkDebugUtilsMessengerCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pUserData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pUserData(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -43711,17 +43728,17 @@ export class VkDebugUtilsMessengerCallbackDataEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDebugUtilsMessengerCallbackDataFlagsEXT;
-    pMessageIdName?: Deno.PointerValue;
+    pMessageIdName?: AnyPointer;
     messageIdNumber?: number;
-    pMessage?: Deno.PointerValue;
+    pMessage?: AnyPointer;
     queueLabelCount?: number;
-    pQueueLabels?: Deno.PointerValue;
+    pQueueLabels?: AnyPointer;
     cmdBufLabelCount?: number;
-    pCmdBufLabels?: Deno.PointerValue;
+    pCmdBufLabels?: AnyPointer;
     objectCount?: number;
-    pObjects?: Deno.PointerValue;
+    pObjects?: AnyPointer;
   }) {
     const s = VkDebugUtilsMessengerCallbackDataEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT;
@@ -43751,8 +43768,8 @@ export class VkDebugUtilsMessengerCallbackDataEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -43767,8 +43784,8 @@ export class VkDebugUtilsMessengerCallbackDataEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pMessageIdName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pMessageIdName(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get messageIdNumber() {
@@ -43783,8 +43800,8 @@ export class VkDebugUtilsMessengerCallbackDataEXT implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pMessage(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pMessage(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get queueLabelCount() {
@@ -43799,8 +43816,8 @@ export class VkDebugUtilsMessengerCallbackDataEXT implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pQueueLabels(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pQueueLabels(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get cmdBufLabelCount() {
@@ -43815,8 +43832,8 @@ export class VkDebugUtilsMessengerCallbackDataEXT implements IVkStructure {
     return this.#view.getBigUint64(72, LE);
   }
   
-  set pCmdBufLabels(value: Deno.PointerValue) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+  set pCmdBufLabels(value: AnyPointer) {
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
   
   get objectCount() {
@@ -43831,8 +43848,8 @@ export class VkDebugUtilsMessengerCallbackDataEXT implements IVkStructure {
     return this.#view.getBigUint64(88, LE);
   }
   
-  set pObjects(value: Deno.PointerValue) {
-    this.#view.setBigUint64(88, BigInt(value), LE);
+  set pObjects(value: AnyPointer) {
+    this.#view.setBigUint64(88, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -43858,7 +43875,7 @@ export class VkPhysicalDeviceDeviceMemoryReportFeaturesEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceMemoryReport?: VkBool32;
   }) {
     const s = VkPhysicalDeviceDeviceMemoryReportFeaturesEXT.alloc();
@@ -43880,8 +43897,8 @@ export class VkPhysicalDeviceDeviceMemoryReportFeaturesEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceMemoryReport() {
@@ -43915,10 +43932,10 @@ export class VkDeviceDeviceMemoryReportCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDeviceMemoryReportFlagsEXT;
     pfnUserCallback?: Deno.PointerValue;
-    pUserData?: Deno.PointerValue;
+    pUserData?: AnyPointer;
   }) {
     const s = VkDeviceDeviceMemoryReportCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT;
@@ -43941,8 +43958,8 @@ export class VkDeviceDeviceMemoryReportCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -43965,8 +43982,8 @@ export class VkDeviceDeviceMemoryReportCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pUserData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pUserData(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -43992,7 +44009,7 @@ export class VkDeviceMemoryReportCallbackDataEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDeviceMemoryReportFlagsEXT;
     type?: VkDeviceMemoryReportEventTypeEXT;
     memoryObjectId?: Deno.PointerValue;
@@ -44026,8 +44043,8 @@ export class VkDeviceMemoryReportCallbackDataEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -44109,9 +44126,9 @@ export class VkImportMemoryHostPointerInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
-    pHostPointer?: Deno.PointerValue;
+    pHostPointer?: AnyPointer;
   }) {
     const s = VkImportMemoryHostPointerInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_IMPORT_MEMORY_HOST_POINTER_INFO_EXT;
@@ -44133,8 +44150,8 @@ export class VkImportMemoryHostPointerInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -44149,8 +44166,8 @@ export class VkImportMemoryHostPointerInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pHostPointer(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pHostPointer(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -44176,7 +44193,7 @@ export class VkMemoryHostPointerPropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryTypeBits?: number;
   }) {
     const s = VkMemoryHostPointerPropertiesEXT.alloc();
@@ -44198,8 +44215,8 @@ export class VkMemoryHostPointerPropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryTypeBits() {
@@ -44233,7 +44250,7 @@ export class VkPhysicalDeviceExternalMemoryHostPropertiesEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minImportedHostPointerAlignment?: VkDeviceSize;
   }) {
     const s = VkPhysicalDeviceExternalMemoryHostPropertiesEXT.alloc();
@@ -44255,8 +44272,8 @@ export class VkPhysicalDeviceExternalMemoryHostPropertiesEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minImportedHostPointerAlignment() {
@@ -44290,7 +44307,7 @@ export class VkPhysicalDeviceConservativeRasterizationPropertiesEXT implements I
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     primitiveOverestimationSize?: number;
     maxExtraPrimitiveOverestimationSize?: number;
     extraPrimitiveOverestimationSizeGranularity?: number;
@@ -44328,8 +44345,8 @@ export class VkPhysicalDeviceConservativeRasterizationPropertiesEXT implements I
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get primitiveOverestimationSize() {
@@ -44427,7 +44444,7 @@ export class VkCalibratedTimestampInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     timeDomain?: VkTimeDomainEXT;
   }) {
     const s = VkCalibratedTimestampInfoEXT.alloc();
@@ -44449,8 +44466,8 @@ export class VkCalibratedTimestampInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get timeDomain() {
@@ -44484,7 +44501,7 @@ export class VkPhysicalDeviceShaderCorePropertiesAMD implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderEngineCount?: number;
     shaderArraysPerEngineCount?: number;
     computeUnitsPerShaderArray?: number;
@@ -44532,8 +44549,8 @@ export class VkPhysicalDeviceShaderCorePropertiesAMD implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderEngineCount() {
@@ -44671,7 +44688,7 @@ export class VkPhysicalDeviceShaderCoreProperties2AMD implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderCoreFeatures?: VkShaderCorePropertiesFlagsAMD;
     activeComputeUnitCount?: number;
   }) {
@@ -44695,8 +44712,8 @@ export class VkPhysicalDeviceShaderCoreProperties2AMD implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderCoreFeatures() {
@@ -44738,7 +44755,7 @@ export class VkPipelineRasterizationConservativeStateCreateInfoEXT implements IV
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineRasterizationConservativeStateCreateFlagsEXT;
     conservativeRasterizationMode?: VkConservativeRasterizationModeEXT;
     extraPrimitiveOverestimationSize?: number;
@@ -44764,8 +44781,8 @@ export class VkPipelineRasterizationConservativeStateCreateInfoEXT implements IV
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -44815,7 +44832,7 @@ export class VkPhysicalDeviceDescriptorIndexingFeatures implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderInputAttachmentArrayDynamicIndexing?: VkBool32;
     shaderUniformTexelBufferArrayDynamicIndexing?: VkBool32;
     shaderStorageTexelBufferArrayDynamicIndexing?: VkBool32;
@@ -44875,8 +44892,8 @@ export class VkPhysicalDeviceDescriptorIndexingFeatures implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderInputAttachmentArrayDynamicIndexing() {
@@ -45062,7 +45079,7 @@ export class VkPhysicalDeviceDescriptorIndexingProperties implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxUpdateAfterBindDescriptorsInAllPools?: number;
     shaderUniformBufferArrayNonUniformIndexingNative?: VkBool32;
     shaderSampledImageArrayNonUniformIndexingNative?: VkBool32;
@@ -45128,8 +45145,8 @@ export class VkPhysicalDeviceDescriptorIndexingProperties implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxUpdateAfterBindDescriptorsInAllPools() {
@@ -45339,9 +45356,9 @@ export class VkDescriptorSetLayoutBindingFlagsCreateInfo implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     bindingCount?: number;
-    pBindingFlags?: Deno.PointerValue;
+    pBindingFlags?: AnyPointer;
   }) {
     const s = VkDescriptorSetLayoutBindingFlagsCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO;
@@ -45363,8 +45380,8 @@ export class VkDescriptorSetLayoutBindingFlagsCreateInfo implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get bindingCount() {
@@ -45379,8 +45396,8 @@ export class VkDescriptorSetLayoutBindingFlagsCreateInfo implements IVkStructure
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pBindingFlags(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pBindingFlags(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -45406,9 +45423,9 @@ export class VkDescriptorSetVariableDescriptorCountAllocateInfo implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     descriptorSetCount?: number;
-    pDescriptorCounts?: Deno.PointerValue;
+    pDescriptorCounts?: AnyPointer;
   }) {
     const s = VkDescriptorSetVariableDescriptorCountAllocateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO;
@@ -45430,8 +45447,8 @@ export class VkDescriptorSetVariableDescriptorCountAllocateInfo implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get descriptorSetCount() {
@@ -45446,8 +45463,8 @@ export class VkDescriptorSetVariableDescriptorCountAllocateInfo implements IVkSt
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDescriptorCounts(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDescriptorCounts(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -45473,7 +45490,7 @@ export class VkDescriptorSetVariableDescriptorCountLayoutSupport implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxVariableDescriptorCount?: number;
   }) {
     const s = VkDescriptorSetVariableDescriptorCountLayoutSupport.alloc();
@@ -45495,8 +45512,8 @@ export class VkDescriptorSetVariableDescriptorCountLayoutSupport implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxVariableDescriptorCount() {
@@ -45530,7 +45547,7 @@ export class VkAttachmentDescription2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkAttachmentDescriptionFlags;
     format?: VkFormat;
     samples?: VkSampleCountFlagBits;
@@ -45568,8 +45585,8 @@ export class VkAttachmentDescription2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -45667,7 +45684,7 @@ export class VkAttachmentReference2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     attachment?: number;
     layout?: VkImageLayout;
     aspectMask?: VkImageAspectFlags;
@@ -45693,8 +45710,8 @@ export class VkAttachmentReference2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get attachment() {
@@ -45744,18 +45761,18 @@ export class VkSubpassDescription2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkSubpassDescriptionFlags;
     pipelineBindPoint?: VkPipelineBindPoint;
     viewMask?: number;
     inputAttachmentCount?: number;
-    pInputAttachments?: Deno.PointerValue;
+    pInputAttachments?: AnyPointer;
     colorAttachmentCount?: number;
-    pColorAttachments?: Deno.PointerValue;
-    pResolveAttachments?: Deno.PointerValue;
-    pDepthStencilAttachment?: Deno.PointerValue;
+    pColorAttachments?: AnyPointer;
+    pResolveAttachments?: AnyPointer;
+    pDepthStencilAttachment?: AnyPointer;
     preserveAttachmentCount?: number;
-    pPreserveAttachments?: Deno.PointerValue;
+    pPreserveAttachments?: AnyPointer;
   }) {
     const s = VkSubpassDescription2.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_2;
@@ -45786,8 +45803,8 @@ export class VkSubpassDescription2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -45826,8 +45843,8 @@ export class VkSubpassDescription2 implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pInputAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pInputAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get colorAttachmentCount() {
@@ -45842,24 +45859,24 @@ export class VkSubpassDescription2 implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pColorAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pColorAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get pResolveAttachments() {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pResolveAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pResolveAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get pDepthStencilAttachment() {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pDepthStencilAttachment(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pDepthStencilAttachment(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
   
   get preserveAttachmentCount() {
@@ -45874,8 +45891,8 @@ export class VkSubpassDescription2 implements IVkStructure {
     return this.#view.getBigUint64(80, LE);
   }
   
-  set pPreserveAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(80, BigInt(value), LE);
+  set pPreserveAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -45901,7 +45918,7 @@ export class VkSubpassDependency2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcSubpass?: number;
     dstSubpass?: number;
     srcStageMask?: VkPipelineStageFlags;
@@ -45937,8 +45954,8 @@ export class VkSubpassDependency2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcSubpass() {
@@ -46028,16 +46045,16 @@ export class VkRenderPassCreateInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkRenderPassCreateFlags;
     attachmentCount?: number;
-    pAttachments?: Deno.PointerValue;
+    pAttachments?: AnyPointer;
     subpassCount?: number;
-    pSubpasses?: Deno.PointerValue;
+    pSubpasses?: AnyPointer;
     dependencyCount?: number;
-    pDependencies?: Deno.PointerValue;
+    pDependencies?: AnyPointer;
     correlatedViewMaskCount?: number;
-    pCorrelatedViewMasks?: Deno.PointerValue;
+    pCorrelatedViewMasks?: AnyPointer;
   }) {
     const s = VkRenderPassCreateInfo2.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2;
@@ -46066,8 +46083,8 @@ export class VkRenderPassCreateInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -46090,8 +46107,8 @@ export class VkRenderPassCreateInfo2 implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get subpassCount() {
@@ -46106,8 +46123,8 @@ export class VkRenderPassCreateInfo2 implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pSubpasses(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pSubpasses(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get dependencyCount() {
@@ -46122,8 +46139,8 @@ export class VkRenderPassCreateInfo2 implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pDependencies(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pDependencies(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get correlatedViewMaskCount() {
@@ -46138,8 +46155,8 @@ export class VkRenderPassCreateInfo2 implements IVkStructure {
     return this.#view.getBigUint64(72, LE);
   }
   
-  set pCorrelatedViewMasks(value: Deno.PointerValue) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+  set pCorrelatedViewMasks(value: AnyPointer) {
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -46165,7 +46182,7 @@ export class VkSubpassBeginInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     contents?: VkSubpassContents;
   }) {
     const s = VkSubpassBeginInfo.alloc();
@@ -46187,8 +46204,8 @@ export class VkSubpassBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get contents() {
@@ -46222,7 +46239,7 @@ export class VkSubpassEndInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
   }) {
     const s = VkSubpassEndInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SUBPASS_END_INFO;
@@ -46242,8 +46259,8 @@ export class VkSubpassEndInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -46269,7 +46286,7 @@ export class VkPhysicalDeviceTimelineSemaphoreFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     timelineSemaphore?: VkBool32;
   }) {
     const s = VkPhysicalDeviceTimelineSemaphoreFeatures.alloc();
@@ -46291,8 +46308,8 @@ export class VkPhysicalDeviceTimelineSemaphoreFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get timelineSemaphore() {
@@ -46326,7 +46343,7 @@ export class VkPhysicalDeviceTimelineSemaphoreProperties implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxTimelineSemaphoreValueDifference?: Deno.PointerValue;
   }) {
     const s = VkPhysicalDeviceTimelineSemaphoreProperties.alloc();
@@ -46348,8 +46365,8 @@ export class VkPhysicalDeviceTimelineSemaphoreProperties implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxTimelineSemaphoreValueDifference() {
@@ -46383,7 +46400,7 @@ export class VkSemaphoreTypeCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphoreType?: VkSemaphoreType;
     initialValue?: Deno.PointerValue;
   }) {
@@ -46407,8 +46424,8 @@ export class VkSemaphoreTypeCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphoreType() {
@@ -46450,11 +46467,11 @@ export class VkTimelineSemaphoreSubmitInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     waitSemaphoreValueCount?: number;
-    pWaitSemaphoreValues?: Deno.PointerValue;
+    pWaitSemaphoreValues?: AnyPointer;
     signalSemaphoreValueCount?: number;
-    pSignalSemaphoreValues?: Deno.PointerValue;
+    pSignalSemaphoreValues?: AnyPointer;
   }) {
     const s = VkTimelineSemaphoreSubmitInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_TIMELINE_SEMAPHORE_SUBMIT_INFO;
@@ -46478,8 +46495,8 @@ export class VkTimelineSemaphoreSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get waitSemaphoreValueCount() {
@@ -46494,8 +46511,8 @@ export class VkTimelineSemaphoreSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pWaitSemaphoreValues(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pWaitSemaphoreValues(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get signalSemaphoreValueCount() {
@@ -46510,8 +46527,8 @@ export class VkTimelineSemaphoreSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pSignalSemaphoreValues(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pSignalSemaphoreValues(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -46537,11 +46554,11 @@ export class VkSemaphoreWaitInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkSemaphoreWaitFlags;
     semaphoreCount?: number;
-    pSemaphores?: Deno.PointerValue;
-    pValues?: Deno.PointerValue;
+    pSemaphores?: AnyPointer;
+    pValues?: AnyPointer;
   }) {
     const s = VkSemaphoreWaitInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SEMAPHORE_WAIT_INFO;
@@ -46565,8 +46582,8 @@ export class VkSemaphoreWaitInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -46589,16 +46606,16 @@ export class VkSemaphoreWaitInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pSemaphores(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pSemaphores(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pValues() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pValues(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pValues(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -46624,7 +46641,7 @@ export class VkSemaphoreSignalInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphore?: VkSemaphore;
     value?: Deno.PointerValue;
   }) {
@@ -46648,8 +46665,8 @@ export class VkSemaphoreSignalInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphore() {
@@ -46657,7 +46674,7 @@ export class VkSemaphoreSignalInfo implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get value() {
@@ -46739,9 +46756,9 @@ export class VkPipelineVertexInputDivisorStateCreateInfoEXT implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     vertexBindingDivisorCount?: number;
-    pVertexBindingDivisors?: Deno.PointerValue;
+    pVertexBindingDivisors?: AnyPointer;
   }) {
     const s = VkPipelineVertexInputDivisorStateCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT;
@@ -46763,8 +46780,8 @@ export class VkPipelineVertexInputDivisorStateCreateInfoEXT implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get vertexBindingDivisorCount() {
@@ -46779,8 +46796,8 @@ export class VkPipelineVertexInputDivisorStateCreateInfoEXT implements IVkStruct
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pVertexBindingDivisors(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pVertexBindingDivisors(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -46806,7 +46823,7 @@ export class VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxVertexAttribDivisor?: number;
   }) {
     const s = VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT.alloc();
@@ -46828,8 +46845,8 @@ export class VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxVertexAttribDivisor() {
@@ -46863,7 +46880,7 @@ export class VkPhysicalDevicePCIBusInfoPropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pciDomain?: number;
     pciBus?: number;
     pciDevice?: number;
@@ -46891,8 +46908,8 @@ export class VkPhysicalDevicePCIBusInfoPropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pciDomain() {
@@ -46950,8 +46967,8 @@ export class VkImportAndroidHardwareBufferInfoANDROID implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    buffer?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    buffer?: AnyPointer;
   }) {
     const s = VkImportAndroidHardwareBufferInfoANDROID.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID;
@@ -46972,16 +46989,16 @@ export class VkImportAndroidHardwareBufferInfoANDROID implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get buffer() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set buffer(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set buffer(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -47007,7 +47024,7 @@ export class VkAndroidHardwareBufferUsageANDROID implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     androidHardwareBufferUsage?: Deno.PointerValue;
   }) {
     const s = VkAndroidHardwareBufferUsageANDROID.alloc();
@@ -47029,8 +47046,8 @@ export class VkAndroidHardwareBufferUsageANDROID implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get androidHardwareBufferUsage() {
@@ -47064,7 +47081,7 @@ export class VkAndroidHardwareBufferPropertiesANDROID implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     allocationSize?: VkDeviceSize;
     memoryTypeBits?: number;
   }) {
@@ -47088,8 +47105,8 @@ export class VkAndroidHardwareBufferPropertiesANDROID implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get allocationSize() {
@@ -47131,7 +47148,7 @@ export class VkMemoryGetAndroidHardwareBufferInfoANDROID implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memory?: VkDeviceMemory;
   }) {
     const s = VkMemoryGetAndroidHardwareBufferInfoANDROID.alloc();
@@ -47153,8 +47170,8 @@ export class VkMemoryGetAndroidHardwareBufferInfoANDROID implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -47162,7 +47179,7 @@ export class VkMemoryGetAndroidHardwareBufferInfoANDROID implements IVkStructure
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -47188,7 +47205,7 @@ export class VkAndroidHardwareBufferFormatPropertiesANDROID implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     format?: VkFormat;
     externalFormat?: Deno.PointerValue;
     formatFeatures?: VkFormatFeatureFlags;
@@ -47224,8 +47241,8 @@ export class VkAndroidHardwareBufferFormatPropertiesANDROID implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get format() {
@@ -47318,7 +47335,7 @@ export class VkCommandBufferInheritanceConditionalRenderingInfoEXT implements IV
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     conditionalRenderingEnable?: VkBool32;
   }) {
     const s = VkCommandBufferInheritanceConditionalRenderingInfoEXT.alloc();
@@ -47340,8 +47357,8 @@ export class VkCommandBufferInheritanceConditionalRenderingInfoEXT implements IV
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get conditionalRenderingEnable() {
@@ -47375,7 +47392,7 @@ export class VkExternalFormatANDROID implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     externalFormat?: Deno.PointerValue;
   }) {
     const s = VkExternalFormatANDROID.alloc();
@@ -47397,8 +47414,8 @@ export class VkExternalFormatANDROID implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get externalFormat() {
@@ -47432,7 +47449,7 @@ export class VkPhysicalDevice8BitStorageFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     storageBuffer8BitAccess?: VkBool32;
     uniformAndStorageBuffer8BitAccess?: VkBool32;
     storagePushConstant8?: VkBool32;
@@ -47458,8 +47475,8 @@ export class VkPhysicalDevice8BitStorageFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get storageBuffer8BitAccess() {
@@ -47509,7 +47526,7 @@ export class VkPhysicalDeviceConditionalRenderingFeaturesEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     conditionalRendering?: VkBool32;
     inheritedConditionalRendering?: VkBool32;
   }) {
@@ -47533,8 +47550,8 @@ export class VkPhysicalDeviceConditionalRenderingFeaturesEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get conditionalRendering() {
@@ -47576,7 +47593,7 @@ export class VkPhysicalDeviceVulkanMemoryModelFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     vulkanMemoryModel?: VkBool32;
     vulkanMemoryModelDeviceScope?: VkBool32;
     vulkanMemoryModelAvailabilityVisibilityChains?: VkBool32;
@@ -47602,8 +47619,8 @@ export class VkPhysicalDeviceVulkanMemoryModelFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get vulkanMemoryModel() {
@@ -47653,7 +47670,7 @@ export class VkPhysicalDeviceShaderAtomicInt64Features implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderBufferInt64Atomics?: VkBool32;
     shaderSharedInt64Atomics?: VkBool32;
   }) {
@@ -47677,8 +47694,8 @@ export class VkPhysicalDeviceShaderAtomicInt64Features implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderBufferInt64Atomics() {
@@ -47720,7 +47737,7 @@ export class VkPhysicalDeviceShaderAtomicFloatFeaturesEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderBufferFloat32Atomics?: VkBool32;
     shaderBufferFloat32AtomicAdd?: VkBool32;
     shaderBufferFloat64Atomics?: VkBool32;
@@ -47764,8 +47781,8 @@ export class VkPhysicalDeviceShaderAtomicFloatFeaturesEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderBufferFloat32Atomics() {
@@ -47887,7 +47904,7 @@ export class VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderBufferFloat16Atomics?: VkBool32;
     shaderBufferFloat16AtomicAdd?: VkBool32;
     shaderBufferFloat16AtomicMinMax?: VkBool32;
@@ -47931,8 +47948,8 @@ export class VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderBufferFloat16Atomics() {
@@ -48054,7 +48071,7 @@ export class VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     vertexAttributeInstanceRateDivisor?: VkBool32;
     vertexAttributeInstanceRateZeroDivisor?: VkBool32;
   }) {
@@ -48078,8 +48095,8 @@ export class VkPhysicalDeviceVertexAttributeDivisorFeaturesEXT implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get vertexAttributeInstanceRateDivisor() {
@@ -48121,7 +48138,7 @@ export class VkQueueFamilyCheckpointPropertiesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     checkpointExecutionStageMask?: VkPipelineStageFlags;
   }) {
     const s = VkQueueFamilyCheckpointPropertiesNV.alloc();
@@ -48143,8 +48160,8 @@ export class VkQueueFamilyCheckpointPropertiesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get checkpointExecutionStageMask() {
@@ -48178,9 +48195,9 @@ export class VkCheckpointDataNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stage?: VkPipelineStageFlagBits;
-    pCheckpointMarker?: Deno.PointerValue;
+    pCheckpointMarker?: AnyPointer;
   }) {
     const s = VkCheckpointDataNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_CHECKPOINT_DATA_NV;
@@ -48202,8 +48219,8 @@ export class VkCheckpointDataNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stage() {
@@ -48218,8 +48235,8 @@ export class VkCheckpointDataNV implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pCheckpointMarker(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pCheckpointMarker(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -48245,7 +48262,7 @@ export class VkPhysicalDeviceDepthStencilResolveProperties implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     supportedDepthResolveModes?: VkResolveModeFlags;
     supportedStencilResolveModes?: VkResolveModeFlags;
     independentResolveNone?: VkBool32;
@@ -48273,8 +48290,8 @@ export class VkPhysicalDeviceDepthStencilResolveProperties implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get supportedDepthResolveModes() {
@@ -48332,10 +48349,10 @@ export class VkSubpassDescriptionDepthStencilResolve implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     depthResolveMode?: VkResolveModeFlagBits;
     stencilResolveMode?: VkResolveModeFlagBits;
-    pDepthStencilResolveAttachment?: Deno.PointerValue;
+    pDepthStencilResolveAttachment?: AnyPointer;
   }) {
     const s = VkSubpassDescriptionDepthStencilResolve.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE;
@@ -48358,8 +48375,8 @@ export class VkSubpassDescriptionDepthStencilResolve implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get depthResolveMode() {
@@ -48382,8 +48399,8 @@ export class VkSubpassDescriptionDepthStencilResolve implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDepthStencilResolveAttachment(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDepthStencilResolveAttachment(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -48409,7 +48426,7 @@ export class VkImageViewASTCDecodeModeEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     decodeMode?: VkFormat;
   }) {
     const s = VkImageViewASTCDecodeModeEXT.alloc();
@@ -48431,8 +48448,8 @@ export class VkImageViewASTCDecodeModeEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get decodeMode() {
@@ -48466,7 +48483,7 @@ export class VkPhysicalDeviceASTCDecodeFeaturesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     decodeModeSharedExponent?: VkBool32;
   }) {
     const s = VkPhysicalDeviceASTCDecodeFeaturesEXT.alloc();
@@ -48488,8 +48505,8 @@ export class VkPhysicalDeviceASTCDecodeFeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get decodeModeSharedExponent() {
@@ -48523,7 +48540,7 @@ export class VkPhysicalDeviceTransformFeedbackFeaturesEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     transformFeedback?: VkBool32;
     geometryStreams?: VkBool32;
   }) {
@@ -48547,8 +48564,8 @@ export class VkPhysicalDeviceTransformFeedbackFeaturesEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get transformFeedback() {
@@ -48590,7 +48607,7 @@ export class VkPhysicalDeviceTransformFeedbackPropertiesEXT implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxTransformFeedbackStreams?: number;
     maxTransformFeedbackBuffers?: number;
     maxTransformFeedbackBufferSize?: VkDeviceSize;
@@ -48630,8 +48647,8 @@ export class VkPhysicalDeviceTransformFeedbackPropertiesEXT implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxTransformFeedbackStreams() {
@@ -48737,7 +48754,7 @@ export class VkPipelineRasterizationStateStreamCreateInfoEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineRasterizationStateStreamCreateFlagsEXT;
     rasterizationStream?: number;
   }) {
@@ -48761,8 +48778,8 @@ export class VkPipelineRasterizationStateStreamCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -48804,7 +48821,7 @@ export class VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     representativeFragmentTest?: VkBool32;
   }) {
     const s = VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV.alloc();
@@ -48826,8 +48843,8 @@ export class VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get representativeFragmentTest() {
@@ -48861,7 +48878,7 @@ export class VkPipelineRepresentativeFragmentTestStateCreateInfoNV implements IV
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     representativeFragmentTestEnable?: VkBool32;
   }) {
     const s = VkPipelineRepresentativeFragmentTestStateCreateInfoNV.alloc();
@@ -48883,8 +48900,8 @@ export class VkPipelineRepresentativeFragmentTestStateCreateInfoNV implements IV
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get representativeFragmentTestEnable() {
@@ -48918,7 +48935,7 @@ export class VkPhysicalDeviceExclusiveScissorFeaturesNV implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     exclusiveScissor?: VkBool32;
   }) {
     const s = VkPhysicalDeviceExclusiveScissorFeaturesNV.alloc();
@@ -48940,8 +48957,8 @@ export class VkPhysicalDeviceExclusiveScissorFeaturesNV implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get exclusiveScissor() {
@@ -48975,9 +48992,9 @@ export class VkPipelineViewportExclusiveScissorStateCreateInfoNV implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     exclusiveScissorCount?: number;
-    pExclusiveScissors?: Deno.PointerValue;
+    pExclusiveScissors?: AnyPointer;
   }) {
     const s = VkPipelineViewportExclusiveScissorStateCreateInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_EXCLUSIVE_SCISSOR_STATE_CREATE_INFO_NV;
@@ -48999,8 +49016,8 @@ export class VkPipelineViewportExclusiveScissorStateCreateInfoNV implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get exclusiveScissorCount() {
@@ -49015,8 +49032,8 @@ export class VkPipelineViewportExclusiveScissorStateCreateInfoNV implements IVkS
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pExclusiveScissors(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pExclusiveScissors(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -49042,7 +49059,7 @@ export class VkPhysicalDeviceCornerSampledImageFeaturesNV implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     cornerSampledImage?: VkBool32;
   }) {
     const s = VkPhysicalDeviceCornerSampledImageFeaturesNV.alloc();
@@ -49064,8 +49081,8 @@ export class VkPhysicalDeviceCornerSampledImageFeaturesNV implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get cornerSampledImage() {
@@ -49099,7 +49116,7 @@ export class VkPhysicalDeviceComputeShaderDerivativesFeaturesNV implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     computeDerivativeGroupQuads?: VkBool32;
     computeDerivativeGroupLinear?: VkBool32;
   }) {
@@ -49123,8 +49140,8 @@ export class VkPhysicalDeviceComputeShaderDerivativesFeaturesNV implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get computeDerivativeGroupQuads() {
@@ -49166,7 +49183,7 @@ export class VkPhysicalDeviceShaderImageFootprintFeaturesNV implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageFootprint?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderImageFootprintFeaturesNV.alloc();
@@ -49188,8 +49205,8 @@ export class VkPhysicalDeviceShaderImageFootprintFeaturesNV implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageFootprint() {
@@ -49223,7 +49240,7 @@ export class VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV implemen
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     dedicatedAllocationImageAliasing?: VkBool32;
   }) {
     const s = VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV.alloc();
@@ -49245,8 +49262,8 @@ export class VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV implemen
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dedicatedAllocationImageAliasing() {
@@ -49280,7 +49297,7 @@ export class VkPhysicalDeviceCopyMemoryIndirectFeaturesNV implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     indirectCopy?: VkBool32;
   }) {
     const s = VkPhysicalDeviceCopyMemoryIndirectFeaturesNV.alloc();
@@ -49302,8 +49319,8 @@ export class VkPhysicalDeviceCopyMemoryIndirectFeaturesNV implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get indirectCopy() {
@@ -49337,7 +49354,7 @@ export class VkPhysicalDeviceCopyMemoryIndirectPropertiesNV implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     supportedQueues?: VkQueueFlags;
   }) {
     const s = VkPhysicalDeviceCopyMemoryIndirectPropertiesNV.alloc();
@@ -49359,8 +49376,8 @@ export class VkPhysicalDeviceCopyMemoryIndirectPropertiesNV implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get supportedQueues() {
@@ -49394,7 +49411,7 @@ export class VkPhysicalDeviceMemoryDecompressionFeaturesNV implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryDecompression?: VkBool32;
   }) {
     const s = VkPhysicalDeviceMemoryDecompressionFeaturesNV.alloc();
@@ -49416,8 +49433,8 @@ export class VkPhysicalDeviceMemoryDecompressionFeaturesNV implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryDecompression() {
@@ -49451,7 +49468,7 @@ export class VkPhysicalDeviceMemoryDecompressionPropertiesNV implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     decompressionMethods?: VkMemoryDecompressionMethodFlagsNV;
     maxDecompressionIndirectCount?: Deno.PointerValue;
   }) {
@@ -49475,8 +49492,8 @@ export class VkPhysicalDeviceMemoryDecompressionPropertiesNV implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get decompressionMethods() {
@@ -49519,7 +49536,7 @@ export class VkShadingRatePaletteNV implements IVkStructure {
   
   static create(data: {
     shadingRatePaletteEntryCount?: number;
-    pShadingRatePaletteEntries?: Deno.PointerValue;
+    pShadingRatePaletteEntries?: AnyPointer;
   }) {
     const s = VkShadingRatePaletteNV.alloc();
     if (data.shadingRatePaletteEntryCount !== undefined) s.shadingRatePaletteEntryCount = data.shadingRatePaletteEntryCount;
@@ -49539,8 +49556,8 @@ export class VkShadingRatePaletteNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pShadingRatePaletteEntries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pShadingRatePaletteEntries(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -49566,10 +49583,10 @@ export class VkPipelineViewportShadingRateImageStateCreateInfoNV implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shadingRateImageEnable?: VkBool32;
     viewportCount?: number;
-    pShadingRatePalettes?: Deno.PointerValue;
+    pShadingRatePalettes?: AnyPointer;
   }) {
     const s = VkPipelineViewportShadingRateImageStateCreateInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_SHADING_RATE_IMAGE_STATE_CREATE_INFO_NV;
@@ -49592,8 +49609,8 @@ export class VkPipelineViewportShadingRateImageStateCreateInfoNV implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shadingRateImageEnable() {
@@ -49616,8 +49633,8 @@ export class VkPipelineViewportShadingRateImageStateCreateInfoNV implements IVkS
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pShadingRatePalettes(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pShadingRatePalettes(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -49643,7 +49660,7 @@ export class VkPhysicalDeviceShadingRateImageFeaturesNV implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shadingRateImage?: VkBool32;
     shadingRateCoarseSampleOrder?: VkBool32;
   }) {
@@ -49667,8 +49684,8 @@ export class VkPhysicalDeviceShadingRateImageFeaturesNV implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shadingRateImage() {
@@ -49710,7 +49727,7 @@ export class VkPhysicalDeviceShadingRateImagePropertiesNV implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shadingRateTexelSize?: VkExtent2D;
     shadingRatePaletteSize?: number;
     shadingRateMaxCoarseSamples?: number;
@@ -49736,8 +49753,8 @@ export class VkPhysicalDeviceShadingRateImagePropertiesNV implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shadingRateTexelSize() {
@@ -49790,7 +49807,7 @@ export class VkPhysicalDeviceInvocationMaskFeaturesHUAWEI implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     invocationMask?: VkBool32;
   }) {
     const s = VkPhysicalDeviceInvocationMaskFeaturesHUAWEI.alloc();
@@ -49812,8 +49829,8 @@ export class VkPhysicalDeviceInvocationMaskFeaturesHUAWEI implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get invocationMask() {
@@ -49908,7 +49925,7 @@ export class VkCoarseSampleOrderCustomNV implements IVkStructure {
     shadingRate?: VkShadingRatePaletteEntryNV;
     sampleCount?: number;
     sampleLocationCount?: number;
-    pSampleLocations?: Deno.PointerValue;
+    pSampleLocations?: AnyPointer;
   }) {
     const s = VkCoarseSampleOrderCustomNV.alloc();
     if (data.shadingRate !== undefined) s.shadingRate = data.shadingRate;
@@ -49946,8 +49963,8 @@ export class VkCoarseSampleOrderCustomNV implements IVkStructure {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pSampleLocations(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pSampleLocations(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -49973,10 +49990,10 @@ export class VkPipelineViewportCoarseSampleOrderStateCreateInfoNV implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     sampleOrderType?: VkCoarseSampleOrderTypeNV;
     customSampleOrderCount?: number;
-    pCustomSampleOrders?: Deno.PointerValue;
+    pCustomSampleOrders?: AnyPointer;
   }) {
     const s = VkPipelineViewportCoarseSampleOrderStateCreateInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_COARSE_SAMPLE_ORDER_STATE_CREATE_INFO_NV;
@@ -49999,8 +50016,8 @@ export class VkPipelineViewportCoarseSampleOrderStateCreateInfoNV implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get sampleOrderType() {
@@ -50023,8 +50040,8 @@ export class VkPipelineViewportCoarseSampleOrderStateCreateInfoNV implements IVk
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pCustomSampleOrders(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pCustomSampleOrders(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -50050,7 +50067,7 @@ export class VkPhysicalDeviceMeshShaderFeaturesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     taskShader?: VkBool32;
     meshShader?: VkBool32;
   }) {
@@ -50074,8 +50091,8 @@ export class VkPhysicalDeviceMeshShaderFeaturesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get taskShader() {
@@ -50117,7 +50134,7 @@ export class VkPhysicalDeviceMeshShaderPropertiesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxDrawMeshTasksCount?: number;
     maxTaskWorkGroupInvocations?: number;
     maxTaskWorkGroupSize?: number[];
@@ -50163,8 +50180,8 @@ export class VkPhysicalDeviceMeshShaderPropertiesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxDrawMeshTasksCount() {
@@ -50358,7 +50375,7 @@ export class VkPhysicalDeviceMeshShaderFeaturesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     taskShader?: VkBool32;
     meshShader?: VkBool32;
     multiviewMeshShader?: VkBool32;
@@ -50388,8 +50405,8 @@ export class VkPhysicalDeviceMeshShaderFeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get taskShader() {
@@ -50455,7 +50472,7 @@ export class VkPhysicalDeviceMeshShaderPropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxTaskWorkGroupTotalCount?: number;
     maxTaskWorkGroupCount?: number[];
     maxTaskWorkGroupInvocations?: number;
@@ -50531,8 +50548,8 @@ export class VkPhysicalDeviceMeshShaderPropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxTaskWorkGroupTotalCount() {
@@ -50872,7 +50889,7 @@ export class VkRayTracingShaderGroupCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     type?: VkRayTracingShaderGroupTypeKHR;
     generalShader?: number;
     closestHitShader?: number;
@@ -50902,8 +50919,8 @@ export class VkRayTracingShaderGroupCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get type() {
@@ -50969,13 +50986,13 @@ export class VkRayTracingShaderGroupCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     type?: VkRayTracingShaderGroupTypeKHR;
     generalShader?: number;
     closestHitShader?: number;
     anyHitShader?: number;
     intersectionShader?: number;
-    pShaderGroupCaptureReplayHandle?: Deno.PointerValue;
+    pShaderGroupCaptureReplayHandle?: AnyPointer;
   }) {
     const s = VkRayTracingShaderGroupCreateInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR;
@@ -51001,8 +51018,8 @@ export class VkRayTracingShaderGroupCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get type() {
@@ -51049,8 +51066,8 @@ export class VkRayTracingShaderGroupCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pShaderGroupCaptureReplayHandle(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pShaderGroupCaptureReplayHandle(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -51076,12 +51093,12 @@ export class VkRayTracingPipelineCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineCreateFlags;
     stageCount?: number;
-    pStages?: Deno.PointerValue;
+    pStages?: AnyPointer;
     groupCount?: number;
-    pGroups?: Deno.PointerValue;
+    pGroups?: AnyPointer;
     maxRecursionDepth?: number;
     layout?: VkPipelineLayout;
     basePipelineHandle?: VkPipeline;
@@ -51114,8 +51131,8 @@ export class VkRayTracingPipelineCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -51138,8 +51155,8 @@ export class VkRayTracingPipelineCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStages(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStages(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get groupCount() {
@@ -51154,8 +51171,8 @@ export class VkRayTracingPipelineCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pGroups(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pGroups(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get maxRecursionDepth() {
@@ -51171,7 +51188,7 @@ export class VkRayTracingPipelineCreateInfoNV implements IVkStructure {
   }
   
   set layout(value: VkPipelineLayout) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get basePipelineHandle() {
@@ -51179,7 +51196,7 @@ export class VkRayTracingPipelineCreateInfoNV implements IVkStructure {
   }
   
   set basePipelineHandle(value: VkPipeline) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
   
   get basePipelineIndex() {
@@ -51213,16 +51230,16 @@ export class VkRayTracingPipelineCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineCreateFlags;
     stageCount?: number;
-    pStages?: Deno.PointerValue;
+    pStages?: AnyPointer;
     groupCount?: number;
-    pGroups?: Deno.PointerValue;
+    pGroups?: AnyPointer;
     maxPipelineRayRecursionDepth?: number;
-    pLibraryInfo?: Deno.PointerValue;
-    pLibraryInterface?: Deno.PointerValue;
-    pDynamicState?: Deno.PointerValue;
+    pLibraryInfo?: AnyPointer;
+    pLibraryInterface?: AnyPointer;
+    pDynamicState?: AnyPointer;
     layout?: VkPipelineLayout;
     basePipelineHandle?: VkPipeline;
     basePipelineIndex?: number;
@@ -51257,8 +51274,8 @@ export class VkRayTracingPipelineCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -51281,8 +51298,8 @@ export class VkRayTracingPipelineCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStages(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStages(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get groupCount() {
@@ -51297,8 +51314,8 @@ export class VkRayTracingPipelineCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pGroups(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pGroups(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get maxPipelineRayRecursionDepth() {
@@ -51313,24 +51330,24 @@ export class VkRayTracingPipelineCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pLibraryInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pLibraryInfo(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get pLibraryInterface() {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pLibraryInterface(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pLibraryInterface(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
   
   get pDynamicState() {
     return this.#view.getBigUint64(72, LE);
   }
   
-  set pDynamicState(value: Deno.PointerValue) {
-    this.#view.setBigUint64(72, BigInt(value), LE);
+  set pDynamicState(value: AnyPointer) {
+    this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
   
   get layout() {
@@ -51338,7 +51355,7 @@ export class VkRayTracingPipelineCreateInfoKHR implements IVkStructure {
   }
   
   set layout(value: VkPipelineLayout) {
-    this.#view.setBigUint64(80, BigInt(value), LE);
+    this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
   
   get basePipelineHandle() {
@@ -51346,7 +51363,7 @@ export class VkRayTracingPipelineCreateInfoKHR implements IVkStructure {
   }
   
   set basePipelineHandle(value: VkPipeline) {
-    this.#view.setBigUint64(88, BigInt(value), LE);
+    this.#view.setBigUint64(88, BigInt(anyPointer(value)), LE);
   }
   
   get basePipelineIndex() {
@@ -51380,7 +51397,7 @@ export class VkGeometryTrianglesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     vertexData?: VkBuffer;
     vertexOffset?: VkDeviceSize;
     vertexCount?: number;
@@ -51422,8 +51439,8 @@ export class VkGeometryTrianglesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get vertexData() {
@@ -51431,7 +51448,7 @@ export class VkGeometryTrianglesNV implements IVkStructure {
   }
   
   set vertexData(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get vertexOffset() {
@@ -51471,7 +51488,7 @@ export class VkGeometryTrianglesNV implements IVkStructure {
   }
   
   set indexData(value: VkBuffer) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get indexOffset() {
@@ -51503,7 +51520,7 @@ export class VkGeometryTrianglesNV implements IVkStructure {
   }
   
   set transformData(value: VkBuffer) {
-    this.#view.setBigUint64(80, BigInt(value), LE);
+    this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
   
   get transformOffset() {
@@ -51537,7 +51554,7 @@ export class VkGeometryAABBNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     aabbData?: VkBuffer;
     numAABBs?: number;
     stride?: number;
@@ -51565,8 +51582,8 @@ export class VkGeometryAABBNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get aabbData() {
@@ -51574,7 +51591,7 @@ export class VkGeometryAABBNV implements IVkStructure {
   }
   
   set aabbData(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get numAABBs() {
@@ -51678,7 +51695,7 @@ export class VkGeometryNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     geometryType?: VkGeometryTypeKHR;
     geometry?: VkGeometryDataNV;
     flags?: VkGeometryFlagsKHR;
@@ -51704,8 +51721,8 @@ export class VkGeometryNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get geometryType() {
@@ -51758,12 +51775,12 @@ export class VkAccelerationStructureInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     type?: VkAccelerationStructureTypeNV;
     flags?: VkBuildAccelerationStructureFlagsNV;
     instanceCount?: number;
     geometryCount?: number;
-    pGeometries?: Deno.PointerValue;
+    pGeometries?: AnyPointer;
   }) {
     const s = VkAccelerationStructureInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_INFO_NV;
@@ -51788,8 +51805,8 @@ export class VkAccelerationStructureInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get type() {
@@ -51828,8 +51845,8 @@ export class VkAccelerationStructureInfoNV implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pGeometries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pGeometries(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -51855,7 +51872,7 @@ export class VkAccelerationStructureCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     compactedSize?: VkDeviceSize;
     info?: VkAccelerationStructureInfoNV;
   }) {
@@ -51879,8 +51896,8 @@ export class VkAccelerationStructureCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get compactedSize() {
@@ -51925,12 +51942,12 @@ export class VkBindAccelerationStructureMemoryInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     accelerationStructure?: VkAccelerationStructureNV;
     memory?: VkDeviceMemory;
     memoryOffset?: VkDeviceSize;
     deviceIndexCount?: number;
-    pDeviceIndices?: Deno.PointerValue;
+    pDeviceIndices?: AnyPointer;
   }) {
     const s = VkBindAccelerationStructureMemoryInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV;
@@ -51955,8 +51972,8 @@ export class VkBindAccelerationStructureMemoryInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get accelerationStructure() {
@@ -51964,7 +51981,7 @@ export class VkBindAccelerationStructureMemoryInfoNV implements IVkStructure {
   }
   
   set accelerationStructure(value: VkAccelerationStructureNV) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -51972,7 +51989,7 @@ export class VkBindAccelerationStructureMemoryInfoNV implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get memoryOffset() {
@@ -51995,8 +52012,8 @@ export class VkBindAccelerationStructureMemoryInfoNV implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pDeviceIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pDeviceIndices(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -52022,9 +52039,9 @@ export class VkWriteDescriptorSetAccelerationStructureKHR implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     accelerationStructureCount?: number;
-    pAccelerationStructures?: Deno.PointerValue;
+    pAccelerationStructures?: AnyPointer;
   }) {
     const s = VkWriteDescriptorSetAccelerationStructureKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR;
@@ -52046,8 +52063,8 @@ export class VkWriteDescriptorSetAccelerationStructureKHR implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get accelerationStructureCount() {
@@ -52062,8 +52079,8 @@ export class VkWriteDescriptorSetAccelerationStructureKHR implements IVkStructur
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAccelerationStructures(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAccelerationStructures(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -52089,9 +52106,9 @@ export class VkWriteDescriptorSetAccelerationStructureNV implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     accelerationStructureCount?: number;
-    pAccelerationStructures?: Deno.PointerValue;
+    pAccelerationStructures?: AnyPointer;
   }) {
     const s = VkWriteDescriptorSetAccelerationStructureNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV;
@@ -52113,8 +52130,8 @@ export class VkWriteDescriptorSetAccelerationStructureNV implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get accelerationStructureCount() {
@@ -52129,8 +52146,8 @@ export class VkWriteDescriptorSetAccelerationStructureNV implements IVkStructure
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAccelerationStructures(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAccelerationStructures(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -52156,7 +52173,7 @@ export class VkAccelerationStructureMemoryRequirementsInfoNV implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     type?: VkAccelerationStructureMemoryRequirementsTypeNV;
     accelerationStructure?: VkAccelerationStructureNV;
   }) {
@@ -52180,8 +52197,8 @@ export class VkAccelerationStructureMemoryRequirementsInfoNV implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get type() {
@@ -52197,7 +52214,7 @@ export class VkAccelerationStructureMemoryRequirementsInfoNV implements IVkStruc
   }
   
   set accelerationStructure(value: VkAccelerationStructureNV) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -52223,7 +52240,7 @@ export class VkPhysicalDeviceAccelerationStructureFeaturesKHR implements IVkStru
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     accelerationStructure?: VkBool32;
     accelerationStructureCaptureReplay?: VkBool32;
     accelerationStructureIndirectBuild?: VkBool32;
@@ -52253,8 +52270,8 @@ export class VkPhysicalDeviceAccelerationStructureFeaturesKHR implements IVkStru
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get accelerationStructure() {
@@ -52320,7 +52337,7 @@ export class VkPhysicalDeviceRayTracingPipelineFeaturesKHR implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     rayTracingPipeline?: VkBool32;
     rayTracingPipelineShaderGroupHandleCaptureReplay?: VkBool32;
     rayTracingPipelineShaderGroupHandleCaptureReplayMixed?: VkBool32;
@@ -52350,8 +52367,8 @@ export class VkPhysicalDeviceRayTracingPipelineFeaturesKHR implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get rayTracingPipeline() {
@@ -52417,7 +52434,7 @@ export class VkPhysicalDeviceRayQueryFeaturesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     rayQuery?: VkBool32;
   }) {
     const s = VkPhysicalDeviceRayQueryFeaturesKHR.alloc();
@@ -52439,8 +52456,8 @@ export class VkPhysicalDeviceRayQueryFeaturesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get rayQuery() {
@@ -52474,7 +52491,7 @@ export class VkPhysicalDeviceAccelerationStructurePropertiesKHR implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxGeometryCount?: Deno.PointerValue;
     maxInstanceCount?: Deno.PointerValue;
     maxPrimitiveCount?: Deno.PointerValue;
@@ -52510,8 +52527,8 @@ export class VkPhysicalDeviceAccelerationStructurePropertiesKHR implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxGeometryCount() {
@@ -52601,7 +52618,7 @@ export class VkPhysicalDeviceRayTracingPipelinePropertiesKHR implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderGroupHandleSize?: number;
     maxRayRecursionDepth?: number;
     maxShaderGroupStride?: number;
@@ -52637,8 +52654,8 @@ export class VkPhysicalDeviceRayTracingPipelinePropertiesKHR implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderGroupHandleSize() {
@@ -52728,7 +52745,7 @@ export class VkPhysicalDeviceRayTracingPropertiesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderGroupHandleSize?: number;
     maxRecursionDepth?: number;
     maxShaderGroupStride?: number;
@@ -52764,8 +52781,8 @@ export class VkPhysicalDeviceRayTracingPropertiesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderGroupHandleSize() {
@@ -53139,7 +53156,7 @@ export class VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     rayTracingMaintenance1?: VkBool32;
     rayTracingPipelineTraceRaysIndirect2?: VkBool32;
   }) {
@@ -53163,8 +53180,8 @@ export class VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get rayTracingMaintenance1() {
@@ -53206,9 +53223,9 @@ export class VkDrmFormatModifierPropertiesListEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     drmFormatModifierCount?: number;
-    pDrmFormatModifierProperties?: Deno.PointerValue;
+    pDrmFormatModifierProperties?: AnyPointer;
   }) {
     const s = VkDrmFormatModifierPropertiesListEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT;
@@ -53230,8 +53247,8 @@ export class VkDrmFormatModifierPropertiesListEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get drmFormatModifierCount() {
@@ -53246,8 +53263,8 @@ export class VkDrmFormatModifierPropertiesListEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDrmFormatModifierProperties(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDrmFormatModifierProperties(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -53331,11 +53348,11 @@ export class VkPhysicalDeviceImageDrmFormatModifierInfoEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     drmFormatModifier?: Deno.PointerValue;
     sharingMode?: VkSharingMode;
     queueFamilyIndexCount?: number;
-    pQueueFamilyIndices?: Deno.PointerValue;
+    pQueueFamilyIndices?: AnyPointer;
   }) {
     const s = VkPhysicalDeviceImageDrmFormatModifierInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT;
@@ -53359,8 +53376,8 @@ export class VkPhysicalDeviceImageDrmFormatModifierInfoEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get drmFormatModifier() {
@@ -53391,8 +53408,8 @@ export class VkPhysicalDeviceImageDrmFormatModifierInfoEXT implements IVkStructu
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pQueueFamilyIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pQueueFamilyIndices(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -53418,9 +53435,9 @@ export class VkImageDrmFormatModifierListCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     drmFormatModifierCount?: number;
-    pDrmFormatModifiers?: Deno.PointerValue;
+    pDrmFormatModifiers?: AnyPointer;
   }) {
     const s = VkImageDrmFormatModifierListCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT;
@@ -53442,8 +53459,8 @@ export class VkImageDrmFormatModifierListCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get drmFormatModifierCount() {
@@ -53458,8 +53475,8 @@ export class VkImageDrmFormatModifierListCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDrmFormatModifiers(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDrmFormatModifiers(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -53485,10 +53502,10 @@ export class VkImageDrmFormatModifierExplicitCreateInfoEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     drmFormatModifier?: Deno.PointerValue;
     drmFormatModifierPlaneCount?: number;
-    pPlaneLayouts?: Deno.PointerValue;
+    pPlaneLayouts?: AnyPointer;
   }) {
     const s = VkImageDrmFormatModifierExplicitCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT;
@@ -53511,8 +53528,8 @@ export class VkImageDrmFormatModifierExplicitCreateInfoEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get drmFormatModifier() {
@@ -53535,8 +53552,8 @@ export class VkImageDrmFormatModifierExplicitCreateInfoEXT implements IVkStructu
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pPlaneLayouts(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pPlaneLayouts(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -53562,7 +53579,7 @@ export class VkImageDrmFormatModifierPropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     drmFormatModifier?: Deno.PointerValue;
   }) {
     const s = VkImageDrmFormatModifierPropertiesEXT.alloc();
@@ -53584,8 +53601,8 @@ export class VkImageDrmFormatModifierPropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get drmFormatModifier() {
@@ -53619,7 +53636,7 @@ export class VkImageStencilUsageCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stencilUsage?: VkImageUsageFlags;
   }) {
     const s = VkImageStencilUsageCreateInfo.alloc();
@@ -53641,8 +53658,8 @@ export class VkImageStencilUsageCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stencilUsage() {
@@ -53676,7 +53693,7 @@ export class VkDeviceMemoryOverallocationCreateInfoAMD implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     overallocationBehavior?: VkMemoryOverallocationBehaviorAMD;
   }) {
     const s = VkDeviceMemoryOverallocationCreateInfoAMD.alloc();
@@ -53698,8 +53715,8 @@ export class VkDeviceMemoryOverallocationCreateInfoAMD implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get overallocationBehavior() {
@@ -53733,7 +53750,7 @@ export class VkPhysicalDeviceFragmentDensityMapFeaturesEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentDensityMap?: VkBool32;
     fragmentDensityMapDynamic?: VkBool32;
     fragmentDensityMapNonSubsampledImages?: VkBool32;
@@ -53759,8 +53776,8 @@ export class VkPhysicalDeviceFragmentDensityMapFeaturesEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentDensityMap() {
@@ -53810,7 +53827,7 @@ export class VkPhysicalDeviceFragmentDensityMap2FeaturesEXT implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentDensityMapDeferred?: VkBool32;
   }) {
     const s = VkPhysicalDeviceFragmentDensityMap2FeaturesEXT.alloc();
@@ -53832,8 +53849,8 @@ export class VkPhysicalDeviceFragmentDensityMap2FeaturesEXT implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentDensityMapDeferred() {
@@ -53867,7 +53884,7 @@ export class VkPhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentDensityMapOffset?: VkBool32;
   }) {
     const s = VkPhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM.alloc();
@@ -53889,8 +53906,8 @@ export class VkPhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentDensityMapOffset() {
@@ -53924,7 +53941,7 @@ export class VkPhysicalDeviceFragmentDensityMapPropertiesEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minFragmentDensityTexelSize?: VkExtent2D;
     maxFragmentDensityTexelSize?: VkExtent2D;
     fragmentDensityInvocations?: VkBool32;
@@ -53950,8 +53967,8 @@ export class VkPhysicalDeviceFragmentDensityMapPropertiesEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minFragmentDensityTexelSize() {
@@ -54007,7 +54024,7 @@ export class VkPhysicalDeviceFragmentDensityMap2PropertiesEXT implements IVkStru
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     subsampledLoads?: VkBool32;
     subsampledCoarseReconstructionEarlyAccess?: VkBool32;
     maxSubsampledArrayLayers?: number;
@@ -54035,8 +54052,8 @@ export class VkPhysicalDeviceFragmentDensityMap2PropertiesEXT implements IVkStru
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get subsampledLoads() {
@@ -54094,7 +54111,7 @@ export class VkPhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM implements I
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentDensityOffsetGranularity?: VkExtent2D;
   }) {
     const s = VkPhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM.alloc();
@@ -54116,8 +54133,8 @@ export class VkPhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM implements I
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentDensityOffsetGranularity() {
@@ -54154,7 +54171,7 @@ export class VkRenderPassFragmentDensityMapCreateInfoEXT implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentDensityMapAttachment?: VkAttachmentReference;
   }) {
     const s = VkRenderPassFragmentDensityMapCreateInfoEXT.alloc();
@@ -54176,8 +54193,8 @@ export class VkRenderPassFragmentDensityMapCreateInfoEXT implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentDensityMapAttachment() {
@@ -54214,9 +54231,9 @@ export class VkSubpassFragmentDensityMapOffsetEndInfoQCOM implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentDensityOffsetCount?: number;
-    pFragmentDensityOffsets?: Deno.PointerValue;
+    pFragmentDensityOffsets?: AnyPointer;
   }) {
     const s = VkSubpassFragmentDensityMapOffsetEndInfoQCOM.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SUBPASS_FRAGMENT_DENSITY_MAP_OFFSET_END_INFO_QCOM;
@@ -54238,8 +54255,8 @@ export class VkSubpassFragmentDensityMapOffsetEndInfoQCOM implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentDensityOffsetCount() {
@@ -54254,8 +54271,8 @@ export class VkSubpassFragmentDensityMapOffsetEndInfoQCOM implements IVkStructur
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pFragmentDensityOffsets(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pFragmentDensityOffsets(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -54281,7 +54298,7 @@ export class VkPhysicalDeviceScalarBlockLayoutFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     scalarBlockLayout?: VkBool32;
   }) {
     const s = VkPhysicalDeviceScalarBlockLayoutFeatures.alloc();
@@ -54303,8 +54320,8 @@ export class VkPhysicalDeviceScalarBlockLayoutFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get scalarBlockLayout() {
@@ -54338,7 +54355,7 @@ export class VkSurfaceProtectedCapabilitiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     supportsProtected?: VkBool32;
   }) {
     const s = VkSurfaceProtectedCapabilitiesKHR.alloc();
@@ -54360,8 +54377,8 @@ export class VkSurfaceProtectedCapabilitiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get supportsProtected() {
@@ -54395,7 +54412,7 @@ export class VkPhysicalDeviceUniformBufferStandardLayoutFeatures implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     uniformBufferStandardLayout?: VkBool32;
   }) {
     const s = VkPhysicalDeviceUniformBufferStandardLayoutFeatures.alloc();
@@ -54417,8 +54434,8 @@ export class VkPhysicalDeviceUniformBufferStandardLayoutFeatures implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get uniformBufferStandardLayout() {
@@ -54452,7 +54469,7 @@ export class VkPhysicalDeviceDepthClipEnableFeaturesEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     depthClipEnable?: VkBool32;
   }) {
     const s = VkPhysicalDeviceDepthClipEnableFeaturesEXT.alloc();
@@ -54474,8 +54491,8 @@ export class VkPhysicalDeviceDepthClipEnableFeaturesEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get depthClipEnable() {
@@ -54509,7 +54526,7 @@ export class VkPipelineRasterizationDepthClipStateCreateInfoEXT implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineRasterizationDepthClipStateCreateFlagsEXT;
     depthClipEnable?: VkBool32;
   }) {
@@ -54533,8 +54550,8 @@ export class VkPipelineRasterizationDepthClipStateCreateInfoEXT implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -54576,7 +54593,7 @@ export class VkPhysicalDeviceMemoryBudgetPropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     heapBudget?: VkDeviceSize[];
     heapUsage?: VkDeviceSize[];
   }) {
@@ -54600,8 +54617,8 @@ export class VkPhysicalDeviceMemoryBudgetPropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get heapBudget() {
@@ -54659,7 +54676,7 @@ export class VkPhysicalDeviceMemoryPriorityFeaturesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryPriority?: VkBool32;
   }) {
     const s = VkPhysicalDeviceMemoryPriorityFeaturesEXT.alloc();
@@ -54681,8 +54698,8 @@ export class VkPhysicalDeviceMemoryPriorityFeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryPriority() {
@@ -54716,7 +54733,7 @@ export class VkMemoryPriorityAllocateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     priority?: number;
   }) {
     const s = VkMemoryPriorityAllocateInfoEXT.alloc();
@@ -54738,8 +54755,8 @@ export class VkMemoryPriorityAllocateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get priority() {
@@ -54773,7 +54790,7 @@ export class VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pageableDeviceLocalMemory?: VkBool32;
   }) {
     const s = VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT.alloc();
@@ -54795,8 +54812,8 @@ export class VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pageableDeviceLocalMemory() {
@@ -54830,7 +54847,7 @@ export class VkPhysicalDeviceBufferDeviceAddressFeatures implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     bufferDeviceAddress?: VkBool32;
     bufferDeviceAddressCaptureReplay?: VkBool32;
     bufferDeviceAddressMultiDevice?: VkBool32;
@@ -54856,8 +54873,8 @@ export class VkPhysicalDeviceBufferDeviceAddressFeatures implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get bufferDeviceAddress() {
@@ -54907,7 +54924,7 @@ export class VkPhysicalDeviceBufferDeviceAddressFeaturesEXT implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     bufferDeviceAddress?: VkBool32;
     bufferDeviceAddressCaptureReplay?: VkBool32;
     bufferDeviceAddressMultiDevice?: VkBool32;
@@ -54933,8 +54950,8 @@ export class VkPhysicalDeviceBufferDeviceAddressFeaturesEXT implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get bufferDeviceAddress() {
@@ -54984,7 +55001,7 @@ export class VkBufferDeviceAddressInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     buffer?: VkBuffer;
   }) {
     const s = VkBufferDeviceAddressInfo.alloc();
@@ -55006,8 +55023,8 @@ export class VkBufferDeviceAddressInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get buffer() {
@@ -55015,7 +55032,7 @@ export class VkBufferDeviceAddressInfo implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -55041,7 +55058,7 @@ export class VkBufferOpaqueCaptureAddressCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     opaqueCaptureAddress?: Deno.PointerValue;
   }) {
     const s = VkBufferOpaqueCaptureAddressCreateInfo.alloc();
@@ -55063,8 +55080,8 @@ export class VkBufferOpaqueCaptureAddressCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get opaqueCaptureAddress() {
@@ -55098,7 +55115,7 @@ export class VkBufferDeviceAddressCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceAddress?: VkDeviceAddress;
   }) {
     const s = VkBufferDeviceAddressCreateInfoEXT.alloc();
@@ -55120,8 +55137,8 @@ export class VkBufferDeviceAddressCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceAddress() {
@@ -55155,7 +55172,7 @@ export class VkPhysicalDeviceImageViewImageFormatInfoEXT implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageViewType?: VkImageViewType;
   }) {
     const s = VkPhysicalDeviceImageViewImageFormatInfoEXT.alloc();
@@ -55177,8 +55194,8 @@ export class VkPhysicalDeviceImageViewImageFormatInfoEXT implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageViewType() {
@@ -55212,7 +55229,7 @@ export class VkFilterCubicImageViewImageFormatPropertiesEXT implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     filterCubic?: VkBool32;
     filterCubicMinmax?: VkBool32;
   }) {
@@ -55236,8 +55253,8 @@ export class VkFilterCubicImageViewImageFormatPropertiesEXT implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get filterCubic() {
@@ -55279,7 +55296,7 @@ export class VkPhysicalDeviceImagelessFramebufferFeatures implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imagelessFramebuffer?: VkBool32;
   }) {
     const s = VkPhysicalDeviceImagelessFramebufferFeatures.alloc();
@@ -55301,8 +55318,8 @@ export class VkPhysicalDeviceImagelessFramebufferFeatures implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imagelessFramebuffer() {
@@ -55336,9 +55353,9 @@ export class VkFramebufferAttachmentsCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     attachmentImageInfoCount?: number;
-    pAttachmentImageInfos?: Deno.PointerValue;
+    pAttachmentImageInfos?: AnyPointer;
   }) {
     const s = VkFramebufferAttachmentsCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENTS_CREATE_INFO;
@@ -55360,8 +55377,8 @@ export class VkFramebufferAttachmentsCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get attachmentImageInfoCount() {
@@ -55376,8 +55393,8 @@ export class VkFramebufferAttachmentsCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAttachmentImageInfos(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAttachmentImageInfos(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -55403,14 +55420,14 @@ export class VkFramebufferAttachmentImageInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkImageCreateFlags;
     usage?: VkImageUsageFlags;
     width?: number;
     height?: number;
     layerCount?: number;
     viewFormatCount?: number;
-    pViewFormats?: Deno.PointerValue;
+    pViewFormats?: AnyPointer;
   }) {
     const s = VkFramebufferAttachmentImageInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENT_IMAGE_INFO;
@@ -55437,8 +55454,8 @@ export class VkFramebufferAttachmentImageInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -55493,8 +55510,8 @@ export class VkFramebufferAttachmentImageInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pViewFormats(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pViewFormats(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -55520,9 +55537,9 @@ export class VkRenderPassAttachmentBeginInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     attachmentCount?: number;
-    pAttachments?: Deno.PointerValue;
+    pAttachments?: AnyPointer;
   }) {
     const s = VkRenderPassAttachmentBeginInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDER_PASS_ATTACHMENT_BEGIN_INFO;
@@ -55544,8 +55561,8 @@ export class VkRenderPassAttachmentBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get attachmentCount() {
@@ -55560,8 +55577,8 @@ export class VkRenderPassAttachmentBeginInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -55587,7 +55604,7 @@ export class VkPhysicalDeviceTextureCompressionASTCHDRFeatures implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     textureCompressionASTC_HDR?: VkBool32;
   }) {
     const s = VkPhysicalDeviceTextureCompressionASTCHDRFeatures.alloc();
@@ -55609,8 +55626,8 @@ export class VkPhysicalDeviceTextureCompressionASTCHDRFeatures implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get textureCompressionASTC_HDR() {
@@ -55644,7 +55661,7 @@ export class VkPhysicalDeviceCooperativeMatrixFeaturesNV implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     cooperativeMatrix?: VkBool32;
     cooperativeMatrixRobustBufferAccess?: VkBool32;
   }) {
@@ -55668,8 +55685,8 @@ export class VkPhysicalDeviceCooperativeMatrixFeaturesNV implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get cooperativeMatrix() {
@@ -55711,7 +55728,7 @@ export class VkPhysicalDeviceCooperativeMatrixPropertiesNV implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     cooperativeMatrixSupportedStages?: VkShaderStageFlags;
   }) {
     const s = VkPhysicalDeviceCooperativeMatrixPropertiesNV.alloc();
@@ -55733,8 +55750,8 @@ export class VkPhysicalDeviceCooperativeMatrixPropertiesNV implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get cooperativeMatrixSupportedStages() {
@@ -55768,7 +55785,7 @@ export class VkCooperativeMatrixPropertiesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     MSize?: number;
     NSize?: number;
     KSize?: number;
@@ -55804,8 +55821,8 @@ export class VkCooperativeMatrixPropertiesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get MSize() {
@@ -55895,7 +55912,7 @@ export class VkPhysicalDeviceYcbcrImageArraysFeaturesEXT implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     ycbcrImageArrays?: VkBool32;
   }) {
     const s = VkPhysicalDeviceYcbcrImageArraysFeaturesEXT.alloc();
@@ -55917,8 +55934,8 @@ export class VkPhysicalDeviceYcbcrImageArraysFeaturesEXT implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get ycbcrImageArrays() {
@@ -55952,7 +55969,7 @@ export class VkImageViewHandleInfoNVX implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageView?: VkImageView;
     descriptorType?: VkDescriptorType;
     sampler?: VkSampler;
@@ -55978,8 +55995,8 @@ export class VkImageViewHandleInfoNVX implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageView() {
@@ -55987,7 +56004,7 @@ export class VkImageViewHandleInfoNVX implements IVkStructure {
   }
   
   set imageView(value: VkImageView) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get descriptorType() {
@@ -56003,7 +56020,7 @@ export class VkImageViewHandleInfoNVX implements IVkStructure {
   }
   
   set sampler(value: VkSampler) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -56029,7 +56046,7 @@ export class VkImageViewAddressPropertiesNVX implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceAddress?: VkDeviceAddress;
     size?: VkDeviceSize;
   }) {
@@ -56053,8 +56070,8 @@ export class VkImageViewAddressPropertiesNVX implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceAddress() {
@@ -56096,7 +56113,7 @@ export class VkPresentFrameTokenGGP implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     frameToken?: Deno.PointerValue;
   }) {
     const s = VkPresentFrameTokenGGP.alloc();
@@ -56118,8 +56135,8 @@ export class VkPresentFrameTokenGGP implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get frameToken() {
@@ -56201,10 +56218,10 @@ export class VkPipelineCreationFeedbackCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pPipelineCreationFeedback?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pPipelineCreationFeedback?: AnyPointer;
     pipelineStageCreationFeedbackCount?: number;
-    pPipelineStageCreationFeedbacks?: Deno.PointerValue;
+    pPipelineStageCreationFeedbacks?: AnyPointer;
   }) {
     const s = VkPipelineCreationFeedbackCreateInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_CREATION_FEEDBACK_CREATE_INFO;
@@ -56227,16 +56244,16 @@ export class VkPipelineCreationFeedbackCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pPipelineCreationFeedback() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pPipelineCreationFeedback(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pPipelineCreationFeedback(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineStageCreationFeedbackCount() {
@@ -56251,8 +56268,8 @@ export class VkPipelineCreationFeedbackCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pPipelineStageCreationFeedbacks(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pPipelineStageCreationFeedbacks(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -56278,7 +56295,7 @@ export class VkSurfaceFullScreenExclusiveInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fullScreenExclusive?: VkFullScreenExclusiveEXT;
   }) {
     const s = VkSurfaceFullScreenExclusiveInfoEXT.alloc();
@@ -56300,8 +56317,8 @@ export class VkSurfaceFullScreenExclusiveInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fullScreenExclusive() {
@@ -56335,7 +56352,7 @@ export class VkSurfaceFullScreenExclusiveWin32InfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     hmonitor?: Deno.PointerValue;
   }) {
     const s = VkSurfaceFullScreenExclusiveWin32InfoEXT.alloc();
@@ -56357,8 +56374,8 @@ export class VkSurfaceFullScreenExclusiveWin32InfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get hmonitor() {
@@ -56366,7 +56383,7 @@ export class VkSurfaceFullScreenExclusiveWin32InfoEXT implements IVkStructure {
   }
   
   set hmonitor(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -56392,7 +56409,7 @@ export class VkSurfaceCapabilitiesFullScreenExclusiveEXT implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fullScreenExclusiveSupported?: VkBool32;
   }) {
     const s = VkSurfaceCapabilitiesFullScreenExclusiveEXT.alloc();
@@ -56414,8 +56431,8 @@ export class VkSurfaceCapabilitiesFullScreenExclusiveEXT implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fullScreenExclusiveSupported() {
@@ -56449,7 +56466,7 @@ export class VkPhysicalDevicePresentBarrierFeaturesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     presentBarrier?: VkBool32;
   }) {
     const s = VkPhysicalDevicePresentBarrierFeaturesNV.alloc();
@@ -56471,8 +56488,8 @@ export class VkPhysicalDevicePresentBarrierFeaturesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get presentBarrier() {
@@ -56506,7 +56523,7 @@ export class VkSurfaceCapabilitiesPresentBarrierNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     presentBarrierSupported?: VkBool32;
   }) {
     const s = VkSurfaceCapabilitiesPresentBarrierNV.alloc();
@@ -56528,8 +56545,8 @@ export class VkSurfaceCapabilitiesPresentBarrierNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get presentBarrierSupported() {
@@ -56563,7 +56580,7 @@ export class VkSwapchainPresentBarrierCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     presentBarrierEnable?: VkBool32;
   }) {
     const s = VkSwapchainPresentBarrierCreateInfoNV.alloc();
@@ -56585,8 +56602,8 @@ export class VkSwapchainPresentBarrierCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get presentBarrierEnable() {
@@ -56620,7 +56637,7 @@ export class VkPhysicalDevicePerformanceQueryFeaturesKHR implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     performanceCounterQueryPools?: VkBool32;
     performanceCounterMultipleQueryPools?: VkBool32;
   }) {
@@ -56644,8 +56661,8 @@ export class VkPhysicalDevicePerformanceQueryFeaturesKHR implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get performanceCounterQueryPools() {
@@ -56687,7 +56704,7 @@ export class VkPhysicalDevicePerformanceQueryPropertiesKHR implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     allowCommandBufferQueryCopies?: VkBool32;
   }) {
     const s = VkPhysicalDevicePerformanceQueryPropertiesKHR.alloc();
@@ -56709,8 +56726,8 @@ export class VkPhysicalDevicePerformanceQueryPropertiesKHR implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get allowCommandBufferQueryCopies() {
@@ -56744,7 +56761,7 @@ export class VkPerformanceCounterKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     unit?: VkPerformanceCounterUnitKHR;
     scope?: VkPerformanceCounterScopeKHR;
     storage?: VkPerformanceCounterStorageKHR;
@@ -56772,8 +56789,8 @@ export class VkPerformanceCounterKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get unit() {
@@ -56839,7 +56856,7 @@ export class VkPerformanceCounterDescriptionKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPerformanceCounterDescriptionFlagsKHR;
     name?: number[];
     category?: number[];
@@ -56867,8 +56884,8 @@ export class VkPerformanceCounterDescriptionKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -56950,10 +56967,10 @@ export class VkQueryPoolPerformanceCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     queueFamilyIndex?: number;
     counterIndexCount?: number;
-    pCounterIndices?: Deno.PointerValue;
+    pCounterIndices?: AnyPointer;
   }) {
     const s = VkQueryPoolPerformanceCreateInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR;
@@ -56976,8 +56993,8 @@ export class VkQueryPoolPerformanceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get queueFamilyIndex() {
@@ -57000,8 +57017,8 @@ export class VkQueryPoolPerformanceCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pCounterIndices(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pCounterIndices(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -57027,7 +57044,7 @@ export class VkAcquireProfilingLockInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkAcquireProfilingLockFlagsKHR;
     timeout?: Deno.PointerValue;
   }) {
@@ -57051,8 +57068,8 @@ export class VkAcquireProfilingLockInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -57094,7 +57111,7 @@ export class VkPerformanceQuerySubmitInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     counterPassIndex?: number;
   }) {
     const s = VkPerformanceQuerySubmitInfoKHR.alloc();
@@ -57116,8 +57133,8 @@ export class VkPerformanceQuerySubmitInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get counterPassIndex() {
@@ -57151,7 +57168,7 @@ export class VkHeadlessSurfaceCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkHeadlessSurfaceCreateFlagsEXT;
   }) {
     const s = VkHeadlessSurfaceCreateInfoEXT.alloc();
@@ -57173,8 +57190,8 @@ export class VkHeadlessSurfaceCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -57208,7 +57225,7 @@ export class VkPhysicalDeviceCoverageReductionModeFeaturesNV implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     coverageReductionMode?: VkBool32;
   }) {
     const s = VkPhysicalDeviceCoverageReductionModeFeaturesNV.alloc();
@@ -57230,8 +57247,8 @@ export class VkPhysicalDeviceCoverageReductionModeFeaturesNV implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get coverageReductionMode() {
@@ -57265,7 +57282,7 @@ export class VkPipelineCoverageReductionStateCreateInfoNV implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkPipelineCoverageReductionStateCreateFlagsNV;
     coverageReductionMode?: VkCoverageReductionModeNV;
   }) {
@@ -57289,8 +57306,8 @@ export class VkPipelineCoverageReductionStateCreateInfoNV implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -57332,7 +57349,7 @@ export class VkFramebufferMixedSamplesCombinationNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     coverageReductionMode?: VkCoverageReductionModeNV;
     rasterizationSamples?: VkSampleCountFlagBits;
     depthStencilSamples?: VkSampleCountFlags;
@@ -57360,8 +57377,8 @@ export class VkFramebufferMixedSamplesCombinationNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get coverageReductionMode() {
@@ -57419,7 +57436,7 @@ export class VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderIntegerFunctions2?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL.alloc();
@@ -57441,8 +57458,8 @@ export class VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderIntegerFunctions2() {
@@ -57524,8 +57541,8 @@ export class VkInitializePerformanceApiInfoINTEL implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pUserData?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pUserData?: AnyPointer;
   }) {
     const s = VkInitializePerformanceApiInfoINTEL.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_INITIALIZE_PERFORMANCE_API_INFO_INTEL;
@@ -57546,16 +57563,16 @@ export class VkInitializePerformanceApiInfoINTEL implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pUserData() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pUserData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pUserData(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -57581,7 +57598,7 @@ export class VkQueryPoolPerformanceQueryCreateInfoINTEL implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     performanceCountersSampling?: VkQueryPoolSamplingModeINTEL;
   }) {
     const s = VkQueryPoolPerformanceQueryCreateInfoINTEL.alloc();
@@ -57603,8 +57620,8 @@ export class VkQueryPoolPerformanceQueryCreateInfoINTEL implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get performanceCountersSampling() {
@@ -57638,7 +57655,7 @@ export class VkPerformanceMarkerInfoINTEL implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     marker?: Deno.PointerValue;
   }) {
     const s = VkPerformanceMarkerInfoINTEL.alloc();
@@ -57660,8 +57677,8 @@ export class VkPerformanceMarkerInfoINTEL implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get marker() {
@@ -57695,7 +57712,7 @@ export class VkPerformanceStreamMarkerInfoINTEL implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     marker?: number;
   }) {
     const s = VkPerformanceStreamMarkerInfoINTEL.alloc();
@@ -57717,8 +57734,8 @@ export class VkPerformanceStreamMarkerInfoINTEL implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get marker() {
@@ -57752,7 +57769,7 @@ export class VkPerformanceOverrideInfoINTEL implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     type?: VkPerformanceOverrideTypeINTEL;
     enable?: VkBool32;
     parameter?: Deno.PointerValue;
@@ -57778,8 +57795,8 @@ export class VkPerformanceOverrideInfoINTEL implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get type() {
@@ -57829,7 +57846,7 @@ export class VkPerformanceConfigurationAcquireInfoINTEL implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     type?: VkPerformanceConfigurationTypeINTEL;
   }) {
     const s = VkPerformanceConfigurationAcquireInfoINTEL.alloc();
@@ -57851,8 +57868,8 @@ export class VkPerformanceConfigurationAcquireInfoINTEL implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get type() {
@@ -57886,7 +57903,7 @@ export class VkPhysicalDeviceShaderClockFeaturesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderSubgroupClock?: VkBool32;
     shaderDeviceClock?: VkBool32;
   }) {
@@ -57910,8 +57927,8 @@ export class VkPhysicalDeviceShaderClockFeaturesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderSubgroupClock() {
@@ -57953,7 +57970,7 @@ export class VkPhysicalDeviceIndexTypeUint8FeaturesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     indexTypeUint8?: VkBool32;
   }) {
     const s = VkPhysicalDeviceIndexTypeUint8FeaturesEXT.alloc();
@@ -57975,8 +57992,8 @@ export class VkPhysicalDeviceIndexTypeUint8FeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get indexTypeUint8() {
@@ -58010,7 +58027,7 @@ export class VkPhysicalDeviceShaderSMBuiltinsPropertiesNV implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderSMCount?: number;
     shaderWarpsPerSM?: number;
   }) {
@@ -58034,8 +58051,8 @@ export class VkPhysicalDeviceShaderSMBuiltinsPropertiesNV implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderSMCount() {
@@ -58077,7 +58094,7 @@ export class VkPhysicalDeviceShaderSMBuiltinsFeaturesNV implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderSMBuiltins?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderSMBuiltinsFeaturesNV.alloc();
@@ -58099,8 +58116,8 @@ export class VkPhysicalDeviceShaderSMBuiltinsFeaturesNV implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderSMBuiltins() {
@@ -58134,7 +58151,7 @@ export class VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentShaderSampleInterlock?: VkBool32;
     fragmentShaderPixelInterlock?: VkBool32;
     fragmentShaderShadingRateInterlock?: VkBool32;
@@ -58160,8 +58177,8 @@ export class VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentShaderSampleInterlock() {
@@ -58211,7 +58228,7 @@ export class VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     separateDepthStencilLayouts?: VkBool32;
   }) {
     const s = VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures.alloc();
@@ -58233,8 +58250,8 @@ export class VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get separateDepthStencilLayouts() {
@@ -58268,7 +58285,7 @@ export class VkAttachmentReferenceStencilLayout implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stencilLayout?: VkImageLayout;
   }) {
     const s = VkAttachmentReferenceStencilLayout.alloc();
@@ -58290,8 +58307,8 @@ export class VkAttachmentReferenceStencilLayout implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stencilLayout() {
@@ -58325,7 +58342,7 @@ export class VkPhysicalDevicePrimitiveTopologyListRestartFeaturesEXT implements 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     primitiveTopologyListRestart?: VkBool32;
     primitiveTopologyPatchListRestart?: VkBool32;
   }) {
@@ -58349,8 +58366,8 @@ export class VkPhysicalDevicePrimitiveTopologyListRestartFeaturesEXT implements 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get primitiveTopologyListRestart() {
@@ -58392,7 +58409,7 @@ export class VkAttachmentDescriptionStencilLayout implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stencilInitialLayout?: VkImageLayout;
     stencilFinalLayout?: VkImageLayout;
   }) {
@@ -58416,8 +58433,8 @@ export class VkAttachmentDescriptionStencilLayout implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stencilInitialLayout() {
@@ -58459,7 +58476,7 @@ export class VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR implements 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipelineExecutableInfo?: VkBool32;
   }) {
     const s = VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR.alloc();
@@ -58481,8 +58498,8 @@ export class VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR implements 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineExecutableInfo() {
@@ -58516,7 +58533,7 @@ export class VkPipelineInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipeline?: VkPipeline;
   }) {
     const s = VkPipelineInfoKHR.alloc();
@@ -58538,8 +58555,8 @@ export class VkPipelineInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipeline() {
@@ -58547,7 +58564,7 @@ export class VkPipelineInfoKHR implements IVkStructure {
   }
   
   set pipeline(value: VkPipeline) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -58573,7 +58590,7 @@ export class VkPipelineExecutablePropertiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stages?: VkShaderStageFlags;
     name?: number[];
     description?: number[];
@@ -58601,8 +58618,8 @@ export class VkPipelineExecutablePropertiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stages() {
@@ -58676,7 +58693,7 @@ export class VkPipelineExecutableInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipeline?: VkPipeline;
     executableIndex?: number;
   }) {
@@ -58700,8 +58717,8 @@ export class VkPipelineExecutableInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipeline() {
@@ -58709,7 +58726,7 @@ export class VkPipelineExecutableInfoKHR implements IVkStructure {
   }
   
   set pipeline(value: VkPipeline) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get executableIndex() {
@@ -58743,7 +58760,7 @@ export class VkPipelineExecutableStatisticKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     name?: number[];
     description?: number[];
     format?: VkPipelineExecutableStatisticFormatKHR;
@@ -58771,8 +58788,8 @@ export class VkPipelineExecutableStatisticKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get name() {
@@ -58846,12 +58863,12 @@ export class VkPipelineExecutableInternalRepresentationKHR implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     name?: number[];
     description?: number[];
     isText?: VkBool32;
     dataSize?: Deno.PointerValue;
-    pData?: Deno.PointerValue;
+    pData?: AnyPointer;
   }) {
     const s = VkPipelineExecutableInternalRepresentationKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR;
@@ -58876,8 +58893,8 @@ export class VkPipelineExecutableInternalRepresentationKHR implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get name() {
@@ -58932,8 +58949,8 @@ export class VkPipelineExecutableInternalRepresentationKHR implements IVkStructu
     return this.#view.getBigUint64(544, LE);
   }
   
-  set pData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(544, BigInt(value), LE);
+  set pData(value: AnyPointer) {
+    this.#view.setBigUint64(544, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -58959,7 +58976,7 @@ export class VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures implements I
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderDemoteToHelperInvocation?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures.alloc();
@@ -58981,8 +58998,8 @@ export class VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures implements I
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderDemoteToHelperInvocation() {
@@ -59016,7 +59033,7 @@ export class VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     texelBufferAlignment?: VkBool32;
   }) {
     const s = VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT.alloc();
@@ -59038,8 +59055,8 @@ export class VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get texelBufferAlignment() {
@@ -59073,7 +59090,7 @@ export class VkPhysicalDeviceTexelBufferAlignmentProperties implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     storageTexelBufferOffsetAlignmentBytes?: VkDeviceSize;
     storageTexelBufferOffsetSingleTexelAlignment?: VkBool32;
     uniformTexelBufferOffsetAlignmentBytes?: VkDeviceSize;
@@ -59101,8 +59118,8 @@ export class VkPhysicalDeviceTexelBufferAlignmentProperties implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get storageTexelBufferOffsetAlignmentBytes() {
@@ -59160,7 +59177,7 @@ export class VkPhysicalDeviceSubgroupSizeControlFeatures implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     subgroupSizeControl?: VkBool32;
     computeFullSubgroups?: VkBool32;
   }) {
@@ -59184,8 +59201,8 @@ export class VkPhysicalDeviceSubgroupSizeControlFeatures implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get subgroupSizeControl() {
@@ -59227,7 +59244,7 @@ export class VkPhysicalDeviceSubgroupSizeControlProperties implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minSubgroupSize?: number;
     maxSubgroupSize?: number;
     maxComputeWorkgroupSubgroups?: number;
@@ -59255,8 +59272,8 @@ export class VkPhysicalDeviceSubgroupSizeControlProperties implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minSubgroupSize() {
@@ -59314,7 +59331,7 @@ export class VkPipelineShaderStageRequiredSubgroupSizeCreateInfo implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     requiredSubgroupSize?: number;
   }) {
     const s = VkPipelineShaderStageRequiredSubgroupSizeCreateInfo.alloc();
@@ -59336,8 +59353,8 @@ export class VkPipelineShaderStageRequiredSubgroupSizeCreateInfo implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get requiredSubgroupSize() {
@@ -59371,7 +59388,7 @@ export class VkSubpassShadingPipelineCreateInfoHUAWEI implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     renderPass?: VkRenderPass;
     subpass?: number;
   }) {
@@ -59395,8 +59412,8 @@ export class VkSubpassShadingPipelineCreateInfoHUAWEI implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get renderPass() {
@@ -59404,7 +59421,7 @@ export class VkSubpassShadingPipelineCreateInfoHUAWEI implements IVkStructure {
   }
   
   set renderPass(value: VkRenderPass) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get subpass() {
@@ -59438,7 +59455,7 @@ export class VkPhysicalDeviceSubpassShadingPropertiesHUAWEI implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxSubpassShadingWorkgroupSizeAspectRatio?: number;
   }) {
     const s = VkPhysicalDeviceSubpassShadingPropertiesHUAWEI.alloc();
@@ -59460,8 +59477,8 @@ export class VkPhysicalDeviceSubpassShadingPropertiesHUAWEI implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxSubpassShadingWorkgroupSizeAspectRatio() {
@@ -59495,7 +59512,7 @@ export class VkMemoryOpaqueCaptureAddressAllocateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     opaqueCaptureAddress?: Deno.PointerValue;
   }) {
     const s = VkMemoryOpaqueCaptureAddressAllocateInfo.alloc();
@@ -59517,8 +59534,8 @@ export class VkMemoryOpaqueCaptureAddressAllocateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get opaqueCaptureAddress() {
@@ -59552,7 +59569,7 @@ export class VkDeviceMemoryOpaqueCaptureAddressInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memory?: VkDeviceMemory;
   }) {
     const s = VkDeviceMemoryOpaqueCaptureAddressInfo.alloc();
@@ -59574,8 +59591,8 @@ export class VkDeviceMemoryOpaqueCaptureAddressInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -59583,7 +59600,7 @@ export class VkDeviceMemoryOpaqueCaptureAddressInfo implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -59609,7 +59626,7 @@ export class VkPhysicalDeviceLineRasterizationFeaturesEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     rectangularLines?: VkBool32;
     bresenhamLines?: VkBool32;
     smoothLines?: VkBool32;
@@ -59641,8 +59658,8 @@ export class VkPhysicalDeviceLineRasterizationFeaturesEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get rectangularLines() {
@@ -59716,7 +59733,7 @@ export class VkPhysicalDeviceLineRasterizationPropertiesEXT implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     lineSubPixelPrecisionBits?: number;
   }) {
     const s = VkPhysicalDeviceLineRasterizationPropertiesEXT.alloc();
@@ -59738,8 +59755,8 @@ export class VkPhysicalDeviceLineRasterizationPropertiesEXT implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get lineSubPixelPrecisionBits() {
@@ -59773,7 +59790,7 @@ export class VkPipelineRasterizationLineStateCreateInfoEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     lineRasterizationMode?: VkLineRasterizationModeEXT;
     stippledLineEnable?: VkBool32;
     lineStippleFactor?: number;
@@ -59801,8 +59818,8 @@ export class VkPipelineRasterizationLineStateCreateInfoEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get lineRasterizationMode() {
@@ -59860,7 +59877,7 @@ export class VkPhysicalDevicePipelineCreationCacheControlFeatures implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipelineCreationCacheControl?: VkBool32;
   }) {
     const s = VkPhysicalDevicePipelineCreationCacheControlFeatures.alloc();
@@ -59882,8 +59899,8 @@ export class VkPhysicalDevicePipelineCreationCacheControlFeatures implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineCreationCacheControl() {
@@ -59917,7 +59934,7 @@ export class VkPhysicalDeviceVulkan11Features implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     storageBuffer16BitAccess?: VkBool32;
     uniformAndStorageBuffer16BitAccess?: VkBool32;
     storagePushConstant16?: VkBool32;
@@ -59961,8 +59978,8 @@ export class VkPhysicalDeviceVulkan11Features implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get storageBuffer16BitAccess() {
@@ -60084,7 +60101,7 @@ export class VkPhysicalDeviceVulkan11Properties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceUUID?: number[];
     driverUUID?: number[];
     deviceLUID?: number[];
@@ -60134,8 +60151,8 @@ export class VkPhysicalDeviceVulkan11Properties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceUUID() {
@@ -60305,7 +60322,7 @@ export class VkPhysicalDeviceVulkan12Features implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     samplerMirrorClampToEdge?: VkBool32;
     drawIndirectCount?: VkBool32;
     storageBuffer8BitAccess?: VkBool32;
@@ -60419,8 +60436,8 @@ export class VkPhysicalDeviceVulkan12Features implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get samplerMirrorClampToEdge() {
@@ -60822,7 +60839,7 @@ export class VkPhysicalDeviceVulkan12Properties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     driverID?: VkDriverId;
     driverName?: number[];
     driverInfo?: number[];
@@ -60946,8 +60963,8 @@ export class VkPhysicalDeviceVulkan12Properties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get driverID() {
@@ -61408,7 +61425,7 @@ export class VkPhysicalDeviceVulkan13Features implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     robustImageAccess?: VkBool32;
     inlineUniformBlock?: VkBool32;
     descriptorBindingInlineUniformBlockUpdateAfterBind?: VkBool32;
@@ -61458,8 +61475,8 @@ export class VkPhysicalDeviceVulkan13Features implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get robustImageAccess() {
@@ -61605,7 +61622,7 @@ export class VkPhysicalDeviceVulkan13Properties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minSubgroupSize?: number;
     maxSubgroupSize?: number;
     maxComputeWorkgroupSubgroups?: number;
@@ -61715,8 +61732,8 @@ export class VkPhysicalDeviceVulkan13Properties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minSubgroupSize() {
@@ -62102,7 +62119,7 @@ export class VkPipelineCompilerControlCreateInfoAMD implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     compilerControlFlags?: VkPipelineCompilerControlFlagsAMD;
   }) {
     const s = VkPipelineCompilerControlCreateInfoAMD.alloc();
@@ -62124,8 +62141,8 @@ export class VkPipelineCompilerControlCreateInfoAMD implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get compilerControlFlags() {
@@ -62159,7 +62176,7 @@ export class VkPhysicalDeviceCoherentMemoryFeaturesAMD implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceCoherentMemory?: VkBool32;
   }) {
     const s = VkPhysicalDeviceCoherentMemoryFeaturesAMD.alloc();
@@ -62181,8 +62198,8 @@ export class VkPhysicalDeviceCoherentMemoryFeaturesAMD implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceCoherentMemory() {
@@ -62216,7 +62233,7 @@ export class VkPhysicalDeviceToolProperties implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     name?: number[];
     version?: number[];
     purposes?: VkToolPurposeFlags;
@@ -62246,8 +62263,8 @@ export class VkPhysicalDeviceToolProperties implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get name() {
@@ -62345,7 +62362,7 @@ export class VkSamplerCustomBorderColorCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     customBorderColor?: VkClearColorValue;
     format?: VkFormat;
   }) {
@@ -62369,8 +62386,8 @@ export class VkSamplerCustomBorderColorCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get customBorderColor() {
@@ -62412,7 +62429,7 @@ export class VkPhysicalDeviceCustomBorderColorPropertiesEXT implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxCustomBorderColorSamplers?: number;
   }) {
     const s = VkPhysicalDeviceCustomBorderColorPropertiesEXT.alloc();
@@ -62434,8 +62451,8 @@ export class VkPhysicalDeviceCustomBorderColorPropertiesEXT implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxCustomBorderColorSamplers() {
@@ -62469,7 +62486,7 @@ export class VkPhysicalDeviceCustomBorderColorFeaturesEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     customBorderColors?: VkBool32;
     customBorderColorWithoutFormat?: VkBool32;
   }) {
@@ -62493,8 +62510,8 @@ export class VkPhysicalDeviceCustomBorderColorFeaturesEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get customBorderColors() {
@@ -62536,7 +62553,7 @@ export class VkSamplerBorderColorComponentMappingCreateInfoEXT implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     components?: VkComponentMapping;
     srgb?: VkBool32;
   }) {
@@ -62560,8 +62577,8 @@ export class VkSamplerBorderColorComponentMappingCreateInfoEXT implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get components() {
@@ -62606,7 +62623,7 @@ export class VkPhysicalDeviceBorderColorSwizzleFeaturesEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     borderColorSwizzle?: VkBool32;
     borderColorSwizzleFromImage?: VkBool32;
   }) {
@@ -62630,8 +62647,8 @@ export class VkPhysicalDeviceBorderColorSwizzleFeaturesEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get borderColorSwizzle() {
@@ -62673,7 +62690,7 @@ export class VkAccelerationStructureGeometryTrianglesDataKHR implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     vertexFormat?: VkFormat;
     vertexData?: VkDeviceOrHostAddressConstKHR;
     vertexStride?: VkDeviceSize;
@@ -62707,8 +62724,8 @@ export class VkAccelerationStructureGeometryTrianglesDataKHR implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get vertexFormat() {
@@ -62790,7 +62807,7 @@ export class VkAccelerationStructureGeometryAabbsDataKHR implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     data?: VkDeviceOrHostAddressConstKHR;
     stride?: VkDeviceSize;
   }) {
@@ -62814,8 +62831,8 @@ export class VkAccelerationStructureGeometryAabbsDataKHR implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get data() {
@@ -62857,7 +62874,7 @@ export class VkAccelerationStructureGeometryInstancesDataKHR implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     arrayOfPointers?: VkBool32;
     data?: VkDeviceOrHostAddressConstKHR;
   }) {
@@ -62881,8 +62898,8 @@ export class VkAccelerationStructureGeometryInstancesDataKHR implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get arrayOfPointers() {
@@ -62924,7 +62941,7 @@ export class VkAccelerationStructureGeometryKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     geometryType?: VkGeometryTypeKHR;
     geometry?: VkAccelerationStructureGeometryDataKHR;
     flags?: VkGeometryFlagsKHR;
@@ -62950,8 +62967,8 @@ export class VkAccelerationStructureGeometryKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get geometryType() {
@@ -63001,15 +63018,15 @@ export class VkAccelerationStructureBuildGeometryInfoKHR implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     type?: VkAccelerationStructureTypeKHR;
     flags?: VkBuildAccelerationStructureFlagsKHR;
     mode?: VkBuildAccelerationStructureModeKHR;
     srcAccelerationStructure?: VkAccelerationStructureKHR;
     dstAccelerationStructure?: VkAccelerationStructureKHR;
     geometryCount?: number;
-    pGeometries?: Deno.PointerValue;
-    ppGeometries?: Deno.PointerValue;
+    pGeometries?: AnyPointer;
+    ppGeometries?: AnyPointer;
     scratchData?: VkDeviceOrHostAddressKHR;
   }) {
     const s = VkAccelerationStructureBuildGeometryInfoKHR.alloc();
@@ -63039,8 +63056,8 @@ export class VkAccelerationStructureBuildGeometryInfoKHR implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get type() {
@@ -63072,7 +63089,7 @@ export class VkAccelerationStructureBuildGeometryInfoKHR implements IVkStructure
   }
   
   set srcAccelerationStructure(value: VkAccelerationStructureKHR) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get dstAccelerationStructure() {
@@ -63080,7 +63097,7 @@ export class VkAccelerationStructureBuildGeometryInfoKHR implements IVkStructure
   }
   
   set dstAccelerationStructure(value: VkAccelerationStructureKHR) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get geometryCount() {
@@ -63095,16 +63112,16 @@ export class VkAccelerationStructureBuildGeometryInfoKHR implements IVkStructure
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pGeometries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pGeometries(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get ppGeometries() {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set ppGeometries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set ppGeometries(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
   
   get scratchData() {
@@ -63206,7 +63223,7 @@ export class VkAccelerationStructureCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     createFlags?: VkAccelerationStructureCreateFlagsKHR;
     buffer?: VkBuffer;
     offset?: VkDeviceSize;
@@ -63238,8 +63255,8 @@ export class VkAccelerationStructureCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get createFlags() {
@@ -63255,7 +63272,7 @@ export class VkAccelerationStructureCreateInfoKHR implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get offset() {
@@ -63538,7 +63555,7 @@ export class VkAccelerationStructureDeviceAddressInfoKHR implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     accelerationStructure?: VkAccelerationStructureKHR;
   }) {
     const s = VkAccelerationStructureDeviceAddressInfoKHR.alloc();
@@ -63560,8 +63577,8 @@ export class VkAccelerationStructureDeviceAddressInfoKHR implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get accelerationStructure() {
@@ -63569,7 +63586,7 @@ export class VkAccelerationStructureDeviceAddressInfoKHR implements IVkStructure
   }
   
   set accelerationStructure(value: VkAccelerationStructureKHR) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -63595,8 +63612,8 @@ export class VkAccelerationStructureVersionInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pVersionData?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pVersionData?: AnyPointer;
   }) {
     const s = VkAccelerationStructureVersionInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_VERSION_INFO_KHR;
@@ -63617,16 +63634,16 @@ export class VkAccelerationStructureVersionInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pVersionData() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pVersionData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pVersionData(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -63652,7 +63669,7 @@ export class VkCopyAccelerationStructureInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     src?: VkAccelerationStructureKHR;
     dst?: VkAccelerationStructureKHR;
     mode?: VkCopyAccelerationStructureModeKHR;
@@ -63678,8 +63695,8 @@ export class VkCopyAccelerationStructureInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get src() {
@@ -63687,7 +63704,7 @@ export class VkCopyAccelerationStructureInfoKHR implements IVkStructure {
   }
   
   set src(value: VkAccelerationStructureKHR) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dst() {
@@ -63695,7 +63712,7 @@ export class VkCopyAccelerationStructureInfoKHR implements IVkStructure {
   }
   
   set dst(value: VkAccelerationStructureKHR) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get mode() {
@@ -63729,7 +63746,7 @@ export class VkCopyAccelerationStructureToMemoryInfoKHR implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     src?: VkAccelerationStructureKHR;
     dst?: VkDeviceOrHostAddressKHR;
     mode?: VkCopyAccelerationStructureModeKHR;
@@ -63755,8 +63772,8 @@ export class VkCopyAccelerationStructureToMemoryInfoKHR implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get src() {
@@ -63764,7 +63781,7 @@ export class VkCopyAccelerationStructureToMemoryInfoKHR implements IVkStructure 
   }
   
   set src(value: VkAccelerationStructureKHR) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dst() {
@@ -63806,7 +63823,7 @@ export class VkCopyMemoryToAccelerationStructureInfoKHR implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     src?: VkDeviceOrHostAddressConstKHR;
     dst?: VkAccelerationStructureKHR;
     mode?: VkCopyAccelerationStructureModeKHR;
@@ -63832,8 +63849,8 @@ export class VkCopyMemoryToAccelerationStructureInfoKHR implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get src() {
@@ -63849,7 +63866,7 @@ export class VkCopyMemoryToAccelerationStructureInfoKHR implements IVkStructure 
   }
   
   set dst(value: VkAccelerationStructureKHR) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get mode() {
@@ -63883,7 +63900,7 @@ export class VkRayTracingPipelineInterfaceCreateInfoKHR implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxPipelineRayPayloadSize?: number;
     maxPipelineRayHitAttributeSize?: number;
   }) {
@@ -63907,8 +63924,8 @@ export class VkRayTracingPipelineInterfaceCreateInfoKHR implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxPipelineRayPayloadSize() {
@@ -63950,9 +63967,9 @@ export class VkPipelineLibraryCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     libraryCount?: number;
-    pLibraries?: Deno.PointerValue;
+    pLibraries?: AnyPointer;
   }) {
     const s = VkPipelineLibraryCreateInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_LIBRARY_CREATE_INFO_KHR;
@@ -63974,8 +63991,8 @@ export class VkPipelineLibraryCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get libraryCount() {
@@ -63990,8 +64007,8 @@ export class VkPipelineLibraryCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pLibraries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pLibraries(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -64017,7 +64034,7 @@ export class VkPhysicalDeviceExtendedDynamicStateFeaturesEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     extendedDynamicState?: VkBool32;
   }) {
     const s = VkPhysicalDeviceExtendedDynamicStateFeaturesEXT.alloc();
@@ -64039,8 +64056,8 @@ export class VkPhysicalDeviceExtendedDynamicStateFeaturesEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get extendedDynamicState() {
@@ -64074,7 +64091,7 @@ export class VkPhysicalDeviceExtendedDynamicState2FeaturesEXT implements IVkStru
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     extendedDynamicState2?: VkBool32;
     extendedDynamicState2LogicOp?: VkBool32;
     extendedDynamicState2PatchControlPoints?: VkBool32;
@@ -64100,8 +64117,8 @@ export class VkPhysicalDeviceExtendedDynamicState2FeaturesEXT implements IVkStru
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get extendedDynamicState2() {
@@ -64151,7 +64168,7 @@ export class VkPhysicalDeviceExtendedDynamicState3FeaturesEXT implements IVkStru
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     extendedDynamicState3TessellationDomainOrigin?: VkBool32;
     extendedDynamicState3DepthClampEnable?: VkBool32;
     extendedDynamicState3PolygonMode?: VkBool32;
@@ -64233,8 +64250,8 @@ export class VkPhysicalDeviceExtendedDynamicState3FeaturesEXT implements IVkStru
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get extendedDynamicState3TessellationDomainOrigin() {
@@ -64508,7 +64525,7 @@ export class VkPhysicalDeviceExtendedDynamicState3PropertiesEXT implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     dynamicPrimitiveTopologyUnrestricted?: VkBool32;
   }) {
     const s = VkPhysicalDeviceExtendedDynamicState3PropertiesEXT.alloc();
@@ -64530,8 +64547,8 @@ export class VkPhysicalDeviceExtendedDynamicState3PropertiesEXT implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dynamicPrimitiveTopologyUnrestricted() {
@@ -64731,7 +64748,7 @@ export class VkRenderPassTransformBeginInfoQCOM implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     transform?: VkSurfaceTransformFlagBitsKHR;
   }) {
     const s = VkRenderPassTransformBeginInfoQCOM.alloc();
@@ -64753,8 +64770,8 @@ export class VkRenderPassTransformBeginInfoQCOM implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get transform() {
@@ -64788,7 +64805,7 @@ export class VkCopyCommandTransformInfoQCOM implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     transform?: VkSurfaceTransformFlagBitsKHR;
   }) {
     const s = VkCopyCommandTransformInfoQCOM.alloc();
@@ -64810,8 +64827,8 @@ export class VkCopyCommandTransformInfoQCOM implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get transform() {
@@ -64845,7 +64862,7 @@ export class VkCommandBufferInheritanceRenderPassTransformInfoQCOM implements IV
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     transform?: VkSurfaceTransformFlagBitsKHR;
     renderArea?: VkRect2D;
   }) {
@@ -64869,8 +64886,8 @@ export class VkCommandBufferInheritanceRenderPassTransformInfoQCOM implements IV
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get transform() {
@@ -64915,7 +64932,7 @@ export class VkPhysicalDeviceDiagnosticsConfigFeaturesNV implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     diagnosticsConfig?: VkBool32;
   }) {
     const s = VkPhysicalDeviceDiagnosticsConfigFeaturesNV.alloc();
@@ -64937,8 +64954,8 @@ export class VkPhysicalDeviceDiagnosticsConfigFeaturesNV implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get diagnosticsConfig() {
@@ -64972,7 +64989,7 @@ export class VkDeviceDiagnosticsConfigCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDeviceDiagnosticsConfigFlagsNV;
   }) {
     const s = VkDeviceDiagnosticsConfigCreateInfoNV.alloc();
@@ -64994,8 +65011,8 @@ export class VkDeviceDiagnosticsConfigCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -65029,7 +65046,7 @@ export class VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures implements IV
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderZeroInitializeWorkgroupMemory?: VkBool32;
   }) {
     const s = VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures.alloc();
@@ -65051,8 +65068,8 @@ export class VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures implements IV
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderZeroInitializeWorkgroupMemory() {
@@ -65086,7 +65103,7 @@ export class VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR impleme
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderSubgroupUniformControlFlow?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR.alloc();
@@ -65108,8 +65125,8 @@ export class VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR impleme
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderSubgroupUniformControlFlow() {
@@ -65143,7 +65160,7 @@ export class VkPhysicalDeviceRobustness2FeaturesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     robustBufferAccess2?: VkBool32;
     robustImageAccess2?: VkBool32;
     nullDescriptor?: VkBool32;
@@ -65169,8 +65186,8 @@ export class VkPhysicalDeviceRobustness2FeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get robustBufferAccess2() {
@@ -65220,7 +65237,7 @@ export class VkPhysicalDeviceRobustness2PropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     robustStorageBufferAccessSizeAlignment?: VkDeviceSize;
     robustUniformBufferAccessSizeAlignment?: VkDeviceSize;
   }) {
@@ -65244,8 +65261,8 @@ export class VkPhysicalDeviceRobustness2PropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get robustStorageBufferAccessSizeAlignment() {
@@ -65287,7 +65304,7 @@ export class VkPhysicalDeviceImageRobustnessFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     robustImageAccess?: VkBool32;
   }) {
     const s = VkPhysicalDeviceImageRobustnessFeatures.alloc();
@@ -65309,8 +65326,8 @@ export class VkPhysicalDeviceImageRobustnessFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get robustImageAccess() {
@@ -65344,7 +65361,7 @@ export class VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR implements
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     workgroupMemoryExplicitLayout?: VkBool32;
     workgroupMemoryExplicitLayoutScalarBlockLayout?: VkBool32;
     workgroupMemoryExplicitLayout8BitAccess?: VkBool32;
@@ -65372,8 +65389,8 @@ export class VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR implements
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get workgroupMemoryExplicitLayout() {
@@ -65431,7 +65448,7 @@ export class VkPhysicalDevicePortabilitySubsetFeaturesKHR implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     constantAlphaColorBlendFactors?: VkBool32;
     events?: VkBool32;
     imageViewFormatReinterpretation?: VkBool32;
@@ -65481,8 +65498,8 @@ export class VkPhysicalDevicePortabilitySubsetFeaturesKHR implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get constantAlphaColorBlendFactors() {
@@ -65628,7 +65645,7 @@ export class VkPhysicalDevicePortabilitySubsetPropertiesKHR implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minVertexInputBindingStrideAlignment?: number;
   }) {
     const s = VkPhysicalDevicePortabilitySubsetPropertiesKHR.alloc();
@@ -65650,8 +65667,8 @@ export class VkPhysicalDevicePortabilitySubsetPropertiesKHR implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minVertexInputBindingStrideAlignment() {
@@ -65685,7 +65702,7 @@ export class VkPhysicalDevice4444FormatsFeaturesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     formatA4R4G4B4?: VkBool32;
     formatA4B4G4R4?: VkBool32;
   }) {
@@ -65709,8 +65726,8 @@ export class VkPhysicalDevice4444FormatsFeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get formatA4R4G4B4() {
@@ -65752,7 +65769,7 @@ export class VkPhysicalDeviceSubpassShadingFeaturesHUAWEI implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     subpassShading?: VkBool32;
   }) {
     const s = VkPhysicalDeviceSubpassShadingFeaturesHUAWEI.alloc();
@@ -65774,8 +65791,8 @@ export class VkPhysicalDeviceSubpassShadingFeaturesHUAWEI implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get subpassShading() {
@@ -65809,7 +65826,7 @@ export class VkBufferCopy2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcOffset?: VkDeviceSize;
     dstOffset?: VkDeviceSize;
     size?: VkDeviceSize;
@@ -65835,8 +65852,8 @@ export class VkBufferCopy2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcOffset() {
@@ -65886,7 +65903,7 @@ export class VkImageCopy2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcSubresource?: VkImageSubresourceLayers;
     srcOffset?: VkOffset3D;
     dstSubresource?: VkImageSubresourceLayers;
@@ -65916,8 +65933,8 @@ export class VkImageCopy2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcSubresource() {
@@ -65998,7 +66015,7 @@ export class VkImageBlit2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcSubresource?: VkImageSubresourceLayers;
     srcOffsets?: VkOffset3D[];
     dstSubresource?: VkImageSubresourceLayers;
@@ -66026,8 +66043,8 @@ export class VkImageBlit2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcSubresource() {
@@ -66113,7 +66130,7 @@ export class VkBufferImageCopy2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     bufferOffset?: VkDeviceSize;
     bufferRowLength?: number;
     bufferImageHeight?: number;
@@ -66145,8 +66162,8 @@ export class VkBufferImageCopy2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get bufferOffset() {
@@ -66229,7 +66246,7 @@ export class VkImageResolve2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcSubresource?: VkImageSubresourceLayers;
     srcOffset?: VkOffset3D;
     dstSubresource?: VkImageSubresourceLayers;
@@ -66259,8 +66276,8 @@ export class VkImageResolve2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcSubresource() {
@@ -66341,11 +66358,11 @@ export class VkCopyBufferInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcBuffer?: VkBuffer;
     dstBuffer?: VkBuffer;
     regionCount?: number;
-    pRegions?: Deno.PointerValue;
+    pRegions?: AnyPointer;
   }) {
     const s = VkCopyBufferInfo2.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_COPY_BUFFER_INFO_2;
@@ -66369,8 +66386,8 @@ export class VkCopyBufferInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcBuffer() {
@@ -66378,7 +66395,7 @@ export class VkCopyBufferInfo2 implements IVkStructure {
   }
   
   set srcBuffer(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dstBuffer() {
@@ -66386,7 +66403,7 @@ export class VkCopyBufferInfo2 implements IVkStructure {
   }
   
   set dstBuffer(value: VkBuffer) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get regionCount() {
@@ -66401,8 +66418,8 @@ export class VkCopyBufferInfo2 implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pRegions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pRegions(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -66428,13 +66445,13 @@ export class VkCopyImageInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcImage?: VkImage;
     srcImageLayout?: VkImageLayout;
     dstImage?: VkImage;
     dstImageLayout?: VkImageLayout;
     regionCount?: number;
-    pRegions?: Deno.PointerValue;
+    pRegions?: AnyPointer;
   }) {
     const s = VkCopyImageInfo2.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_COPY_IMAGE_INFO_2;
@@ -66460,8 +66477,8 @@ export class VkCopyImageInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcImage() {
@@ -66469,7 +66486,7 @@ export class VkCopyImageInfo2 implements IVkStructure {
   }
   
   set srcImage(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get srcImageLayout() {
@@ -66485,7 +66502,7 @@ export class VkCopyImageInfo2 implements IVkStructure {
   }
   
   set dstImage(value: VkImage) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get dstImageLayout() {
@@ -66508,8 +66525,8 @@ export class VkCopyImageInfo2 implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pRegions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pRegions(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -66535,13 +66552,13 @@ export class VkBlitImageInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcImage?: VkImage;
     srcImageLayout?: VkImageLayout;
     dstImage?: VkImage;
     dstImageLayout?: VkImageLayout;
     regionCount?: number;
-    pRegions?: Deno.PointerValue;
+    pRegions?: AnyPointer;
     filter?: VkFilter;
   }) {
     const s = VkBlitImageInfo2.alloc();
@@ -66569,8 +66586,8 @@ export class VkBlitImageInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcImage() {
@@ -66578,7 +66595,7 @@ export class VkBlitImageInfo2 implements IVkStructure {
   }
   
   set srcImage(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get srcImageLayout() {
@@ -66594,7 +66611,7 @@ export class VkBlitImageInfo2 implements IVkStructure {
   }
   
   set dstImage(value: VkImage) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get dstImageLayout() {
@@ -66617,8 +66634,8 @@ export class VkBlitImageInfo2 implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pRegions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pRegions(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get filter() {
@@ -66652,12 +66669,12 @@ export class VkCopyBufferToImageInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcBuffer?: VkBuffer;
     dstImage?: VkImage;
     dstImageLayout?: VkImageLayout;
     regionCount?: number;
-    pRegions?: Deno.PointerValue;
+    pRegions?: AnyPointer;
   }) {
     const s = VkCopyBufferToImageInfo2.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_COPY_BUFFER_TO_IMAGE_INFO_2;
@@ -66682,8 +66699,8 @@ export class VkCopyBufferToImageInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcBuffer() {
@@ -66691,7 +66708,7 @@ export class VkCopyBufferToImageInfo2 implements IVkStructure {
   }
   
   set srcBuffer(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dstImage() {
@@ -66699,7 +66716,7 @@ export class VkCopyBufferToImageInfo2 implements IVkStructure {
   }
   
   set dstImage(value: VkImage) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get dstImageLayout() {
@@ -66722,8 +66739,8 @@ export class VkCopyBufferToImageInfo2 implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pRegions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pRegions(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -66749,12 +66766,12 @@ export class VkCopyImageToBufferInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcImage?: VkImage;
     srcImageLayout?: VkImageLayout;
     dstBuffer?: VkBuffer;
     regionCount?: number;
-    pRegions?: Deno.PointerValue;
+    pRegions?: AnyPointer;
   }) {
     const s = VkCopyImageToBufferInfo2.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_COPY_IMAGE_TO_BUFFER_INFO_2;
@@ -66779,8 +66796,8 @@ export class VkCopyImageToBufferInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcImage() {
@@ -66788,7 +66805,7 @@ export class VkCopyImageToBufferInfo2 implements IVkStructure {
   }
   
   set srcImage(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get srcImageLayout() {
@@ -66804,7 +66821,7 @@ export class VkCopyImageToBufferInfo2 implements IVkStructure {
   }
   
   set dstBuffer(value: VkBuffer) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get regionCount() {
@@ -66819,8 +66836,8 @@ export class VkCopyImageToBufferInfo2 implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pRegions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pRegions(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -66846,13 +66863,13 @@ export class VkResolveImageInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcImage?: VkImage;
     srcImageLayout?: VkImageLayout;
     dstImage?: VkImage;
     dstImageLayout?: VkImageLayout;
     regionCount?: number;
-    pRegions?: Deno.PointerValue;
+    pRegions?: AnyPointer;
   }) {
     const s = VkResolveImageInfo2.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RESOLVE_IMAGE_INFO_2;
@@ -66878,8 +66895,8 @@ export class VkResolveImageInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcImage() {
@@ -66887,7 +66904,7 @@ export class VkResolveImageInfo2 implements IVkStructure {
   }
   
   set srcImage(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get srcImageLayout() {
@@ -66903,7 +66920,7 @@ export class VkResolveImageInfo2 implements IVkStructure {
   }
   
   set dstImage(value: VkImage) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get dstImageLayout() {
@@ -66926,8 +66943,8 @@ export class VkResolveImageInfo2 implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pRegions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pRegions(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -66953,7 +66970,7 @@ export class VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderImageInt64Atomics?: VkBool32;
     sparseImageInt64Atomics?: VkBool32;
   }) {
@@ -66977,8 +66994,8 @@ export class VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderImageInt64Atomics() {
@@ -67020,8 +67037,8 @@ export class VkFragmentShadingRateAttachmentInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pFragmentShadingRateAttachment?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pFragmentShadingRateAttachment?: AnyPointer;
     shadingRateAttachmentTexelSize?: VkExtent2D;
   }) {
     const s = VkFragmentShadingRateAttachmentInfoKHR.alloc();
@@ -67044,16 +67061,16 @@ export class VkFragmentShadingRateAttachmentInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pFragmentShadingRateAttachment() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pFragmentShadingRateAttachment(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pFragmentShadingRateAttachment(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get shadingRateAttachmentTexelSize() {
@@ -67090,7 +67107,7 @@ export class VkPipelineFragmentShadingRateStateCreateInfoKHR implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentSize?: VkExtent2D;
     combinerOps?: VkFragmentShadingRateCombinerOpKHR[];
   }) {
@@ -67114,8 +67131,8 @@ export class VkPipelineFragmentShadingRateStateCreateInfoKHR implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentSize() {
@@ -67168,7 +67185,7 @@ export class VkPhysicalDeviceFragmentShadingRateFeaturesKHR implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipelineFragmentShadingRate?: VkBool32;
     primitiveFragmentShadingRate?: VkBool32;
     attachmentFragmentShadingRate?: VkBool32;
@@ -67194,8 +67211,8 @@ export class VkPhysicalDeviceFragmentShadingRateFeaturesKHR implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineFragmentShadingRate() {
@@ -67245,7 +67262,7 @@ export class VkPhysicalDeviceFragmentShadingRatePropertiesKHR implements IVkStru
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minFragmentShadingRateAttachmentTexelSize?: VkExtent2D;
     maxFragmentShadingRateAttachmentTexelSize?: VkExtent2D;
     maxFragmentShadingRateAttachmentTexelSizeAspectRatio?: number;
@@ -67299,8 +67316,8 @@ export class VkPhysicalDeviceFragmentShadingRatePropertiesKHR implements IVkStru
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minFragmentShadingRateAttachmentTexelSize() {
@@ -67471,7 +67488,7 @@ export class VkPhysicalDeviceFragmentShadingRateKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     sampleCounts?: VkSampleCountFlags;
     fragmentSize?: VkExtent2D;
   }) {
@@ -67495,8 +67512,8 @@ export class VkPhysicalDeviceFragmentShadingRateKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get sampleCounts() {
@@ -67541,7 +67558,7 @@ export class VkPhysicalDeviceShaderTerminateInvocationFeatures implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderTerminateInvocation?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderTerminateInvocationFeatures.alloc();
@@ -67563,8 +67580,8 @@ export class VkPhysicalDeviceShaderTerminateInvocationFeatures implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderTerminateInvocation() {
@@ -67598,7 +67615,7 @@ export class VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentShadingRateEnums?: VkBool32;
     supersampleFragmentShadingRates?: VkBool32;
     noInvocationFragmentShadingRates?: VkBool32;
@@ -67624,8 +67641,8 @@ export class VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentShadingRateEnums() {
@@ -67675,7 +67692,7 @@ export class VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxFragmentShadingRateInvocationCount?: VkSampleCountFlagBits;
   }) {
     const s = VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV.alloc();
@@ -67697,8 +67714,8 @@ export class VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxFragmentShadingRateInvocationCount() {
@@ -67732,7 +67749,7 @@ export class VkPipelineFragmentShadingRateEnumStateCreateInfoNV implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shadingRateType?: VkFragmentShadingRateTypeNV;
     shadingRate?: VkFragmentShadingRateNV;
     combinerOps?: VkFragmentShadingRateCombinerOpKHR[];
@@ -67758,8 +67775,8 @@ export class VkPipelineFragmentShadingRateEnumStateCreateInfoNV implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shadingRateType() {
@@ -67817,7 +67834,7 @@ export class VkAccelerationStructureBuildSizesInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     accelerationStructureSize?: VkDeviceSize;
     updateScratchSize?: VkDeviceSize;
     buildScratchSize?: VkDeviceSize;
@@ -67843,8 +67860,8 @@ export class VkAccelerationStructureBuildSizesInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get accelerationStructureSize() {
@@ -67894,7 +67911,7 @@ export class VkPhysicalDeviceImage2DViewOf3DFeaturesEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     image2DViewOf3D?: VkBool32;
     sampler2DViewOf3D?: VkBool32;
   }) {
@@ -67918,8 +67935,8 @@ export class VkPhysicalDeviceImage2DViewOf3DFeaturesEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get image2DViewOf3D() {
@@ -67961,7 +67978,7 @@ export class VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT implements IVkStru
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     mutableDescriptorType?: VkBool32;
   }) {
     const s = VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT.alloc();
@@ -67983,8 +68000,8 @@ export class VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT implements IVkStru
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get mutableDescriptorType() {
@@ -68019,7 +68036,7 @@ export class VkMutableDescriptorTypeListEXT implements IVkStructure {
   
   static create(data: {
     descriptorTypeCount?: number;
-    pDescriptorTypes?: Deno.PointerValue;
+    pDescriptorTypes?: AnyPointer;
   }) {
     const s = VkMutableDescriptorTypeListEXT.alloc();
     if (data.descriptorTypeCount !== undefined) s.descriptorTypeCount = data.descriptorTypeCount;
@@ -68039,8 +68056,8 @@ export class VkMutableDescriptorTypeListEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pDescriptorTypes(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pDescriptorTypes(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -68066,9 +68083,9 @@ export class VkMutableDescriptorTypeCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     mutableDescriptorTypeListCount?: number;
-    pMutableDescriptorTypeLists?: Deno.PointerValue;
+    pMutableDescriptorTypeLists?: AnyPointer;
   }) {
     const s = VkMutableDescriptorTypeCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_EXT;
@@ -68090,8 +68107,8 @@ export class VkMutableDescriptorTypeCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get mutableDescriptorTypeListCount() {
@@ -68106,8 +68123,8 @@ export class VkMutableDescriptorTypeCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pMutableDescriptorTypeLists(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pMutableDescriptorTypeLists(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -68133,7 +68150,7 @@ export class VkPhysicalDeviceDepthClipControlFeaturesEXT implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     depthClipControl?: VkBool32;
   }) {
     const s = VkPhysicalDeviceDepthClipControlFeaturesEXT.alloc();
@@ -68155,8 +68172,8 @@ export class VkPhysicalDeviceDepthClipControlFeaturesEXT implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get depthClipControl() {
@@ -68190,7 +68207,7 @@ export class VkPipelineViewportDepthClipControlCreateInfoEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     negativeOneToOne?: VkBool32;
   }) {
     const s = VkPipelineViewportDepthClipControlCreateInfoEXT.alloc();
@@ -68212,8 +68229,8 @@ export class VkPipelineViewportDepthClipControlCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get negativeOneToOne() {
@@ -68247,7 +68264,7 @@ export class VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     vertexInputDynamicState?: VkBool32;
   }) {
     const s = VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT.alloc();
@@ -68269,8 +68286,8 @@ export class VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get vertexInputDynamicState() {
@@ -68304,7 +68321,7 @@ export class VkPhysicalDeviceExternalMemoryRDMAFeaturesNV implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     externalMemoryRDMA?: VkBool32;
   }) {
     const s = VkPhysicalDeviceExternalMemoryRDMAFeaturesNV.alloc();
@@ -68326,8 +68343,8 @@ export class VkPhysicalDeviceExternalMemoryRDMAFeaturesNV implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get externalMemoryRDMA() {
@@ -68361,7 +68378,7 @@ export class VkVertexInputBindingDescription2EXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     binding?: number;
     stride?: number;
     inputRate?: VkVertexInputRate;
@@ -68389,8 +68406,8 @@ export class VkVertexInputBindingDescription2EXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get binding() {
@@ -68448,7 +68465,7 @@ export class VkVertexInputAttributeDescription2EXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     location?: number;
     binding?: number;
     format?: VkFormat;
@@ -68476,8 +68493,8 @@ export class VkVertexInputAttributeDescription2EXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get location() {
@@ -68535,7 +68552,7 @@ export class VkPhysicalDeviceColorWriteEnableFeaturesEXT implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     colorWriteEnable?: VkBool32;
   }) {
     const s = VkPhysicalDeviceColorWriteEnableFeaturesEXT.alloc();
@@ -68557,8 +68574,8 @@ export class VkPhysicalDeviceColorWriteEnableFeaturesEXT implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get colorWriteEnable() {
@@ -68592,9 +68609,9 @@ export class VkPipelineColorWriteCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     attachmentCount?: number;
-    pColorWriteEnables?: Deno.PointerValue;
+    pColorWriteEnables?: AnyPointer;
   }) {
     const s = VkPipelineColorWriteCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_COLOR_WRITE_CREATE_INFO_EXT;
@@ -68616,8 +68633,8 @@ export class VkPipelineColorWriteCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get attachmentCount() {
@@ -68632,8 +68649,8 @@ export class VkPipelineColorWriteCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pColorWriteEnables(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pColorWriteEnables(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -68659,7 +68676,7 @@ export class VkMemoryBarrier2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcStageMask?: VkPipelineStageFlags2;
     srcAccessMask?: VkAccessFlags2;
     dstStageMask?: VkPipelineStageFlags2;
@@ -68687,8 +68704,8 @@ export class VkMemoryBarrier2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcStageMask() {
@@ -68746,7 +68763,7 @@ export class VkImageMemoryBarrier2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcStageMask?: VkPipelineStageFlags2;
     srcAccessMask?: VkAccessFlags2;
     dstStageMask?: VkPipelineStageFlags2;
@@ -68786,8 +68803,8 @@ export class VkImageMemoryBarrier2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcStageMask() {
@@ -68859,7 +68876,7 @@ export class VkImageMemoryBarrier2 implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
   
   get subresourceRange() {
@@ -68896,7 +68913,7 @@ export class VkBufferMemoryBarrier2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     srcStageMask?: VkPipelineStageFlags2;
     srcAccessMask?: VkAccessFlags2;
     dstStageMask?: VkPipelineStageFlags2;
@@ -68934,8 +68951,8 @@ export class VkBufferMemoryBarrier2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get srcStageMask() {
@@ -68991,7 +69008,7 @@ export class VkBufferMemoryBarrier2 implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get offset() {
@@ -69033,14 +69050,14 @@ export class VkDependencyInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     dependencyFlags?: VkDependencyFlags;
     memoryBarrierCount?: number;
-    pMemoryBarriers?: Deno.PointerValue;
+    pMemoryBarriers?: AnyPointer;
     bufferMemoryBarrierCount?: number;
-    pBufferMemoryBarriers?: Deno.PointerValue;
+    pBufferMemoryBarriers?: AnyPointer;
     imageMemoryBarrierCount?: number;
-    pImageMemoryBarriers?: Deno.PointerValue;
+    pImageMemoryBarriers?: AnyPointer;
   }) {
     const s = VkDependencyInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEPENDENCY_INFO;
@@ -69067,8 +69084,8 @@ export class VkDependencyInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dependencyFlags() {
@@ -69091,8 +69108,8 @@ export class VkDependencyInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pMemoryBarriers(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pMemoryBarriers(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get bufferMemoryBarrierCount() {
@@ -69107,8 +69124,8 @@ export class VkDependencyInfo implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pBufferMemoryBarriers(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pBufferMemoryBarriers(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get imageMemoryBarrierCount() {
@@ -69123,8 +69140,8 @@ export class VkDependencyInfo implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pImageMemoryBarriers(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pImageMemoryBarriers(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -69150,7 +69167,7 @@ export class VkSemaphoreSubmitInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphore?: VkSemaphore;
     value?: Deno.PointerValue;
     stageMask?: VkPipelineStageFlags2;
@@ -69178,8 +69195,8 @@ export class VkSemaphoreSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphore() {
@@ -69187,7 +69204,7 @@ export class VkSemaphoreSubmitInfo implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get value() {
@@ -69237,7 +69254,7 @@ export class VkCommandBufferSubmitInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     commandBuffer?: VkCommandBuffer;
     deviceMask?: number;
   }) {
@@ -69261,8 +69278,8 @@ export class VkCommandBufferSubmitInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get commandBuffer() {
@@ -69270,7 +69287,7 @@ export class VkCommandBufferSubmitInfo implements IVkStructure {
   }
   
   set commandBuffer(value: VkCommandBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get deviceMask() {
@@ -69304,14 +69321,14 @@ export class VkSubmitInfo2 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkSubmitFlags;
     waitSemaphoreInfoCount?: number;
-    pWaitSemaphoreInfos?: Deno.PointerValue;
+    pWaitSemaphoreInfos?: AnyPointer;
     commandBufferInfoCount?: number;
-    pCommandBufferInfos?: Deno.PointerValue;
+    pCommandBufferInfos?: AnyPointer;
     signalSemaphoreInfoCount?: number;
-    pSignalSemaphoreInfos?: Deno.PointerValue;
+    pSignalSemaphoreInfos?: AnyPointer;
   }) {
     const s = VkSubmitInfo2.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_SUBMIT_INFO_2;
@@ -69338,8 +69355,8 @@ export class VkSubmitInfo2 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -69362,8 +69379,8 @@ export class VkSubmitInfo2 implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pWaitSemaphoreInfos(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pWaitSemaphoreInfos(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get commandBufferInfoCount() {
@@ -69378,8 +69395,8 @@ export class VkSubmitInfo2 implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pCommandBufferInfos(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pCommandBufferInfos(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get signalSemaphoreInfoCount() {
@@ -69394,8 +69411,8 @@ export class VkSubmitInfo2 implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pSignalSemaphoreInfos(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pSignalSemaphoreInfos(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -69421,7 +69438,7 @@ export class VkQueueFamilyCheckpointProperties2NV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     checkpointExecutionStageMask?: VkPipelineStageFlags2;
   }) {
     const s = VkQueueFamilyCheckpointProperties2NV.alloc();
@@ -69443,8 +69460,8 @@ export class VkQueueFamilyCheckpointProperties2NV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get checkpointExecutionStageMask() {
@@ -69478,9 +69495,9 @@ export class VkCheckpointData2NV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stage?: VkPipelineStageFlags2;
-    pCheckpointMarker?: Deno.PointerValue;
+    pCheckpointMarker?: AnyPointer;
   }) {
     const s = VkCheckpointData2NV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_CHECKPOINT_DATA_2_NV;
@@ -69502,8 +69519,8 @@ export class VkCheckpointData2NV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stage() {
@@ -69518,8 +69535,8 @@ export class VkCheckpointData2NV implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pCheckpointMarker(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pCheckpointMarker(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -69545,7 +69562,7 @@ export class VkPhysicalDeviceSynchronization2Features implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     synchronization2?: VkBool32;
   }) {
     const s = VkPhysicalDeviceSynchronization2Features.alloc();
@@ -69567,8 +69584,8 @@ export class VkPhysicalDeviceSynchronization2Features implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get synchronization2() {
@@ -69602,7 +69619,7 @@ export class VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     primitivesGeneratedQuery?: VkBool32;
     primitivesGeneratedQueryWithRasterizerDiscard?: VkBool32;
     primitivesGeneratedQueryWithNonZeroStreams?: VkBool32;
@@ -69628,8 +69645,8 @@ export class VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get primitivesGeneratedQuery() {
@@ -69679,7 +69696,7 @@ export class VkPhysicalDeviceLegacyDitheringFeaturesEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     legacyDithering?: VkBool32;
   }) {
     const s = VkPhysicalDeviceLegacyDitheringFeaturesEXT.alloc();
@@ -69701,8 +69718,8 @@ export class VkPhysicalDeviceLegacyDitheringFeaturesEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get legacyDithering() {
@@ -69736,7 +69753,7 @@ export class VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT implem
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     multisampledRenderToSingleSampled?: VkBool32;
   }) {
     const s = VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT.alloc();
@@ -69758,8 +69775,8 @@ export class VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT implem
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get multisampledRenderToSingleSampled() {
@@ -69793,7 +69810,7 @@ export class VkSubpassResolvePerformanceQueryEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     optimal?: VkBool32;
   }) {
     const s = VkSubpassResolvePerformanceQueryEXT.alloc();
@@ -69815,8 +69832,8 @@ export class VkSubpassResolvePerformanceQueryEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get optimal() {
@@ -69850,7 +69867,7 @@ export class VkMultisampledRenderToSingleSampledInfoEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     multisampledRenderToSingleSampledEnable?: VkBool32;
     rasterizationSamples?: VkSampleCountFlagBits;
   }) {
@@ -69874,8 +69891,8 @@ export class VkMultisampledRenderToSingleSampledInfoEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get multisampledRenderToSingleSampledEnable() {
@@ -69917,7 +69934,7 @@ export class VkPhysicalDevicePipelineProtectedAccessFeaturesEXT implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipelineProtectedAccess?: VkBool32;
   }) {
     const s = VkPhysicalDevicePipelineProtectedAccessFeaturesEXT.alloc();
@@ -69939,8 +69956,8 @@ export class VkPhysicalDevicePipelineProtectedAccessFeaturesEXT implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineProtectedAccess() {
@@ -69974,7 +69991,7 @@ export class VkQueueFamilyVideoPropertiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     videoCodecOperations?: VkVideoCodecOperationFlagsKHR;
   }) {
     const s = VkQueueFamilyVideoPropertiesKHR.alloc();
@@ -69996,8 +70013,8 @@ export class VkQueueFamilyVideoPropertiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get videoCodecOperations() {
@@ -70031,7 +70048,7 @@ export class VkQueueFamilyQueryResultStatusPropertiesKHR implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     queryResultStatusSupport?: VkBool32;
   }) {
     const s = VkQueueFamilyQueryResultStatusPropertiesKHR.alloc();
@@ -70053,8 +70070,8 @@ export class VkQueueFamilyQueryResultStatusPropertiesKHR implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get queryResultStatusSupport() {
@@ -70088,9 +70105,9 @@ export class VkVideoProfileListInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     profileCount?: number;
-    pProfiles?: Deno.PointerValue;
+    pProfiles?: AnyPointer;
   }) {
     const s = VkVideoProfileListInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_PROFILE_LIST_INFO_KHR;
@@ -70112,8 +70129,8 @@ export class VkVideoProfileListInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get profileCount() {
@@ -70128,8 +70145,8 @@ export class VkVideoProfileListInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pProfiles(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pProfiles(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -70155,7 +70172,7 @@ export class VkPhysicalDeviceVideoFormatInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageUsage?: VkImageUsageFlags;
   }) {
     const s = VkPhysicalDeviceVideoFormatInfoKHR.alloc();
@@ -70177,8 +70194,8 @@ export class VkPhysicalDeviceVideoFormatInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageUsage() {
@@ -70212,7 +70229,7 @@ export class VkVideoFormatPropertiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     format?: VkFormat;
     componentMapping?: VkComponentMapping;
     imageCreateFlags?: VkImageCreateFlags;
@@ -70244,8 +70261,8 @@ export class VkVideoFormatPropertiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get format() {
@@ -70322,7 +70339,7 @@ export class VkVideoProfileInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     videoCodecOperation?: VkVideoCodecOperationFlagBitsKHR;
     chromaSubsampling?: VkVideoChromaSubsamplingFlagsKHR;
     lumaBitDepth?: VkVideoComponentBitDepthFlagsKHR;
@@ -70350,8 +70367,8 @@ export class VkVideoProfileInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get videoCodecOperation() {
@@ -70409,7 +70426,7 @@ export class VkVideoCapabilitiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoCapabilityFlagsKHR;
     minBitstreamBufferOffsetAlignment?: VkDeviceSize;
     minBitstreamBufferSizeAlignment?: VkDeviceSize;
@@ -70447,8 +70464,8 @@ export class VkVideoCapabilitiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -70558,7 +70575,7 @@ export class VkVideoSessionMemoryRequirementsKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryBindIndex?: number;
     memoryRequirements?: VkMemoryRequirements;
   }) {
@@ -70582,8 +70599,8 @@ export class VkVideoSessionMemoryRequirementsKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryBindIndex() {
@@ -70628,7 +70645,7 @@ export class VkBindVideoSessionMemoryInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryBindIndex?: number;
     memory?: VkDeviceMemory;
     memoryOffset?: VkDeviceSize;
@@ -70656,8 +70673,8 @@ export class VkBindVideoSessionMemoryInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryBindIndex() {
@@ -70673,7 +70690,7 @@ export class VkBindVideoSessionMemoryInfoKHR implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get memoryOffset() {
@@ -70715,7 +70732,7 @@ export class VkVideoPictureResourceInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     codedOffset?: VkOffset2D;
     codedExtent?: VkExtent2D;
     baseArrayLayer?: number;
@@ -70743,8 +70760,8 @@ export class VkVideoPictureResourceInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get codedOffset() {
@@ -70782,7 +70799,7 @@ export class VkVideoPictureResourceInfoKHR implements IVkStructure {
   }
   
   set imageViewBinding(value: VkImageView) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -70808,9 +70825,9 @@ export class VkVideoReferenceSlotInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     slotIndex?: number;
-    pPictureResource?: Deno.PointerValue;
+    pPictureResource?: AnyPointer;
   }) {
     const s = VkVideoReferenceSlotInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_REFERENCE_SLOT_INFO_KHR;
@@ -70832,8 +70849,8 @@ export class VkVideoReferenceSlotInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get slotIndex() {
@@ -70848,8 +70865,8 @@ export class VkVideoReferenceSlotInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pPictureResource(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pPictureResource(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -70875,7 +70892,7 @@ export class VkVideoDecodeCapabilitiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoDecodeCapabilityFlagsKHR;
   }) {
     const s = VkVideoDecodeCapabilitiesKHR.alloc();
@@ -70897,8 +70914,8 @@ export class VkVideoDecodeCapabilitiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -70932,7 +70949,7 @@ export class VkVideoDecodeUsageInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     videoUsageHints?: VkVideoDecodeUsageFlagsKHR;
   }) {
     const s = VkVideoDecodeUsageInfoKHR.alloc();
@@ -70954,8 +70971,8 @@ export class VkVideoDecodeUsageInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get videoUsageHints() {
@@ -70989,15 +71006,15 @@ export class VkVideoDecodeInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoDecodeFlagsKHR;
     srcBuffer?: VkBuffer;
     srcBufferOffset?: VkDeviceSize;
     srcBufferRange?: VkDeviceSize;
     dstPictureResource?: VkVideoPictureResourceInfoKHR;
-    pSetupReferenceSlot?: Deno.PointerValue;
+    pSetupReferenceSlot?: AnyPointer;
     referenceSlotCount?: number;
-    pReferenceSlots?: Deno.PointerValue;
+    pReferenceSlots?: AnyPointer;
   }) {
     const s = VkVideoDecodeInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_DECODE_INFO_KHR;
@@ -71025,8 +71042,8 @@ export class VkVideoDecodeInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -71042,7 +71059,7 @@ export class VkVideoDecodeInfoKHR implements IVkStructure {
   }
   
   set srcBuffer(value: VkBuffer) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get srcBufferOffset() {
@@ -71076,8 +71093,8 @@ export class VkVideoDecodeInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(96, LE);
   }
   
-  set pSetupReferenceSlot(value: Deno.PointerValue) {
-    this.#view.setBigUint64(96, BigInt(value), LE);
+  set pSetupReferenceSlot(value: AnyPointer) {
+    this.#view.setBigUint64(96, BigInt(anyPointer(value)), LE);
   }
   
   get referenceSlotCount() {
@@ -71092,8 +71109,8 @@ export class VkVideoDecodeInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(112, LE);
   }
   
-  set pReferenceSlots(value: Deno.PointerValue) {
-    this.#view.setBigUint64(112, BigInt(value), LE);
+  set pReferenceSlots(value: AnyPointer) {
+    this.#view.setBigUint64(112, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -71119,7 +71136,7 @@ export class VkVideoDecodeH264ProfileInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stdProfileIdc?: StdVideoH264ProfileIdc;
     pictureLayout?: VkVideoDecodeH264PictureLayoutFlagBitsEXT;
   }) {
@@ -71143,8 +71160,8 @@ export class VkVideoDecodeH264ProfileInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stdProfileIdc() {
@@ -71186,7 +71203,7 @@ export class VkVideoDecodeH264CapabilitiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxLevelIdc?: StdVideoH264LevelIdc;
     fieldOffsetGranularity?: VkOffset2D;
   }) {
@@ -71210,8 +71227,8 @@ export class VkVideoDecodeH264CapabilitiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxLevelIdc() {
@@ -71256,11 +71273,11 @@ export class VkVideoDecodeH264SessionParametersAddInfoEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stdSPSCount?: number;
-    pStdSPSs?: Deno.PointerValue;
+    pStdSPSs?: AnyPointer;
     stdPPSCount?: number;
-    pStdPPSs?: Deno.PointerValue;
+    pStdPPSs?: AnyPointer;
   }) {
     const s = VkVideoDecodeH264SessionParametersAddInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT;
@@ -71284,8 +71301,8 @@ export class VkVideoDecodeH264SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stdSPSCount() {
@@ -71300,8 +71317,8 @@ export class VkVideoDecodeH264SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStdSPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStdSPSs(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get stdPPSCount() {
@@ -71316,8 +71333,8 @@ export class VkVideoDecodeH264SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pStdPPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pStdPPSs(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -71343,10 +71360,10 @@ export class VkVideoDecodeH264SessionParametersCreateInfoEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxStdSPSCount?: number;
     maxStdPPSCount?: number;
-    pParametersAddInfo?: Deno.PointerValue;
+    pParametersAddInfo?: AnyPointer;
   }) {
     const s = VkVideoDecodeH264SessionParametersCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT;
@@ -71369,8 +71386,8 @@ export class VkVideoDecodeH264SessionParametersCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxStdSPSCount() {
@@ -71393,8 +71410,8 @@ export class VkVideoDecodeH264SessionParametersCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pParametersAddInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pParametersAddInfo(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -71420,10 +71437,10 @@ export class VkVideoDecodeH264PictureInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pStdPictureInfo?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pStdPictureInfo?: AnyPointer;
     sliceCount?: number;
-    pSliceOffsets?: Deno.PointerValue;
+    pSliceOffsets?: AnyPointer;
   }) {
     const s = VkVideoDecodeH264PictureInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_PICTURE_INFO_EXT;
@@ -71446,16 +71463,16 @@ export class VkVideoDecodeH264PictureInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pStdPictureInfo() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pStdPictureInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pStdPictureInfo(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get sliceCount() {
@@ -71470,8 +71487,8 @@ export class VkVideoDecodeH264PictureInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pSliceOffsets(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pSliceOffsets(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -71497,8 +71514,8 @@ export class VkVideoDecodeH264DpbSlotInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pStdReferenceInfo?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pStdReferenceInfo?: AnyPointer;
   }) {
     const s = VkVideoDecodeH264DpbSlotInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_DECODE_H264_DPB_SLOT_INFO_EXT;
@@ -71519,16 +71536,16 @@ export class VkVideoDecodeH264DpbSlotInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pStdReferenceInfo() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pStdReferenceInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pStdReferenceInfo(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -71554,7 +71571,7 @@ export class VkVideoDecodeH265ProfileInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stdProfileIdc?: StdVideoH265ProfileIdc;
   }) {
     const s = VkVideoDecodeH265ProfileInfoEXT.alloc();
@@ -71576,8 +71593,8 @@ export class VkVideoDecodeH265ProfileInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stdProfileIdc() {
@@ -71611,7 +71628,7 @@ export class VkVideoDecodeH265CapabilitiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxLevelIdc?: StdVideoH265LevelIdc;
   }) {
     const s = VkVideoDecodeH265CapabilitiesEXT.alloc();
@@ -71633,8 +71650,8 @@ export class VkVideoDecodeH265CapabilitiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxLevelIdc() {
@@ -71668,13 +71685,13 @@ export class VkVideoDecodeH265SessionParametersAddInfoEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stdVPSCount?: number;
-    pStdVPSs?: Deno.PointerValue;
+    pStdVPSs?: AnyPointer;
     stdSPSCount?: number;
-    pStdSPSs?: Deno.PointerValue;
+    pStdSPSs?: AnyPointer;
     stdPPSCount?: number;
-    pStdPPSs?: Deno.PointerValue;
+    pStdPPSs?: AnyPointer;
   }) {
     const s = VkVideoDecodeH265SessionParametersAddInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT;
@@ -71700,8 +71717,8 @@ export class VkVideoDecodeH265SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stdVPSCount() {
@@ -71716,8 +71733,8 @@ export class VkVideoDecodeH265SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStdVPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStdVPSs(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get stdSPSCount() {
@@ -71732,8 +71749,8 @@ export class VkVideoDecodeH265SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pStdSPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pStdSPSs(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get stdPPSCount() {
@@ -71748,8 +71765,8 @@ export class VkVideoDecodeH265SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pStdPPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pStdPPSs(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -71775,11 +71792,11 @@ export class VkVideoDecodeH265SessionParametersCreateInfoEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxStdVPSCount?: number;
     maxStdSPSCount?: number;
     maxStdPPSCount?: number;
-    pParametersAddInfo?: Deno.PointerValue;
+    pParametersAddInfo?: AnyPointer;
   }) {
     const s = VkVideoDecodeH265SessionParametersCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT;
@@ -71803,8 +71820,8 @@ export class VkVideoDecodeH265SessionParametersCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxStdVPSCount() {
@@ -71835,8 +71852,8 @@ export class VkVideoDecodeH265SessionParametersCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pParametersAddInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pParametersAddInfo(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -71862,10 +71879,10 @@ export class VkVideoDecodeH265PictureInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pStdPictureInfo?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pStdPictureInfo?: AnyPointer;
     sliceCount?: number;
-    pSliceOffsets?: Deno.PointerValue;
+    pSliceOffsets?: AnyPointer;
   }) {
     const s = VkVideoDecodeH265PictureInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_PICTURE_INFO_EXT;
@@ -71888,16 +71905,16 @@ export class VkVideoDecodeH265PictureInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pStdPictureInfo() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pStdPictureInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pStdPictureInfo(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get sliceCount() {
@@ -71912,8 +71929,8 @@ export class VkVideoDecodeH265PictureInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pSliceOffsets(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pSliceOffsets(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -71939,8 +71956,8 @@ export class VkVideoDecodeH265DpbSlotInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pStdReferenceInfo?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pStdReferenceInfo?: AnyPointer;
   }) {
     const s = VkVideoDecodeH265DpbSlotInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_DPB_SLOT_INFO_EXT;
@@ -71961,16 +71978,16 @@ export class VkVideoDecodeH265DpbSlotInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pStdReferenceInfo() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pStdReferenceInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pStdReferenceInfo(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -71996,16 +72013,16 @@ export class VkVideoSessionCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     queueFamilyIndex?: number;
     flags?: VkVideoSessionCreateFlagsKHR;
-    pVideoProfile?: Deno.PointerValue;
+    pVideoProfile?: AnyPointer;
     pictureFormat?: VkFormat;
     maxCodedExtent?: VkExtent2D;
     referencePictureFormat?: VkFormat;
     maxDpbSlots?: number;
     maxActiveReferencePictures?: number;
-    pStdHeaderVersion?: Deno.PointerValue;
+    pStdHeaderVersion?: AnyPointer;
   }) {
     const s = VkVideoSessionCreateInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_SESSION_CREATE_INFO_KHR;
@@ -72034,8 +72051,8 @@ export class VkVideoSessionCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get queueFamilyIndex() {
@@ -72058,8 +72075,8 @@ export class VkVideoSessionCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pVideoProfile(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pVideoProfile(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pictureFormat() {
@@ -72109,8 +72126,8 @@ export class VkVideoSessionCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pStdHeaderVersion(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pStdHeaderVersion(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -72136,7 +72153,7 @@ export class VkVideoSessionParametersCreateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoSessionParametersCreateFlagsKHR;
     videoSessionParametersTemplate?: VkVideoSessionParametersKHR;
     videoSession?: VkVideoSessionKHR;
@@ -72162,8 +72179,8 @@ export class VkVideoSessionParametersCreateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -72179,7 +72196,7 @@ export class VkVideoSessionParametersCreateInfoKHR implements IVkStructure {
   }
   
   set videoSessionParametersTemplate(value: VkVideoSessionParametersKHR) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get videoSession() {
@@ -72187,7 +72204,7 @@ export class VkVideoSessionParametersCreateInfoKHR implements IVkStructure {
   }
   
   set videoSession(value: VkVideoSessionKHR) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -72213,7 +72230,7 @@ export class VkVideoSessionParametersUpdateInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     updateSequenceCount?: number;
   }) {
     const s = VkVideoSessionParametersUpdateInfoKHR.alloc();
@@ -72235,8 +72252,8 @@ export class VkVideoSessionParametersUpdateInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get updateSequenceCount() {
@@ -72270,12 +72287,12 @@ export class VkVideoBeginCodingInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoBeginCodingFlagsKHR;
     videoSession?: VkVideoSessionKHR;
     videoSessionParameters?: VkVideoSessionParametersKHR;
     referenceSlotCount?: number;
-    pReferenceSlots?: Deno.PointerValue;
+    pReferenceSlots?: AnyPointer;
   }) {
     const s = VkVideoBeginCodingInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_BEGIN_CODING_INFO_KHR;
@@ -72300,8 +72317,8 @@ export class VkVideoBeginCodingInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -72317,7 +72334,7 @@ export class VkVideoBeginCodingInfoKHR implements IVkStructure {
   }
   
   set videoSession(value: VkVideoSessionKHR) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get videoSessionParameters() {
@@ -72325,7 +72342,7 @@ export class VkVideoBeginCodingInfoKHR implements IVkStructure {
   }
   
   set videoSessionParameters(value: VkVideoSessionParametersKHR) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get referenceSlotCount() {
@@ -72340,8 +72357,8 @@ export class VkVideoBeginCodingInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pReferenceSlots(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pReferenceSlots(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -72367,7 +72384,7 @@ export class VkVideoEndCodingInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoEndCodingFlagsKHR;
   }) {
     const s = VkVideoEndCodingInfoKHR.alloc();
@@ -72389,8 +72406,8 @@ export class VkVideoEndCodingInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -72424,7 +72441,7 @@ export class VkVideoCodingControlInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoCodingControlFlagsKHR;
   }) {
     const s = VkVideoCodingControlInfoKHR.alloc();
@@ -72446,8 +72463,8 @@ export class VkVideoCodingControlInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -72481,7 +72498,7 @@ export class VkVideoEncodeUsageInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     videoUsageHints?: VkVideoEncodeUsageFlagsKHR;
     videoContentHints?: VkVideoEncodeContentFlagsKHR;
     tuningMode?: VkVideoEncodeTuningModeKHR;
@@ -72507,8 +72524,8 @@ export class VkVideoEncodeUsageInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get videoUsageHints() {
@@ -72558,16 +72575,16 @@ export class VkVideoEncodeInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoEncodeFlagsKHR;
     qualityLevel?: number;
     dstBitstreamBuffer?: VkBuffer;
     dstBitstreamBufferOffset?: VkDeviceSize;
     dstBitstreamBufferMaxRange?: VkDeviceSize;
     srcPictureResource?: VkVideoPictureResourceInfoKHR;
-    pSetupReferenceSlot?: Deno.PointerValue;
+    pSetupReferenceSlot?: AnyPointer;
     referenceSlotCount?: number;
-    pReferenceSlots?: Deno.PointerValue;
+    pReferenceSlots?: AnyPointer;
     precedingExternallyEncodedBytes?: number;
   }) {
     const s = VkVideoEncodeInfoKHR.alloc();
@@ -72598,8 +72615,8 @@ export class VkVideoEncodeInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -72623,7 +72640,7 @@ export class VkVideoEncodeInfoKHR implements IVkStructure {
   }
   
   set dstBitstreamBuffer(value: VkBuffer) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get dstBitstreamBufferOffset() {
@@ -72657,8 +72674,8 @@ export class VkVideoEncodeInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(96, LE);
   }
   
-  set pSetupReferenceSlot(value: Deno.PointerValue) {
-    this.#view.setBigUint64(96, BigInt(value), LE);
+  set pSetupReferenceSlot(value: AnyPointer) {
+    this.#view.setBigUint64(96, BigInt(anyPointer(value)), LE);
   }
   
   get referenceSlotCount() {
@@ -72673,8 +72690,8 @@ export class VkVideoEncodeInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(112, LE);
   }
   
-  set pReferenceSlots(value: Deno.PointerValue) {
-    this.#view.setBigUint64(112, BigInt(value), LE);
+  set pReferenceSlots(value: AnyPointer) {
+    this.#view.setBigUint64(112, BigInt(anyPointer(value)), LE);
   }
   
   get precedingExternallyEncodedBytes() {
@@ -72708,11 +72725,11 @@ export class VkVideoEncodeRateControlInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoEncodeRateControlFlagsKHR;
     rateControlMode?: VkVideoEncodeRateControlModeFlagBitsKHR;
     layerCount?: number;
-    pLayerConfigs?: Deno.PointerValue;
+    pLayerConfigs?: AnyPointer;
   }) {
     const s = VkVideoEncodeRateControlInfoKHR.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_RATE_CONTROL_INFO_KHR;
@@ -72736,8 +72753,8 @@ export class VkVideoEncodeRateControlInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -72768,8 +72785,8 @@ export class VkVideoEncodeRateControlInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pLayerConfigs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pLayerConfigs(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -72795,7 +72812,7 @@ export class VkVideoEncodeRateControlLayerInfoKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     averageBitrate?: number;
     maxBitrate?: number;
     frameRateNumerator?: number;
@@ -72827,8 +72844,8 @@ export class VkVideoEncodeRateControlLayerInfoKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get averageBitrate() {
@@ -72902,7 +72919,7 @@ export class VkVideoEncodeCapabilitiesKHR implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoEncodeCapabilityFlagsKHR;
     rateControlModes?: VkVideoEncodeRateControlModeFlagsKHR;
     rateControlLayerCount?: number;
@@ -72932,8 +72949,8 @@ export class VkVideoEncodeCapabilitiesKHR implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -73002,7 +73019,7 @@ export class VkVideoEncodeH264CapabilitiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoEncodeH264CapabilityFlagsEXT;
     inputModeFlags?: VkVideoEncodeH264InputModeFlagsEXT;
     outputModeFlags?: VkVideoEncodeH264OutputModeFlagsEXT;
@@ -73044,8 +73061,8 @@ export class VkVideoEncodeH264CapabilitiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -73159,11 +73176,11 @@ export class VkVideoEncodeH264SessionParametersAddInfoEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stdSPSCount?: number;
-    pStdSPSs?: Deno.PointerValue;
+    pStdSPSs?: AnyPointer;
     stdPPSCount?: number;
-    pStdPPSs?: Deno.PointerValue;
+    pStdPPSs?: AnyPointer;
   }) {
     const s = VkVideoEncodeH264SessionParametersAddInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT;
@@ -73187,8 +73204,8 @@ export class VkVideoEncodeH264SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stdSPSCount() {
@@ -73203,8 +73220,8 @@ export class VkVideoEncodeH264SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStdSPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStdSPSs(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get stdPPSCount() {
@@ -73219,8 +73236,8 @@ export class VkVideoEncodeH264SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pStdPPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pStdPPSs(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -73246,10 +73263,10 @@ export class VkVideoEncodeH264SessionParametersCreateInfoEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxStdSPSCount?: number;
     maxStdPPSCount?: number;
-    pParametersAddInfo?: Deno.PointerValue;
+    pParametersAddInfo?: AnyPointer;
   }) {
     const s = VkVideoEncodeH264SessionParametersCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_SESSION_PARAMETERS_CREATE_INFO_EXT;
@@ -73272,8 +73289,8 @@ export class VkVideoEncodeH264SessionParametersCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxStdSPSCount() {
@@ -73296,8 +73313,8 @@ export class VkVideoEncodeH264SessionParametersCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pParametersAddInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pParametersAddInfo(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -73323,9 +73340,9 @@ export class VkVideoEncodeH264DpbSlotInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     slotIndex?: number;
-    pStdReferenceInfo?: Deno.PointerValue;
+    pStdReferenceInfo?: AnyPointer;
   }) {
     const s = VkVideoEncodeH264DpbSlotInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT;
@@ -73347,8 +73364,8 @@ export class VkVideoEncodeH264DpbSlotInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get slotIndex() {
@@ -73363,8 +73380,8 @@ export class VkVideoEncodeH264DpbSlotInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStdReferenceInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStdReferenceInfo(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -73390,11 +73407,11 @@ export class VkVideoEncodeH264VclFrameInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pReferenceFinalLists?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pReferenceFinalLists?: AnyPointer;
     naluSliceEntryCount?: number;
-    pNaluSliceEntries?: Deno.PointerValue;
-    pCurrentPictureInfo?: Deno.PointerValue;
+    pNaluSliceEntries?: AnyPointer;
+    pCurrentPictureInfo?: AnyPointer;
   }) {
     const s = VkVideoEncodeH264VclFrameInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_VCL_FRAME_INFO_EXT;
@@ -73418,16 +73435,16 @@ export class VkVideoEncodeH264VclFrameInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pReferenceFinalLists() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pReferenceFinalLists(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pReferenceFinalLists(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get naluSliceEntryCount() {
@@ -73442,16 +73459,16 @@ export class VkVideoEncodeH264VclFrameInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pNaluSliceEntries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pNaluSliceEntries(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get pCurrentPictureInfo() {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pCurrentPictureInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pCurrentPictureInfo(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -73477,12 +73494,12 @@ export class VkVideoEncodeH264ReferenceListsInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     referenceList0EntryCount?: number;
-    pReferenceList0Entries?: Deno.PointerValue;
+    pReferenceList0Entries?: AnyPointer;
     referenceList1EntryCount?: number;
-    pReferenceList1Entries?: Deno.PointerValue;
-    pMemMgmtCtrlOperations?: Deno.PointerValue;
+    pReferenceList1Entries?: AnyPointer;
+    pMemMgmtCtrlOperations?: AnyPointer;
   }) {
     const s = VkVideoEncodeH264ReferenceListsInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_REFERENCE_LISTS_INFO_EXT;
@@ -73507,8 +73524,8 @@ export class VkVideoEncodeH264ReferenceListsInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get referenceList0EntryCount() {
@@ -73523,8 +73540,8 @@ export class VkVideoEncodeH264ReferenceListsInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pReferenceList0Entries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pReferenceList0Entries(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get referenceList1EntryCount() {
@@ -73539,16 +73556,16 @@ export class VkVideoEncodeH264ReferenceListsInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pReferenceList1Entries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pReferenceList1Entries(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get pMemMgmtCtrlOperations() {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pMemMgmtCtrlOperations(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pMemMgmtCtrlOperations(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -73574,11 +73591,11 @@ export class VkVideoEncodeH264EmitPictureParametersInfoEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     spsId?: number;
     emitSpsEnable?: VkBool32;
     ppsIdEntryCount?: number;
-    ppsIdEntries?: Deno.PointerValue;
+    ppsIdEntries?: AnyPointer;
   }) {
     const s = VkVideoEncodeH264EmitPictureParametersInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_EMIT_PICTURE_PARAMETERS_INFO_EXT;
@@ -73602,8 +73619,8 @@ export class VkVideoEncodeH264EmitPictureParametersInfoEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get spsId() {
@@ -73634,8 +73651,8 @@ export class VkVideoEncodeH264EmitPictureParametersInfoEXT implements IVkStructu
     return this.#view.getBigUint64(32, LE);
   }
   
-  set ppsIdEntries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set ppsIdEntries(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -73661,7 +73678,7 @@ export class VkVideoEncodeH264ProfileInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stdProfileIdc?: StdVideoH264ProfileIdc;
   }) {
     const s = VkVideoEncodeH264ProfileInfoEXT.alloc();
@@ -73683,8 +73700,8 @@ export class VkVideoEncodeH264ProfileInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stdProfileIdc() {
@@ -73718,10 +73735,10 @@ export class VkVideoEncodeH264NaluSliceInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     mbCount?: number;
-    pReferenceFinalLists?: Deno.PointerValue;
-    pSliceHeaderStd?: Deno.PointerValue;
+    pReferenceFinalLists?: AnyPointer;
+    pSliceHeaderStd?: AnyPointer;
   }) {
     const s = VkVideoEncodeH264NaluSliceInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT;
@@ -73744,8 +73761,8 @@ export class VkVideoEncodeH264NaluSliceInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get mbCount() {
@@ -73760,16 +73777,16 @@ export class VkVideoEncodeH264NaluSliceInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pReferenceFinalLists(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pReferenceFinalLists(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pSliceHeaderStd() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pSliceHeaderStd(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pSliceHeaderStd(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -73795,7 +73812,7 @@ export class VkVideoEncodeH264RateControlInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     gopFrameCount?: number;
     idrPeriod?: number;
     consecutiveBFrameCount?: number;
@@ -73825,8 +73842,8 @@ export class VkVideoEncodeH264RateControlInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get gopFrameCount() {
@@ -74008,7 +74025,7 @@ export class VkVideoEncodeH264RateControlLayerInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     temporalLayerId?: number;
     useInitialRcQp?: VkBool32;
     initialRcQp?: VkVideoEncodeH264QpEXT;
@@ -74046,8 +74063,8 @@ export class VkVideoEncodeH264RateControlLayerInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get temporalLayerId() {
@@ -74157,7 +74174,7 @@ export class VkVideoEncodeH265CapabilitiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkVideoEncodeH265CapabilityFlagsEXT;
     inputModeFlags?: VkVideoEncodeH265InputModeFlagsEXT;
     outputModeFlags?: VkVideoEncodeH265OutputModeFlagsEXT;
@@ -74217,8 +74234,8 @@ export class VkVideoEncodeH265CapabilitiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -74404,13 +74421,13 @@ export class VkVideoEncodeH265SessionParametersAddInfoEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stdVPSCount?: number;
-    pStdVPSs?: Deno.PointerValue;
+    pStdVPSs?: AnyPointer;
     stdSPSCount?: number;
-    pStdSPSs?: Deno.PointerValue;
+    pStdSPSs?: AnyPointer;
     stdPPSCount?: number;
-    pStdPPSs?: Deno.PointerValue;
+    pStdPPSs?: AnyPointer;
   }) {
     const s = VkVideoEncodeH265SessionParametersAddInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H265_SESSION_PARAMETERS_ADD_INFO_EXT;
@@ -74436,8 +74453,8 @@ export class VkVideoEncodeH265SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stdVPSCount() {
@@ -74452,8 +74469,8 @@ export class VkVideoEncodeH265SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStdVPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStdVPSs(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get stdSPSCount() {
@@ -74468,8 +74485,8 @@ export class VkVideoEncodeH265SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pStdSPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pStdSPSs(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get stdPPSCount() {
@@ -74484,8 +74501,8 @@ export class VkVideoEncodeH265SessionParametersAddInfoEXT implements IVkStructur
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pStdPPSs(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pStdPPSs(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -74511,11 +74528,11 @@ export class VkVideoEncodeH265SessionParametersCreateInfoEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxStdVPSCount?: number;
     maxStdSPSCount?: number;
     maxStdPPSCount?: number;
-    pParametersAddInfo?: Deno.PointerValue;
+    pParametersAddInfo?: AnyPointer;
   }) {
     const s = VkVideoEncodeH265SessionParametersCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H265_SESSION_PARAMETERS_CREATE_INFO_EXT;
@@ -74539,8 +74556,8 @@ export class VkVideoEncodeH265SessionParametersCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxStdVPSCount() {
@@ -74571,8 +74588,8 @@ export class VkVideoEncodeH265SessionParametersCreateInfoEXT implements IVkStruc
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pParametersAddInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pParametersAddInfo(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -74598,11 +74615,11 @@ export class VkVideoEncodeH265VclFrameInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pReferenceFinalLists?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pReferenceFinalLists?: AnyPointer;
     naluSliceSegmentEntryCount?: number;
-    pNaluSliceSegmentEntries?: Deno.PointerValue;
-    pCurrentPictureInfo?: Deno.PointerValue;
+    pNaluSliceSegmentEntries?: AnyPointer;
+    pCurrentPictureInfo?: AnyPointer;
   }) {
     const s = VkVideoEncodeH265VclFrameInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H265_VCL_FRAME_INFO_EXT;
@@ -74626,16 +74643,16 @@ export class VkVideoEncodeH265VclFrameInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pReferenceFinalLists() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pReferenceFinalLists(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pReferenceFinalLists(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get naluSliceSegmentEntryCount() {
@@ -74650,16 +74667,16 @@ export class VkVideoEncodeH265VclFrameInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pNaluSliceSegmentEntries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pNaluSliceSegmentEntries(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get pCurrentPictureInfo() {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pCurrentPictureInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pCurrentPictureInfo(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -74685,13 +74702,13 @@ export class VkVideoEncodeH265EmitPictureParametersInfoEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     vpsId?: number;
     spsId?: number;
     emitVpsEnable?: VkBool32;
     emitSpsEnable?: VkBool32;
     ppsIdEntryCount?: number;
-    ppsIdEntries?: Deno.PointerValue;
+    ppsIdEntries?: AnyPointer;
   }) {
     const s = VkVideoEncodeH265EmitPictureParametersInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H265_EMIT_PICTURE_PARAMETERS_INFO_EXT;
@@ -74717,8 +74734,8 @@ export class VkVideoEncodeH265EmitPictureParametersInfoEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get vpsId() {
@@ -74765,8 +74782,8 @@ export class VkVideoEncodeH265EmitPictureParametersInfoEXT implements IVkStructu
     return this.#view.getBigUint64(32, LE);
   }
   
-  set ppsIdEntries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set ppsIdEntries(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -74792,10 +74809,10 @@ export class VkVideoEncodeH265NaluSliceSegmentInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     ctbCount?: number;
-    pReferenceFinalLists?: Deno.PointerValue;
-    pSliceSegmentHeaderStd?: Deno.PointerValue;
+    pReferenceFinalLists?: AnyPointer;
+    pSliceSegmentHeaderStd?: AnyPointer;
   }) {
     const s = VkVideoEncodeH265NaluSliceSegmentInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H265_NALU_SLICE_SEGMENT_INFO_EXT;
@@ -74818,8 +74835,8 @@ export class VkVideoEncodeH265NaluSliceSegmentInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get ctbCount() {
@@ -74834,16 +74851,16 @@ export class VkVideoEncodeH265NaluSliceSegmentInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pReferenceFinalLists(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pReferenceFinalLists(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get pSliceSegmentHeaderStd() {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pSliceSegmentHeaderStd(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pSliceSegmentHeaderStd(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -74869,7 +74886,7 @@ export class VkVideoEncodeH265RateControlInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     gopFrameCount?: number;
     idrPeriod?: number;
     consecutiveBFrameCount?: number;
@@ -74899,8 +74916,8 @@ export class VkVideoEncodeH265RateControlInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get gopFrameCount() {
@@ -75082,7 +75099,7 @@ export class VkVideoEncodeH265RateControlLayerInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     temporalId?: number;
     useInitialRcQp?: VkBool32;
     initialRcQp?: VkVideoEncodeH265QpEXT;
@@ -75120,8 +75137,8 @@ export class VkVideoEncodeH265RateControlLayerInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get temporalId() {
@@ -75231,7 +75248,7 @@ export class VkVideoEncodeH265ProfileInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     stdProfileIdc?: StdVideoH265ProfileIdc;
   }) {
     const s = VkVideoEncodeH265ProfileInfoEXT.alloc();
@@ -75253,8 +75270,8 @@ export class VkVideoEncodeH265ProfileInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get stdProfileIdc() {
@@ -75288,9 +75305,9 @@ export class VkVideoEncodeH265DpbSlotInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     slotIndex?: number;
-    pStdReferenceInfo?: Deno.PointerValue;
+    pStdReferenceInfo?: AnyPointer;
   }) {
     const s = VkVideoEncodeH265DpbSlotInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H265_DPB_SLOT_INFO_EXT;
@@ -75312,8 +75329,8 @@ export class VkVideoEncodeH265DpbSlotInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get slotIndex() {
@@ -75328,8 +75345,8 @@ export class VkVideoEncodeH265DpbSlotInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pStdReferenceInfo(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pStdReferenceInfo(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -75355,12 +75372,12 @@ export class VkVideoEncodeH265ReferenceListsInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     referenceList0EntryCount?: number;
-    pReferenceList0Entries?: Deno.PointerValue;
+    pReferenceList0Entries?: AnyPointer;
     referenceList1EntryCount?: number;
-    pReferenceList1Entries?: Deno.PointerValue;
-    pReferenceModifications?: Deno.PointerValue;
+    pReferenceList1Entries?: AnyPointer;
+    pReferenceModifications?: AnyPointer;
   }) {
     const s = VkVideoEncodeH265ReferenceListsInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_VIDEO_ENCODE_H265_REFERENCE_LISTS_INFO_EXT;
@@ -75385,8 +75402,8 @@ export class VkVideoEncodeH265ReferenceListsInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get referenceList0EntryCount() {
@@ -75401,8 +75418,8 @@ export class VkVideoEncodeH265ReferenceListsInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pReferenceList0Entries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pReferenceList0Entries(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get referenceList1EntryCount() {
@@ -75417,16 +75434,16 @@ export class VkVideoEncodeH265ReferenceListsInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(40, LE);
   }
   
-  set pReferenceList1Entries(value: Deno.PointerValue) {
-    this.#view.setBigUint64(40, BigInt(value), LE);
+  set pReferenceList1Entries(value: AnyPointer) {
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
   
   get pReferenceModifications() {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pReferenceModifications(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pReferenceModifications(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -75452,7 +75469,7 @@ export class VkPhysicalDeviceInheritedViewportScissorFeaturesNV implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     inheritedViewportScissor2D?: VkBool32;
   }) {
     const s = VkPhysicalDeviceInheritedViewportScissorFeaturesNV.alloc();
@@ -75474,8 +75491,8 @@ export class VkPhysicalDeviceInheritedViewportScissorFeaturesNV implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get inheritedViewportScissor2D() {
@@ -75509,10 +75526,10 @@ export class VkCommandBufferInheritanceViewportScissorInfoNV implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     viewportScissor2D?: VkBool32;
     viewportDepthCount?: number;
-    pViewportDepths?: Deno.PointerValue;
+    pViewportDepths?: AnyPointer;
   }) {
     const s = VkCommandBufferInheritanceViewportScissorInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_COMMAND_BUFFER_INHERITANCE_VIEWPORT_SCISSOR_INFO_NV;
@@ -75535,8 +75552,8 @@ export class VkCommandBufferInheritanceViewportScissorInfoNV implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get viewportScissor2D() {
@@ -75559,8 +75576,8 @@ export class VkCommandBufferInheritanceViewportScissorInfoNV implements IVkStruc
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pViewportDepths(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pViewportDepths(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -75586,7 +75603,7 @@ export class VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT implements IVkStru
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     ycbcr2plane444Formats?: VkBool32;
   }) {
     const s = VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT.alloc();
@@ -75608,8 +75625,8 @@ export class VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT implements IVkStru
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get ycbcr2plane444Formats() {
@@ -75643,7 +75660,7 @@ export class VkPhysicalDeviceProvokingVertexFeaturesEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     provokingVertexLast?: VkBool32;
     transformFeedbackPreservesProvokingVertex?: VkBool32;
   }) {
@@ -75667,8 +75684,8 @@ export class VkPhysicalDeviceProvokingVertexFeaturesEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get provokingVertexLast() {
@@ -75710,7 +75727,7 @@ export class VkPhysicalDeviceProvokingVertexPropertiesEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     provokingVertexModePerPipeline?: VkBool32;
     transformFeedbackPreservesTriangleFanProvokingVertex?: VkBool32;
   }) {
@@ -75734,8 +75751,8 @@ export class VkPhysicalDeviceProvokingVertexPropertiesEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get provokingVertexModePerPipeline() {
@@ -75777,7 +75794,7 @@ export class VkPipelineRasterizationProvokingVertexStateCreateInfoEXT implements
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     provokingVertexMode?: VkProvokingVertexModeEXT;
   }) {
     const s = VkPipelineRasterizationProvokingVertexStateCreateInfoEXT.alloc();
@@ -75799,8 +75816,8 @@ export class VkPipelineRasterizationProvokingVertexStateCreateInfoEXT implements
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get provokingVertexMode() {
@@ -75834,9 +75851,9 @@ export class VkCuModuleCreateInfoNVX implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     dataSize?: Deno.PointerValue;
-    pData?: Deno.PointerValue;
+    pData?: AnyPointer;
   }) {
     const s = VkCuModuleCreateInfoNVX.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_CU_MODULE_CREATE_INFO_NVX;
@@ -75858,8 +75875,8 @@ export class VkCuModuleCreateInfoNVX implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dataSize() {
@@ -75874,8 +75891,8 @@ export class VkCuModuleCreateInfoNVX implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pData(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -75901,9 +75918,9 @@ export class VkCuFunctionCreateInfoNVX implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     module?: VkCuModuleNVX;
-    pName?: Deno.PointerValue;
+    pName?: AnyPointer;
   }) {
     const s = VkCuFunctionCreateInfoNVX.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_CU_FUNCTION_CREATE_INFO_NVX;
@@ -75925,8 +75942,8 @@ export class VkCuFunctionCreateInfoNVX implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get module() {
@@ -75934,15 +75951,15 @@ export class VkCuFunctionCreateInfoNVX implements IVkStructure {
   }
   
   set module(value: VkCuModuleNVX) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get pName() {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pName(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pName(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -75968,7 +75985,7 @@ export class VkCuLaunchInfoNVX implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     vk_function?: VkCuFunctionNVX;
     gridDimX?: number;
     gridDimY?: number;
@@ -75978,9 +75995,9 @@ export class VkCuLaunchInfoNVX implements IVkStructure {
     blockDimZ?: number;
     sharedMemBytes?: number;
     paramCount?: Deno.PointerValue;
-    pParams?: Deno.PointerValue;
+    pParams?: AnyPointer;
     extraCount?: Deno.PointerValue;
-    pExtras?: Deno.PointerValue;
+    pExtras?: AnyPointer;
   }) {
     const s = VkCuLaunchInfoNVX.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_CU_LAUNCH_INFO_NVX;
@@ -76012,8 +76029,8 @@ export class VkCuLaunchInfoNVX implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get vk_function() {
@@ -76021,7 +76038,7 @@ export class VkCuLaunchInfoNVX implements IVkStructure {
   }
   
   set vk_function(value: VkCuFunctionNVX) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get gridDimX() {
@@ -76092,8 +76109,8 @@ export class VkCuLaunchInfoNVX implements IVkStructure {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pParams(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pParams(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
   
   get extraCount() {
@@ -76108,8 +76125,8 @@ export class VkCuLaunchInfoNVX implements IVkStructure {
     return this.#view.getBigUint64(80, LE);
   }
   
-  set pExtras(value: Deno.PointerValue) {
-    this.#view.setBigUint64(80, BigInt(value), LE);
+  set pExtras(value: AnyPointer) {
+    this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -76135,7 +76152,7 @@ export class VkPhysicalDeviceDescriptorBufferFeaturesEXT implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     descriptorBuffer?: VkBool32;
     descriptorBufferCaptureReplay?: VkBool32;
     descriptorBufferImageLayoutIgnored?: VkBool32;
@@ -76163,8 +76180,8 @@ export class VkPhysicalDeviceDescriptorBufferFeaturesEXT implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get descriptorBuffer() {
@@ -76222,7 +76239,7 @@ export class VkPhysicalDeviceDescriptorBufferPropertiesEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     combinedImageSamplerDescriptorSingleArray?: VkBool32;
     bufferlessPushDescriptors?: VkBool32;
     allowSamplerImageViewPostSubmitCreation?: VkBool32;
@@ -76308,8 +76325,8 @@ export class VkPhysicalDeviceDescriptorBufferPropertiesEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get combinedImageSamplerDescriptorSingleArray() {
@@ -76599,7 +76616,7 @@ export class VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT implements 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     combinedImageSamplerDensityMapDescriptorSize?: Deno.PointerValue;
   }) {
     const s = VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT.alloc();
@@ -76621,8 +76638,8 @@ export class VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT implements 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get combinedImageSamplerDensityMapDescriptorSize() {
@@ -76656,7 +76673,7 @@ export class VkDescriptorAddressInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     address?: VkDeviceAddress;
     range?: VkDeviceSize;
     format?: VkFormat;
@@ -76682,8 +76699,8 @@ export class VkDescriptorAddressInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get address() {
@@ -76733,7 +76750,7 @@ export class VkDescriptorBufferBindingInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     address?: VkDeviceAddress;
     usage?: VkBufferUsageFlags;
   }) {
@@ -76757,8 +76774,8 @@ export class VkDescriptorBufferBindingInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get address() {
@@ -76800,7 +76817,7 @@ export class VkDescriptorBufferBindingPushDescriptorBufferHandleEXT implements I
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     buffer?: VkBuffer;
   }) {
     const s = VkDescriptorBufferBindingPushDescriptorBufferHandleEXT.alloc();
@@ -76822,8 +76839,8 @@ export class VkDescriptorBufferBindingPushDescriptorBufferHandleEXT implements I
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get buffer() {
@@ -76831,7 +76848,7 @@ export class VkDescriptorBufferBindingPushDescriptorBufferHandleEXT implements I
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -76857,7 +76874,7 @@ export class VkDescriptorGetInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     type?: VkDescriptorType;
     data?: VkDescriptorDataEXT;
   }) {
@@ -76881,8 +76898,8 @@ export class VkDescriptorGetInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get type() {
@@ -76924,7 +76941,7 @@ export class VkBufferCaptureDescriptorDataInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     buffer?: VkBuffer;
   }) {
     const s = VkBufferCaptureDescriptorDataInfoEXT.alloc();
@@ -76946,8 +76963,8 @@ export class VkBufferCaptureDescriptorDataInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get buffer() {
@@ -76955,7 +76972,7 @@ export class VkBufferCaptureDescriptorDataInfoEXT implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -76981,7 +76998,7 @@ export class VkImageCaptureDescriptorDataInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     image?: VkImage;
   }) {
     const s = VkImageCaptureDescriptorDataInfoEXT.alloc();
@@ -77003,8 +77020,8 @@ export class VkImageCaptureDescriptorDataInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get image() {
@@ -77012,7 +77029,7 @@ export class VkImageCaptureDescriptorDataInfoEXT implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -77038,7 +77055,7 @@ export class VkImageViewCaptureDescriptorDataInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageView?: VkImageView;
   }) {
     const s = VkImageViewCaptureDescriptorDataInfoEXT.alloc();
@@ -77060,8 +77077,8 @@ export class VkImageViewCaptureDescriptorDataInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageView() {
@@ -77069,7 +77086,7 @@ export class VkImageViewCaptureDescriptorDataInfoEXT implements IVkStructure {
   }
   
   set imageView(value: VkImageView) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -77095,7 +77112,7 @@ export class VkSamplerCaptureDescriptorDataInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     sampler?: VkSampler;
   }) {
     const s = VkSamplerCaptureDescriptorDataInfoEXT.alloc();
@@ -77117,8 +77134,8 @@ export class VkSamplerCaptureDescriptorDataInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get sampler() {
@@ -77126,7 +77143,7 @@ export class VkSamplerCaptureDescriptorDataInfoEXT implements IVkStructure {
   }
   
   set sampler(value: VkSampler) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -77152,7 +77169,7 @@ export class VkAccelerationStructureCaptureDescriptorDataInfoEXT implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     accelerationStructure?: VkAccelerationStructureKHR;
     accelerationStructureNV?: VkAccelerationStructureNV;
   }) {
@@ -77176,8 +77193,8 @@ export class VkAccelerationStructureCaptureDescriptorDataInfoEXT implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get accelerationStructure() {
@@ -77185,7 +77202,7 @@ export class VkAccelerationStructureCaptureDescriptorDataInfoEXT implements IVkS
   }
   
   set accelerationStructure(value: VkAccelerationStructureKHR) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get accelerationStructureNV() {
@@ -77193,7 +77210,7 @@ export class VkAccelerationStructureCaptureDescriptorDataInfoEXT implements IVkS
   }
   
   set accelerationStructureNV(value: VkAccelerationStructureNV) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -77219,8 +77236,8 @@ export class VkOpaqueCaptureDescriptorDataCreateInfoEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    opaqueCaptureDescriptorData?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    opaqueCaptureDescriptorData?: AnyPointer;
   }) {
     const s = VkOpaqueCaptureDescriptorDataCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_OPAQUE_CAPTURE_DESCRIPTOR_DATA_CREATE_INFO_EXT;
@@ -77241,16 +77258,16 @@ export class VkOpaqueCaptureDescriptorDataCreateInfoEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get opaqueCaptureDescriptorData() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set opaqueCaptureDescriptorData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set opaqueCaptureDescriptorData(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -77276,7 +77293,7 @@ export class VkPhysicalDeviceShaderIntegerDotProductFeatures implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderIntegerDotProduct?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderIntegerDotProductFeatures.alloc();
@@ -77298,8 +77315,8 @@ export class VkPhysicalDeviceShaderIntegerDotProductFeatures implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderIntegerDotProduct() {
@@ -77333,7 +77350,7 @@ export class VkPhysicalDeviceShaderIntegerDotProductProperties implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     integerDotProduct8BitUnsignedAccelerated?: VkBool32;
     integerDotProduct8BitSignedAccelerated?: VkBool32;
     integerDotProduct8BitMixedSignednessAccelerated?: VkBool32;
@@ -77413,8 +77430,8 @@ export class VkPhysicalDeviceShaderIntegerDotProductProperties implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get integerDotProduct8BitUnsignedAccelerated() {
@@ -77680,7 +77697,7 @@ export class VkPhysicalDeviceDrmPropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     hasPrimary?: VkBool32;
     hasRender?: VkBool32;
     primaryMajor?: Deno.PointerValue;
@@ -77712,8 +77729,8 @@ export class VkPhysicalDeviceDrmPropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get hasPrimary() {
@@ -77787,7 +77804,7 @@ export class VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     fragmentShaderBarycentric?: VkBool32;
   }) {
     const s = VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR.alloc();
@@ -77809,8 +77826,8 @@ export class VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get fragmentShaderBarycentric() {
@@ -77844,7 +77861,7 @@ export class VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR implements I
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     triStripVertexOrderIndependentOfProvokingVertex?: VkBool32;
   }) {
     const s = VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR.alloc();
@@ -77866,8 +77883,8 @@ export class VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR implements I
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get triStripVertexOrderIndependentOfProvokingVertex() {
@@ -77901,7 +77918,7 @@ export class VkPhysicalDeviceRayTracingMotionBlurFeaturesNV implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     rayTracingMotionBlur?: VkBool32;
     rayTracingMotionBlurPipelineTraceRaysIndirect?: VkBool32;
   }) {
@@ -77925,8 +77942,8 @@ export class VkPhysicalDeviceRayTracingMotionBlurFeaturesNV implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get rayTracingMotionBlur() {
@@ -77968,7 +77985,7 @@ export class VkAccelerationStructureGeometryMotionTrianglesDataNV implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     vertexData?: VkDeviceOrHostAddressConstKHR;
   }) {
     const s = VkAccelerationStructureGeometryMotionTrianglesDataNV.alloc();
@@ -77990,8 +78007,8 @@ export class VkAccelerationStructureGeometryMotionTrianglesDataNV implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get vertexData() {
@@ -78025,7 +78042,7 @@ export class VkAccelerationStructureMotionInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxInstances?: number;
     flags?: VkAccelerationStructureMotionInfoFlagsNV;
   }) {
@@ -78049,8 +78066,8 @@ export class VkAccelerationStructureMotionInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxInstances() {
@@ -78546,7 +78563,7 @@ export class VkMemoryGetRemoteAddressInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memory?: VkDeviceMemory;
     handleType?: VkExternalMemoryHandleTypeFlagBits;
   }) {
@@ -78570,8 +78587,8 @@ export class VkMemoryGetRemoteAddressInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -78579,7 +78596,7 @@ export class VkMemoryGetRemoteAddressInfoNV implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get handleType() {
@@ -78613,7 +78630,7 @@ export class VkImportMemoryBufferCollectionFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     collection?: VkBufferCollectionFUCHSIA;
     index?: number;
   }) {
@@ -78637,8 +78654,8 @@ export class VkImportMemoryBufferCollectionFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get collection() {
@@ -78646,7 +78663,7 @@ export class VkImportMemoryBufferCollectionFUCHSIA implements IVkStructure {
   }
   
   set collection(value: VkBufferCollectionFUCHSIA) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get index() {
@@ -78680,7 +78697,7 @@ export class VkBufferCollectionImageCreateInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     collection?: VkBufferCollectionFUCHSIA;
     index?: number;
   }) {
@@ -78704,8 +78721,8 @@ export class VkBufferCollectionImageCreateInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get collection() {
@@ -78713,7 +78730,7 @@ export class VkBufferCollectionImageCreateInfoFUCHSIA implements IVkStructure {
   }
   
   set collection(value: VkBufferCollectionFUCHSIA) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get index() {
@@ -78747,7 +78764,7 @@ export class VkBufferCollectionBufferCreateInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     collection?: VkBufferCollectionFUCHSIA;
     index?: number;
   }) {
@@ -78771,8 +78788,8 @@ export class VkBufferCollectionBufferCreateInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get collection() {
@@ -78780,7 +78797,7 @@ export class VkBufferCollectionBufferCreateInfoFUCHSIA implements IVkStructure {
   }
   
   set collection(value: VkBufferCollectionFUCHSIA) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get index() {
@@ -78814,7 +78831,7 @@ export class VkBufferCollectionCreateInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     collectionToken?: Deno.PointerValue;
   }) {
     const s = VkBufferCollectionCreateInfoFUCHSIA.alloc();
@@ -78836,8 +78853,8 @@ export class VkBufferCollectionCreateInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get collectionToken() {
@@ -78845,7 +78862,7 @@ export class VkBufferCollectionCreateInfoFUCHSIA implements IVkStructure {
   }
   
   set collectionToken(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -78871,7 +78888,7 @@ export class VkBufferCollectionPropertiesFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memoryTypeBits?: number;
     bufferCount?: number;
     createInfoIndex?: number;
@@ -78913,8 +78930,8 @@ export class VkBufferCollectionPropertiesFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memoryTypeBits() {
@@ -79034,7 +79051,7 @@ export class VkBufferConstraintsInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     createInfo?: VkBufferCreateInfo;
     requiredFormatFeatures?: VkFormatFeatureFlags;
     bufferCollectionConstraints?: VkBufferCollectionConstraintsInfoFUCHSIA;
@@ -79060,8 +79077,8 @@ export class VkBufferConstraintsInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get createInfo() {
@@ -79117,7 +79134,7 @@ export class VkSysmemColorSpaceFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     colorSpace?: number;
   }) {
     const s = VkSysmemColorSpaceFUCHSIA.alloc();
@@ -79139,8 +79156,8 @@ export class VkSysmemColorSpaceFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get colorSpace() {
@@ -79174,13 +79191,13 @@ export class VkImageFormatConstraintsInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageCreateInfo?: VkImageCreateInfo;
     requiredFormatFeatures?: VkFormatFeatureFlags;
     flags?: VkImageFormatConstraintsFlagsFUCHSIA;
     sysmemPixelFormat?: Deno.PointerValue;
     colorSpaceCount?: number;
-    pColorSpaces?: Deno.PointerValue;
+    pColorSpaces?: AnyPointer;
   }) {
     const s = VkImageFormatConstraintsInfoFUCHSIA.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA;
@@ -79206,8 +79223,8 @@ export class VkImageFormatConstraintsInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageCreateInfo() {
@@ -79257,8 +79274,8 @@ export class VkImageFormatConstraintsInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(128, LE);
   }
   
-  set pColorSpaces(value: Deno.PointerValue) {
-    this.#view.setBigUint64(128, BigInt(value), LE);
+  set pColorSpaces(value: AnyPointer) {
+    this.#view.setBigUint64(128, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -79284,9 +79301,9 @@ export class VkImageConstraintsInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     formatConstraintsCount?: number;
-    pFormatConstraints?: Deno.PointerValue;
+    pFormatConstraints?: AnyPointer;
     bufferCollectionConstraints?: VkBufferCollectionConstraintsInfoFUCHSIA;
     flags?: VkImageConstraintsInfoFlagsFUCHSIA;
   }) {
@@ -79312,8 +79329,8 @@ export class VkImageConstraintsInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get formatConstraintsCount() {
@@ -79328,8 +79345,8 @@ export class VkImageConstraintsInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pFormatConstraints(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pFormatConstraints(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get bufferCollectionConstraints() {
@@ -79374,7 +79391,7 @@ export class VkBufferCollectionConstraintsInfoFUCHSIA implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minBufferCount?: number;
     maxBufferCount?: number;
     minBufferCountForCamping?: number;
@@ -79404,8 +79421,8 @@ export class VkBufferCollectionConstraintsInfoFUCHSIA implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minBufferCount() {
@@ -79471,7 +79488,7 @@ export class VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     formatRgba10x6WithoutYCbCrSampler?: VkBool32;
   }) {
     const s = VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT.alloc();
@@ -79493,8 +79510,8 @@ export class VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get formatRgba10x6WithoutYCbCrSampler() {
@@ -79528,7 +79545,7 @@ export class VkFormatProperties3 implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     linearTilingFeatures?: VkFormatFeatureFlags2;
     optimalTilingFeatures?: VkFormatFeatureFlags2;
     bufferFeatures?: VkFormatFeatureFlags2;
@@ -79554,8 +79571,8 @@ export class VkFormatProperties3 implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get linearTilingFeatures() {
@@ -79605,9 +79622,9 @@ export class VkDrmFormatModifierPropertiesList2EXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     drmFormatModifierCount?: number;
-    pDrmFormatModifierProperties?: Deno.PointerValue;
+    pDrmFormatModifierProperties?: AnyPointer;
   }) {
     const s = VkDrmFormatModifierPropertiesList2EXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DRM_FORMAT_MODIFIER_PROPERTIES_LIST_2_EXT;
@@ -79629,8 +79646,8 @@ export class VkDrmFormatModifierPropertiesList2EXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get drmFormatModifierCount() {
@@ -79645,8 +79662,8 @@ export class VkDrmFormatModifierPropertiesList2EXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pDrmFormatModifierProperties(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pDrmFormatModifierProperties(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -79730,7 +79747,7 @@ export class VkAndroidHardwareBufferFormatProperties2ANDROID implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     format?: VkFormat;
     externalFormat?: Deno.PointerValue;
     formatFeatures?: VkFormatFeatureFlags2;
@@ -79766,8 +79783,8 @@ export class VkAndroidHardwareBufferFormatProperties2ANDROID implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get format() {
@@ -79860,10 +79877,10 @@ export class VkPipelineRenderingCreateInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     viewMask?: number;
     colorAttachmentCount?: number;
-    pColorAttachmentFormats?: Deno.PointerValue;
+    pColorAttachmentFormats?: AnyPointer;
     depthAttachmentFormat?: VkFormat;
     stencilAttachmentFormat?: VkFormat;
   }) {
@@ -79890,8 +79907,8 @@ export class VkPipelineRenderingCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get viewMask() {
@@ -79914,8 +79931,8 @@ export class VkPipelineRenderingCreateInfo implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pColorAttachmentFormats(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pColorAttachmentFormats(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get depthAttachmentFormat() {
@@ -79957,15 +79974,15 @@ export class VkRenderingInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkRenderingFlags;
     renderArea?: VkRect2D;
     layerCount?: number;
     viewMask?: number;
     colorAttachmentCount?: number;
-    pColorAttachments?: Deno.PointerValue;
-    pDepthAttachment?: Deno.PointerValue;
-    pStencilAttachment?: Deno.PointerValue;
+    pColorAttachments?: AnyPointer;
+    pDepthAttachment?: AnyPointer;
+    pStencilAttachment?: AnyPointer;
   }) {
     const s = VkRenderingInfo.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDERING_INFO;
@@ -79993,8 +80010,8 @@ export class VkRenderingInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -80044,24 +80061,24 @@ export class VkRenderingInfo implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pColorAttachments(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pColorAttachments(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get pDepthAttachment() {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set pDepthAttachment(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set pDepthAttachment(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get pStencilAttachment() {
     return this.#view.getBigUint64(64, LE);
   }
   
-  set pStencilAttachment(value: Deno.PointerValue) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+  set pStencilAttachment(value: AnyPointer) {
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -80087,7 +80104,7 @@ export class VkRenderingAttachmentInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageView?: VkImageView;
     imageLayout?: VkImageLayout;
     resolveMode?: VkResolveModeFlagBits;
@@ -80123,8 +80140,8 @@ export class VkRenderingAttachmentInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageView() {
@@ -80132,7 +80149,7 @@ export class VkRenderingAttachmentInfo implements IVkStructure {
   }
   
   set imageView(value: VkImageView) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get imageLayout() {
@@ -80156,7 +80173,7 @@ export class VkRenderingAttachmentInfo implements IVkStructure {
   }
   
   set resolveImageView(value: VkImageView) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get resolveImageLayout() {
@@ -80214,7 +80231,7 @@ export class VkRenderingFragmentShadingRateAttachmentInfoKHR implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageView?: VkImageView;
     imageLayout?: VkImageLayout;
     shadingRateAttachmentTexelSize?: VkExtent2D;
@@ -80240,8 +80257,8 @@ export class VkRenderingFragmentShadingRateAttachmentInfoKHR implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageView() {
@@ -80249,7 +80266,7 @@ export class VkRenderingFragmentShadingRateAttachmentInfoKHR implements IVkStruc
   }
   
   set imageView(value: VkImageView) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get imageLayout() {
@@ -80294,7 +80311,7 @@ export class VkRenderingFragmentDensityMapAttachmentInfoEXT implements IVkStruct
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageView?: VkImageView;
     imageLayout?: VkImageLayout;
   }) {
@@ -80318,8 +80335,8 @@ export class VkRenderingFragmentDensityMapAttachmentInfoEXT implements IVkStruct
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageView() {
@@ -80327,7 +80344,7 @@ export class VkRenderingFragmentDensityMapAttachmentInfoEXT implements IVkStruct
   }
   
   set imageView(value: VkImageView) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get imageLayout() {
@@ -80361,7 +80378,7 @@ export class VkPhysicalDeviceDynamicRenderingFeatures implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     dynamicRendering?: VkBool32;
   }) {
     const s = VkPhysicalDeviceDynamicRenderingFeatures.alloc();
@@ -80383,8 +80400,8 @@ export class VkPhysicalDeviceDynamicRenderingFeatures implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get dynamicRendering() {
@@ -80418,11 +80435,11 @@ export class VkCommandBufferInheritanceRenderingInfo implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkRenderingFlags;
     viewMask?: number;
     colorAttachmentCount?: number;
-    pColorAttachmentFormats?: Deno.PointerValue;
+    pColorAttachmentFormats?: AnyPointer;
     depthAttachmentFormat?: VkFormat;
     stencilAttachmentFormat?: VkFormat;
     rasterizationSamples?: VkSampleCountFlagBits;
@@ -80452,8 +80469,8 @@ export class VkCommandBufferInheritanceRenderingInfo implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -80484,8 +80501,8 @@ export class VkCommandBufferInheritanceRenderingInfo implements IVkStructure {
     return this.#view.getBigUint64(32, LE);
   }
   
-  set pColorAttachmentFormats(value: Deno.PointerValue) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+  set pColorAttachmentFormats(value: AnyPointer) {
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get depthAttachmentFormat() {
@@ -80535,9 +80552,9 @@ export class VkAttachmentSampleCountInfoAMD implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     colorAttachmentCount?: number;
-    pColorAttachmentSamples?: Deno.PointerValue;
+    pColorAttachmentSamples?: AnyPointer;
     depthStencilAttachmentSamples?: VkSampleCountFlagBits;
   }) {
     const s = VkAttachmentSampleCountInfoAMD.alloc();
@@ -80561,8 +80578,8 @@ export class VkAttachmentSampleCountInfoAMD implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get colorAttachmentCount() {
@@ -80577,8 +80594,8 @@ export class VkAttachmentSampleCountInfoAMD implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pColorAttachmentSamples(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pColorAttachmentSamples(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get depthStencilAttachmentSamples() {
@@ -80612,7 +80629,7 @@ export class VkMultiviewPerViewAttributesInfoNVX implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     perViewAttributes?: VkBool32;
     perViewAttributesPositionXOnly?: VkBool32;
   }) {
@@ -80636,8 +80653,8 @@ export class VkMultiviewPerViewAttributesInfoNVX implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get perViewAttributes() {
@@ -80679,7 +80696,7 @@ export class VkPhysicalDeviceImageViewMinLodFeaturesEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minLod?: VkBool32;
   }) {
     const s = VkPhysicalDeviceImageViewMinLodFeaturesEXT.alloc();
@@ -80701,8 +80718,8 @@ export class VkPhysicalDeviceImageViewMinLodFeaturesEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minLod() {
@@ -80736,7 +80753,7 @@ export class VkImageViewMinLodCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     minLod?: number;
   }) {
     const s = VkImageViewMinLodCreateInfoEXT.alloc();
@@ -80758,8 +80775,8 @@ export class VkImageViewMinLodCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get minLod() {
@@ -80793,7 +80810,7 @@ export class VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT imple
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     rasterizationOrderColorAttachmentAccess?: VkBool32;
     rasterizationOrderDepthAttachmentAccess?: VkBool32;
     rasterizationOrderStencilAttachmentAccess?: VkBool32;
@@ -80819,8 +80836,8 @@ export class VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT imple
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get rasterizationOrderColorAttachmentAccess() {
@@ -80870,7 +80887,7 @@ export class VkPhysicalDeviceLinearColorAttachmentFeaturesNV implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     linearColorAttachment?: VkBool32;
   }) {
     const s = VkPhysicalDeviceLinearColorAttachmentFeaturesNV.alloc();
@@ -80892,8 +80909,8 @@ export class VkPhysicalDeviceLinearColorAttachmentFeaturesNV implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get linearColorAttachment() {
@@ -80927,7 +80944,7 @@ export class VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     graphicsPipelineLibrary?: VkBool32;
   }) {
     const s = VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT.alloc();
@@ -80949,8 +80966,8 @@ export class VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get graphicsPipelineLibrary() {
@@ -80984,7 +81001,7 @@ export class VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT implements IVk
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     graphicsPipelineLibraryFastLinking?: VkBool32;
     graphicsPipelineLibraryIndependentInterpolationDecoration?: VkBool32;
   }) {
@@ -81008,8 +81025,8 @@ export class VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT implements IVk
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get graphicsPipelineLibraryFastLinking() {
@@ -81051,7 +81068,7 @@ export class VkGraphicsPipelineLibraryCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkGraphicsPipelineLibraryFlagsEXT;
   }) {
     const s = VkGraphicsPipelineLibraryCreateInfoEXT.alloc();
@@ -81073,8 +81090,8 @@ export class VkGraphicsPipelineLibraryCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -81108,7 +81125,7 @@ export class VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE implements IV
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     descriptorSetHostMapping?: VkBool32;
   }) {
     const s = VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE.alloc();
@@ -81130,8 +81147,8 @@ export class VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE implements IV
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get descriptorSetHostMapping() {
@@ -81165,7 +81182,7 @@ export class VkDescriptorSetBindingReferenceVALVE implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     descriptorSetLayout?: VkDescriptorSetLayout;
     binding?: number;
   }) {
@@ -81189,8 +81206,8 @@ export class VkDescriptorSetBindingReferenceVALVE implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get descriptorSetLayout() {
@@ -81198,7 +81215,7 @@ export class VkDescriptorSetBindingReferenceVALVE implements IVkStructure {
   }
   
   set descriptorSetLayout(value: VkDescriptorSetLayout) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get binding() {
@@ -81232,7 +81249,7 @@ export class VkDescriptorSetLayoutHostMappingInfoVALVE implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     descriptorOffset?: Deno.PointerValue;
     descriptorSize?: number;
   }) {
@@ -81256,8 +81273,8 @@ export class VkDescriptorSetLayoutHostMappingInfoVALVE implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get descriptorOffset() {
@@ -81299,7 +81316,7 @@ export class VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT implements IVkStr
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderModuleIdentifier?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT.alloc();
@@ -81321,8 +81338,8 @@ export class VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT implements IVkStr
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderModuleIdentifier() {
@@ -81356,7 +81373,7 @@ export class VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT implements IVkS
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderModuleIdentifierAlgorithmUUID?: number[];
   }) {
     const s = VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT.alloc();
@@ -81378,8 +81395,8 @@ export class VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT implements IVkS
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderModuleIdentifierAlgorithmUUID() {
@@ -81421,9 +81438,9 @@ export class VkPipelineShaderStageModuleIdentifierCreateInfoEXT implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     identifierSize?: number;
-    pIdentifier?: Deno.PointerValue;
+    pIdentifier?: AnyPointer;
   }) {
     const s = VkPipelineShaderStageModuleIdentifierCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_MODULE_IDENTIFIER_CREATE_INFO_EXT;
@@ -81445,8 +81462,8 @@ export class VkPipelineShaderStageModuleIdentifierCreateInfoEXT implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get identifierSize() {
@@ -81461,8 +81478,8 @@ export class VkPipelineShaderStageModuleIdentifierCreateInfoEXT implements IVkSt
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pIdentifier(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pIdentifier(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -81488,7 +81505,7 @@ export class VkShaderModuleIdentifierEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     identifierSize?: number;
     identifier?: number[];
   }) {
@@ -81512,8 +81529,8 @@ export class VkShaderModuleIdentifierEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get identifierSize() {
@@ -81563,10 +81580,10 @@ export class VkImageCompressionControlEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkImageCompressionFlagsEXT;
     compressionControlPlaneCount?: number;
-    pFixedRateFlags?: Deno.PointerValue;
+    pFixedRateFlags?: AnyPointer;
   }) {
     const s = VkImageCompressionControlEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT;
@@ -81589,8 +81606,8 @@ export class VkImageCompressionControlEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -81613,8 +81630,8 @@ export class VkImageCompressionControlEXT implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pFixedRateFlags(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pFixedRateFlags(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -81640,7 +81657,7 @@ export class VkPhysicalDeviceImageCompressionControlFeaturesEXT implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageCompressionControl?: VkBool32;
   }) {
     const s = VkPhysicalDeviceImageCompressionControlFeaturesEXT.alloc();
@@ -81662,8 +81679,8 @@ export class VkPhysicalDeviceImageCompressionControlFeaturesEXT implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageCompressionControl() {
@@ -81697,7 +81714,7 @@ export class VkImageCompressionPropertiesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageCompressionFlags?: VkImageCompressionFlagsEXT;
     imageCompressionFixedRateFlags?: VkImageCompressionFixedRateFlagsEXT;
   }) {
@@ -81721,8 +81738,8 @@ export class VkImageCompressionPropertiesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageCompressionFlags() {
@@ -81764,7 +81781,7 @@ export class VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT impleme
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageCompressionControlSwapchain?: VkBool32;
   }) {
     const s = VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT.alloc();
@@ -81786,8 +81803,8 @@ export class VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT impleme
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageCompressionControlSwapchain() {
@@ -81821,7 +81838,7 @@ export class VkImageSubresource2EXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     imageSubresource?: VkImageSubresource;
   }) {
     const s = VkImageSubresource2EXT.alloc();
@@ -81843,8 +81860,8 @@ export class VkImageSubresource2EXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get imageSubresource() {
@@ -81881,7 +81898,7 @@ export class VkSubresourceLayout2EXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     subresourceLayout?: VkSubresourceLayout;
   }) {
     const s = VkSubresourceLayout2EXT.alloc();
@@ -81903,8 +81920,8 @@ export class VkSubresourceLayout2EXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get subresourceLayout() {
@@ -81941,7 +81958,7 @@ export class VkRenderPassCreationControlEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     disallowMerging?: VkBool32;
   }) {
     const s = VkRenderPassCreationControlEXT.alloc();
@@ -81963,8 +81980,8 @@ export class VkRenderPassCreationControlEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get disallowMerging() {
@@ -82036,8 +82053,8 @@ export class VkRenderPassCreationFeedbackCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pRenderPassFeedback?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pRenderPassFeedback?: AnyPointer;
   }) {
     const s = VkRenderPassCreationFeedbackCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDER_PASS_CREATION_FEEDBACK_CREATE_INFO_EXT;
@@ -82058,16 +82075,16 @@ export class VkRenderPassCreationFeedbackCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pRenderPassFeedback() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pRenderPassFeedback(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pRenderPassFeedback(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -82159,8 +82176,8 @@ export class VkRenderPassSubpassFeedbackCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pSubpassFeedback?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pSubpassFeedback?: AnyPointer;
   }) {
     const s = VkRenderPassSubpassFeedbackCreateInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_RENDER_PASS_SUBPASS_FEEDBACK_CREATE_INFO_EXT;
@@ -82181,16 +82198,16 @@ export class VkRenderPassSubpassFeedbackCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pSubpassFeedback() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pSubpassFeedback(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pSubpassFeedback(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -82216,7 +82233,7 @@ export class VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     subpassMergeFeedback?: VkBool32;
   }) {
     const s = VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT.alloc();
@@ -82238,8 +82255,8 @@ export class VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get subpassMergeFeedback() {
@@ -82273,14 +82290,14 @@ export class VkMicromapBuildInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     type?: VkMicromapTypeEXT;
     flags?: VkBuildMicromapFlagsEXT;
     mode?: VkBuildMicromapModeEXT;
     dstMicromap?: VkMicromapEXT;
     usageCountsCount?: number;
-    pUsageCounts?: Deno.PointerValue;
-    ppUsageCounts?: Deno.PointerValue;
+    pUsageCounts?: AnyPointer;
+    ppUsageCounts?: AnyPointer;
     data?: VkDeviceOrHostAddressConstKHR;
     scratchData?: VkDeviceOrHostAddressKHR;
     triangleArray?: VkDeviceOrHostAddressConstKHR;
@@ -82315,8 +82332,8 @@ export class VkMicromapBuildInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get type() {
@@ -82348,7 +82365,7 @@ export class VkMicromapBuildInfoEXT implements IVkStructure {
   }
   
   set dstMicromap(value: VkMicromapEXT) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get usageCountsCount() {
@@ -82363,16 +82380,16 @@ export class VkMicromapBuildInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pUsageCounts(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pUsageCounts(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get ppUsageCounts() {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set ppUsageCounts(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set ppUsageCounts(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get data() {
@@ -82430,7 +82447,7 @@ export class VkMicromapCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     createFlags?: VkMicromapCreateFlagsEXT;
     buffer?: VkBuffer;
     offset?: VkDeviceSize;
@@ -82462,8 +82479,8 @@ export class VkMicromapCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get createFlags() {
@@ -82479,7 +82496,7 @@ export class VkMicromapCreateInfoEXT implements IVkStructure {
   }
   
   set buffer(value: VkBuffer) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get offset() {
@@ -82537,8 +82554,8 @@ export class VkMicromapVersionInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
-    pVersionData?: Deno.PointerValue;
+    pNext?: AnyPointer;
+    pVersionData?: AnyPointer;
   }) {
     const s = VkMicromapVersionInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_MICROMAP_VERSION_INFO_EXT;
@@ -82559,16 +82576,16 @@ export class VkMicromapVersionInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pVersionData() {
     return this.#view.getBigUint64(16, LE);
   }
   
-  set pVersionData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+  set pVersionData(value: AnyPointer) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -82594,7 +82611,7 @@ export class VkCopyMicromapInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     src?: VkMicromapEXT;
     dst?: VkMicromapEXT;
     mode?: VkCopyMicromapModeEXT;
@@ -82620,8 +82637,8 @@ export class VkCopyMicromapInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get src() {
@@ -82629,7 +82646,7 @@ export class VkCopyMicromapInfoEXT implements IVkStructure {
   }
   
   set src(value: VkMicromapEXT) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dst() {
@@ -82637,7 +82654,7 @@ export class VkCopyMicromapInfoEXT implements IVkStructure {
   }
   
   set dst(value: VkMicromapEXT) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get mode() {
@@ -82671,7 +82688,7 @@ export class VkCopyMicromapToMemoryInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     src?: VkMicromapEXT;
     dst?: VkDeviceOrHostAddressKHR;
     mode?: VkCopyMicromapModeEXT;
@@ -82697,8 +82714,8 @@ export class VkCopyMicromapToMemoryInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get src() {
@@ -82706,7 +82723,7 @@ export class VkCopyMicromapToMemoryInfoEXT implements IVkStructure {
   }
   
   set src(value: VkMicromapEXT) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get dst() {
@@ -82748,7 +82765,7 @@ export class VkCopyMemoryToMicromapInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     src?: VkDeviceOrHostAddressConstKHR;
     dst?: VkMicromapEXT;
     mode?: VkCopyMicromapModeEXT;
@@ -82774,8 +82791,8 @@ export class VkCopyMemoryToMicromapInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get src() {
@@ -82791,7 +82808,7 @@ export class VkCopyMemoryToMicromapInfoEXT implements IVkStructure {
   }
   
   set dst(value: VkMicromapEXT) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get mode() {
@@ -82825,7 +82842,7 @@ export class VkMicromapBuildSizesInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     micromapSize?: VkDeviceSize;
     buildScratchSize?: VkDeviceSize;
     discardable?: VkBool32;
@@ -82851,8 +82868,8 @@ export class VkMicromapBuildSizesInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get micromapSize() {
@@ -83018,7 +83035,7 @@ export class VkPhysicalDeviceOpacityMicromapFeaturesEXT implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     micromap?: VkBool32;
     micromapCaptureReplay?: VkBool32;
     micromapHostCommands?: VkBool32;
@@ -83044,8 +83061,8 @@ export class VkPhysicalDeviceOpacityMicromapFeaturesEXT implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get micromap() {
@@ -83095,7 +83112,7 @@ export class VkPhysicalDeviceOpacityMicromapPropertiesEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxOpacity2StateSubdivisionLevel?: number;
     maxOpacity4StateSubdivisionLevel?: number;
   }) {
@@ -83119,8 +83136,8 @@ export class VkPhysicalDeviceOpacityMicromapPropertiesEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxOpacity2StateSubdivisionLevel() {
@@ -83162,14 +83179,14 @@ export class VkAccelerationStructureTrianglesOpacityMicromapEXT implements IVkSt
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     indexType?: VkIndexType;
     indexBuffer?: VkDeviceOrHostAddressConstKHR;
     indexStride?: VkDeviceSize;
     baseTriangle?: number;
     usageCountsCount?: number;
-    pUsageCounts?: Deno.PointerValue;
-    ppUsageCounts?: Deno.PointerValue;
+    pUsageCounts?: AnyPointer;
+    ppUsageCounts?: AnyPointer;
     micromap?: VkMicromapEXT;
   }) {
     const s = VkAccelerationStructureTrianglesOpacityMicromapEXT.alloc();
@@ -83198,8 +83215,8 @@ export class VkAccelerationStructureTrianglesOpacityMicromapEXT implements IVkSt
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get indexType() {
@@ -83246,16 +83263,16 @@ export class VkAccelerationStructureTrianglesOpacityMicromapEXT implements IVkSt
     return this.#view.getBigUint64(48, LE);
   }
   
-  set pUsageCounts(value: Deno.PointerValue) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+  set pUsageCounts(value: AnyPointer) {
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
   
   get ppUsageCounts() {
     return this.#view.getBigUint64(56, LE);
   }
   
-  set ppUsageCounts(value: Deno.PointerValue) {
-    this.#view.setBigUint64(56, BigInt(value), LE);
+  set ppUsageCounts(value: AnyPointer) {
+    this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
   
   get micromap() {
@@ -83263,7 +83280,7 @@ export class VkAccelerationStructureTrianglesOpacityMicromapEXT implements IVkSt
   }
   
   set micromap(value: VkMicromapEXT) {
-    this.#view.setBigUint64(64, BigInt(value), LE);
+    this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -83289,7 +83306,7 @@ export class VkPipelinePropertiesIdentifierEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipelineIdentifier?: number[];
   }) {
     const s = VkPipelinePropertiesIdentifierEXT.alloc();
@@ -83311,8 +83328,8 @@ export class VkPipelinePropertiesIdentifierEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineIdentifier() {
@@ -83354,7 +83371,7 @@ export class VkPhysicalDevicePipelinePropertiesFeaturesEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipelinePropertiesIdentifier?: VkBool32;
   }) {
     const s = VkPhysicalDevicePipelinePropertiesFeaturesEXT.alloc();
@@ -83376,8 +83393,8 @@ export class VkPhysicalDevicePipelinePropertiesFeaturesEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipelinePropertiesIdentifier() {
@@ -83411,7 +83428,7 @@ export class VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD implemen
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderEarlyAndLateFragmentTests?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD.alloc();
@@ -83433,8 +83450,8 @@ export class VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD implemen
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderEarlyAndLateFragmentTests() {
@@ -83468,7 +83485,7 @@ export class VkExportMetalObjectCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     exportObjectType?: VkExportMetalObjectTypeFlagBitsEXT;
   }) {
     const s = VkExportMetalObjectCreateInfoEXT.alloc();
@@ -83490,8 +83507,8 @@ export class VkExportMetalObjectCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get exportObjectType() {
@@ -83525,7 +83542,7 @@ export class VkExportMetalObjectsInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
   }) {
     const s = VkExportMetalObjectsInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_EXPORT_METAL_OBJECTS_INFO_EXT;
@@ -83545,8 +83562,8 @@ export class VkExportMetalObjectsInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -83572,7 +83589,7 @@ export class VkExportMetalDeviceInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     mtlDevice?: MTLDevice_id;
   }) {
     const s = VkExportMetalDeviceInfoEXT.alloc();
@@ -83594,8 +83611,8 @@ export class VkExportMetalDeviceInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get mtlDevice() {
@@ -83603,7 +83620,7 @@ export class VkExportMetalDeviceInfoEXT implements IVkStructure {
   }
   
   set mtlDevice(value: MTLDevice_id) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -83629,7 +83646,7 @@ export class VkExportMetalCommandQueueInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     queue?: VkQueue;
     mtlCommandQueue?: MTLCommandQueue_id;
   }) {
@@ -83653,8 +83670,8 @@ export class VkExportMetalCommandQueueInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get queue() {
@@ -83662,7 +83679,7 @@ export class VkExportMetalCommandQueueInfoEXT implements IVkStructure {
   }
   
   set queue(value: VkQueue) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get mtlCommandQueue() {
@@ -83670,7 +83687,7 @@ export class VkExportMetalCommandQueueInfoEXT implements IVkStructure {
   }
   
   set mtlCommandQueue(value: MTLCommandQueue_id) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -83696,7 +83713,7 @@ export class VkExportMetalBufferInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     memory?: VkDeviceMemory;
     mtlBuffer?: MTLBuffer_id;
   }) {
@@ -83720,8 +83737,8 @@ export class VkExportMetalBufferInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get memory() {
@@ -83729,7 +83746,7 @@ export class VkExportMetalBufferInfoEXT implements IVkStructure {
   }
   
   set memory(value: VkDeviceMemory) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get mtlBuffer() {
@@ -83737,7 +83754,7 @@ export class VkExportMetalBufferInfoEXT implements IVkStructure {
   }
   
   set mtlBuffer(value: MTLBuffer_id) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -83763,7 +83780,7 @@ export class VkImportMetalBufferInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     mtlBuffer?: MTLBuffer_id;
   }) {
     const s = VkImportMetalBufferInfoEXT.alloc();
@@ -83785,8 +83802,8 @@ export class VkImportMetalBufferInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get mtlBuffer() {
@@ -83794,7 +83811,7 @@ export class VkImportMetalBufferInfoEXT implements IVkStructure {
   }
   
   set mtlBuffer(value: MTLBuffer_id) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -83820,7 +83837,7 @@ export class VkExportMetalTextureInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     image?: VkImage;
     imageView?: VkImageView;
     bufferView?: VkBufferView;
@@ -83850,8 +83867,8 @@ export class VkExportMetalTextureInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get image() {
@@ -83859,7 +83876,7 @@ export class VkExportMetalTextureInfoEXT implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get imageView() {
@@ -83867,7 +83884,7 @@ export class VkExportMetalTextureInfoEXT implements IVkStructure {
   }
   
   set imageView(value: VkImageView) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get bufferView() {
@@ -83875,7 +83892,7 @@ export class VkExportMetalTextureInfoEXT implements IVkStructure {
   }
   
   set bufferView(value: VkBufferView) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
   
   get plane() {
@@ -83891,7 +83908,7 @@ export class VkExportMetalTextureInfoEXT implements IVkStructure {
   }
   
   set mtlTexture(value: MTLTexture_id) {
-    this.#view.setBigUint64(48, BigInt(value), LE);
+    this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -83917,7 +83934,7 @@ export class VkImportMetalTextureInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     plane?: VkImageAspectFlagBits;
     mtlTexture?: MTLTexture_id;
   }) {
@@ -83941,8 +83958,8 @@ export class VkImportMetalTextureInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get plane() {
@@ -83958,7 +83975,7 @@ export class VkImportMetalTextureInfoEXT implements IVkStructure {
   }
   
   set mtlTexture(value: MTLTexture_id) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -83984,7 +84001,7 @@ export class VkExportMetalIOSurfaceInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     image?: VkImage;
     ioSurface?: IOSurfaceRef;
   }) {
@@ -84008,8 +84025,8 @@ export class VkExportMetalIOSurfaceInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get image() {
@@ -84017,7 +84034,7 @@ export class VkExportMetalIOSurfaceInfoEXT implements IVkStructure {
   }
   
   set image(value: VkImage) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get ioSurface() {
@@ -84025,7 +84042,7 @@ export class VkExportMetalIOSurfaceInfoEXT implements IVkStructure {
   }
   
   set ioSurface(value: IOSurfaceRef) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -84051,7 +84068,7 @@ export class VkImportMetalIOSurfaceInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     ioSurface?: IOSurfaceRef;
   }) {
     const s = VkImportMetalIOSurfaceInfoEXT.alloc();
@@ -84073,8 +84090,8 @@ export class VkImportMetalIOSurfaceInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get ioSurface() {
@@ -84082,7 +84099,7 @@ export class VkImportMetalIOSurfaceInfoEXT implements IVkStructure {
   }
   
   set ioSurface(value: IOSurfaceRef) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -84108,7 +84125,7 @@ export class VkExportMetalSharedEventInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     semaphore?: VkSemaphore;
     event?: VkEvent;
     mtlSharedEvent?: MTLSharedEvent_id;
@@ -84134,8 +84151,8 @@ export class VkExportMetalSharedEventInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get semaphore() {
@@ -84143,7 +84160,7 @@ export class VkExportMetalSharedEventInfoEXT implements IVkStructure {
   }
   
   set semaphore(value: VkSemaphore) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
   
   get event() {
@@ -84151,7 +84168,7 @@ export class VkExportMetalSharedEventInfoEXT implements IVkStructure {
   }
   
   set event(value: VkEvent) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
   
   get mtlSharedEvent() {
@@ -84159,7 +84176,7 @@ export class VkExportMetalSharedEventInfoEXT implements IVkStructure {
   }
   
   set mtlSharedEvent(value: MTLSharedEvent_id) {
-    this.#view.setBigUint64(32, BigInt(value), LE);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -84185,7 +84202,7 @@ export class VkImportMetalSharedEventInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     mtlSharedEvent?: MTLSharedEvent_id;
   }) {
     const s = VkImportMetalSharedEventInfoEXT.alloc();
@@ -84207,8 +84224,8 @@ export class VkImportMetalSharedEventInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get mtlSharedEvent() {
@@ -84216,7 +84233,7 @@ export class VkImportMetalSharedEventInfoEXT implements IVkStructure {
   }
   
   set mtlSharedEvent(value: MTLSharedEvent_id) {
-    this.#view.setBigUint64(16, BigInt(value), LE);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -84242,7 +84259,7 @@ export class VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     nonSeamlessCubeMap?: VkBool32;
   }) {
     const s = VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT.alloc();
@@ -84264,8 +84281,8 @@ export class VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get nonSeamlessCubeMap() {
@@ -84299,7 +84316,7 @@ export class VkPhysicalDevicePipelineRobustnessFeaturesEXT implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     pipelineRobustness?: VkBool32;
   }) {
     const s = VkPhysicalDevicePipelineRobustnessFeaturesEXT.alloc();
@@ -84321,8 +84338,8 @@ export class VkPhysicalDevicePipelineRobustnessFeaturesEXT implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get pipelineRobustness() {
@@ -84356,7 +84373,7 @@ export class VkPipelineRobustnessCreateInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     storageBuffers?: VkPipelineRobustnessBufferBehaviorEXT;
     uniformBuffers?: VkPipelineRobustnessBufferBehaviorEXT;
     vertexInputs?: VkPipelineRobustnessBufferBehaviorEXT;
@@ -84384,8 +84401,8 @@ export class VkPipelineRobustnessCreateInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get storageBuffers() {
@@ -84443,7 +84460,7 @@ export class VkPhysicalDevicePipelineRobustnessPropertiesEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     defaultRobustnessStorageBuffers?: VkPipelineRobustnessBufferBehaviorEXT;
     defaultRobustnessUniformBuffers?: VkPipelineRobustnessBufferBehaviorEXT;
     defaultRobustnessVertexInputs?: VkPipelineRobustnessBufferBehaviorEXT;
@@ -84471,8 +84488,8 @@ export class VkPhysicalDevicePipelineRobustnessPropertiesEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get defaultRobustnessStorageBuffers() {
@@ -84530,7 +84547,7 @@ export class VkImageViewSampleWeightCreateInfoQCOM implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     filterCenter?: VkOffset2D;
     filterSize?: VkExtent2D;
     numPhases?: number;
@@ -84556,8 +84573,8 @@ export class VkImageViewSampleWeightCreateInfoQCOM implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get filterCenter() {
@@ -84613,7 +84630,7 @@ export class VkPhysicalDeviceImageProcessingFeaturesQCOM implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     textureSampleWeighted?: VkBool32;
     textureBoxFilter?: VkBool32;
     textureBlockMatch?: VkBool32;
@@ -84639,8 +84656,8 @@ export class VkPhysicalDeviceImageProcessingFeaturesQCOM implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get textureSampleWeighted() {
@@ -84690,7 +84707,7 @@ export class VkPhysicalDeviceImageProcessingPropertiesQCOM implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     maxWeightFilterPhases?: number;
     maxWeightFilterDimension?: VkExtent2D;
     maxBlockMatchRegion?: VkExtent2D;
@@ -84718,8 +84735,8 @@ export class VkPhysicalDeviceImageProcessingPropertiesQCOM implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get maxWeightFilterPhases() {
@@ -84786,7 +84803,7 @@ export class VkPhysicalDeviceTilePropertiesFeaturesQCOM implements IVkStructure 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     tileProperties?: VkBool32;
   }) {
     const s = VkPhysicalDeviceTilePropertiesFeaturesQCOM.alloc();
@@ -84808,8 +84825,8 @@ export class VkPhysicalDeviceTilePropertiesFeaturesQCOM implements IVkStructure 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get tileProperties() {
@@ -84843,7 +84860,7 @@ export class VkTilePropertiesQCOM implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     tileSize?: VkExtent3D;
     apronSize?: VkExtent2D;
     origin?: VkOffset2D;
@@ -84869,8 +84886,8 @@ export class VkTilePropertiesQCOM implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get tileSize() {
@@ -84929,7 +84946,7 @@ export class VkPhysicalDeviceAmigoProfilingFeaturesSEC implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     amigoProfiling?: VkBool32;
   }) {
     const s = VkPhysicalDeviceAmigoProfilingFeaturesSEC.alloc();
@@ -84951,8 +84968,8 @@ export class VkPhysicalDeviceAmigoProfilingFeaturesSEC implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get amigoProfiling() {
@@ -84986,7 +85003,7 @@ export class VkAmigoProfilingSubmitInfoSEC implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     firstDrawTimestamp?: Deno.PointerValue;
     swapBufferTimestamp?: Deno.PointerValue;
   }) {
@@ -85010,8 +85027,8 @@ export class VkAmigoProfilingSubmitInfoSEC implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get firstDrawTimestamp() {
@@ -85053,7 +85070,7 @@ export class VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT implements 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     attachmentFeedbackLoopLayout?: VkBool32;
   }) {
     const s = VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT.alloc();
@@ -85075,8 +85092,8 @@ export class VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT implements 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get attachmentFeedbackLoopLayout() {
@@ -85110,7 +85127,7 @@ export class VkPhysicalDeviceDepthClampZeroOneFeaturesEXT implements IVkStructur
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     depthClampZeroOne?: VkBool32;
   }) {
     const s = VkPhysicalDeviceDepthClampZeroOneFeaturesEXT.alloc();
@@ -85132,8 +85149,8 @@ export class VkPhysicalDeviceDepthClampZeroOneFeaturesEXT implements IVkStructur
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get depthClampZeroOne() {
@@ -85167,7 +85184,7 @@ export class VkPhysicalDeviceAddressBindingReportFeaturesEXT implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     reportAddressBinding?: VkBool32;
   }) {
     const s = VkPhysicalDeviceAddressBindingReportFeaturesEXT.alloc();
@@ -85189,8 +85206,8 @@ export class VkPhysicalDeviceAddressBindingReportFeaturesEXT implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get reportAddressBinding() {
@@ -85224,7 +85241,7 @@ export class VkDeviceAddressBindingCallbackDataEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkDeviceAddressBindingFlagsEXT;
     baseAddress?: VkDeviceAddress;
     size?: VkDeviceSize;
@@ -85252,8 +85269,8 @@ export class VkDeviceAddressBindingCallbackDataEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -85311,7 +85328,7 @@ export class VkPhysicalDeviceOpticalFlowFeaturesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     opticalFlow?: VkBool32;
   }) {
     const s = VkPhysicalDeviceOpticalFlowFeaturesNV.alloc();
@@ -85333,8 +85350,8 @@ export class VkPhysicalDeviceOpticalFlowFeaturesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get opticalFlow() {
@@ -85368,7 +85385,7 @@ export class VkPhysicalDeviceOpticalFlowPropertiesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     supportedOutputGridSizes?: VkOpticalFlowGridSizeFlagsNV;
     supportedHintGridSizes?: VkOpticalFlowGridSizeFlagsNV;
     hintSupported?: VkBool32;
@@ -85410,8 +85427,8 @@ export class VkPhysicalDeviceOpticalFlowPropertiesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get supportedOutputGridSizes() {
@@ -85525,7 +85542,7 @@ export class VkOpticalFlowImageFormatInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     usage?: VkOpticalFlowUsageFlagsNV;
   }) {
     const s = VkOpticalFlowImageFormatInfoNV.alloc();
@@ -85547,8 +85564,8 @@ export class VkOpticalFlowImageFormatInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get usage() {
@@ -85582,7 +85599,7 @@ export class VkOpticalFlowImageFormatPropertiesNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     format?: VkFormat;
   }) {
     const s = VkOpticalFlowImageFormatPropertiesNV.alloc();
@@ -85604,8 +85621,8 @@ export class VkOpticalFlowImageFormatPropertiesNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get format() {
@@ -85639,7 +85656,7 @@ export class VkOpticalFlowSessionCreateInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     width?: number;
     height?: number;
     imageFormat?: VkFormat;
@@ -85677,8 +85694,8 @@ export class VkOpticalFlowSessionCreateInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get width() {
@@ -85776,10 +85793,10 @@ export class VkOpticalFlowSessionCreatePrivateDataInfoNV implements IVkStructure
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     id?: number;
     size?: number;
-    pPrivateData?: Deno.PointerValue;
+    pPrivateData?: AnyPointer;
   }) {
     const s = VkOpticalFlowSessionCreatePrivateDataInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_OPTICAL_FLOW_SESSION_CREATE_PRIVATE_DATA_INFO_NV;
@@ -85802,8 +85819,8 @@ export class VkOpticalFlowSessionCreatePrivateDataInfoNV implements IVkStructure
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get id() {
@@ -85826,8 +85843,8 @@ export class VkOpticalFlowSessionCreatePrivateDataInfoNV implements IVkStructure
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pPrivateData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pPrivateData(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -85853,10 +85870,10 @@ export class VkOpticalFlowExecuteInfoNV implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     flags?: VkOpticalFlowExecuteFlagsNV;
     regionCount?: number;
-    pRegions?: Deno.PointerValue;
+    pRegions?: AnyPointer;
   }) {
     const s = VkOpticalFlowExecuteInfoNV.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_OPTICAL_FLOW_EXECUTE_INFO_NV;
@@ -85879,8 +85896,8 @@ export class VkOpticalFlowExecuteInfoNV implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get flags() {
@@ -85903,8 +85920,8 @@ export class VkOpticalFlowExecuteInfoNV implements IVkStructure {
     return this.#view.getBigUint64(24, LE);
   }
   
-  set pRegions(value: Deno.PointerValue) {
-    this.#view.setBigUint64(24, BigInt(value), LE);
+  set pRegions(value: AnyPointer) {
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -85930,7 +85947,7 @@ export class VkPhysicalDeviceFaultFeaturesEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     deviceFault?: VkBool32;
     deviceFaultVendorBinary?: VkBool32;
   }) {
@@ -85954,8 +85971,8 @@ export class VkPhysicalDeviceFaultFeaturesEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get deviceFault() {
@@ -86121,7 +86138,7 @@ export class VkDeviceFaultCountsEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     addressInfoCount?: number;
     vendorInfoCount?: number;
     vendorBinarySize?: VkDeviceSize;
@@ -86147,8 +86164,8 @@ export class VkDeviceFaultCountsEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get addressInfoCount() {
@@ -86198,11 +86215,11 @@ export class VkDeviceFaultInfoEXT implements IVkStructure {
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     description?: number[];
-    pAddressInfos?: Deno.PointerValue;
-    pVendorInfos?: Deno.PointerValue;
-    pVendorBinaryData?: Deno.PointerValue;
+    pAddressInfos?: AnyPointer;
+    pVendorInfos?: AnyPointer;
+    pVendorBinaryData?: AnyPointer;
   }) {
     const s = VkDeviceFaultInfoEXT.alloc();
     s.sType = VkStructureType.VK_STRUCTURE_TYPE_DEVICE_FAULT_INFO_EXT;
@@ -86226,8 +86243,8 @@ export class VkDeviceFaultInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get description() {
@@ -86250,24 +86267,24 @@ export class VkDeviceFaultInfoEXT implements IVkStructure {
     return this.#view.getBigUint64(272, LE);
   }
   
-  set pAddressInfos(value: Deno.PointerValue) {
-    this.#view.setBigUint64(272, BigInt(value), LE);
+  set pAddressInfos(value: AnyPointer) {
+    this.#view.setBigUint64(272, BigInt(anyPointer(value)), LE);
   }
   
   get pVendorInfos() {
     return this.#view.getBigUint64(280, LE);
   }
   
-  set pVendorInfos(value: Deno.PointerValue) {
-    this.#view.setBigUint64(280, BigInt(value), LE);
+  set pVendorInfos(value: AnyPointer) {
+    this.#view.setBigUint64(280, BigInt(anyPointer(value)), LE);
   }
   
   get pVendorBinaryData() {
     return this.#view.getBigUint64(288, LE);
   }
   
-  set pVendorBinaryData(value: Deno.PointerValue) {
-    this.#view.setBigUint64(288, BigInt(value), LE);
+  set pVendorBinaryData(value: AnyPointer) {
+    this.#view.setBigUint64(288, BigInt(anyPointer(value)), LE);
   }
 }
 
@@ -86497,7 +86514,7 @@ export class VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM implements IVkStruc
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderCoreMask?: Deno.PointerValue;
     shaderCoreCount?: number;
     shaderWarpsPerCore?: number;
@@ -86523,8 +86540,8 @@ export class VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM implements IVkStruc
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderCoreMask() {
@@ -86574,7 +86591,7 @@ export class VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM implements IVkStructu
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     shaderCoreBuiltins?: VkBool32;
   }) {
     const s = VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM.alloc();
@@ -86596,8 +86613,8 @@ export class VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM implements IVkStructu
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get shaderCoreBuiltins() {
@@ -86631,7 +86648,7 @@ export class VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV implements IV
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     rayTracingInvocationReorder?: VkBool32;
   }) {
     const s = VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV.alloc();
@@ -86653,8 +86670,8 @@ export class VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV implements IV
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get rayTracingInvocationReorder() {
@@ -86688,7 +86705,7 @@ export class VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV implements 
   }
   
   static create(data: {
-    pNext?: Deno.PointerValue;
+    pNext?: AnyPointer;
     rayTracingInvocationReorderReorderingHint?: VkRayTracingInvocationReorderModeNV;
   }) {
     const s = VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV.alloc();
@@ -86710,8 +86727,8 @@ export class VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV implements 
     return this.#view.getBigUint64(8, LE);
   }
   
-  set pNext(value: Deno.PointerValue) {
-    this.#view.setBigUint64(8, BigInt(value), LE);
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
   
   get rayTracingInvocationReorderReorderingHint() {
@@ -88807,14 +88824,14 @@ export class VkError extends Error {
 /// Commands
 
 export function vkCreateInstance(
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pInstance: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pInstance: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateInstance(
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pInstance === null ? null : pInstance instanceof Uint8Array ? pInstance : pInstance[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pInstance),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -88825,23 +88842,23 @@ export function vkCreateInstance(
 
 export function vkDestroyInstance(
   instance: VkInstance,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyInstance(
     instance,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkEnumeratePhysicalDevices(
   instance: VkInstance,
-  pPhysicalDeviceCount: IVkStructure | Uint8Array | null,
-  pPhysicalDevices: IVkStructure | Uint8Array | null,
+  pPhysicalDeviceCount: AnyBuffer,
+  pPhysicalDevices: AnyBuffer,
 ): VkResult {
   const ret = lib.vkEnumeratePhysicalDevices(
     instance,
-    pPhysicalDeviceCount === null ? null : pPhysicalDeviceCount instanceof Uint8Array ? pPhysicalDeviceCount : pPhysicalDeviceCount[BUFFER],
-    pPhysicalDevices === null ? null : pPhysicalDevices instanceof Uint8Array ? pPhysicalDevices : pPhysicalDevices[BUFFER],
+    anyBuffer(pPhysicalDeviceCount),
+    anyBuffer(pPhysicalDevices),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -88852,77 +88869,77 @@ export function vkEnumeratePhysicalDevices(
 
 export function vkGetDeviceProcAddr(
   device: VkDevice,
-  pName: IVkStructure | Uint8Array,
+  pName: AnyBuffer,
 ): Deno.PointerValue {
   const ret = lib.vkGetDeviceProcAddr(
     device,
-    pName === null ? null : pName instanceof Uint8Array ? pName : pName[BUFFER],
+    anyBuffer(pName),
   );
   return ret;
 }
 
 export function vkGetInstanceProcAddr(
   instance: VkInstance,
-  pName: IVkStructure | Uint8Array,
+  pName: AnyBuffer,
 ): Deno.PointerValue {
   const ret = lib.vkGetInstanceProcAddr(
     instance,
-    pName === null ? null : pName instanceof Uint8Array ? pName : pName[BUFFER],
+    anyBuffer(pName),
   );
   return ret;
 }
 
 export function vkGetPhysicalDeviceProperties(
   physicalDevice: VkPhysicalDevice,
-  pProperties: IVkStructure | Uint8Array,
+  pProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceProperties(
     physicalDevice,
-    pProperties === null ? null : pProperties instanceof Uint8Array ? pProperties : pProperties[BUFFER],
+    anyBuffer(pProperties),
   );
 }
 
 export function vkGetPhysicalDeviceQueueFamilyProperties(
   physicalDevice: VkPhysicalDevice,
-  pQueueFamilyPropertyCount: IVkStructure | Uint8Array | null,
-  pQueueFamilyProperties: IVkStructure | Uint8Array | null,
+  pQueueFamilyPropertyCount: AnyBuffer,
+  pQueueFamilyProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceQueueFamilyProperties(
     physicalDevice,
-    pQueueFamilyPropertyCount === null ? null : pQueueFamilyPropertyCount instanceof Uint8Array ? pQueueFamilyPropertyCount : pQueueFamilyPropertyCount[BUFFER],
-    pQueueFamilyProperties === null ? null : pQueueFamilyProperties instanceof Uint8Array ? pQueueFamilyProperties : pQueueFamilyProperties[BUFFER],
+    anyBuffer(pQueueFamilyPropertyCount),
+    anyBuffer(pQueueFamilyProperties),
   );
 }
 
 export function vkGetPhysicalDeviceMemoryProperties(
   physicalDevice: VkPhysicalDevice,
-  pMemoryProperties: IVkStructure | Uint8Array,
+  pMemoryProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceMemoryProperties(
     physicalDevice,
-    pMemoryProperties === null ? null : pMemoryProperties instanceof Uint8Array ? pMemoryProperties : pMemoryProperties[BUFFER],
+    anyBuffer(pMemoryProperties),
   );
 }
 
 export function vkGetPhysicalDeviceFeatures(
   physicalDevice: VkPhysicalDevice,
-  pFeatures: IVkStructure | Uint8Array,
+  pFeatures: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceFeatures(
     physicalDevice,
-    pFeatures === null ? null : pFeatures instanceof Uint8Array ? pFeatures : pFeatures[BUFFER],
+    anyBuffer(pFeatures),
   );
 }
 
 export function vkGetPhysicalDeviceFormatProperties(
   physicalDevice: VkPhysicalDevice,
   format: VkFormat,
-  pFormatProperties: IVkStructure | Uint8Array,
+  pFormatProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceFormatProperties(
     physicalDevice,
     format,
-    pFormatProperties === null ? null : pFormatProperties instanceof Uint8Array ? pFormatProperties : pFormatProperties[BUFFER],
+    anyBuffer(pFormatProperties),
   );
 }
 
@@ -88933,7 +88950,7 @@ export function vkGetPhysicalDeviceImageFormatProperties(
   tiling: VkImageTiling,
   usage: VkImageUsageFlags,
   flags: VkImageCreateFlags,
-  pImageFormatProperties: IVkStructure | Uint8Array,
+  pImageFormatProperties: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetPhysicalDeviceImageFormatProperties(
     physicalDevice,
@@ -88942,7 +88959,7 @@ export function vkGetPhysicalDeviceImageFormatProperties(
     tiling,
     usage,
     flags,
-    pImageFormatProperties === null ? null : pImageFormatProperties instanceof Uint8Array ? pImageFormatProperties : pImageFormatProperties[BUFFER],
+    anyBuffer(pImageFormatProperties),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -88953,15 +88970,15 @@ export function vkGetPhysicalDeviceImageFormatProperties(
 
 export function vkCreateDevice(
   physicalDevice: VkPhysicalDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pDevice: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pDevice: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateDevice(
     physicalDevice,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pDevice === null ? null : pDevice instanceof Uint8Array ? pDevice : pDevice[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pDevice),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -88972,19 +88989,19 @@ export function vkCreateDevice(
 
 export function vkDestroyDevice(
   device: VkDevice,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyDevice(
     device,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkEnumerateInstanceVersion(
-  pApiVersion: IVkStructure | Uint8Array,
+  pApiVersion: AnyBuffer,
 ): VkResult {
   const ret = lib.vkEnumerateInstanceVersion(
-    pApiVersion === null ? null : pApiVersion instanceof Uint8Array ? pApiVersion : pApiVersion[BUFFER],
+    anyBuffer(pApiVersion),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -88994,12 +89011,12 @@ export function vkEnumerateInstanceVersion(
 }
 
 export function vkEnumerateInstanceLayerProperties(
-  pPropertyCount: IVkStructure | Uint8Array | null,
-  pProperties: IVkStructure | Uint8Array | null,
+  pPropertyCount: AnyBuffer,
+  pProperties: AnyBuffer,
 ): VkResult {
   const ret = lib.vkEnumerateInstanceLayerProperties(
-    pPropertyCount === null ? null : pPropertyCount instanceof Uint8Array ? pPropertyCount : pPropertyCount[BUFFER],
-    pProperties === null ? null : pProperties instanceof Uint8Array ? pProperties : pProperties[BUFFER],
+    anyBuffer(pPropertyCount),
+    anyBuffer(pProperties),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -89009,14 +89026,14 @@ export function vkEnumerateInstanceLayerProperties(
 }
 
 export function vkEnumerateInstanceExtensionProperties(
-  pLayerName: IVkStructure | Uint8Array | null,
-  pPropertyCount: IVkStructure | Uint8Array | null,
-  pProperties: IVkStructure | Uint8Array | null,
+  pLayerName: AnyBuffer,
+  pPropertyCount: AnyBuffer,
+  pProperties: AnyBuffer,
 ): VkResult {
   const ret = lib.vkEnumerateInstanceExtensionProperties(
-    pLayerName === null ? null : pLayerName instanceof Uint8Array ? pLayerName : pLayerName[BUFFER],
-    pPropertyCount === null ? null : pPropertyCount instanceof Uint8Array ? pPropertyCount : pPropertyCount[BUFFER],
-    pProperties === null ? null : pProperties instanceof Uint8Array ? pProperties : pProperties[BUFFER],
+    anyBuffer(pLayerName),
+    anyBuffer(pPropertyCount),
+    anyBuffer(pProperties),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -89027,13 +89044,13 @@ export function vkEnumerateInstanceExtensionProperties(
 
 export function vkEnumerateDeviceLayerProperties(
   physicalDevice: VkPhysicalDevice,
-  pPropertyCount: IVkStructure | Uint8Array | null,
-  pProperties: IVkStructure | Uint8Array | null,
+  pPropertyCount: AnyBuffer,
+  pProperties: AnyBuffer,
 ): VkResult {
   const ret = lib.vkEnumerateDeviceLayerProperties(
     physicalDevice,
-    pPropertyCount === null ? null : pPropertyCount instanceof Uint8Array ? pPropertyCount : pPropertyCount[BUFFER],
-    pProperties === null ? null : pProperties instanceof Uint8Array ? pProperties : pProperties[BUFFER],
+    anyBuffer(pPropertyCount),
+    anyBuffer(pProperties),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -89044,15 +89061,15 @@ export function vkEnumerateDeviceLayerProperties(
 
 export function vkEnumerateDeviceExtensionProperties(
   physicalDevice: VkPhysicalDevice,
-  pLayerName: IVkStructure | Uint8Array | null,
-  pPropertyCount: IVkStructure | Uint8Array | null,
-  pProperties: IVkStructure | Uint8Array | null,
+  pLayerName: AnyBuffer,
+  pPropertyCount: AnyBuffer,
+  pProperties: AnyBuffer,
 ): VkResult {
   const ret = lib.vkEnumerateDeviceExtensionProperties(
     physicalDevice,
-    pLayerName === null ? null : pLayerName instanceof Uint8Array ? pLayerName : pLayerName[BUFFER],
-    pPropertyCount === null ? null : pPropertyCount instanceof Uint8Array ? pPropertyCount : pPropertyCount[BUFFER],
-    pProperties === null ? null : pProperties instanceof Uint8Array ? pProperties : pProperties[BUFFER],
+    anyBuffer(pLayerName),
+    anyBuffer(pPropertyCount),
+    anyBuffer(pProperties),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -89065,26 +89082,26 @@ export function vkGetDeviceQueue(
   device: VkDevice,
   queueFamilyIndex: number,
   queueIndex: number,
-  pQueue: IVkStructure | Uint8Array,
+  pQueue: AnyBuffer,
 ): void {
   lib.vkGetDeviceQueue(
     device,
     queueFamilyIndex,
     queueIndex,
-    pQueue === null ? null : pQueue instanceof Uint8Array ? pQueue : pQueue[BUFFER],
+    anyBuffer(pQueue),
   );
 }
 
 export function vkQueueSubmit(
   queue: VkQueue,
   submitCount: number,
-  pSubmits: IVkStructure | Uint8Array,
+  pSubmits: AnyBuffer,
   fence: VkFence,
 ): VkResult {
   const ret = lib.vkQueueSubmit(
     queue,
     submitCount,
-    pSubmits === null ? null : pSubmits instanceof Uint8Array ? pSubmits : pSubmits[BUFFER],
+    anyBuffer(pSubmits),
     fence,
   );
   if (ret === VkResult.VK_SUCCESS) {
@@ -89122,15 +89139,15 @@ export function vkDeviceWaitIdle(
 
 export function vkAllocateMemory(
   device: VkDevice,
-  pAllocateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pMemory: IVkStructure | Uint8Array,
+  pAllocateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pMemory: AnyBuffer,
 ): VkResult {
   const ret = lib.vkAllocateMemory(
     device,
-    pAllocateInfo === null ? null : pAllocateInfo instanceof Uint8Array ? pAllocateInfo : pAllocateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pMemory === null ? null : pMemory instanceof Uint8Array ? pMemory : pMemory[BUFFER],
+    anyBuffer(pAllocateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pMemory),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89142,12 +89159,12 @@ export function vkAllocateMemory(
 export function vkFreeMemory(
   device: VkDevice,
   memory: VkDeviceMemory,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkFreeMemory(
     device,
     memory,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
@@ -89157,7 +89174,7 @@ export function vkMapMemory(
   offset: VkDeviceSize,
   size: VkDeviceSize,
   flags: VkMemoryMapFlags,
-  ppData: IVkStructure | Uint8Array | null,
+  ppData: AnyBuffer,
 ): VkResult {
   const ret = lib.vkMapMemory(
     device,
@@ -89165,7 +89182,7 @@ export function vkMapMemory(
     offset,
     size,
     flags,
-    ppData === null ? null : ppData instanceof Uint8Array ? ppData : ppData[BUFFER],
+    anyBuffer(ppData),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89187,12 +89204,12 @@ export function vkUnmapMemory(
 export function vkFlushMappedMemoryRanges(
   device: VkDevice,
   memoryRangeCount: number,
-  pMemoryRanges: IVkStructure | Uint8Array,
+  pMemoryRanges: AnyBuffer,
 ): VkResult {
   const ret = lib.vkFlushMappedMemoryRanges(
     device,
     memoryRangeCount,
-    pMemoryRanges === null ? null : pMemoryRanges instanceof Uint8Array ? pMemoryRanges : pMemoryRanges[BUFFER],
+    anyBuffer(pMemoryRanges),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89204,12 +89221,12 @@ export function vkFlushMappedMemoryRanges(
 export function vkInvalidateMappedMemoryRanges(
   device: VkDevice,
   memoryRangeCount: number,
-  pMemoryRanges: IVkStructure | Uint8Array,
+  pMemoryRanges: AnyBuffer,
 ): VkResult {
   const ret = lib.vkInvalidateMappedMemoryRanges(
     device,
     memoryRangeCount,
-    pMemoryRanges === null ? null : pMemoryRanges instanceof Uint8Array ? pMemoryRanges : pMemoryRanges[BUFFER],
+    anyBuffer(pMemoryRanges),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89221,24 +89238,24 @@ export function vkInvalidateMappedMemoryRanges(
 export function vkGetDeviceMemoryCommitment(
   device: VkDevice,
   memory: VkDeviceMemory,
-  pCommittedMemoryInBytes: IVkStructure | Uint8Array,
+  pCommittedMemoryInBytes: AnyBuffer,
 ): void {
   lib.vkGetDeviceMemoryCommitment(
     device,
     memory,
-    pCommittedMemoryInBytes === null ? null : pCommittedMemoryInBytes instanceof Uint8Array ? pCommittedMemoryInBytes : pCommittedMemoryInBytes[BUFFER],
+    anyBuffer(pCommittedMemoryInBytes),
   );
 }
 
 export function vkGetBufferMemoryRequirements(
   device: VkDevice,
   buffer: VkBuffer,
-  pMemoryRequirements: IVkStructure | Uint8Array,
+  pMemoryRequirements: AnyBuffer,
 ): void {
   lib.vkGetBufferMemoryRequirements(
     device,
     buffer,
-    pMemoryRequirements === null ? null : pMemoryRequirements instanceof Uint8Array ? pMemoryRequirements : pMemoryRequirements[BUFFER],
+    anyBuffer(pMemoryRequirements),
   );
 }
 
@@ -89264,12 +89281,12 @@ export function vkBindBufferMemory(
 export function vkGetImageMemoryRequirements(
   device: VkDevice,
   image: VkImage,
-  pMemoryRequirements: IVkStructure | Uint8Array,
+  pMemoryRequirements: AnyBuffer,
 ): void {
   lib.vkGetImageMemoryRequirements(
     device,
     image,
-    pMemoryRequirements === null ? null : pMemoryRequirements instanceof Uint8Array ? pMemoryRequirements : pMemoryRequirements[BUFFER],
+    anyBuffer(pMemoryRequirements),
   );
 }
 
@@ -89295,14 +89312,14 @@ export function vkBindImageMemory(
 export function vkGetImageSparseMemoryRequirements(
   device: VkDevice,
   image: VkImage,
-  pSparseMemoryRequirementCount: IVkStructure | Uint8Array | null,
-  pSparseMemoryRequirements: IVkStructure | Uint8Array | null,
+  pSparseMemoryRequirementCount: AnyBuffer,
+  pSparseMemoryRequirements: AnyBuffer,
 ): void {
   lib.vkGetImageSparseMemoryRequirements(
     device,
     image,
-    pSparseMemoryRequirementCount === null ? null : pSparseMemoryRequirementCount instanceof Uint8Array ? pSparseMemoryRequirementCount : pSparseMemoryRequirementCount[BUFFER],
-    pSparseMemoryRequirements === null ? null : pSparseMemoryRequirements instanceof Uint8Array ? pSparseMemoryRequirements : pSparseMemoryRequirements[BUFFER],
+    anyBuffer(pSparseMemoryRequirementCount),
+    anyBuffer(pSparseMemoryRequirements),
   );
 }
 
@@ -89313,8 +89330,8 @@ export function vkGetPhysicalDeviceSparseImageFormatProperties(
   samples: VkSampleCountFlagBits,
   usage: VkImageUsageFlags,
   tiling: VkImageTiling,
-  pPropertyCount: IVkStructure | Uint8Array | null,
-  pProperties: IVkStructure | Uint8Array | null,
+  pPropertyCount: AnyBuffer,
+  pProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceSparseImageFormatProperties(
     physicalDevice,
@@ -89323,21 +89340,21 @@ export function vkGetPhysicalDeviceSparseImageFormatProperties(
     samples,
     usage,
     tiling,
-    pPropertyCount === null ? null : pPropertyCount instanceof Uint8Array ? pPropertyCount : pPropertyCount[BUFFER],
-    pProperties === null ? null : pProperties instanceof Uint8Array ? pProperties : pProperties[BUFFER],
+    anyBuffer(pPropertyCount),
+    anyBuffer(pProperties),
   );
 }
 
 export function vkQueueBindSparse(
   queue: VkQueue,
   bindInfoCount: number,
-  pBindInfo: IVkStructure | Uint8Array,
+  pBindInfo: AnyBuffer,
   fence: VkFence,
 ): VkResult {
   const ret = lib.vkQueueBindSparse(
     queue,
     bindInfoCount,
-    pBindInfo === null ? null : pBindInfo instanceof Uint8Array ? pBindInfo : pBindInfo[BUFFER],
+    anyBuffer(pBindInfo),
     fence,
   );
   if (ret === VkResult.VK_SUCCESS) {
@@ -89349,15 +89366,15 @@ export function vkQueueBindSparse(
 
 export function vkCreateFence(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pFence: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pFence: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateFence(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pFence === null ? null : pFence instanceof Uint8Array ? pFence : pFence[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pFence),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89369,24 +89386,24 @@ export function vkCreateFence(
 export function vkDestroyFence(
   device: VkDevice,
   fence: VkFence,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyFence(
     device,
     fence,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkResetFences(
   device: VkDevice,
   fenceCount: number,
-  pFences: IVkStructure | Uint8Array,
+  pFences: AnyBuffer,
 ): VkResult {
   const ret = lib.vkResetFences(
     device,
     fenceCount,
-    pFences === null ? null : pFences instanceof Uint8Array ? pFences : pFences[BUFFER],
+    anyBuffer(pFences),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89413,14 +89430,14 @@ export function vkGetFenceStatus(
 export function vkWaitForFences(
   device: VkDevice,
   fenceCount: number,
-  pFences: IVkStructure | Uint8Array,
+  pFences: AnyBuffer,
   waitAll: VkBool32,
   timeout: Deno.PointerValue,
 ): VkResult {
   const ret = lib.vkWaitForFences(
     device,
     fenceCount,
-    pFences === null ? null : pFences instanceof Uint8Array ? pFences : pFences[BUFFER],
+    anyBuffer(pFences),
     waitAll,
     timeout,
   );
@@ -89433,15 +89450,15 @@ export function vkWaitForFences(
 
 export function vkCreateSemaphore(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pSemaphore: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pSemaphore: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateSemaphore(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pSemaphore === null ? null : pSemaphore instanceof Uint8Array ? pSemaphore : pSemaphore[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pSemaphore),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89453,26 +89470,26 @@ export function vkCreateSemaphore(
 export function vkDestroySemaphore(
   device: VkDevice,
   semaphore: VkSemaphore,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroySemaphore(
     device,
     semaphore,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreateEvent(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pEvent: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pEvent: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateEvent(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pEvent === null ? null : pEvent instanceof Uint8Array ? pEvent : pEvent[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pEvent),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89484,12 +89501,12 @@ export function vkCreateEvent(
 export function vkDestroyEvent(
   device: VkDevice,
   event: VkEvent,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyEvent(
     device,
     event,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
@@ -89540,15 +89557,15 @@ export function vkResetEvent(
 
 export function vkCreateQueryPool(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pQueryPool: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pQueryPool: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateQueryPool(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pQueryPool === null ? null : pQueryPool instanceof Uint8Array ? pQueryPool : pQueryPool[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pQueryPool),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89560,12 +89577,12 @@ export function vkCreateQueryPool(
 export function vkDestroyQueryPool(
   device: VkDevice,
   queryPool: VkQueryPool,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyQueryPool(
     device,
     queryPool,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
@@ -89575,7 +89592,7 @@ export function vkGetQueryPoolResults(
   firstQuery: number,
   queryCount: number,
   dataSize: Deno.PointerValue,
-  pData: IVkStructure | Uint8Array,
+  pData: AnyBuffer,
   stride: VkDeviceSize,
   flags: VkQueryResultFlags,
 ): VkResult {
@@ -89585,7 +89602,7 @@ export function vkGetQueryPoolResults(
     firstQuery,
     queryCount,
     dataSize,
-    pData === null ? null : pData instanceof Uint8Array ? pData : pData[BUFFER],
+    anyBuffer(pData),
     stride,
     flags,
   );
@@ -89612,15 +89629,15 @@ export function vkResetQueryPool(
 
 export function vkCreateBuffer(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pBuffer: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pBuffer: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateBuffer(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pBuffer === null ? null : pBuffer instanceof Uint8Array ? pBuffer : pBuffer[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pBuffer),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89632,26 +89649,26 @@ export function vkCreateBuffer(
 export function vkDestroyBuffer(
   device: VkDevice,
   buffer: VkBuffer,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyBuffer(
     device,
     buffer,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreateBufferView(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pView: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pView: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateBufferView(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pView === null ? null : pView instanceof Uint8Array ? pView : pView[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pView),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89663,26 +89680,26 @@ export function vkCreateBufferView(
 export function vkDestroyBufferView(
   device: VkDevice,
   bufferView: VkBufferView,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyBufferView(
     device,
     bufferView,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreateImage(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pImage: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pImage: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateImage(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pImage === null ? null : pImage instanceof Uint8Array ? pImage : pImage[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pImage),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89694,40 +89711,40 @@ export function vkCreateImage(
 export function vkDestroyImage(
   device: VkDevice,
   image: VkImage,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyImage(
     device,
     image,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkGetImageSubresourceLayout(
   device: VkDevice,
   image: VkImage,
-  pSubresource: IVkStructure | Uint8Array,
-  pLayout: IVkStructure | Uint8Array,
+  pSubresource: AnyBuffer,
+  pLayout: AnyBuffer,
 ): void {
   lib.vkGetImageSubresourceLayout(
     device,
     image,
-    pSubresource === null ? null : pSubresource instanceof Uint8Array ? pSubresource : pSubresource[BUFFER],
-    pLayout === null ? null : pLayout instanceof Uint8Array ? pLayout : pLayout[BUFFER],
+    anyBuffer(pSubresource),
+    anyBuffer(pLayout),
   );
 }
 
 export function vkCreateImageView(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pView: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pView: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateImageView(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pView === null ? null : pView instanceof Uint8Array ? pView : pView[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pView),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89739,26 +89756,26 @@ export function vkCreateImageView(
 export function vkDestroyImageView(
   device: VkDevice,
   imageView: VkImageView,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyImageView(
     device,
     imageView,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreateShaderModule(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pShaderModule: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pShaderModule: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateShaderModule(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pShaderModule === null ? null : pShaderModule instanceof Uint8Array ? pShaderModule : pShaderModule[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pShaderModule),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89770,26 +89787,26 @@ export function vkCreateShaderModule(
 export function vkDestroyShaderModule(
   device: VkDevice,
   shaderModule: VkShaderModule,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyShaderModule(
     device,
     shaderModule,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreatePipelineCache(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pPipelineCache: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pPipelineCache: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreatePipelineCache(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pPipelineCache === null ? null : pPipelineCache instanceof Uint8Array ? pPipelineCache : pPipelineCache[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pPipelineCache),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89801,26 +89818,26 @@ export function vkCreatePipelineCache(
 export function vkDestroyPipelineCache(
   device: VkDevice,
   pipelineCache: VkPipelineCache,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyPipelineCache(
     device,
     pipelineCache,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkGetPipelineCacheData(
   device: VkDevice,
   pipelineCache: VkPipelineCache,
-  pDataSize: IVkStructure | Uint8Array | null,
-  pData: IVkStructure | Uint8Array | null,
+  pDataSize: AnyBuffer,
+  pData: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetPipelineCacheData(
     device,
     pipelineCache,
-    pDataSize === null ? null : pDataSize instanceof Uint8Array ? pDataSize : pDataSize[BUFFER],
-    pData === null ? null : pData instanceof Uint8Array ? pData : pData[BUFFER],
+    anyBuffer(pDataSize),
+    anyBuffer(pData),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -89833,13 +89850,13 @@ export function vkMergePipelineCaches(
   device: VkDevice,
   dstCache: VkPipelineCache,
   srcCacheCount: number,
-  pSrcCaches: IVkStructure | Uint8Array,
+  pSrcCaches: AnyBuffer,
 ): VkResult {
   const ret = lib.vkMergePipelineCaches(
     device,
     dstCache,
     srcCacheCount,
-    pSrcCaches === null ? null : pSrcCaches instanceof Uint8Array ? pSrcCaches : pSrcCaches[BUFFER],
+    anyBuffer(pSrcCaches),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89852,17 +89869,17 @@ export function vkCreateGraphicsPipelines(
   device: VkDevice,
   pipelineCache: VkPipelineCache,
   createInfoCount: number,
-  pCreateInfos: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pPipelines: IVkStructure | Uint8Array,
+  pCreateInfos: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pPipelines: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateGraphicsPipelines(
     device,
     pipelineCache,
     createInfoCount,
-    pCreateInfos === null ? null : pCreateInfos instanceof Uint8Array ? pCreateInfos : pCreateInfos[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pPipelines === null ? null : pPipelines instanceof Uint8Array ? pPipelines : pPipelines[BUFFER],
+    anyBuffer(pCreateInfos),
+    anyBuffer(pAllocator),
+    anyBuffer(pPipelines),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_PIPELINE_COMPILE_REQUIRED_EXT) {
     return ret;
@@ -89875,17 +89892,17 @@ export function vkCreateComputePipelines(
   device: VkDevice,
   pipelineCache: VkPipelineCache,
   createInfoCount: number,
-  pCreateInfos: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pPipelines: IVkStructure | Uint8Array,
+  pCreateInfos: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pPipelines: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateComputePipelines(
     device,
     pipelineCache,
     createInfoCount,
-    pCreateInfos === null ? null : pCreateInfos instanceof Uint8Array ? pCreateInfos : pCreateInfos[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pPipelines === null ? null : pPipelines instanceof Uint8Array ? pPipelines : pPipelines[BUFFER],
+    anyBuffer(pCreateInfos),
+    anyBuffer(pAllocator),
+    anyBuffer(pPipelines),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_PIPELINE_COMPILE_REQUIRED_EXT) {
     return ret;
@@ -89897,26 +89914,26 @@ export function vkCreateComputePipelines(
 export function vkDestroyPipeline(
   device: VkDevice,
   pipeline: VkPipeline,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyPipeline(
     device,
     pipeline,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreatePipelineLayout(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pPipelineLayout: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pPipelineLayout: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreatePipelineLayout(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pPipelineLayout === null ? null : pPipelineLayout instanceof Uint8Array ? pPipelineLayout : pPipelineLayout[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pPipelineLayout),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89928,26 +89945,26 @@ export function vkCreatePipelineLayout(
 export function vkDestroyPipelineLayout(
   device: VkDevice,
   pipelineLayout: VkPipelineLayout,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyPipelineLayout(
     device,
     pipelineLayout,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreateSampler(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pSampler: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pSampler: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateSampler(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pSampler === null ? null : pSampler instanceof Uint8Array ? pSampler : pSampler[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pSampler),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89959,26 +89976,26 @@ export function vkCreateSampler(
 export function vkDestroySampler(
   device: VkDevice,
   sampler: VkSampler,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroySampler(
     device,
     sampler,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreateDescriptorSetLayout(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pSetLayout: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pSetLayout: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateDescriptorSetLayout(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pSetLayout === null ? null : pSetLayout instanceof Uint8Array ? pSetLayout : pSetLayout[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pSetLayout),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -89990,26 +90007,26 @@ export function vkCreateDescriptorSetLayout(
 export function vkDestroyDescriptorSetLayout(
   device: VkDevice,
   descriptorSetLayout: VkDescriptorSetLayout,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyDescriptorSetLayout(
     device,
     descriptorSetLayout,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreateDescriptorPool(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pDescriptorPool: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pDescriptorPool: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateDescriptorPool(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pDescriptorPool === null ? null : pDescriptorPool instanceof Uint8Array ? pDescriptorPool : pDescriptorPool[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pDescriptorPool),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -90021,12 +90038,12 @@ export function vkCreateDescriptorPool(
 export function vkDestroyDescriptorPool(
   device: VkDevice,
   descriptorPool: VkDescriptorPool,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyDescriptorPool(
     device,
     descriptorPool,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
@@ -90049,13 +90066,13 @@ export function vkResetDescriptorPool(
 
 export function vkAllocateDescriptorSets(
   device: VkDevice,
-  pAllocateInfo: IVkStructure | Uint8Array,
-  pDescriptorSets: IVkStructure | Uint8Array,
+  pAllocateInfo: AnyBuffer,
+  pDescriptorSets: AnyBuffer,
 ): VkResult {
   const ret = lib.vkAllocateDescriptorSets(
     device,
-    pAllocateInfo === null ? null : pAllocateInfo instanceof Uint8Array ? pAllocateInfo : pAllocateInfo[BUFFER],
-    pDescriptorSets === null ? null : pDescriptorSets instanceof Uint8Array ? pDescriptorSets : pDescriptorSets[BUFFER],
+    anyBuffer(pAllocateInfo),
+    anyBuffer(pDescriptorSets),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -90068,13 +90085,13 @@ export function vkFreeDescriptorSets(
   device: VkDevice,
   descriptorPool: VkDescriptorPool,
   descriptorSetCount: number,
-  pDescriptorSets: IVkStructure | Uint8Array,
+  pDescriptorSets: AnyBuffer,
 ): VkResult {
   const ret = lib.vkFreeDescriptorSets(
     device,
     descriptorPool,
     descriptorSetCount,
-    pDescriptorSets === null ? null : pDescriptorSets instanceof Uint8Array ? pDescriptorSets : pDescriptorSets[BUFFER],
+    anyBuffer(pDescriptorSets),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -90086,30 +90103,30 @@ export function vkFreeDescriptorSets(
 export function vkUpdateDescriptorSets(
   device: VkDevice,
   descriptorWriteCount: number,
-  pDescriptorWrites: IVkStructure | Uint8Array,
+  pDescriptorWrites: AnyBuffer,
   descriptorCopyCount: number,
-  pDescriptorCopies: IVkStructure | Uint8Array,
+  pDescriptorCopies: AnyBuffer,
 ): void {
   lib.vkUpdateDescriptorSets(
     device,
     descriptorWriteCount,
-    pDescriptorWrites === null ? null : pDescriptorWrites instanceof Uint8Array ? pDescriptorWrites : pDescriptorWrites[BUFFER],
+    anyBuffer(pDescriptorWrites),
     descriptorCopyCount,
-    pDescriptorCopies === null ? null : pDescriptorCopies instanceof Uint8Array ? pDescriptorCopies : pDescriptorCopies[BUFFER],
+    anyBuffer(pDescriptorCopies),
   );
 }
 
 export function vkCreateFramebuffer(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pFramebuffer: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pFramebuffer: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateFramebuffer(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pFramebuffer === null ? null : pFramebuffer instanceof Uint8Array ? pFramebuffer : pFramebuffer[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pFramebuffer),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -90121,26 +90138,26 @@ export function vkCreateFramebuffer(
 export function vkDestroyFramebuffer(
   device: VkDevice,
   framebuffer: VkFramebuffer,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyFramebuffer(
     device,
     framebuffer,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkCreateRenderPass(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pRenderPass: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pRenderPass: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateRenderPass(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pRenderPass === null ? null : pRenderPass instanceof Uint8Array ? pRenderPass : pRenderPass[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pRenderPass),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -90152,38 +90169,38 @@ export function vkCreateRenderPass(
 export function vkDestroyRenderPass(
   device: VkDevice,
   renderPass: VkRenderPass,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyRenderPass(
     device,
     renderPass,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkGetRenderAreaGranularity(
   device: VkDevice,
   renderPass: VkRenderPass,
-  pGranularity: IVkStructure | Uint8Array,
+  pGranularity: AnyBuffer,
 ): void {
   lib.vkGetRenderAreaGranularity(
     device,
     renderPass,
-    pGranularity === null ? null : pGranularity instanceof Uint8Array ? pGranularity : pGranularity[BUFFER],
+    anyBuffer(pGranularity),
   );
 }
 
 export function vkCreateCommandPool(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pCommandPool: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pCommandPool: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateCommandPool(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pCommandPool === null ? null : pCommandPool instanceof Uint8Array ? pCommandPool : pCommandPool[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pCommandPool),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -90195,12 +90212,12 @@ export function vkCreateCommandPool(
 export function vkDestroyCommandPool(
   device: VkDevice,
   commandPool: VkCommandPool,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyCommandPool(
     device,
     commandPool,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
@@ -90223,13 +90240,13 @@ export function vkResetCommandPool(
 
 export function vkAllocateCommandBuffers(
   device: VkDevice,
-  pAllocateInfo: IVkStructure | Uint8Array,
-  pCommandBuffers: IVkStructure | Uint8Array,
+  pAllocateInfo: AnyBuffer,
+  pCommandBuffers: AnyBuffer,
 ): VkResult {
   const ret = lib.vkAllocateCommandBuffers(
     device,
-    pAllocateInfo === null ? null : pAllocateInfo instanceof Uint8Array ? pAllocateInfo : pAllocateInfo[BUFFER],
-    pCommandBuffers === null ? null : pCommandBuffers instanceof Uint8Array ? pCommandBuffers : pCommandBuffers[BUFFER],
+    anyBuffer(pAllocateInfo),
+    anyBuffer(pCommandBuffers),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -90242,23 +90259,23 @@ export function vkFreeCommandBuffers(
   device: VkDevice,
   commandPool: VkCommandPool,
   commandBufferCount: number,
-  pCommandBuffers: IVkStructure | Uint8Array,
+  pCommandBuffers: AnyBuffer,
 ): void {
   lib.vkFreeCommandBuffers(
     device,
     commandPool,
     commandBufferCount,
-    pCommandBuffers === null ? null : pCommandBuffers instanceof Uint8Array ? pCommandBuffers : pCommandBuffers[BUFFER],
+    anyBuffer(pCommandBuffers),
   );
 }
 
 export function vkBeginCommandBuffer(
   commandBuffer: VkCommandBuffer,
-  pBeginInfo: IVkStructure | Uint8Array,
+  pBeginInfo: AnyBuffer,
 ): VkResult {
   const ret = lib.vkBeginCommandBuffer(
     commandBuffer,
-    pBeginInfo === null ? null : pBeginInfo instanceof Uint8Array ? pBeginInfo : pBeginInfo[BUFFER],
+    anyBuffer(pBeginInfo),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -90311,13 +90328,13 @@ export function vkCmdSetViewport(
   commandBuffer: VkCommandBuffer,
   firstViewport: number,
   viewportCount: number,
-  pViewports: IVkStructure | Uint8Array,
+  pViewports: AnyBuffer,
 ): void {
   lib.vkCmdSetViewport(
     commandBuffer,
     firstViewport,
     viewportCount,
-    pViewports === null ? null : pViewports instanceof Uint8Array ? pViewports : pViewports[BUFFER],
+    anyBuffer(pViewports),
   );
 }
 
@@ -90325,13 +90342,13 @@ export function vkCmdSetScissor(
   commandBuffer: VkCommandBuffer,
   firstScissor: number,
   scissorCount: number,
-  pScissors: IVkStructure | Uint8Array,
+  pScissors: AnyBuffer,
 ): void {
   lib.vkCmdSetScissor(
     commandBuffer,
     firstScissor,
     scissorCount,
-    pScissors === null ? null : pScissors instanceof Uint8Array ? pScissors : pScissors[BUFFER],
+    anyBuffer(pScissors),
   );
 }
 
@@ -90423,9 +90440,9 @@ export function vkCmdBindDescriptorSets(
   layout: VkPipelineLayout,
   firstSet: number,
   descriptorSetCount: number,
-  pDescriptorSets: IVkStructure | Uint8Array | null,
+  pDescriptorSets: AnyBuffer,
   dynamicOffsetCount: number,
-  pDynamicOffsets: IVkStructure | Uint8Array,
+  pDynamicOffsets: AnyBuffer,
 ): void {
   lib.vkCmdBindDescriptorSets(
     commandBuffer,
@@ -90433,9 +90450,9 @@ export function vkCmdBindDescriptorSets(
     layout,
     firstSet,
     descriptorSetCount,
-    pDescriptorSets === null ? null : pDescriptorSets instanceof Uint8Array ? pDescriptorSets : pDescriptorSets[BUFFER],
+    anyBuffer(pDescriptorSets),
     dynamicOffsetCount,
-    pDynamicOffsets === null ? null : pDynamicOffsets instanceof Uint8Array ? pDynamicOffsets : pDynamicOffsets[BUFFER],
+    anyBuffer(pDynamicOffsets),
   );
 }
 
@@ -90457,15 +90474,15 @@ export function vkCmdBindVertexBuffers(
   commandBuffer: VkCommandBuffer,
   firstBinding: number,
   bindingCount: number,
-  pBuffers: IVkStructure | Uint8Array | null,
-  pOffsets: IVkStructure | Uint8Array,
+  pBuffers: AnyBuffer,
+  pOffsets: AnyBuffer,
 ): void {
   lib.vkCmdBindVertexBuffers(
     commandBuffer,
     firstBinding,
     bindingCount,
-    pBuffers === null ? null : pBuffers instanceof Uint8Array ? pBuffers : pBuffers[BUFFER],
-    pOffsets === null ? null : pOffsets instanceof Uint8Array ? pOffsets : pOffsets[BUFFER],
+    anyBuffer(pBuffers),
+    anyBuffer(pOffsets),
   );
 }
 
@@ -90566,14 +90583,14 @@ export function vkCmdCopyBuffer(
   srcBuffer: VkBuffer,
   dstBuffer: VkBuffer,
   regionCount: number,
-  pRegions: IVkStructure | Uint8Array,
+  pRegions: AnyBuffer,
 ): void {
   lib.vkCmdCopyBuffer(
     commandBuffer,
     srcBuffer,
     dstBuffer,
     regionCount,
-    pRegions === null ? null : pRegions instanceof Uint8Array ? pRegions : pRegions[BUFFER],
+    anyBuffer(pRegions),
   );
 }
 
@@ -90584,7 +90601,7 @@ export function vkCmdCopyImage(
   dstImage: VkImage,
   dstImageLayout: VkImageLayout,
   regionCount: number,
-  pRegions: IVkStructure | Uint8Array,
+  pRegions: AnyBuffer,
 ): void {
   lib.vkCmdCopyImage(
     commandBuffer,
@@ -90593,7 +90610,7 @@ export function vkCmdCopyImage(
     dstImage,
     dstImageLayout,
     regionCount,
-    pRegions === null ? null : pRegions instanceof Uint8Array ? pRegions : pRegions[BUFFER],
+    anyBuffer(pRegions),
   );
 }
 
@@ -90604,7 +90621,7 @@ export function vkCmdBlitImage(
   dstImage: VkImage,
   dstImageLayout: VkImageLayout,
   regionCount: number,
-  pRegions: IVkStructure | Uint8Array,
+  pRegions: AnyBuffer,
   filter: VkFilter,
 ): void {
   lib.vkCmdBlitImage(
@@ -90614,7 +90631,7 @@ export function vkCmdBlitImage(
     dstImage,
     dstImageLayout,
     regionCount,
-    pRegions === null ? null : pRegions instanceof Uint8Array ? pRegions : pRegions[BUFFER],
+    anyBuffer(pRegions),
     filter,
   );
 }
@@ -90625,7 +90642,7 @@ export function vkCmdCopyBufferToImage(
   dstImage: VkImage,
   dstImageLayout: VkImageLayout,
   regionCount: number,
-  pRegions: IVkStructure | Uint8Array,
+  pRegions: AnyBuffer,
 ): void {
   lib.vkCmdCopyBufferToImage(
     commandBuffer,
@@ -90633,7 +90650,7 @@ export function vkCmdCopyBufferToImage(
     dstImage,
     dstImageLayout,
     regionCount,
-    pRegions === null ? null : pRegions instanceof Uint8Array ? pRegions : pRegions[BUFFER],
+    anyBuffer(pRegions),
   );
 }
 
@@ -90643,7 +90660,7 @@ export function vkCmdCopyImageToBuffer(
   srcImageLayout: VkImageLayout,
   dstBuffer: VkBuffer,
   regionCount: number,
-  pRegions: IVkStructure | Uint8Array,
+  pRegions: AnyBuffer,
 ): void {
   lib.vkCmdCopyImageToBuffer(
     commandBuffer,
@@ -90651,7 +90668,7 @@ export function vkCmdCopyImageToBuffer(
     srcImageLayout,
     dstBuffer,
     regionCount,
-    pRegions === null ? null : pRegions instanceof Uint8Array ? pRegions : pRegions[BUFFER],
+    anyBuffer(pRegions),
   );
 }
 
@@ -90660,14 +90677,14 @@ export function vkCmdUpdateBuffer(
   dstBuffer: VkBuffer,
   dstOffset: VkDeviceSize,
   dataSize: VkDeviceSize,
-  pData: IVkStructure | Uint8Array,
+  pData: AnyBuffer,
 ): void {
   lib.vkCmdUpdateBuffer(
     commandBuffer,
     dstBuffer,
     dstOffset,
     dataSize,
-    pData === null ? null : pData instanceof Uint8Array ? pData : pData[BUFFER],
+    anyBuffer(pData),
   );
 }
 
@@ -90692,17 +90709,17 @@ export function vkCmdClearColorImage(
   commandBuffer: VkCommandBuffer,
   image: VkImage,
   imageLayout: VkImageLayout,
-  pColor: IVkStructure | Uint8Array,
+  pColor: AnyBuffer,
   rangeCount: number,
-  pRanges: IVkStructure | Uint8Array,
+  pRanges: AnyBuffer,
 ): void {
   lib.vkCmdClearColorImage(
     commandBuffer,
     image,
     imageLayout,
-    pColor === null ? null : pColor instanceof Uint8Array ? pColor : pColor[BUFFER],
+    anyBuffer(pColor),
     rangeCount,
-    pRanges === null ? null : pRanges instanceof Uint8Array ? pRanges : pRanges[BUFFER],
+    anyBuffer(pRanges),
   );
 }
 
@@ -90710,33 +90727,33 @@ export function vkCmdClearDepthStencilImage(
   commandBuffer: VkCommandBuffer,
   image: VkImage,
   imageLayout: VkImageLayout,
-  pDepthStencil: IVkStructure | Uint8Array,
+  pDepthStencil: AnyBuffer,
   rangeCount: number,
-  pRanges: IVkStructure | Uint8Array,
+  pRanges: AnyBuffer,
 ): void {
   lib.vkCmdClearDepthStencilImage(
     commandBuffer,
     image,
     imageLayout,
-    pDepthStencil === null ? null : pDepthStencil instanceof Uint8Array ? pDepthStencil : pDepthStencil[BUFFER],
+    anyBuffer(pDepthStencil),
     rangeCount,
-    pRanges === null ? null : pRanges instanceof Uint8Array ? pRanges : pRanges[BUFFER],
+    anyBuffer(pRanges),
   );
 }
 
 export function vkCmdClearAttachments(
   commandBuffer: VkCommandBuffer,
   attachmentCount: number,
-  pAttachments: IVkStructure | Uint8Array,
+  pAttachments: AnyBuffer,
   rectCount: number,
-  pRects: IVkStructure | Uint8Array,
+  pRects: AnyBuffer,
 ): void {
   lib.vkCmdClearAttachments(
     commandBuffer,
     attachmentCount,
-    pAttachments === null ? null : pAttachments instanceof Uint8Array ? pAttachments : pAttachments[BUFFER],
+    anyBuffer(pAttachments),
     rectCount,
-    pRects === null ? null : pRects instanceof Uint8Array ? pRects : pRects[BUFFER],
+    anyBuffer(pRects),
   );
 }
 
@@ -90747,7 +90764,7 @@ export function vkCmdResolveImage(
   dstImage: VkImage,
   dstImageLayout: VkImageLayout,
   regionCount: number,
-  pRegions: IVkStructure | Uint8Array,
+  pRegions: AnyBuffer,
 ): void {
   lib.vkCmdResolveImage(
     commandBuffer,
@@ -90756,7 +90773,7 @@ export function vkCmdResolveImage(
     dstImage,
     dstImageLayout,
     regionCount,
-    pRegions === null ? null : pRegions instanceof Uint8Array ? pRegions : pRegions[BUFFER],
+    anyBuffer(pRegions),
   );
 }
 
@@ -90787,28 +90804,28 @@ export function vkCmdResetEvent(
 export function vkCmdWaitEvents(
   commandBuffer: VkCommandBuffer,
   eventCount: number,
-  pEvents: IVkStructure | Uint8Array,
+  pEvents: AnyBuffer,
   srcStageMask: VkPipelineStageFlags,
   dstStageMask: VkPipelineStageFlags,
   memoryBarrierCount: number,
-  pMemoryBarriers: IVkStructure | Uint8Array,
+  pMemoryBarriers: AnyBuffer,
   bufferMemoryBarrierCount: number,
-  pBufferMemoryBarriers: IVkStructure | Uint8Array,
+  pBufferMemoryBarriers: AnyBuffer,
   imageMemoryBarrierCount: number,
-  pImageMemoryBarriers: IVkStructure | Uint8Array,
+  pImageMemoryBarriers: AnyBuffer,
 ): void {
   lib.vkCmdWaitEvents(
     commandBuffer,
     eventCount,
-    pEvents === null ? null : pEvents instanceof Uint8Array ? pEvents : pEvents[BUFFER],
+    anyBuffer(pEvents),
     srcStageMask,
     dstStageMask,
     memoryBarrierCount,
-    pMemoryBarriers === null ? null : pMemoryBarriers instanceof Uint8Array ? pMemoryBarriers : pMemoryBarriers[BUFFER],
+    anyBuffer(pMemoryBarriers),
     bufferMemoryBarrierCount,
-    pBufferMemoryBarriers === null ? null : pBufferMemoryBarriers instanceof Uint8Array ? pBufferMemoryBarriers : pBufferMemoryBarriers[BUFFER],
+    anyBuffer(pBufferMemoryBarriers),
     imageMemoryBarrierCount,
-    pImageMemoryBarriers === null ? null : pImageMemoryBarriers instanceof Uint8Array ? pImageMemoryBarriers : pImageMemoryBarriers[BUFFER],
+    anyBuffer(pImageMemoryBarriers),
   );
 }
 
@@ -90818,11 +90835,11 @@ export function vkCmdPipelineBarrier(
   dstStageMask: VkPipelineStageFlags,
   dependencyFlags: VkDependencyFlags,
   memoryBarrierCount: number,
-  pMemoryBarriers: IVkStructure | Uint8Array,
+  pMemoryBarriers: AnyBuffer,
   bufferMemoryBarrierCount: number,
-  pBufferMemoryBarriers: IVkStructure | Uint8Array,
+  pBufferMemoryBarriers: AnyBuffer,
   imageMemoryBarrierCount: number,
-  pImageMemoryBarriers: IVkStructure | Uint8Array,
+  pImageMemoryBarriers: AnyBuffer,
 ): void {
   lib.vkCmdPipelineBarrier(
     commandBuffer,
@@ -90830,11 +90847,11 @@ export function vkCmdPipelineBarrier(
     dstStageMask,
     dependencyFlags,
     memoryBarrierCount,
-    pMemoryBarriers === null ? null : pMemoryBarriers instanceof Uint8Array ? pMemoryBarriers : pMemoryBarriers[BUFFER],
+    anyBuffer(pMemoryBarriers),
     bufferMemoryBarrierCount,
-    pBufferMemoryBarriers === null ? null : pBufferMemoryBarriers instanceof Uint8Array ? pBufferMemoryBarriers : pBufferMemoryBarriers[BUFFER],
+    anyBuffer(pBufferMemoryBarriers),
     imageMemoryBarrierCount,
-    pImageMemoryBarriers === null ? null : pImageMemoryBarriers instanceof Uint8Array ? pImageMemoryBarriers : pImageMemoryBarriers[BUFFER],
+    anyBuffer(pImageMemoryBarriers),
   );
 }
 
@@ -90920,7 +90937,7 @@ export function vkCmdPushConstants(
   stageFlags: VkShaderStageFlags,
   offset: number,
   size: number,
-  pValues: IVkStructure | Uint8Array,
+  pValues: AnyBuffer,
 ): void {
   lib.vkCmdPushConstants(
     commandBuffer,
@@ -90928,18 +90945,18 @@ export function vkCmdPushConstants(
     stageFlags,
     offset,
     size,
-    pValues === null ? null : pValues instanceof Uint8Array ? pValues : pValues[BUFFER],
+    anyBuffer(pValues),
   );
 }
 
 export function vkCmdBeginRenderPass(
   commandBuffer: VkCommandBuffer,
-  pRenderPassBegin: IVkStructure | Uint8Array,
+  pRenderPassBegin: AnyBuffer,
   contents: VkSubpassContents,
 ): void {
   lib.vkCmdBeginRenderPass(
     commandBuffer,
-    pRenderPassBegin === null ? null : pRenderPassBegin instanceof Uint8Array ? pRenderPassBegin : pRenderPassBegin[BUFFER],
+    anyBuffer(pRenderPassBegin),
     contents,
   );
 }
@@ -90965,12 +90982,12 @@ export function vkCmdEndRenderPass(
 export function vkCmdExecuteCommands(
   commandBuffer: VkCommandBuffer,
   commandBufferCount: number,
-  pCommandBuffers: IVkStructure | Uint8Array,
+  pCommandBuffers: AnyBuffer,
 ): void {
   lib.vkCmdExecuteCommands(
     commandBuffer,
     commandBufferCount,
-    pCommandBuffers === null ? null : pCommandBuffers instanceof Uint8Array ? pCommandBuffers : pCommandBuffers[BUFFER],
+    anyBuffer(pCommandBuffers),
   );
 }
 
@@ -90978,13 +90995,13 @@ export function vkGetPhysicalDeviceSurfaceSupportKHR(
   physicalDevice: VkPhysicalDevice,
   queueFamilyIndex: number,
   surface: VkSurfaceKHR,
-  pSupported: IVkStructure | Uint8Array,
+  pSupported: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetPhysicalDeviceSurfaceSupportKHR(
     physicalDevice,
     queueFamilyIndex,
     surface,
-    pSupported === null ? null : pSupported instanceof Uint8Array ? pSupported : pSupported[BUFFER],
+    anyBuffer(pSupported),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -90996,12 +91013,12 @@ export function vkGetPhysicalDeviceSurfaceSupportKHR(
 export function vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
   physicalDevice: VkPhysicalDevice,
   surface: VkSurfaceKHR,
-  pSurfaceCapabilities: IVkStructure | Uint8Array,
+  pSurfaceCapabilities: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
     physicalDevice,
     surface,
-    pSurfaceCapabilities === null ? null : pSurfaceCapabilities instanceof Uint8Array ? pSurfaceCapabilities : pSurfaceCapabilities[BUFFER],
+    anyBuffer(pSurfaceCapabilities),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91013,14 +91030,14 @@ export function vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
 export function vkGetPhysicalDeviceSurfaceFormatsKHR(
   physicalDevice: VkPhysicalDevice,
   surface: VkSurfaceKHR,
-  pSurfaceFormatCount: IVkStructure | Uint8Array | null,
-  pSurfaceFormats: IVkStructure | Uint8Array | null,
+  pSurfaceFormatCount: AnyBuffer,
+  pSurfaceFormats: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetPhysicalDeviceSurfaceFormatsKHR(
     physicalDevice,
     surface,
-    pSurfaceFormatCount === null ? null : pSurfaceFormatCount instanceof Uint8Array ? pSurfaceFormatCount : pSurfaceFormatCount[BUFFER],
-    pSurfaceFormats === null ? null : pSurfaceFormats instanceof Uint8Array ? pSurfaceFormats : pSurfaceFormats[BUFFER],
+    anyBuffer(pSurfaceFormatCount),
+    anyBuffer(pSurfaceFormats),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -91032,14 +91049,14 @@ export function vkGetPhysicalDeviceSurfaceFormatsKHR(
 export function vkGetPhysicalDeviceSurfacePresentModesKHR(
   physicalDevice: VkPhysicalDevice,
   surface: VkSurfaceKHR,
-  pPresentModeCount: IVkStructure | Uint8Array | null,
-  pPresentModes: IVkStructure | Uint8Array | null,
+  pPresentModeCount: AnyBuffer,
+  pPresentModes: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetPhysicalDeviceSurfacePresentModesKHR(
     physicalDevice,
     surface,
-    pPresentModeCount === null ? null : pPresentModeCount instanceof Uint8Array ? pPresentModeCount : pPresentModeCount[BUFFER],
-    pPresentModes === null ? null : pPresentModes instanceof Uint8Array ? pPresentModes : pPresentModes[BUFFER],
+    anyBuffer(pPresentModeCount),
+    anyBuffer(pPresentModes),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -91050,15 +91067,15 @@ export function vkGetPhysicalDeviceSurfacePresentModesKHR(
 
 export function vkCreateSwapchainKHR(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pSwapchain: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pSwapchain: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateSwapchainKHR(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pSwapchain === null ? null : pSwapchain instanceof Uint8Array ? pSwapchain : pSwapchain[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pSwapchain),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91070,26 +91087,26 @@ export function vkCreateSwapchainKHR(
 export function vkDestroySwapchainKHR(
   device: VkDevice,
   swapchain: VkSwapchainKHR,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroySwapchainKHR(
     device,
     swapchain,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkGetSwapchainImagesKHR(
   device: VkDevice,
   swapchain: VkSwapchainKHR,
-  pSwapchainImageCount: IVkStructure | Uint8Array | null,
-  pSwapchainImages: IVkStructure | Uint8Array | null,
+  pSwapchainImageCount: AnyBuffer,
+  pSwapchainImages: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetSwapchainImagesKHR(
     device,
     swapchain,
-    pSwapchainImageCount === null ? null : pSwapchainImageCount instanceof Uint8Array ? pSwapchainImageCount : pSwapchainImageCount[BUFFER],
-    pSwapchainImages === null ? null : pSwapchainImages instanceof Uint8Array ? pSwapchainImages : pSwapchainImages[BUFFER],
+    anyBuffer(pSwapchainImageCount),
+    anyBuffer(pSwapchainImages),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -91104,7 +91121,7 @@ export function vkAcquireNextImageKHR(
   timeout: Deno.PointerValue,
   semaphore: VkSemaphore,
   fence: VkFence,
-  pImageIndex: IVkStructure | Uint8Array,
+  pImageIndex: AnyBuffer,
 ): VkResult {
   const ret = lib.vkAcquireNextImageKHR(
     device,
@@ -91112,7 +91129,7 @@ export function vkAcquireNextImageKHR(
     timeout,
     semaphore,
     fence,
-    pImageIndex === null ? null : pImageIndex instanceof Uint8Array ? pImageIndex : pImageIndex[BUFFER],
+    anyBuffer(pImageIndex),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_TIMEOUT || ret === VkResult.VK_NOT_READY || ret === VkResult.VK_SUBOPTIMAL_KHR) {
     return ret;
@@ -91123,11 +91140,11 @@ export function vkAcquireNextImageKHR(
 
 export function vkQueuePresentKHR(
   queue: VkQueue,
-  pPresentInfo: IVkStructure | Uint8Array,
+  pPresentInfo: AnyBuffer,
 ): VkResult {
   const ret = lib.vkQueuePresentKHR(
     queue,
-    pPresentInfo === null ? null : pPresentInfo instanceof Uint8Array ? pPresentInfo : pPresentInfo[BUFFER],
+    anyBuffer(pPresentInfo),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_SUBOPTIMAL_KHR) {
     return ret;
@@ -91138,45 +91155,45 @@ export function vkQueuePresentKHR(
 
 export function vkGetPhysicalDeviceFeatures2(
   physicalDevice: VkPhysicalDevice,
-  pFeatures: IVkStructure | Uint8Array,
+  pFeatures: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceFeatures2(
     physicalDevice,
-    pFeatures === null ? null : pFeatures instanceof Uint8Array ? pFeatures : pFeatures[BUFFER],
+    anyBuffer(pFeatures),
   );
 }
 
 export function vkGetPhysicalDeviceProperties2(
   physicalDevice: VkPhysicalDevice,
-  pProperties: IVkStructure | Uint8Array,
+  pProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceProperties2(
     physicalDevice,
-    pProperties === null ? null : pProperties instanceof Uint8Array ? pProperties : pProperties[BUFFER],
+    anyBuffer(pProperties),
   );
 }
 
 export function vkGetPhysicalDeviceFormatProperties2(
   physicalDevice: VkPhysicalDevice,
   format: VkFormat,
-  pFormatProperties: IVkStructure | Uint8Array,
+  pFormatProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceFormatProperties2(
     physicalDevice,
     format,
-    pFormatProperties === null ? null : pFormatProperties instanceof Uint8Array ? pFormatProperties : pFormatProperties[BUFFER],
+    anyBuffer(pFormatProperties),
   );
 }
 
 export function vkGetPhysicalDeviceImageFormatProperties2(
   physicalDevice: VkPhysicalDevice,
-  pImageFormatInfo: IVkStructure | Uint8Array,
-  pImageFormatProperties: IVkStructure | Uint8Array,
+  pImageFormatInfo: AnyBuffer,
+  pImageFormatProperties: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetPhysicalDeviceImageFormatProperties2(
     physicalDevice,
-    pImageFormatInfo === null ? null : pImageFormatInfo instanceof Uint8Array ? pImageFormatInfo : pImageFormatInfo[BUFFER],
-    pImageFormatProperties === null ? null : pImageFormatProperties instanceof Uint8Array ? pImageFormatProperties : pImageFormatProperties[BUFFER],
+    anyBuffer(pImageFormatInfo),
+    anyBuffer(pImageFormatProperties),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91187,37 +91204,37 @@ export function vkGetPhysicalDeviceImageFormatProperties2(
 
 export function vkGetPhysicalDeviceQueueFamilyProperties2(
   physicalDevice: VkPhysicalDevice,
-  pQueueFamilyPropertyCount: IVkStructure | Uint8Array | null,
-  pQueueFamilyProperties: IVkStructure | Uint8Array | null,
+  pQueueFamilyPropertyCount: AnyBuffer,
+  pQueueFamilyProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceQueueFamilyProperties2(
     physicalDevice,
-    pQueueFamilyPropertyCount === null ? null : pQueueFamilyPropertyCount instanceof Uint8Array ? pQueueFamilyPropertyCount : pQueueFamilyPropertyCount[BUFFER],
-    pQueueFamilyProperties === null ? null : pQueueFamilyProperties instanceof Uint8Array ? pQueueFamilyProperties : pQueueFamilyProperties[BUFFER],
+    anyBuffer(pQueueFamilyPropertyCount),
+    anyBuffer(pQueueFamilyProperties),
   );
 }
 
 export function vkGetPhysicalDeviceMemoryProperties2(
   physicalDevice: VkPhysicalDevice,
-  pMemoryProperties: IVkStructure | Uint8Array,
+  pMemoryProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceMemoryProperties2(
     physicalDevice,
-    pMemoryProperties === null ? null : pMemoryProperties instanceof Uint8Array ? pMemoryProperties : pMemoryProperties[BUFFER],
+    anyBuffer(pMemoryProperties),
   );
 }
 
 export function vkGetPhysicalDeviceSparseImageFormatProperties2(
   physicalDevice: VkPhysicalDevice,
-  pFormatInfo: IVkStructure | Uint8Array,
-  pPropertyCount: IVkStructure | Uint8Array | null,
-  pProperties: IVkStructure | Uint8Array | null,
+  pFormatInfo: AnyBuffer,
+  pPropertyCount: AnyBuffer,
+  pProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceSparseImageFormatProperties2(
     physicalDevice,
-    pFormatInfo === null ? null : pFormatInfo instanceof Uint8Array ? pFormatInfo : pFormatInfo[BUFFER],
-    pPropertyCount === null ? null : pPropertyCount instanceof Uint8Array ? pPropertyCount : pPropertyCount[BUFFER],
-    pProperties === null ? null : pProperties instanceof Uint8Array ? pProperties : pProperties[BUFFER],
+    anyBuffer(pFormatInfo),
+    anyBuffer(pPropertyCount),
+    anyBuffer(pProperties),
   );
 }
 
@@ -91235,49 +91252,49 @@ export function vkTrimCommandPool(
 
 export function vkGetPhysicalDeviceExternalBufferProperties(
   physicalDevice: VkPhysicalDevice,
-  pExternalBufferInfo: IVkStructure | Uint8Array,
-  pExternalBufferProperties: IVkStructure | Uint8Array,
+  pExternalBufferInfo: AnyBuffer,
+  pExternalBufferProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceExternalBufferProperties(
     physicalDevice,
-    pExternalBufferInfo === null ? null : pExternalBufferInfo instanceof Uint8Array ? pExternalBufferInfo : pExternalBufferInfo[BUFFER],
-    pExternalBufferProperties === null ? null : pExternalBufferProperties instanceof Uint8Array ? pExternalBufferProperties : pExternalBufferProperties[BUFFER],
+    anyBuffer(pExternalBufferInfo),
+    anyBuffer(pExternalBufferProperties),
   );
 }
 
 export function vkGetPhysicalDeviceExternalSemaphoreProperties(
   physicalDevice: VkPhysicalDevice,
-  pExternalSemaphoreInfo: IVkStructure | Uint8Array,
-  pExternalSemaphoreProperties: IVkStructure | Uint8Array,
+  pExternalSemaphoreInfo: AnyBuffer,
+  pExternalSemaphoreProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceExternalSemaphoreProperties(
     physicalDevice,
-    pExternalSemaphoreInfo === null ? null : pExternalSemaphoreInfo instanceof Uint8Array ? pExternalSemaphoreInfo : pExternalSemaphoreInfo[BUFFER],
-    pExternalSemaphoreProperties === null ? null : pExternalSemaphoreProperties instanceof Uint8Array ? pExternalSemaphoreProperties : pExternalSemaphoreProperties[BUFFER],
+    anyBuffer(pExternalSemaphoreInfo),
+    anyBuffer(pExternalSemaphoreProperties),
   );
 }
 
 export function vkGetPhysicalDeviceExternalFenceProperties(
   physicalDevice: VkPhysicalDevice,
-  pExternalFenceInfo: IVkStructure | Uint8Array,
-  pExternalFenceProperties: IVkStructure | Uint8Array,
+  pExternalFenceInfo: AnyBuffer,
+  pExternalFenceProperties: AnyBuffer,
 ): void {
   lib.vkGetPhysicalDeviceExternalFenceProperties(
     physicalDevice,
-    pExternalFenceInfo === null ? null : pExternalFenceInfo instanceof Uint8Array ? pExternalFenceInfo : pExternalFenceInfo[BUFFER],
-    pExternalFenceProperties === null ? null : pExternalFenceProperties instanceof Uint8Array ? pExternalFenceProperties : pExternalFenceProperties[BUFFER],
+    anyBuffer(pExternalFenceInfo),
+    anyBuffer(pExternalFenceProperties),
   );
 }
 
 export function vkEnumeratePhysicalDeviceGroups(
   instance: VkInstance,
-  pPhysicalDeviceGroupCount: IVkStructure | Uint8Array | null,
-  pPhysicalDeviceGroupProperties: IVkStructure | Uint8Array | null,
+  pPhysicalDeviceGroupCount: AnyBuffer,
+  pPhysicalDeviceGroupProperties: AnyBuffer,
 ): VkResult {
   const ret = lib.vkEnumeratePhysicalDeviceGroups(
     instance,
-    pPhysicalDeviceGroupCount === null ? null : pPhysicalDeviceGroupCount instanceof Uint8Array ? pPhysicalDeviceGroupCount : pPhysicalDeviceGroupCount[BUFFER],
-    pPhysicalDeviceGroupProperties === null ? null : pPhysicalDeviceGroupProperties instanceof Uint8Array ? pPhysicalDeviceGroupProperties : pPhysicalDeviceGroupProperties[BUFFER],
+    anyBuffer(pPhysicalDeviceGroupCount),
+    anyBuffer(pPhysicalDeviceGroupProperties),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -91291,26 +91308,26 @@ export function vkGetDeviceGroupPeerMemoryFeatures(
   heapIndex: number,
   localDeviceIndex: number,
   remoteDeviceIndex: number,
-  pPeerMemoryFeatures: IVkStructure | Uint8Array,
+  pPeerMemoryFeatures: AnyBuffer,
 ): void {
   lib.vkGetDeviceGroupPeerMemoryFeatures(
     device,
     heapIndex,
     localDeviceIndex,
     remoteDeviceIndex,
-    pPeerMemoryFeatures === null ? null : pPeerMemoryFeatures instanceof Uint8Array ? pPeerMemoryFeatures : pPeerMemoryFeatures[BUFFER],
+    anyBuffer(pPeerMemoryFeatures),
   );
 }
 
 export function vkBindBufferMemory2(
   device: VkDevice,
   bindInfoCount: number,
-  pBindInfos: IVkStructure | Uint8Array,
+  pBindInfos: AnyBuffer,
 ): VkResult {
   const ret = lib.vkBindBufferMemory2(
     device,
     bindInfoCount,
-    pBindInfos === null ? null : pBindInfos instanceof Uint8Array ? pBindInfos : pBindInfos[BUFFER],
+    anyBuffer(pBindInfos),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91322,12 +91339,12 @@ export function vkBindBufferMemory2(
 export function vkBindImageMemory2(
   device: VkDevice,
   bindInfoCount: number,
-  pBindInfos: IVkStructure | Uint8Array,
+  pBindInfos: AnyBuffer,
 ): VkResult {
   const ret = lib.vkBindImageMemory2(
     device,
     bindInfoCount,
-    pBindInfos === null ? null : pBindInfos instanceof Uint8Array ? pBindInfos : pBindInfos[BUFFER],
+    anyBuffer(pBindInfos),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91368,15 +91385,15 @@ export function vkCmdDispatchBase(
 
 export function vkCreateDescriptorUpdateTemplate(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pDescriptorUpdateTemplate: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pDescriptorUpdateTemplate: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateDescriptorUpdateTemplate(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pDescriptorUpdateTemplate === null ? null : pDescriptorUpdateTemplate instanceof Uint8Array ? pDescriptorUpdateTemplate : pDescriptorUpdateTemplate[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pDescriptorUpdateTemplate),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91388,12 +91405,12 @@ export function vkCreateDescriptorUpdateTemplate(
 export function vkDestroyDescriptorUpdateTemplate(
   device: VkDevice,
   descriptorUpdateTemplate: VkDescriptorUpdateTemplate,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyDescriptorUpdateTemplate(
     device,
     descriptorUpdateTemplate,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
@@ -91401,103 +91418,103 @@ export function vkUpdateDescriptorSetWithTemplate(
   device: VkDevice,
   descriptorSet: VkDescriptorSet,
   descriptorUpdateTemplate: VkDescriptorUpdateTemplate,
-  pData: IVkStructure | Uint8Array,
+  pData: AnyBuffer,
 ): void {
   lib.vkUpdateDescriptorSetWithTemplate(
     device,
     descriptorSet,
     descriptorUpdateTemplate,
-    pData === null ? null : pData instanceof Uint8Array ? pData : pData[BUFFER],
+    anyBuffer(pData),
   );
 }
 
 export function vkGetBufferMemoryRequirements2(
   device: VkDevice,
-  pInfo: IVkStructure | Uint8Array,
-  pMemoryRequirements: IVkStructure | Uint8Array,
+  pInfo: AnyBuffer,
+  pMemoryRequirements: AnyBuffer,
 ): void {
   lib.vkGetBufferMemoryRequirements2(
     device,
-    pInfo === null ? null : pInfo instanceof Uint8Array ? pInfo : pInfo[BUFFER],
-    pMemoryRequirements === null ? null : pMemoryRequirements instanceof Uint8Array ? pMemoryRequirements : pMemoryRequirements[BUFFER],
+    anyBuffer(pInfo),
+    anyBuffer(pMemoryRequirements),
   );
 }
 
 export function vkGetImageMemoryRequirements2(
   device: VkDevice,
-  pInfo: IVkStructure | Uint8Array,
-  pMemoryRequirements: IVkStructure | Uint8Array,
+  pInfo: AnyBuffer,
+  pMemoryRequirements: AnyBuffer,
 ): void {
   lib.vkGetImageMemoryRequirements2(
     device,
-    pInfo === null ? null : pInfo instanceof Uint8Array ? pInfo : pInfo[BUFFER],
-    pMemoryRequirements === null ? null : pMemoryRequirements instanceof Uint8Array ? pMemoryRequirements : pMemoryRequirements[BUFFER],
+    anyBuffer(pInfo),
+    anyBuffer(pMemoryRequirements),
   );
 }
 
 export function vkGetImageSparseMemoryRequirements2(
   device: VkDevice,
-  pInfo: IVkStructure | Uint8Array,
-  pSparseMemoryRequirementCount: IVkStructure | Uint8Array | null,
-  pSparseMemoryRequirements: IVkStructure | Uint8Array | null,
+  pInfo: AnyBuffer,
+  pSparseMemoryRequirementCount: AnyBuffer,
+  pSparseMemoryRequirements: AnyBuffer,
 ): void {
   lib.vkGetImageSparseMemoryRequirements2(
     device,
-    pInfo === null ? null : pInfo instanceof Uint8Array ? pInfo : pInfo[BUFFER],
-    pSparseMemoryRequirementCount === null ? null : pSparseMemoryRequirementCount instanceof Uint8Array ? pSparseMemoryRequirementCount : pSparseMemoryRequirementCount[BUFFER],
-    pSparseMemoryRequirements === null ? null : pSparseMemoryRequirements instanceof Uint8Array ? pSparseMemoryRequirements : pSparseMemoryRequirements[BUFFER],
+    anyBuffer(pInfo),
+    anyBuffer(pSparseMemoryRequirementCount),
+    anyBuffer(pSparseMemoryRequirements),
   );
 }
 
 export function vkGetDeviceBufferMemoryRequirements(
   device: VkDevice,
-  pInfo: IVkStructure | Uint8Array,
-  pMemoryRequirements: IVkStructure | Uint8Array,
+  pInfo: AnyBuffer,
+  pMemoryRequirements: AnyBuffer,
 ): void {
   lib.vkGetDeviceBufferMemoryRequirements(
     device,
-    pInfo === null ? null : pInfo instanceof Uint8Array ? pInfo : pInfo[BUFFER],
-    pMemoryRequirements === null ? null : pMemoryRequirements instanceof Uint8Array ? pMemoryRequirements : pMemoryRequirements[BUFFER],
+    anyBuffer(pInfo),
+    anyBuffer(pMemoryRequirements),
   );
 }
 
 export function vkGetDeviceImageMemoryRequirements(
   device: VkDevice,
-  pInfo: IVkStructure | Uint8Array,
-  pMemoryRequirements: IVkStructure | Uint8Array,
+  pInfo: AnyBuffer,
+  pMemoryRequirements: AnyBuffer,
 ): void {
   lib.vkGetDeviceImageMemoryRequirements(
     device,
-    pInfo === null ? null : pInfo instanceof Uint8Array ? pInfo : pInfo[BUFFER],
-    pMemoryRequirements === null ? null : pMemoryRequirements instanceof Uint8Array ? pMemoryRequirements : pMemoryRequirements[BUFFER],
+    anyBuffer(pInfo),
+    anyBuffer(pMemoryRequirements),
   );
 }
 
 export function vkGetDeviceImageSparseMemoryRequirements(
   device: VkDevice,
-  pInfo: IVkStructure | Uint8Array,
-  pSparseMemoryRequirementCount: IVkStructure | Uint8Array | null,
-  pSparseMemoryRequirements: IVkStructure | Uint8Array | null,
+  pInfo: AnyBuffer,
+  pSparseMemoryRequirementCount: AnyBuffer,
+  pSparseMemoryRequirements: AnyBuffer,
 ): void {
   lib.vkGetDeviceImageSparseMemoryRequirements(
     device,
-    pInfo === null ? null : pInfo instanceof Uint8Array ? pInfo : pInfo[BUFFER],
-    pSparseMemoryRequirementCount === null ? null : pSparseMemoryRequirementCount instanceof Uint8Array ? pSparseMemoryRequirementCount : pSparseMemoryRequirementCount[BUFFER],
-    pSparseMemoryRequirements === null ? null : pSparseMemoryRequirements instanceof Uint8Array ? pSparseMemoryRequirements : pSparseMemoryRequirements[BUFFER],
+    anyBuffer(pInfo),
+    anyBuffer(pSparseMemoryRequirementCount),
+    anyBuffer(pSparseMemoryRequirements),
   );
 }
 
 export function vkCreateSamplerYcbcrConversion(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pYcbcrConversion: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pYcbcrConversion: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateSamplerYcbcrConversion(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pYcbcrConversion === null ? null : pYcbcrConversion instanceof Uint8Array ? pYcbcrConversion : pYcbcrConversion[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pYcbcrConversion),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91509,50 +91526,50 @@ export function vkCreateSamplerYcbcrConversion(
 export function vkDestroySamplerYcbcrConversion(
   device: VkDevice,
   ycbcrConversion: VkSamplerYcbcrConversion,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroySamplerYcbcrConversion(
     device,
     ycbcrConversion,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
 export function vkGetDeviceQueue2(
   device: VkDevice,
-  pQueueInfo: IVkStructure | Uint8Array,
-  pQueue: IVkStructure | Uint8Array,
+  pQueueInfo: AnyBuffer,
+  pQueue: AnyBuffer,
 ): void {
   lib.vkGetDeviceQueue2(
     device,
-    pQueueInfo === null ? null : pQueueInfo instanceof Uint8Array ? pQueueInfo : pQueueInfo[BUFFER],
-    pQueue === null ? null : pQueue instanceof Uint8Array ? pQueue : pQueue[BUFFER],
+    anyBuffer(pQueueInfo),
+    anyBuffer(pQueue),
   );
 }
 
 export function vkGetDescriptorSetLayoutSupport(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pSupport: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pSupport: AnyBuffer,
 ): void {
   lib.vkGetDescriptorSetLayoutSupport(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pSupport === null ? null : pSupport instanceof Uint8Array ? pSupport : pSupport[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pSupport),
   );
 }
 
 export function vkCreateRenderPass2(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pRenderPass: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pRenderPass: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreateRenderPass2(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pRenderPass === null ? null : pRenderPass instanceof Uint8Array ? pRenderPass : pRenderPass[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pRenderPass),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91563,47 +91580,47 @@ export function vkCreateRenderPass2(
 
 export function vkCmdBeginRenderPass2(
   commandBuffer: VkCommandBuffer,
-  pRenderPassBegin: IVkStructure | Uint8Array,
-  pSubpassBeginInfo: IVkStructure | Uint8Array,
+  pRenderPassBegin: AnyBuffer,
+  pSubpassBeginInfo: AnyBuffer,
 ): void {
   lib.vkCmdBeginRenderPass2(
     commandBuffer,
-    pRenderPassBegin === null ? null : pRenderPassBegin instanceof Uint8Array ? pRenderPassBegin : pRenderPassBegin[BUFFER],
-    pSubpassBeginInfo === null ? null : pSubpassBeginInfo instanceof Uint8Array ? pSubpassBeginInfo : pSubpassBeginInfo[BUFFER],
+    anyBuffer(pRenderPassBegin),
+    anyBuffer(pSubpassBeginInfo),
   );
 }
 
 export function vkCmdNextSubpass2(
   commandBuffer: VkCommandBuffer,
-  pSubpassBeginInfo: IVkStructure | Uint8Array,
-  pSubpassEndInfo: IVkStructure | Uint8Array,
+  pSubpassBeginInfo: AnyBuffer,
+  pSubpassEndInfo: AnyBuffer,
 ): void {
   lib.vkCmdNextSubpass2(
     commandBuffer,
-    pSubpassBeginInfo === null ? null : pSubpassBeginInfo instanceof Uint8Array ? pSubpassBeginInfo : pSubpassBeginInfo[BUFFER],
-    pSubpassEndInfo === null ? null : pSubpassEndInfo instanceof Uint8Array ? pSubpassEndInfo : pSubpassEndInfo[BUFFER],
+    anyBuffer(pSubpassBeginInfo),
+    anyBuffer(pSubpassEndInfo),
   );
 }
 
 export function vkCmdEndRenderPass2(
   commandBuffer: VkCommandBuffer,
-  pSubpassEndInfo: IVkStructure | Uint8Array,
+  pSubpassEndInfo: AnyBuffer,
 ): void {
   lib.vkCmdEndRenderPass2(
     commandBuffer,
-    pSubpassEndInfo === null ? null : pSubpassEndInfo instanceof Uint8Array ? pSubpassEndInfo : pSubpassEndInfo[BUFFER],
+    anyBuffer(pSubpassEndInfo),
   );
 }
 
 export function vkGetSemaphoreCounterValue(
   device: VkDevice,
   semaphore: VkSemaphore,
-  pValue: IVkStructure | Uint8Array,
+  pValue: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetSemaphoreCounterValue(
     device,
     semaphore,
-    pValue === null ? null : pValue instanceof Uint8Array ? pValue : pValue[BUFFER],
+    anyBuffer(pValue),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91614,12 +91631,12 @@ export function vkGetSemaphoreCounterValue(
 
 export function vkWaitSemaphores(
   device: VkDevice,
-  pWaitInfo: IVkStructure | Uint8Array,
+  pWaitInfo: AnyBuffer,
   timeout: Deno.PointerValue,
 ): VkResult {
   const ret = lib.vkWaitSemaphores(
     device,
-    pWaitInfo === null ? null : pWaitInfo instanceof Uint8Array ? pWaitInfo : pWaitInfo[BUFFER],
+    anyBuffer(pWaitInfo),
     timeout,
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_TIMEOUT) {
@@ -91631,11 +91648,11 @@ export function vkWaitSemaphores(
 
 export function vkSignalSemaphore(
   device: VkDevice,
-  pSignalInfo: IVkStructure | Uint8Array,
+  pSignalInfo: AnyBuffer,
 ): VkResult {
   const ret = lib.vkSignalSemaphore(
     device,
-    pSignalInfo === null ? null : pSignalInfo instanceof Uint8Array ? pSignalInfo : pSignalInfo[BUFFER],
+    anyBuffer(pSignalInfo),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91686,46 +91703,46 @@ export function vkCmdDrawIndexedIndirectCount(
 
 export function vkGetBufferOpaqueCaptureAddress(
   device: VkDevice,
-  pInfo: IVkStructure | Uint8Array,
+  pInfo: AnyBuffer,
 ): Deno.PointerValue {
   const ret = lib.vkGetBufferOpaqueCaptureAddress(
     device,
-    pInfo === null ? null : pInfo instanceof Uint8Array ? pInfo : pInfo[BUFFER],
+    anyBuffer(pInfo),
   );
   return ret;
 }
 
 export function vkGetBufferDeviceAddress(
   device: VkDevice,
-  pInfo: IVkStructure | Uint8Array,
+  pInfo: AnyBuffer,
 ): VkDeviceAddress {
   const ret = lib.vkGetBufferDeviceAddress(
     device,
-    pInfo === null ? null : pInfo instanceof Uint8Array ? pInfo : pInfo[BUFFER],
+    anyBuffer(pInfo),
   );
   return ret;
 }
 
 export function vkGetDeviceMemoryOpaqueCaptureAddress(
   device: VkDevice,
-  pInfo: IVkStructure | Uint8Array,
+  pInfo: AnyBuffer,
 ): Deno.PointerValue {
   const ret = lib.vkGetDeviceMemoryOpaqueCaptureAddress(
     device,
-    pInfo === null ? null : pInfo instanceof Uint8Array ? pInfo : pInfo[BUFFER],
+    anyBuffer(pInfo),
   );
   return ret;
 }
 
 export function vkGetPhysicalDeviceToolProperties(
   physicalDevice: VkPhysicalDevice,
-  pToolCount: IVkStructure | Uint8Array | null,
-  pToolProperties: IVkStructure | Uint8Array | null,
+  pToolCount: AnyBuffer,
+  pToolProperties: AnyBuffer,
 ): VkResult {
   const ret = lib.vkGetPhysicalDeviceToolProperties(
     physicalDevice,
-    pToolCount === null ? null : pToolCount instanceof Uint8Array ? pToolCount : pToolCount[BUFFER],
-    pToolProperties === null ? null : pToolProperties instanceof Uint8Array ? pToolProperties : pToolProperties[BUFFER],
+    anyBuffer(pToolCount),
+    anyBuffer(pToolProperties),
   );
   if (ret === VkResult.VK_SUCCESS || ret === VkResult.VK_INCOMPLETE) {
     return ret;
@@ -91767,24 +91784,24 @@ export function vkCmdSetPrimitiveTopology(
 export function vkCmdSetViewportWithCount(
   commandBuffer: VkCommandBuffer,
   viewportCount: number,
-  pViewports: IVkStructure | Uint8Array,
+  pViewports: AnyBuffer,
 ): void {
   lib.vkCmdSetViewportWithCount(
     commandBuffer,
     viewportCount,
-    pViewports === null ? null : pViewports instanceof Uint8Array ? pViewports : pViewports[BUFFER],
+    anyBuffer(pViewports),
   );
 }
 
 export function vkCmdSetScissorWithCount(
   commandBuffer: VkCommandBuffer,
   scissorCount: number,
-  pScissors: IVkStructure | Uint8Array,
+  pScissors: AnyBuffer,
 ): void {
   lib.vkCmdSetScissorWithCount(
     commandBuffer,
     scissorCount,
-    pScissors === null ? null : pScissors instanceof Uint8Array ? pScissors : pScissors[BUFFER],
+    anyBuffer(pScissors),
   );
 }
 
@@ -91792,19 +91809,19 @@ export function vkCmdBindVertexBuffers2(
   commandBuffer: VkCommandBuffer,
   firstBinding: number,
   bindingCount: number,
-  pBuffers: IVkStructure | Uint8Array | null,
-  pOffsets: IVkStructure | Uint8Array,
-  pSizes: IVkStructure | Uint8Array | null,
-  pStrides: IVkStructure | Uint8Array | null,
+  pBuffers: AnyBuffer,
+  pOffsets: AnyBuffer,
+  pSizes: AnyBuffer,
+  pStrides: AnyBuffer,
 ): void {
   lib.vkCmdBindVertexBuffers2(
     commandBuffer,
     firstBinding,
     bindingCount,
-    pBuffers === null ? null : pBuffers instanceof Uint8Array ? pBuffers : pBuffers[BUFFER],
-    pOffsets === null ? null : pOffsets instanceof Uint8Array ? pOffsets : pOffsets[BUFFER],
-    pSizes === null ? null : pSizes instanceof Uint8Array ? pSizes : pSizes[BUFFER],
-    pStrides === null ? null : pStrides instanceof Uint8Array ? pStrides : pStrides[BUFFER],
+    anyBuffer(pBuffers),
+    anyBuffer(pOffsets),
+    anyBuffer(pSizes),
+    anyBuffer(pStrides),
   );
 }
 
@@ -91908,15 +91925,15 @@ export function vkCmdSetPrimitiveRestartEnable(
 
 export function vkCreatePrivateDataSlot(
   device: VkDevice,
-  pCreateInfo: IVkStructure | Uint8Array,
-  pAllocator: IVkStructure | Uint8Array | null,
-  pPrivateDataSlot: IVkStructure | Uint8Array,
+  pCreateInfo: AnyBuffer,
+  pAllocator: AnyBuffer,
+  pPrivateDataSlot: AnyBuffer,
 ): VkResult {
   const ret = lib.vkCreatePrivateDataSlot(
     device,
-    pCreateInfo === null ? null : pCreateInfo instanceof Uint8Array ? pCreateInfo : pCreateInfo[BUFFER],
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
-    pPrivateDataSlot === null ? null : pPrivateDataSlot instanceof Uint8Array ? pPrivateDataSlot : pPrivateDataSlot[BUFFER],
+    anyBuffer(pCreateInfo),
+    anyBuffer(pAllocator),
+    anyBuffer(pPrivateDataSlot),
   );
   if (ret === VkResult.VK_SUCCESS) {
     return ret;
@@ -91928,12 +91945,12 @@ export function vkCreatePrivateDataSlot(
 export function vkDestroyPrivateDataSlot(
   device: VkDevice,
   privateDataSlot: VkPrivateDataSlot,
-  pAllocator: IVkStructure | Uint8Array | null,
+  pAllocator: AnyBuffer,
 ): void {
   lib.vkDestroyPrivateDataSlot(
     device,
     privateDataSlot,
-    pAllocator === null ? null : pAllocator instanceof Uint8Array ? pAllocator : pAllocator[BUFFER],
+    anyBuffer(pAllocator),
   );
 }
 
@@ -91963,86 +91980,86 @@ export function vkGetPrivateData(
   objectType: VkObjectType,
   objectHandle: Deno.PointerValue,
   privateDataSlot: VkPrivateDataSlot,
-  pData: IVkStructure | Uint8Array,
+  pData: AnyBuffer,
 ): void {
   lib.vkGetPrivateData(
     device,
     objectType,
     objectHandle,
     privateDataSlot,
-    pData === null ? null : pData instanceof Uint8Array ? pData : pData[BUFFER],
+    anyBuffer(pData),
   );
 }
 
 export function vkCmdCopyBuffer2(
   commandBuffer: VkCommandBuffer,
-  pCopyBufferInfo: IVkStructure | Uint8Array,
+  pCopyBufferInfo: AnyBuffer,
 ): void {
   lib.vkCmdCopyBuffer2(
     commandBuffer,
-    pCopyBufferInfo === null ? null : pCopyBufferInfo instanceof Uint8Array ? pCopyBufferInfo : pCopyBufferInfo[BUFFER],
+    anyBuffer(pCopyBufferInfo),
   );
 }
 
 export function vkCmdCopyImage2(
   commandBuffer: VkCommandBuffer,
-  pCopyImageInfo: IVkStructure | Uint8Array,
+  pCopyImageInfo: AnyBuffer,
 ): void {
   lib.vkCmdCopyImage2(
     commandBuffer,
-    pCopyImageInfo === null ? null : pCopyImageInfo instanceof Uint8Array ? pCopyImageInfo : pCopyImageInfo[BUFFER],
+    anyBuffer(pCopyImageInfo),
   );
 }
 
 export function vkCmdBlitImage2(
   commandBuffer: VkCommandBuffer,
-  pBlitImageInfo: IVkStructure | Uint8Array,
+  pBlitImageInfo: AnyBuffer,
 ): void {
   lib.vkCmdBlitImage2(
     commandBuffer,
-    pBlitImageInfo === null ? null : pBlitImageInfo instanceof Uint8Array ? pBlitImageInfo : pBlitImageInfo[BUFFER],
+    anyBuffer(pBlitImageInfo),
   );
 }
 
 export function vkCmdCopyBufferToImage2(
   commandBuffer: VkCommandBuffer,
-  pCopyBufferToImageInfo: IVkStructure | Uint8Array,
+  pCopyBufferToImageInfo: AnyBuffer,
 ): void {
   lib.vkCmdCopyBufferToImage2(
     commandBuffer,
-    pCopyBufferToImageInfo === null ? null : pCopyBufferToImageInfo instanceof Uint8Array ? pCopyBufferToImageInfo : pCopyBufferToImageInfo[BUFFER],
+    anyBuffer(pCopyBufferToImageInfo),
   );
 }
 
 export function vkCmdCopyImageToBuffer2(
   commandBuffer: VkCommandBuffer,
-  pCopyImageToBufferInfo: IVkStructure | Uint8Array,
+  pCopyImageToBufferInfo: AnyBuffer,
 ): void {
   lib.vkCmdCopyImageToBuffer2(
     commandBuffer,
-    pCopyImageToBufferInfo === null ? null : pCopyImageToBufferInfo instanceof Uint8Array ? pCopyImageToBufferInfo : pCopyImageToBufferInfo[BUFFER],
+    anyBuffer(pCopyImageToBufferInfo),
   );
 }
 
 export function vkCmdResolveImage2(
   commandBuffer: VkCommandBuffer,
-  pResolveImageInfo: IVkStructure | Uint8Array,
+  pResolveImageInfo: AnyBuffer,
 ): void {
   lib.vkCmdResolveImage2(
     commandBuffer,
-    pResolveImageInfo === null ? null : pResolveImageInfo instanceof Uint8Array ? pResolveImageInfo : pResolveImageInfo[BUFFER],
+    anyBuffer(pResolveImageInfo),
   );
 }
 
 export function vkCmdSetEvent2(
   commandBuffer: VkCommandBuffer,
   event: VkEvent,
-  pDependencyInfo: IVkStructure | Uint8Array,
+  pDependencyInfo: AnyBuffer,
 ): void {
   lib.vkCmdSetEvent2(
     commandBuffer,
     event,
-    pDependencyInfo === null ? null : pDependencyInfo instanceof Uint8Array ? pDependencyInfo : pDependencyInfo[BUFFER],
+    anyBuffer(pDependencyInfo),
   );
 }
 
@@ -92061,37 +92078,37 @@ export function vkCmdResetEvent2(
 export function vkCmdWaitEvents2(
   commandBuffer: VkCommandBuffer,
   eventCount: number,
-  pEvents: IVkStructure | Uint8Array,
-  pDependencyInfos: IVkStructure | Uint8Array,
+  pEvents: AnyBuffer,
+  pDependencyInfos: AnyBuffer,
 ): void {
   lib.vkCmdWaitEvents2(
     commandBuffer,
     eventCount,
-    pEvents === null ? null : pEvents instanceof Uint8Array ? pEvents : pEvents[BUFFER],
-    pDependencyInfos === null ? null : pDependencyInfos instanceof Uint8Array ? pDependencyInfos : pDependencyInfos[BUFFER],
+    anyBuffer(pEvents),
+    anyBuffer(pDependencyInfos),
   );
 }
 
 export function vkCmdPipelineBarrier2(
   commandBuffer: VkCommandBuffer,
-  pDependencyInfo: IVkStructure | Uint8Array,
+  pDependencyInfo: AnyBuffer,
 ): void {
   lib.vkCmdPipelineBarrier2(
     commandBuffer,
-    pDependencyInfo === null ? null : pDependencyInfo instanceof Uint8Array ? pDependencyInfo : pDependencyInfo[BUFFER],
+    anyBuffer(pDependencyInfo),
   );
 }
 
 export function vkQueueSubmit2(
   queue: VkQueue,
   submitCount: number,
-  pSubmits: IVkStructure | Uint8Array,
+  pSubmits: AnyBuffer,
   fence: VkFence,
 ): VkResult {
   const ret = lib.vkQueueSubmit2(
     queue,
     submitCount,
-    pSubmits === null ? null : pSubmits instanceof Uint8Array ? pSubmits : pSubmits[BUFFER],
+    anyBuffer(pSubmits),
     fence,
   );
   if (ret === VkResult.VK_SUCCESS) {
@@ -92117,11 +92134,11 @@ export function vkCmdWriteTimestamp2(
 
 export function vkCmdBeginRendering(
   commandBuffer: VkCommandBuffer,
-  pRenderingInfo: IVkStructure | Uint8Array,
+  pRenderingInfo: AnyBuffer,
 ): void {
   lib.vkCmdBeginRendering(
     commandBuffer,
-    pRenderingInfo === null ? null : pRenderingInfo instanceof Uint8Array ? pRenderingInfo : pRenderingInfo[BUFFER],
+    anyBuffer(pRenderingInfo),
   );
 }
 
