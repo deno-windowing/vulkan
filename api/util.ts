@@ -7,8 +7,7 @@ export interface BaseStruct {
   readonly [BUFFER]: Uint8Array;
 }
 
-export type AnyBuffer =
-  | ArrayBuffer
+export type TypedArray = 
   | Uint8Array
   | Uint16Array
   | Uint32Array
@@ -18,7 +17,11 @@ export type AnyBuffer =
   | Float32Array
   | Float64Array
   | BigUint64Array
-  | BigInt64Array
+  | BigInt64Array;
+
+export type AnyBuffer =
+  | ArrayBuffer
+  | TypedArray
   | null
   | BaseStruct;
 
@@ -101,4 +104,51 @@ export class PointerArray extends BigUint64Array {
       }
     }
   }
+}
+
+export class StructArray<T extends BaseStruct> implements BaseStruct {
+  #data: Uint8Array
+
+  get data() {
+    return this.#data;
+  }
+
+  get [BUFFER]() {
+    return this.#data;
+  }
+
+  constructor(datas: T[] | number, public Struct: (new (u8: Uint8Array) => T) & { size: number }) {
+    this.#data = new Uint8Array(typeof datas === "number" ? datas * Struct.size : datas.length * Struct.size);
+    if (typeof datas !== "number") {
+      for (let i = 0; i < datas.length; i++) {
+        this.#data.set(datas[i][BUFFER], i * Struct.size);
+      }
+    }
+  }
+
+  get length() {
+    return this.#data.length / this.Struct.size;
+  }
+
+  get byteLength() {
+    return this.#data.byteLength;
+  }
+
+  get(index: number): T {
+    return new this.Struct(this.#data.subarray(index * this.Struct.size));
+  }
+
+  set(index: number, value: T) {
+    this.#data.set(value[BUFFER], index * this.Struct.size);
+  }
+
+  *[Symbol.iterator]() {
+    for (let i = 0; i < this.length; i++) {
+      yield this.get(i);
+    }
+  }
+}
+
+export function getBuffer<T = TypedArray>(ptr: Deno.PointerValue, size: number, arr: new (buf: ArrayBuffer) => T): T {
+  return new arr(Deno.UnsafePointerView.getArrayBuffer(ptr, size));
 }

@@ -172,7 +172,7 @@ export class TriangleApplication {
 
       vk.DestroyDevice(this.device, null);
 
-      // vk.DestroySurfaceKHR(this.instance, this.surface, null);
+      vk.DestroySurfaceKHR(this.instance, this.surface, null);
 
       vk.DestroyInstance(this.instance, null);
     }
@@ -183,8 +183,8 @@ export class TriangleApplication {
       applicationVersion: 1 << 22,
       engineVersion: 1 << 22,
       apiVersion: 1 << 22,
-      pApplicationName: new TextEncoder().encode("Test\0"),
-      pEngineName: new TextEncoder().encode("No Engine\0"),
+      pApplicationName: new vk.CString("Test"),
+      pEngineName: new vk.CString("No Engine"),
     });
 
     const glfwExtCount = new Uint32Array(1);
@@ -254,20 +254,16 @@ export class TriangleApplication {
       throw new Error("No queue families found");
     }
 
-    const queueFamilyPropertiesPtr = new Uint8Array(
-      vk.QueueFamilyProperties.size * queueFamilyCount[0],
+    const queueFamilyPropertiesPtr = new vk.StructArray(
+      queueFamilyCount[0],
+      vk.QueueFamilyProperties,
     );
     vk.GetPhysicalDeviceQueueFamilyProperties(
       this.physicalDevice,
       queueFamilyCount,
       queueFamilyPropertiesPtr,
     );
-
-    const queueFamilies = new Array(queueFamilyCount[0]).fill(0).map((_, i) => {
-      return new vk.QueueFamilyProperties(
-        queueFamilyPropertiesPtr.subarray(i * vk.QueueFamilyProperties.size),
-      );
-    });
+    const queueFamilies = [...queueFamilyPropertiesPtr];
 
     let foundGraphicsQueueFamily = false;
     let foundPresentQueueFamily = false;
@@ -309,20 +305,14 @@ export class TriangleApplication {
   createLogicalDevice() {
     let queuePriority = new Float32Array([1.0]);
 
-    const pQueueCreateInfos = new Uint8Array(
-      vk.DeviceQueueCreateInfo.size * 2,
+    const pQueueCreateInfos = new vk.StructArray(
+      2,
+      vk.DeviceQueueCreateInfo,
     );
 
     const queueCreateInfo = [
-      new vk.DeviceQueueCreateInfo(
-        pQueueCreateInfos.subarray(0, vk.DeviceQueueCreateInfo.size),
-      ),
-      new vk.DeviceQueueCreateInfo(
-        pQueueCreateInfos.subarray(
-          vk.DeviceQueueCreateInfo.size,
-          vk.DeviceQueueCreateInfo.size * 2,
-        ),
-      ),
+      pQueueCreateInfos.get(0),
+      pQueueCreateInfos.get(1),
     ];
 
     queueCreateInfo[0].sType =
@@ -498,10 +488,7 @@ export class TriangleApplication {
       0,
       dataOut,
     );
-    const data = new Float32Array(
-      Deno.UnsafePointerView.getArrayBuffer(dataOut.value, vertices.byteLength),
-    );
-    data.set(vertices);
+    vk.getBuffer(dataOut.value, vertices.byteLength, Float32Array).set(vertices);
     vk.UnmapMemory(this.device, vertexBufferMemory);
     vk.BindBufferMemory(
       this.device,
@@ -583,10 +570,7 @@ export class TriangleApplication {
       0,
       dataOut,
     );
-    const indexData = new Uint16Array(
-      Deno.UnsafePointerView.getArrayBuffer(dataOut.value, indices.byteLength),
-    );
-    indexData.set(indices);
+    vk.getBuffer(dataOut.value, indices.byteLength, Uint16Array).set(indices);
     vk.UnmapMemory(this.device, indexBufferMemory);
     vk.BindBufferMemory(
       this.device,
@@ -764,10 +748,7 @@ export class TriangleApplication {
       0,
       dataOut,
     );
-    const data = new Float32Array(
-      Deno.UnsafePointerView.getArrayBuffer(dataOut.value, 4 * 4 * 4),
-    );
-    data.set(this.uniformBufferData);
+    vk.getBuffer(dataOut.value, this.uniformBufferData.byteLength, Float32Array).set(this.uniformBufferData);
     vk.UnmapMemory(this.device, this.uniformBufferMemory);
   }
 
@@ -805,8 +786,9 @@ export class TriangleApplication {
       null,
     );
 
-    const surfaceFormats = new Uint8Array(
-      formatCountOut[0] * vk.SurfaceFormatKHR.size,
+    const surfaceFormats = new vk.StructArray(
+      formatCountOut[0],
+      vk.SurfaceFormatKHR,
     );
     vk.GetPhysicalDeviceSurfaceFormatsKHR(
       this.physicalDevice,
@@ -839,16 +821,7 @@ export class TriangleApplication {
       imageCount = surfaceCapabilities.maxImageCount;
     }
 
-    const surfaceFormat = this.chooseSurfaceFormat(
-      new Array(formatCountOut[0]).fill(0).map((_, i) =>
-        new vk.SurfaceFormatKHR(
-          surfaceFormats.subarray(
-            i * vk.SurfaceFormatKHR.size,
-            (i + 1) * vk.SurfaceFormatKHR.size,
-          ),
-        )
-      ),
-    );
+    const surfaceFormat = this.chooseSurfaceFormat([...surfaceFormats]);
 
     this.swapChainExtent = this.chooseSwapExtent(surfaceCapabilities);
 
@@ -1121,25 +1094,18 @@ export class TriangleApplication {
       pName: new TextEncoder().encode("main\0"),
     });
 
-    const shaderStages = new Uint8Array(
-      2 * vk.PipelineShaderStageCreateInfo.size,
-    );
-    shaderStages.set(vertexShaderCreateInfo[vk.BUFFER]);
-    shaderStages.set(
-      fragmentShaderCreateInfo[vk.BUFFER],
-      vk.PipelineShaderStageCreateInfo.size,
+    const shaderStages = new vk.StructArray(
+      [
+        vertexShaderCreateInfo,
+        fragmentShaderCreateInfo,
+      ],
+      vk.PipelineShaderStageCreateInfo,
     );
 
-    const vertexAttributeDescriptions = new Uint8Array(
-      this.vertexAttributeDescriptions.length *
-        vk.VertexInputAttributeDescription.size,
+    const vertexAttributeDescriptions = new vk.StructArray(
+      this.vertexAttributeDescriptions,
+      vk.VertexInputAttributeDescription,
     );
-    for (let i = 0; i < this.vertexAttributeDescriptions.length; i++) {
-      vertexAttributeDescriptions.set(
-        this.vertexAttributeDescriptions[i][vk.BUFFER],
-        i * vk.VertexInputAttributeDescription.size,
-      );
-    }
 
     const vertexInputCreateInfo = new vk.PipelineVertexInputStateCreateInfo({
       vertexBindingDescriptionCount: 1,

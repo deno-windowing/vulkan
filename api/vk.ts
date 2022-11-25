@@ -95510,6 +95510,14 @@ const lib = Deno.dlopen("vulkan-1", {
     ],
     "result": "void"
   },
+  "vkDestroySurfaceKHR": {
+    "parameters": [
+      "pointer",
+      "pointer",
+      "buffer"
+    ],
+    "result": "void"
+  },
   "vkGetPhysicalDeviceSurfaceSupportKHR": {
     "parameters": [
       "pointer",
@@ -98378,6 +98386,18 @@ export function CmdExecuteCommands(
     commandBuffer,
     commandBufferCount,
     anyBuffer(pCommandBuffers),
+  );
+}
+
+export function DestroySurfaceKHR(
+  instance: Instance,
+  surface: SurfaceKHR,
+  pAllocator: AnyBuffer,
+): void {
+  lib.vkDestroySurfaceKHR(
+    instance,
+    surface,
+    anyBuffer(pAllocator),
   );
 }
 

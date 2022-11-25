@@ -409,6 +409,7 @@ function toSkipCMD(name: string) {
   if (name === "vkGetSwapchainImagesKHR") return false;
   if (name === "vkAcquireNextImageKHR") return false;
   if (name === "vkQueuePresentKHR") return false;
+  if (name === "vkDestroySurfaceKHR") return false;
 
   if (name.endsWith("NV")) return true;
   if (name.endsWith("NX")) return true;
