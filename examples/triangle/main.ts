@@ -180,9 +180,9 @@ export class TriangleApplication {
 
   createInstance() {
     const appInfo = new vk.ApplicationInfo({
-      applicationVersion: 1 << 22,
-      engineVersion: 1 << 22,
-      apiVersion: 1 << 22,
+      applicationVersion: vk.makeVersion(1, 0, 0),
+      engineVersion: vk.makeVersion(1, 0, 0),
+      apiVersion: vk.makeVersion(1, 2, 0),
       pApplicationName: new vk.CString("Test"),
       pEngineName: new vk.CString("No Engine"),
     });

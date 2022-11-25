@@ -5,10 +5,10 @@ vk.CreateInstance(
   new vk.InstanceCreateInfo({
     pApplicationInfo: new vk.ApplicationInfo({
       pApplicationName: new vk.CString("Deno"),
-      applicationVersion: 1 << 22,
+      applicationVersion: vk.makeVersion(1, 0, 0),
       pEngineName: new vk.CString("Deno"),
-      engineVersion: 1 << 22,
-      apiVersion: 1 << 22,
+      engineVersion: vk.makeVersion(1, 0, 0),
+      apiVersion: vk.makeVersion(1, 2, 0),
     }),
   }),
   null,

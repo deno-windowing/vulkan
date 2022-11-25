@@ -152,3 +152,7 @@ export class StructArray<T extends BaseStruct> implements BaseStruct {
 export function getBuffer<T = TypedArray>(ptr: Deno.PointerValue, size: number, arr: new (buf: ArrayBuffer) => T): T {
   return new arr(Deno.UnsafePointerView.getArrayBuffer(ptr, size));
 }
+
+export function makeVersion(major: number, minor: number, patch: number) {
+  return (major << 22) | (minor << 12) | patch;
+}
