@@ -302,7 +302,10 @@ export function isArray(type: any) {
   return typeof type === "object" && type !== null && ("array" in type);
 }
 
-export function getAlignSize(type: any, cache?: WeakMap<any, number | null>): number {
+export function getAlignSize(
+  type: any,
+  cache?: WeakMap<any, number | null>,
+): number {
   if (isStruct(type)) {
     return getAlignSize(type.struct[0], cache);
   } else if (isUnion(type)) {
@@ -314,7 +317,10 @@ export function getAlignSize(type: any, cache?: WeakMap<any, number | null>): nu
   }
 }
 
-export function getTypeSize(type: any, cache = new WeakMap<any, number | null>()) {
+export function getTypeSize(
+  type: any,
+  cache = new WeakMap<any, number | null>(),
+) {
   if (isStruct(type)) {
     const cached = cache.get(type);
     if (cached !== undefined) {
@@ -532,7 +538,11 @@ for (const ty of api.registry.types.type) {
         comment: member.$comment,
         ffi: "void",
         values: member.$values?.split(","),
-        enum: member.enum ? (Array.isArray(member.enum) ? member.enum.map((e: any) => e["#text"]) : member.enum?.["#text"]) : undefined,
+        enum: member.enum
+          ? (Array.isArray(member.enum)
+            ? member.enum.map((e: any) => e["#text"])
+            : member.enum?.["#text"])
+          : undefined,
       };
 
       if (field.text?.endsWith("*")) {
@@ -544,10 +554,14 @@ for (const ty of api.registry.types.type) {
       if (field.text?.startsWith("[")) {
         if (field.enum) {
           if (Array.isArray(field.enum)) {
-            field.len = field.enum.map(en => {
-              return constants.map((c) => c.constants.find((c) => c.name === en)).find((e) => e !== undefined)?.value!;
+            field.len = field.enum.map((en) => {
+              return constants.map((c) =>
+                c.constants.find((c) => c.name === en)
+              ).find((e) => e !== undefined)?.value!;
             });
-          } else field.len = constants.map((c) => c.constants.find((c) => c.name === field.enum)).find((e) => e !== undefined)?.value;
+          } else {field.len = constants.map((c) =>
+              c.constants.find((c) => c.name === field.enum)
+            ).find((e) => e !== undefined)?.value;}
         } else {
           const match = field.text.match(/^\[(\d+)\]*/);
           if (match) {
@@ -557,7 +571,12 @@ for (const ty of api.registry.types.type) {
         if (!field.len) {
           throw new Error(`Invalid length: ${Deno.inspect(field)}`);
         }
-        field.ffi = { array: field.ffi, len: Array.isArray(field.len) ? field.len.reduce((p, a) => p * a, 1) : field.len };
+        field.ffi = {
+          array: field.ffi,
+          len: Array.isArray(field.len)
+            ? field.len.reduce((p, a) => p * a, 1)
+            : field.len,
+        };
       }
 
       const fieldSize = getTypeSize(field.ffi);

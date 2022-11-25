@@ -9,7 +9,9 @@ const parser = new XMLParser({
   attributeNamePrefix: "$",
 });
 const xml = Deno.readTextFileSync(new URL("../data/vk.xml", import.meta.url));
-const videoXml = Deno.readTextFileSync(new URL("../data/video.xml", import.meta.url));
+const videoXml = Deno.readTextFileSync(
+  new URL("../data/video.xml", import.meta.url),
+);
 
 console.log("Parsing...");
 const json = parser.parse(xml);

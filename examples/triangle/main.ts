@@ -179,34 +179,6 @@ export class TriangleApplication {
   }
 
   createInstance() {
-    const extCount = new Uint32Array(1);
-    vk.EnumerateInstanceExtensionProperties(
-      null,
-      extCount,
-      null,
-    );
-
-    if (extCount[0] < 1) {
-      throw new Error("No extensions found");
-    }
-
-    const exts = new Uint8Array(260 * extCount[0]);
-    vk.EnumerateInstanceExtensionProperties(
-      null,
-      extCount,
-      exts,
-    );
-
-    const extNames: string[] = [];
-
-    for (let i = 0; i < extCount[0]; i++) {
-      extNames.push(
-        new TextDecoder().decode(
-          exts.subarray(i * 260, exts.indexOf(0, i * 260)),
-        ),
-      );
-    }
-
     const appInfo = new vk.ApplicationInfo({
       applicationVersion: 1 << 22,
       engineVersion: 1 << 22,
@@ -222,42 +194,28 @@ export class TriangleApplication {
     for (let i = 0; i < glfwExtCount[0]; i++) {
       names.push(Deno.UnsafePointerView.getCString(view.getBigUint64(i * 8)));
     }
-
-    const nameBuffers = names.map((name) =>
-      new TextEncoder().encode(name + "\0")
-    );
-    const extensions = new BigUint64Array(
-      nameBuffers.map((e) => BigInt(Deno.UnsafePointer.of(e))),
-    );
-
     const createInfo = new vk.InstanceCreateInfo({
       pApplicationInfo: appInfo,
-      enabledExtensionCount: extensions.length,
-      ppEnabledExtensionNames: extensions,
+      enabledExtensionCount: names.length,
+      ppEnabledExtensionNames: new vk.CStringArray(names),
       enabledLayerCount: 1,
-      ppEnabledLayerNames: new BigUint64Array([
-        BigInt(
-          Deno.UnsafePointer.of(
-            new TextEncoder().encode("VK_LAYER_KHRONOS_validation\0"),
-          ),
-        ),
-      ]),
+      ppEnabledLayerNames: new vk.CStringArray(["VK_LAYER_KHRONOS_validation"]),
     });
 
-    const instOut = new BigUint64Array(1);
-    vk.CreateInstance(createInfo, null, instOut.buffer);
-    this.instance = instOut[0];
+    const instOut = new vk.PointerRef();
+    vk.CreateInstance(createInfo, null, instOut);
+    this.instance = instOut.value;
   }
 
   createWindowSurface() {
-    const surfaceOut = new BigUint64Array(1);
+    const surfaceOut = new vk.PointerRef();
     ffi.glfwCreateWindowSurface(
       this.instance,
       this.window.nativeHandle,
       null,
       surfaceOut,
     );
-    this.surface = surfaceOut[0];
+    this.surface = surfaceOut.value;
   }
 
   findPhysicalDevice() {
@@ -272,14 +230,14 @@ export class TriangleApplication {
       throw new Error("No devices found");
     }
 
-    const physicalDeviceOut = new BigUint64Array(1);
+    const physicalDeviceOut = new vk.PointerRef();
     deviceCount[0] = 1;
     vk.EnumeratePhysicalDevices(
       this.instance,
       deviceCount,
       physicalDeviceOut,
     );
-    this.physicalDevice = physicalDeviceOut[0];
+    this.physicalDevice = physicalDeviceOut.value;
   }
 
   checkSwapChainSupport() {}
@@ -390,48 +348,38 @@ export class TriangleApplication {
         : 2,
       pEnabledFeatures: enabledFeatures,
       enabledExtensionCount: 1,
-      ppEnabledExtensionNames: new BigUint64Array([
-        BigInt(
-          Deno.UnsafePointer.of(
-            new TextEncoder().encode("VK_KHR_swapchain\0"),
-          ),
-        ),
+      ppEnabledExtensionNames: new vk.CStringArray([
+        vk.KHR_SWAPCHAIN_EXTENSION_NAME,
       ]),
       enabledLayerCount: 1,
-      ppEnabledLayerNames: new BigUint64Array([
-        BigInt(
-          Deno.UnsafePointer.of(
-            new TextEncoder().encode("VK_LAYER_KHRONOS_validation\0"),
-          ),
-        ),
-      ]),
+      ppEnabledLayerNames: new vk.CStringArray(["VK_LAYER_KHRONOS_validation"]),
     });
 
-    const deviceOut = new BigUint64Array(1);
+    const deviceOut = new vk.PointerRef();
     vk.CreateDevice(
       this.physicalDevice,
       deviceCreateInfo,
       null,
       deviceOut,
     );
-    this.device = deviceOut[0];
+    this.device = deviceOut.value;
 
-    const graphicsQueueOut = new BigUint64Array(1);
+    const graphicsQueueOut = new vk.PointerRef();
     vk.GetDeviceQueue(
       this.device,
       this.graphicsQueueFamily,
       0,
       graphicsQueueOut,
     );
-    this.graphicsQueue = graphicsQueueOut[0];
-    const presentQueueOut = new BigUint64Array(1);
+    this.graphicsQueue = graphicsQueueOut.value;
+    const presentQueueOut = new vk.PointerRef();
     vk.GetDeviceQueue(
       this.device,
       this.presentQueueFamily,
       0,
       presentQueueOut,
     );
-    this.presentQueue = presentQueueOut[0];
+    this.presentQueue = presentQueueOut.value;
 
     const deviceMemoryProperties = new vk.PhysicalDeviceMemoryProperties();
     vk.GetPhysicalDeviceMemoryProperties(
@@ -446,8 +394,8 @@ export class TriangleApplication {
   createSemaphores() {
     const createInfo = new vk.SemaphoreCreateInfo({});
 
-    const imageAvailableSemaphoreOut = new BigUint64Array(1);
-    const renderingFinishedSemaphoreOut = new BigUint64Array(1);
+    const imageAvailableSemaphoreOut = new vk.PointerRef();
+    const renderingFinishedSemaphoreOut = new vk.PointerRef();
 
     vk.CreateSemaphore(
       this.device,
@@ -462,8 +410,8 @@ export class TriangleApplication {
       renderingFinishedSemaphoreOut,
     );
 
-    this.imageAvailableSemaphore = imageAvailableSemaphoreOut[0];
-    this.renderingFinishedSemaphore = renderingFinishedSemaphoreOut[0];
+    this.imageAvailableSemaphore = imageAvailableSemaphoreOut.value;
+    this.renderingFinishedSemaphore = renderingFinishedSemaphoreOut.value;
   }
 
   createCommandPool() {
@@ -471,14 +419,14 @@ export class TriangleApplication {
       queueFamilyIndex: this.graphicsQueueFamily,
     });
 
-    const commandPoolOut = new BigUint64Array(1);
+    const commandPoolOut = new vk.PointerRef();
     vk.CreateCommandPool(
       this.device,
       poolCreateInfo,
       null,
       commandPoolOut,
     );
-    this.commandPool = commandPoolOut[0];
+    this.commandPool = commandPoolOut.value;
   }
 
   createVertexBuffer() {
@@ -500,28 +448,27 @@ export class TriangleApplication {
       commandBufferCount: 1,
     });
 
-    const copyCommandBufferOut = new BigUint64Array(1);
+    const copyCommandBufferOut = new vk.PointerRef();
     vk.AllocateCommandBuffers(
       this.device,
       cmdBufInfo,
       copyCommandBufferOut,
     );
-
-    const copyCommandBuffer = copyCommandBufferOut[0];
+    const copyCommandBuffer = copyCommandBufferOut.value;
 
     const vertexBufferInfo = new vk.BufferCreateInfo({
       size: vertices.byteLength,
       usage: vk.BufferUsageFlagBits.BUFFER_USAGE_TRANSFER_SRC_BIT,
     });
 
-    const vertexBufferOut = new BigUint64Array(1);
+    const vertexBufferOut = new vk.PointerRef();
     vk.CreateBuffer(
       this.device,
       vertexBufferInfo,
       null,
       vertexBufferOut,
     );
-    const vertexBuffer = vertexBufferOut[0];
+    const vertexBuffer = vertexBufferOut.value;
 
     vk.GetBufferMemoryRequirements(
       this.device,
@@ -533,16 +480,16 @@ export class TriangleApplication {
       memReqs.memoryTypeBits,
       vk.MemoryPropertyFlagBits.MEMORY_PROPERTY_HOST_VISIBLE_BIT,
     );
-    const vertexBufferMemoryOut = new BigUint64Array(1);
+    const vertexBufferMemoryOut = new vk.PointerRef();
     vk.AllocateMemory(
       this.device,
       memAlloc,
       null,
       vertexBufferMemoryOut,
     );
-    const vertexBufferMemory = vertexBufferMemoryOut[0];
+    const vertexBufferMemory = vertexBufferMemoryOut.value;
 
-    const dataOut = new BigUint64Array(1);
+    const dataOut = new vk.PointerRef();
     vk.MapMemory(
       this.device,
       vertexBufferMemory,
@@ -552,7 +499,7 @@ export class TriangleApplication {
       dataOut,
     );
     const data = new Float32Array(
-      Deno.UnsafePointerView.getArrayBuffer(dataOut[0], vertices.byteLength),
+      Deno.UnsafePointerView.getArrayBuffer(dataOut.value, vertices.byteLength),
     );
     data.set(vertices);
     vk.UnmapMemory(this.device, vertexBufferMemory);
@@ -572,7 +519,7 @@ export class TriangleApplication {
       null,
       vertexBufferOut,
     );
-    this.vertexBuffer = vertexBufferOut[0];
+    this.vertexBuffer = vertexBufferOut.value;
     vk.GetBufferMemoryRequirements(
       this.device,
       this.vertexBuffer,
@@ -589,7 +536,7 @@ export class TriangleApplication {
       null,
       vertexBufferMemoryOut,
     );
-    this.vertexBufferMemory = vertexBufferMemoryOut[0];
+    this.vertexBufferMemory = vertexBufferMemoryOut.value;
     vk.BindBufferMemory(
       this.device,
       this.vertexBuffer,
@@ -602,14 +549,14 @@ export class TriangleApplication {
       usage: vk.BufferUsageFlagBits.BUFFER_USAGE_TRANSFER_SRC_BIT,
     });
 
-    const indexBufferOut = new BigUint64Array(1);
+    const indexBufferOut = new vk.PointerRef();
     vk.CreateBuffer(
       this.device,
       indexBufferInfo,
       null,
       indexBufferOut,
     );
-    const indexBuffer = indexBufferOut[0];
+    const indexBuffer = indexBufferOut.value;
     vk.GetBufferMemoryRequirements(
       this.device,
       indexBuffer,
@@ -620,14 +567,14 @@ export class TriangleApplication {
       memReqs.memoryTypeBits,
       vk.MemoryPropertyFlagBits.MEMORY_PROPERTY_HOST_VISIBLE_BIT,
     );
-    const indexBufferMemoryOut = new BigUint64Array(1);
+    const indexBufferMemoryOut = new vk.PointerRef();
     vk.AllocateMemory(
       this.device,
       memAlloc,
       null,
       indexBufferMemoryOut,
     );
-    const indexBufferMemory = indexBufferMemoryOut[0];
+    const indexBufferMemory = indexBufferMemoryOut.value;
     vk.MapMemory(
       this.device,
       indexBufferMemory,
@@ -637,7 +584,7 @@ export class TriangleApplication {
       dataOut,
     );
     const indexData = new Uint16Array(
-      Deno.UnsafePointerView.getArrayBuffer(dataOut[0], indices.byteLength),
+      Deno.UnsafePointerView.getArrayBuffer(dataOut.value, indices.byteLength),
     );
     indexData.set(indices);
     vk.UnmapMemory(this.device, indexBufferMemory);
@@ -657,7 +604,7 @@ export class TriangleApplication {
       null,
       indexBufferOut,
     );
-    this.indexBuffer = indexBufferOut[0];
+    this.indexBuffer = indexBufferOut.value;
     vk.GetBufferMemoryRequirements(
       this.device,
       this.indexBuffer,
@@ -674,7 +621,7 @@ export class TriangleApplication {
       null,
       indexBufferMemoryOut,
     );
-    this.indexBufferMemory = indexBufferMemoryOut[0];
+    this.indexBufferMemory = indexBufferMemoryOut.value;
     vk.BindBufferMemory(
       this.device,
       this.indexBuffer,
@@ -712,7 +659,7 @@ export class TriangleApplication {
 
     const submitInfo = new vk.SubmitInfo({
       commandBufferCount: 1,
-      pCommandBuffers: new BigUint64Array([copyCommandBuffer]),
+      pCommandBuffers: new vk.PointerArray([copyCommandBuffer]),
     });
 
     vk.QueueSubmit(this.graphicsQueue, 1, submitInfo, 0);
@@ -722,7 +669,7 @@ export class TriangleApplication {
       this.device,
       this.commandPool,
       1,
-      new BigUint64Array([copyCommandBuffer]),
+      new vk.PointerArray([copyCommandBuffer]),
     );
 
     vk.DestroyBuffer(this.device, vertexBuffer, null);
@@ -759,14 +706,14 @@ export class TriangleApplication {
       usage: vk.BufferUsageFlagBits.BUFFER_USAGE_UNIFORM_BUFFER_BIT,
     });
 
-    const bufferOut = new BigUint64Array(1);
+    const bufferOut = new vk.PointerRef();
     vk.CreateBuffer(
       this.device,
       bufferInfo,
       null,
       bufferOut,
     );
-    this.uniformBuffer = bufferOut[0];
+    this.uniformBuffer = bufferOut.value;
 
     const memReqs = new vk.MemoryRequirements();
     vk.GetBufferMemoryRequirements(
@@ -784,14 +731,14 @@ export class TriangleApplication {
       ),
     });
 
-    const bufferMemoryOut = new BigUint64Array(1);
+    const bufferMemoryOut = new vk.PointerRef();
     vk.AllocateMemory(
       this.device,
       memAlloc,
       null,
       bufferMemoryOut,
     );
-    this.uniformBufferMemory = bufferMemoryOut[0];
+    this.uniformBufferMemory = bufferMemoryOut.value;
 
     vk.BindBufferMemory(
       this.device,
@@ -808,7 +755,7 @@ export class TriangleApplication {
     // const timeDelta = timeNow - this.timeStart;
     // const angle = (timeDelta % 4000) / 4000 * Math.PI * 2;
 
-    const dataOut = new BigUint64Array(1);
+    const dataOut = new vk.PointerRef();
     vk.MapMemory(
       this.device,
       this.uniformBufferMemory,
@@ -818,7 +765,7 @@ export class TriangleApplication {
       dataOut,
     );
     const data = new Float32Array(
-      Deno.UnsafePointerView.getArrayBuffer(dataOut[0], 4 * 4 * 4),
+      Deno.UnsafePointerView.getArrayBuffer(dataOut.value, 4 * 4 * 4),
     );
     data.set(this.uniformBufferData);
     vk.UnmapMemory(this.device, this.uniformBufferMemory);
@@ -941,14 +888,14 @@ export class TriangleApplication {
       oldSwapchain: this.oldSwapChain,
     });
 
-    const swapChainOut = new BigUint64Array(1);
+    const swapChainOut = new vk.PointerRef();
     vk.CreateSwapchainKHR(
       this.device,
       createInfo,
       null,
       swapChainOut,
     );
-    this.swapChain = swapChainOut[0];
+    this.swapChain = swapChainOut.value;
 
     if (this.oldSwapChain) {
       vk.DestroySwapchainKHR(this.device, this.oldSwapChain, null);
@@ -971,7 +918,7 @@ export class TriangleApplication {
       this.device,
       this.swapChain,
       actualImageCount,
-      new Uint8Array(this.swapChainImages.buffer),
+      this.swapChainImages,
     );
   }
 
@@ -1061,15 +1008,14 @@ export class TriangleApplication {
       pSubpasses: subPassDescription,
     });
 
-    const renderPassOut = new BigUint64Array(1);
+    const renderPassOut = new vk.PointerRef();
     vk.CreateRenderPass(
       this.device,
       createInfo,
       null,
       renderPassOut,
     );
-
-    this.renderPass = renderPassOut[0];
+    this.renderPass = renderPassOut.value;
   }
 
   createImageViews() {
@@ -1099,15 +1045,14 @@ export class TriangleApplication {
         subresourceRange,
       });
 
-      const imageViewOut = new BigUint64Array(1);
+      const imageViewOut = new vk.PointerRef();
       vk.CreateImageView(
         this.device,
         createInfo,
         null,
         imageViewOut,
       );
-
-      this.swapChainImageViews[i] = imageViewOut[0];
+      this.swapChainImageViews[i] = BigInt(imageViewOut.value);
     }
   }
 
@@ -1120,13 +1065,13 @@ export class TriangleApplication {
       const createInfo = new vk.FramebufferCreateInfo({
         renderPass: this.renderPass,
         attachmentCount: 1,
-        pAttachments: new BigUint64Array([this.swapChainImageViews[i]]),
+        pAttachments: new vk.PointerArray([this.swapChainImageViews[i]]),
         width: this.swapChainExtent.width,
         height: this.swapChainExtent.height,
         layers: 1,
       });
 
-      const framebufferOut = new BigUint64Array(1);
+      const framebufferOut = new vk.PointerRef();
       vk.CreateFramebuffer(
         this.device,
         createInfo,
@@ -1134,7 +1079,7 @@ export class TriangleApplication {
         framebufferOut,
       );
 
-      this.swapChainFramebuffers[i] = framebufferOut[0];
+      this.swapChainFramebuffers[i] = BigInt(framebufferOut.value);
     }
   }
 
@@ -1146,15 +1091,14 @@ export class TriangleApplication {
       pCode: data,
     });
 
-    const shaderModuleOut = new BigUint64Array(1);
+    const shaderModuleOut = new vk.PointerRef();
     vk.CreateShaderModule(
       this.device,
       createInfo,
       null,
       shaderModuleOut,
     );
-
-    return shaderModuleOut[0];
+    return shaderModuleOut.value;
   }
 
   createGraphicsPipeline() {
@@ -1286,28 +1230,28 @@ export class TriangleApplication {
       pBindings: layoutBinding,
     });
 
-    const descriptorSetLayoutOut = new BigUint64Array(1);
+    const descriptorSetLayoutOut = new vk.PointerRef();
     vk.CreateDescriptorSetLayout(
       this.device,
       descriptorLayoutCreateInfo,
       null,
       descriptorSetLayoutOut,
     );
-    this.descriptorSetLayout = descriptorSetLayoutOut[0];
+    this.descriptorSetLayout = descriptorSetLayoutOut.value;
 
     const layoutCreateInfo = new vk.PipelineLayoutCreateInfo({
       setLayoutCount: 1,
-      pSetLayouts: new BigUint64Array([this.descriptorSetLayout]),
+      pSetLayouts: new vk.PointerArray([this.descriptorSetLayout]),
     });
 
-    const pipelineLayoutOut = new BigUint64Array(1);
+    const pipelineLayoutOut = new vk.PointerRef();
     vk.CreatePipelineLayout(
       this.device,
       layoutCreateInfo,
       null,
       pipelineLayoutOut,
     );
-    this.pipelineLayout = pipelineLayoutOut[0];
+    this.pipelineLayout = pipelineLayoutOut.value;
 
     const pipelineCreateInfo = new vk.GraphicsPipelineCreateInfo({
       stageCount: 2,
@@ -1325,7 +1269,7 @@ export class TriangleApplication {
       basePipelineIndex: -1,
     });
 
-    const pipelineOut = new BigUint64Array(1);
+    const pipelineOut = new vk.PointerRef();
     vk.CreateGraphicsPipelines(
       this.device,
       0,
@@ -1334,7 +1278,7 @@ export class TriangleApplication {
       null,
       pipelineOut,
     );
-    this.graphicsPipeline = pipelineOut[0];
+    this.graphicsPipeline = pipelineOut.value;
 
     vk.DestroyShaderModule(this.device, vertexShaderModule, null);
     vk.DestroyShaderModule(this.device, fragmentShaderModule, null);
@@ -1352,30 +1296,30 @@ export class TriangleApplication {
       maxSets: 1,
     });
 
-    const poolOut = new BigUint64Array(1);
+    const poolOut = new vk.PointerRef();
     vk.CreateDescriptorPool(
       this.device,
       createInfo,
       null,
       poolOut,
     );
-    this.descriptorPool = poolOut[0];
+    this.descriptorPool = poolOut.value;
   }
 
   createDescriptorSet() {
     const allocInfo = new vk.DescriptorSetAllocateInfo({
       descriptorPool: this.descriptorPool,
       descriptorSetCount: 1,
-      pSetLayouts: new BigUint64Array([BigInt(this.descriptorSetLayout)]),
+      pSetLayouts: new vk.PointerArray([this.descriptorSetLayout]),
     });
 
-    const descriptorSetOut = new BigUint64Array(1);
+    const descriptorSetOut = new vk.PointerRef();
     vk.AllocateDescriptorSets(
       this.device,
       allocInfo,
       descriptorSetOut,
     );
-    this.descriptorSet = descriptorSetOut[0];
+    this.descriptorSet = descriptorSetOut.value;
 
     const descriptorBufferInfo = new vk.DescriptorBufferInfo({
       buffer: this.uniformBuffer,
@@ -1461,9 +1405,9 @@ export class TriangleApplication {
           .PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
         0,
         0,
-        new Uint8Array(),
+        null,
         0,
-        new Uint8Array(),
+        null,
         1,
         presentToDrawBarrier,
       );
@@ -1491,7 +1435,7 @@ export class TriangleApplication {
         this.pipelineLayout,
         0,
         1,
-        new BigUint64Array([BigInt(this.descriptorSet)]),
+        new vk.PointerArray([this.descriptorSet]),
         0,
         null,
       );
@@ -1502,12 +1446,12 @@ export class TriangleApplication {
         this.graphicsPipeline,
       );
 
-      const offset = new BigUint64Array(1);
+      const offset = new vk.PointerRef();
       vk.CmdBindVertexBuffers(
         this.graphicsCommandBuffers[i],
         0,
         1,
-        new BigUint64Array([BigInt(this.vertexBuffer)]),
+        new vk.PointerArray([this.vertexBuffer]),
         offset,
       );
 
@@ -1577,20 +1521,16 @@ export class TriangleApplication {
 
     const submitInfo = new vk.SubmitInfo({
       waitSemaphoreCount: 1,
-      pWaitSemaphores: new BigUint64Array([
-        BigInt(this.imageAvailableSemaphore),
-      ]),
+      pWaitSemaphores: new vk.PointerArray([this.imageAvailableSemaphore]),
       signalSemaphoreCount: 1,
-      pSignalSemaphores: new BigUint64Array([
-        BigInt(this.renderingFinishedSemaphore),
-      ]),
+      pSignalSemaphores: new vk.PointerArray([this.renderingFinishedSemaphore]),
       pWaitDstStageMask: new Uint32Array([
         vk.PipelineStageFlagBits
           .PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
       ]),
       commandBufferCount: 1,
-      pCommandBuffers: new BigUint64Array([
-        BigInt(this.graphicsCommandBuffers[imageIndex[0]]),
+      pCommandBuffers: new vk.PointerArray([
+        this.graphicsCommandBuffers[imageIndex[0]],
       ]),
     });
 
@@ -1598,11 +1538,9 @@ export class TriangleApplication {
 
     const presentInfo = new vk.PresentInfoKHR({
       waitSemaphoreCount: 1,
-      pWaitSemaphores: new BigUint64Array([
-        BigInt(this.renderingFinishedSemaphore),
-      ]),
+      pWaitSemaphores: new vk.PointerArray([this.renderingFinishedSemaphore]),
       swapchainCount: 1,
-      pSwapchains: new BigUint64Array([BigInt(this.swapChain)]),
+      pSwapchains: new vk.PointerArray([this.swapChain]),
       pImageIndices: imageIndex,
     });
 

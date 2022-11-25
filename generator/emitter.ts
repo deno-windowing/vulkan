@@ -1,22 +1,22 @@
 import { transform } from "https://deno.land/x/swc@0.2.1/mod.ts";
 import {
-  newline,
-  emit,
-  output,
-  typedefs,
-  constants,
-  enums,
-  structs,
-  unions,
-  commands,
   block,
-  jsify,
-  typeToJS,
-  isStruct,
-  isArray,
-  getTypeSize,
-  getIdent,
+  commands,
+  constants,
+  emit,
+  enums,
   Field,
+  getIdent,
+  getTypeSize,
+  isArray,
+  isStruct,
+  jsify,
+  newline,
+  output,
+  structs,
+  typedefs,
+  typeToJS,
+  unions,
 } from "./process_xml.ts";
 
 function stripVk(name: any) {
@@ -29,48 +29,10 @@ function stripVk(name: any) {
 console.log("Emitting...");
 
 newline();
-emit(`export const BUFFER = Symbol("vkStructBuffer");`);
-emit(`export const DATAVIEW = Symbol("vkStructDataView");`);
+
 emit(
-  "export const LE = new Uint8Array(new Uint32Array([0x12345678]).buffer)[0] === 0x78;",
+  `import { AnyBuffer, AnyPointer, anyBuffer, anyPointer, BUFFER, DATAVIEW, LE, BaseStruct } from "./util.ts";`,
 );
-newline();
-
-emit("export interface BaseStruct {");
-block(() => {
-  emit(`readonly [BUFFER]: Uint8Array;`);
-});
-emit("}");
-
-newline();
-
-emit("export type AnyBuffer = ArrayBuffer | Uint8Array | Uint16Array | Uint32Array | Int8Array | Int16Array | Int32Array | Float32Array | Float64Array | BigUint64Array | BigInt64Array | null | BaseStruct;");
-
-newline();
-
-emit("export function anyBuffer(buffer: AnyBuffer) {");
-block(() => {
-  emit("if (!buffer) return null;");
-  emit(`else if (typeof buffer === "object" && BUFFER in buffer) return (buffer as BaseStruct)[BUFFER];`);
-  emit("else if (buffer instanceof Uint8Array) return buffer;");
-  emit("return new Uint8Array(buffer instanceof ArrayBuffer ? buffer : (buffer as unknown as ArrayBufferView).buffer);");
-});
-emit("}");
-
-newline();
-
-emit("export type AnyPointer = Deno.PointerValue | null | AnyBuffer;");
-
-newline();
-
-emit("export function anyPointer(buffer: AnyPointer): Deno.PointerValue {");
-block(() => {
-  emit("if (!buffer) return 0;");
-  emit(`else if (typeof buffer === "number" || typeof buffer === "bigint") return buffer;`);
-  emit("const u8 = anyBuffer(buffer);");
-  emit("return u8!.length === 0 ? 0 : Deno.UnsafePointer.of(u8 ?? new Uint8Array());");
-});
-emit("}");
 
 newline();
 emit("/// Type definitions");
@@ -153,14 +115,34 @@ for (const s of structs) {
     newline();
 
     emit(`constructor();`);
+    emit(`constructor(ptr: Deno.PointerValue);`);
     emit(`constructor(init: Init${stripVk(s.name)});`);
-    emit(`constructor(data: Uint8Array);`)
-    emit(`constructor(data?: Uint8Array | Init${stripVk(s.name)}) {`);
+    emit(`constructor(data: Uint8Array);`);
+    emit(
+      `constructor(data?: Deno.PointerValue | Uint8Array | Init${
+        stripVk(s.name)
+      }) {`,
+    );
     block(() => {
-      emit(`if (!data) {`);
+      emit(`if (data === undefined) {`);
       block(() => {
         emit(`this.#data = new Uint8Array(${stripVk(s.name)}.size);`);
-        emit("this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);");
+        emit(
+          "this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);",
+        );
+      });
+      emit(
+        `} else if (typeof data === "number" || typeof data === "bigint") {`,
+      );
+      block(() => {
+        emit(
+          `this.#data = new Uint8Array(Deno.UnsafePointerView.getArrayBuffer(data, ${
+            stripVk(s.name)
+          }.size));`,
+        );
+        emit(
+          "this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);",
+        );
       });
       emit("} else if (data instanceof Uint8Array) {");
       block(() => {
@@ -175,17 +157,26 @@ for (const s of structs) {
       emit("} else {");
       block(() => {
         emit(`this.#data = new Uint8Array(${stripVk(s.name)}.size);`);
-        emit("this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);");
+        emit(
+          "this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);",
+        );
         for (const f of s.fields) {
           if (f.name === "sType" && f.values?.length === 1) {
-            emit(`this.sType = StructureType.${stripVk(f.values?.[0])};`);
+            continue;
           } else {
             const name = jsify(f.name);
-            emit(`if (data.${name} !== undefined) this.${name} = data.${name};`);
+            emit(
+              `if (data.${name} !== undefined) this.${name} = data.${name};`,
+            );
           }
         }
       });
       emit("}");
+      for (const f of s.fields) {
+        if (f.name === "sType" && f.values?.length === 1) {
+          emit(`this.sType = StructureType.${stripVk(f.values?.[0])};`);
+        }
+      }
     });
     emit("}");
 
@@ -237,7 +228,11 @@ for (const s of structs) {
               if (isStruct(f.ffi)) {
                 const name = f.type;
                 emit(
-                  `return new ${stripVk(name)}(this.#data.subarray(${f.offset}, ${f.offset} + ${stripVk(name)}.size));`,
+                  `return new ${
+                    stripVk(name)
+                  }(this.#data.subarray(${f.offset}, ${f.offset} + ${
+                    stripVk(name)
+                  }.size));`,
                 );
                 break;
               }
@@ -281,7 +276,9 @@ for (const s of structs) {
       );
       function emitFieldSetter(f: Field, vname = "value") {
         if (isptr) {
-          emit(`this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`);
+          emit(
+            `this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`,
+          );
         } else {
           switch (f.ffi) {
             case "i8":
@@ -304,15 +301,21 @@ for (const s of structs) {
               break;
             case "isize":
             case "i64":
-              emit(`this.#view.setBigInt64(${f.offset}, BigInt(${vname}), LE);`);
+              emit(
+                `this.#view.setBigInt64(${f.offset}, BigInt(${vname}), LE);`,
+              );
               break;
             case "usize":
             case "u64":
-              emit(`this.#view.setBigUint64(${f.offset}, BigInt(${vname}), LE);`);
+              emit(
+                `this.#view.setBigUint64(${f.offset}, BigInt(${vname}), LE);`,
+              );
               break;
             case "buffer":
             case "pointer":
-              emit(`this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`);
+              emit(
+                `this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`,
+              );
               break;
             case "f32":
               emit(`this.#view.setFloat32(${f.offset}, Number(${vname}), LE);`);
@@ -323,7 +326,9 @@ for (const s of structs) {
             default: {
               if (isStruct(f.ffi)) {
                 const name = f.type;
-                emit(`if (${vname}[BUFFER].byteLength < ${stripVk(name)}.size) {`);
+                emit(
+                  `if (${vname}[BUFFER].byteLength < ${stripVk(name)}.size) {`,
+                );
                 block(() => {
                   emit(`throw new Error("Data buffer too small");`);
                 });
@@ -467,9 +472,7 @@ for (const cmd of commands) {
     for (const p of cmd.params) {
       emit(
         `${jsify(p.name)}: ${
-          p.text?.endsWith("*")
-            ? `AnyBuffer`
-            : stripVk(typeToJS(p.type))
+          p.text?.endsWith("*") ? `AnyBuffer` : stripVk(typeToJS(p.type))
         },`,
       );
     }
@@ -481,11 +484,7 @@ for (const cmd of commands) {
       for (const p of cmd.params) {
         const jsn = jsify(p.name);
         emit(
-          `${
-            p.text?.endsWith("*")
-              ? `anyBuffer(${jsn})`
-              : jsn
-          },`,
+          `${p.text?.endsWith("*") ? `anyBuffer(${jsn})` : jsn},`,
         );
       }
     });
@@ -494,7 +493,9 @@ for (const cmd of commands) {
       if (cmd.type === "VkResult") {
         emit(
           `if (${
-            cmd.successCodes.map((e) => `ret === Result.${stripVk(e)}`).join(" || ")
+            cmd.successCodes.map((e) => `ret === Result.${stripVk(e)}`).join(
+              " || ",
+            )
           }) {`,
         );
         block(() => {
@@ -514,6 +515,10 @@ for (const cmd of commands) {
   });
   emit(`}`);
 }
+
+newline();
+
+emit(`export * from "./util.ts";`);
 
 const src = output();
 
