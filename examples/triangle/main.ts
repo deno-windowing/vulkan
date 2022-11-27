@@ -805,7 +805,7 @@ export class TriangleApplication {
       null,
     );
 
-    const presentModes = new Uint8Array(presentModeCountOut[0] * 4);
+    const presentModes = new Uint32Array(presentModeCountOut[0]);
     vk.GetPhysicalDeviceSurfacePresentModesKHR(
       this.physicalDevice,
       this.surface,
@@ -836,11 +836,7 @@ export class TriangleApplication {
       surfaceTransform = surfaceCapabilities.currentTransform;
     }
 
-    const presentMode = this.choosePresentMode(
-      new Array(presentModeCountOut[0]).fill(0).map((_, i) =>
-        new Uint32Array(presentModes.subarray(i * 4, (i + 1) * 4))[0]
-      ),
-    );
+    const presentMode = this.choosePresentMode([...presentModes]);
 
     const createInfo = new vk.SwapchainCreateInfoKHR({
       surface: this.surface,
@@ -1085,13 +1081,13 @@ export class TriangleApplication {
     const vertexShaderCreateInfo = new vk.PipelineShaderStageCreateInfo({
       stage: vk.ShaderStageFlagBits.SHADER_STAGE_VERTEX_BIT,
       module: vertexShaderModule,
-      pName: new TextEncoder().encode("main\0"),
+      pName: new vk.CString("main"),
     });
 
     const fragmentShaderCreateInfo = new vk.PipelineShaderStageCreateInfo({
       stage: vk.ShaderStageFlagBits.SHADER_STAGE_FRAGMENT_BIT,
       module: fragmentShaderModule,
-      pName: new TextEncoder().encode("main\0"),
+      pName: new vk.CString("main"),
     });
 
     const shaderStages = new vk.StructArray(

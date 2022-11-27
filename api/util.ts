@@ -117,9 +117,9 @@ export class StructArray<T extends BaseStruct> implements BaseStruct {
     return this.#data;
   }
 
-  constructor(datas: T[] | number, public Struct: (new (u8: Uint8Array) => T) & { size: number }) {
-    this.#data = new Uint8Array(typeof datas === "number" ? datas * Struct.size : datas.length * Struct.size);
-    if (typeof datas !== "number") {
+  constructor(datas: T[] | number | Uint8Array, public Struct: (new (u8: Uint8Array) => T) & { size: number }) {
+    this.#data = datas instanceof Uint8Array ? datas : new Uint8Array(typeof datas === "number" ? datas * Struct.size : datas.length * Struct.size);
+    if (typeof datas !== "number" && !(datas instanceof Uint8Array)) {
       for (let i = 0; i < datas.length; i++) {
         this.#data.set(datas[i][BUFFER], i * Struct.size);
       }
