@@ -1,6 +1,6 @@
-import * as vk from "../../api/vk.ts";
-import * as dwm from "../../../../../Projects/dwm/mod.ts";
-import { ffi } from "../../../../../Projects/dwm/src/platform/glfw/ffi.ts";
+import * as vk from "../../mod.ts";
+import * as dwm from "https://raw.githubusercontent.com/deno-windowing/dwm/main/mod.ts";
+import { ffi } from "https://raw.githubusercontent.com/deno-windowing/dwm/main/src/platform/glfw/ffi.ts";
 
 export class TriangleApplication {
   window!: dwm.DwmWindow;
@@ -303,7 +303,7 @@ export class TriangleApplication {
   }
 
   createLogicalDevice() {
-    let queuePriority = new Float32Array([1.0]);
+    const queuePriority = new Float32Array([1.0]);
 
     const pQueueCreateInfos = new vk.StructArray(
       2,
@@ -1472,6 +1472,7 @@ export class TriangleApplication {
         0,
         imageIndex,
       );
+    // deno-lint-ignore no-explicit-any
     } catch (e: any) {
       if (e.code === vk.Result.ERROR_OUT_OF_DATE_KHR) {
         this.onWindowSizeChanged();
@@ -1511,6 +1512,7 @@ export class TriangleApplication {
       if (res === vk.Result.SUBOPTIMAL_KHR || this.resized) {
         this.onWindowSizeChanged();
       }
+    // deno-lint-ignore no-explicit-any
     } catch (e: any) {
       if (e.code === vk.Result.ERROR_OUT_OF_DATE_KHR) {
         this.onWindowSizeChanged();

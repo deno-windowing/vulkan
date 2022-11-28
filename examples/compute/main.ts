@@ -1,4 +1,4 @@
-import * as vk from "../../api/vk.ts";
+import * as vk from "../../mod.ts";
 
 export class ComputeApp {
   instance!: vk.Instance;
