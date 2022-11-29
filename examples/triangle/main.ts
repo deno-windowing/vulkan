@@ -1,6 +1,5 @@
 import * as vk from "../../api/vk.ts";
-import * as dwm from "../../../../../Projects/dwm/mod.ts";
-import { ffi } from "../../../../../Projects/dwm/src/platform/glfw/ffi.ts";
+import * as dwm from "https://raw.githubusercontent.com/deno-windowing/dwm/98a2bf0/mod.ts";
 
 export class TriangleApplication {
   window!: dwm.DwmWindow;
@@ -187,19 +186,13 @@ export class TriangleApplication {
       pEngineName: new vk.CString("No Engine"),
     });
 
-    const glfwExtCount = new Uint32Array(1);
-    const glfwExts = ffi.glfwGetRequiredInstanceExtensions(glfwExtCount);
-    const view = new Deno.UnsafePointerView(glfwExts);
-    const names = [];
-    for (let i = 0; i < glfwExtCount[0]; i++) {
-      names.push(Deno.UnsafePointerView.getCString(view.getBigUint64(i * 8)));
-    }
+    const names = dwm.getRequiredInstanceExtensions();
     const createInfo = new vk.InstanceCreateInfo({
       pApplicationInfo: appInfo,
       enabledExtensionCount: names.length,
       ppEnabledExtensionNames: new vk.CStringArray(names),
-      enabledLayerCount: 1,
-      ppEnabledLayerNames: new vk.CStringArray(["VK_LAYER_KHRONOS_validation"]),
+      // enabledLayerCount: 1,
+      // ppEnabledLayerNames: new vk.CStringArray(["VK_LAYER_KHRONOS_validation"]),
     });
 
     const instOut = new vk.PointerRef();
@@ -208,14 +201,7 @@ export class TriangleApplication {
   }
 
   createWindowSurface() {
-    const surfaceOut = new vk.PointerRef();
-    ffi.glfwCreateWindowSurface(
-      this.instance,
-      this.window.nativeHandle,
-      null,
-      surfaceOut,
-    );
-    this.surface = surfaceOut.value;
+    this.surface = this.window.createSurface(this.instance);
   }
 
   findPhysicalDevice() {
@@ -341,8 +327,8 @@ export class TriangleApplication {
       ppEnabledExtensionNames: new vk.CStringArray([
         vk.KHR_SWAPCHAIN_EXTENSION_NAME,
       ]),
-      enabledLayerCount: 1,
-      ppEnabledLayerNames: new vk.CStringArray(["VK_LAYER_KHRONOS_validation"]),
+      // enabledLayerCount: 1,
+      // ppEnabledLayerNames: new vk.CStringArray(["VK_LAYER_KHRONOS_validation"]),
     });
 
     const deviceOut = new vk.PointerRef();
@@ -1519,6 +1505,11 @@ export class TriangleApplication {
       }
     }
   }
+}
+
+if (!dwm.vulkanSupported()) {
+  console.log("Vulkan not supported");
+  Deno.exit(1);
 }
 
 const app = new TriangleApplication();
