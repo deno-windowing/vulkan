@@ -433,7 +433,7 @@ function toSkipCMD(name: string) {
 newline();
 emit("/// FFI Library");
 
-emit(`const lib = Deno.dlopen("vulkan-1", {`);
+emit(`const lib = Deno.dlopen(Deno.build.os === "windows" ? "vulkan-1" : Deno.build.os === "darwin" ? "libvulkan.dylib.1" : "libvulkan.so.1", {`);
 block(() => {
   for (const cmd of commands) {
     if (toSkipCMD(cmd.name)) continue;

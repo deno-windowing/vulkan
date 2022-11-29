@@ -94286,7 +94286,7 @@ export class AccelerationStructureMotionInstanceDataNV {
 }
 
 /// FFI Library
-const lib = Deno.dlopen("vulkan-1", {
+const lib = Deno.dlopen(Deno.build.os === "windows" ? "vulkan-1" : Deno.build.os === "darwin" ? "libvulkan.dylib.1" : "libvulkan.so.1", {
   "vkCreateInstance": {
     "parameters": [
       "buffer",
