@@ -314,8 +314,10 @@ export class TriangleApplication {
     queueCreateInfo[1].pQueuePriorities = queuePriority;
 
     const enabledFeatures = new vk.PhysicalDeviceFeatures();
-    enabledFeatures.shaderClipDistance = 1;
-    enabledFeatures.shaderCullDistance = 1;
+    if (Deno.build.os !== "darwin") {
+      enabledFeatures.shaderClipDistance = 1;
+      enabledFeatures.shaderCullDistance = 1;
+    }
 
     const deviceCreateInfo = new vk.DeviceCreateInfo({
       pQueueCreateInfos,
