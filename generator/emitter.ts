@@ -74,6 +74,7 @@ for (const e of enums) {
   emit(`export enum ${stripVk(e.name)} {`);
   const ec = toConstCase(stripVk(e.name)).replace("_FLAG_BITS", "");
   block(() => {
+    const pushed: string[] = [];
     for (const c of e.enums) {
       if (c.comment) emit(`/** ${c.comment} */`);
       const n = stripVk(c.name);
@@ -88,8 +89,11 @@ for (const e of enums) {
         if (sliced.match?.(/^[0-9]/)) sliced = "VK_" + sliced;
         return sliced;
       }
+      const final = maybeSlice(n);
+      if (pushed.includes(final)) continue;
+      pushed.push(final);
       emit(
-        `${maybeSlice(n)} = ${
+        `${final} = ${
           typeof c.value === "string" && c.value.startsWith("VK")
             ? maybeSlice(
               e.enums.find((x) => x.name === c.value)?.value ?? c.value,
