@@ -7,7 +7,7 @@ export interface BaseStruct {
   readonly [BUFFER]: Uint8Array;
 }
 
-export type TypedArray = 
+export type TypedArray =
   | Uint8Array
   | Uint16Array
   | Uint32Array
@@ -107,7 +107,7 @@ export class PointerArray extends BigUint64Array {
 }
 
 export class StructArray<T extends BaseStruct> implements BaseStruct {
-  #data: Uint8Array
+  #data: Uint8Array;
 
   get data() {
     return this.#data;
@@ -117,8 +117,15 @@ export class StructArray<T extends BaseStruct> implements BaseStruct {
     return this.#data;
   }
 
-  constructor(datas: T[] | number | Uint8Array, public Struct: (new (u8: Uint8Array) => T) & { size: number }) {
-    this.#data = datas instanceof Uint8Array ? datas : new Uint8Array(typeof datas === "number" ? datas * Struct.size : datas.length * Struct.size);
+  constructor(
+    datas: T[] | number | Uint8Array,
+    public Struct: (new (u8: Uint8Array) => T) & { size: number },
+  ) {
+    this.#data = datas instanceof Uint8Array ? datas : new Uint8Array(
+      typeof datas === "number"
+        ? datas * Struct.size
+        : datas.length * Struct.size,
+    );
     if (typeof datas !== "number" && !(datas instanceof Uint8Array)) {
       for (let i = 0; i < datas.length; i++) {
         this.#data.set(datas[i][BUFFER], i * Struct.size);
@@ -149,7 +156,11 @@ export class StructArray<T extends BaseStruct> implements BaseStruct {
   }
 }
 
-export function getBuffer<T = TypedArray>(ptr: Deno.PointerValue, size: number, arr: new (buf: ArrayBuffer) => T): T {
+export function getBuffer<T = TypedArray>(
+  ptr: Deno.PointerValue,
+  size: number,
+  arr: new (buf: ArrayBuffer) => T,
+): T {
   return new arr(Deno.UnsafePointerView.getArrayBuffer(ptr, size));
 }
 

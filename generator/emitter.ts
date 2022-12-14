@@ -14,6 +14,7 @@ import {
   newline,
   output,
   structs,
+  tymap,
   typedefs,
   typeToJS,
   unions,
@@ -24,6 +25,13 @@ function stripVk(name: any) {
   if (name.startsWith("Vk") || name.startsWith("vk")) return name.slice(2);
   else if (name.startsWith("VK_")) return name.slice(3);
   return name;
+}
+
+function toConstCase(name: string) {
+  return name
+    .split(/(?=[A-Z])/)
+    .map((x) => x.toUpperCase())
+    .join("_");
 }
 
 console.log("Emitting...");
@@ -64,13 +72,29 @@ for (const e of enums) {
   newline();
   if (e.comment) emit(`/** ${e.comment} */`);
   emit(`export enum ${stripVk(e.name)} {`);
+  const ec = toConstCase(stripVk(e.name)).replace("_FLAG_BITS", "");
   block(() => {
     for (const c of e.enums) {
       if (c.comment) emit(`/** ${c.comment} */`);
+      const n = stripVk(c.name);
+      function maybeSlice(x: string, vkOnly = false) {
+        if (typeof x !== "string") return x;
+        if (vkOnly && !x.startsWith("VK_")) return x;
+        x = stripVk(x);
+        let sliced = x.startsWith?.(ec + "_") ? x.slice(ec.length + 1) : x;
+        if (e.name.endsWith("FlagBits") && sliced.endsWith("_BIT")) {
+          sliced = sliced.slice(0, -4);
+        }
+        if (sliced.match?.(/^[0-9]/)) sliced = "VK_" + sliced;
+        return sliced;
+      }
       emit(
-        `${stripVk(c.name)} = ${
+        `${maybeSlice(n)} = ${
           typeof c.value === "string" && c.value.startsWith("VK")
-            ? stripVk(e.enums.find((x) => x.name === c.value)?.value ?? c.value)
+            ? maybeSlice(
+              e.enums.find((x) => x.name === c.value)?.value ?? c.value,
+              true,
+            )
             : c.value
         },`,
       );
@@ -88,10 +112,15 @@ for (const s of structs) {
   block(() => {
     for (const f of s.fields) {
       if (f.name === "sType" && f.values?.length === 1) continue;
+      const nativearr = isArray(f.ffi) && (f.ffi.array in tymap);
       emit(
         `${jsify(f.name)}?: ${
-          f.text?.endsWith("*") ? "AnyPointer" : stripVk(typeToJS(f.type))
-        }${f.len ? "[]" : ""};`,
+          nativearr
+            ? tymap[f.ffi.array as keyof typeof tymap]
+            : f.text?.endsWith("*")
+            ? "AnyPointer"
+            : stripVk(typeToJS(f.type))
+        }${f.len && !nativearr ? "[]" : ""};`,
       );
     }
   });
@@ -174,7 +203,11 @@ for (const s of structs) {
       emit("}");
       for (const f of s.fields) {
         if (f.name === "sType" && f.values?.length === 1) {
-          emit(`this.sType = StructureType.${stripVk(f.values?.[0])};`);
+          emit(
+            `this.sType = StructureType.${
+              stripVk(f.values?.[0]).slice("STRUCTURE_TYPE_".length)
+            };`,
+          );
         }
       }
     });
@@ -237,23 +270,31 @@ for (const s of structs) {
                 break;
               }
               if (isArray(f.ffi)) {
-                emit(`const result: ${stripVk(typeToJS(f.type))}[] = [];`);
-                emit(`for (let i = 0; i < ${f.ffi.len}; i++) {`);
-                block(() => {
-                  emit(`result.push((() => {`);
+                if (tymap[f.ffi.array as keyof typeof tymap]) {
+                  emit(
+                    `return new ${
+                      tymap[f.ffi.array as keyof typeof tymap]
+                    }(this.#data.buffer, this.#data.byteOffset + ${f.offset}, ${f.ffi.len});`,
+                  );
+                } else {
+                  emit(`const result: ${stripVk(typeToJS(f.type))}[] = [];`);
+                  emit(`for (let i = 0; i < ${f.ffi.len}; i++) {`);
                   block(() => {
-                    const tysize = getTypeSize(f.ffi.array);
-                    emitFieldGetter({
-                      name: f.name,
-                      offset: `${f.offset} + i * ${tysize}` as any,
-                      type: f.type,
-                      ffi: f.ffi.array,
-                    } as any);
+                    emit(`result.push((() => {`);
+                    block(() => {
+                      const tysize = getTypeSize(f.ffi.array);
+                      emitFieldGetter({
+                        name: f.name,
+                        offset: `${f.offset} + i * ${tysize}` as any,
+                        type: f.type,
+                        ffi: f.ffi.array,
+                      } as any);
+                    });
+                    emit(`})());`);
                   });
-                  emit(`})());`);
-                });
-                emit(`}`);
-                emit(`return result;`);
+                  emit(`}`);
+                  emit(`return result;`);
+                }
                 break;
               }
               emit(
@@ -269,16 +310,21 @@ for (const s of structs) {
       });
       emit(`}`);
       newline();
+      const nativearr = isArray(f.ffi) && (f.ffi.array in tymap);
       emit(
         `set ${jsify(f.name)}(value: ${
-          isptr ? "AnyPointer" : stripVk(typeToJS(f.type))
-        }${f.len ? "[]" : ""}) {`,
+          nativearr
+            ? `${tymap[f.ffi.array as keyof typeof tymap]}`
+            : (isptr ? "AnyPointer" : stripVk(typeToJS(f.type)))
+        }${f.len && !nativearr ? "[]" : ""}) {`,
       );
       function emitFieldSetter(f: Field, vname = "value") {
         if (isptr) {
           emit(
             `this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`,
           );
+        } else if (nativearr) {
+          emit(`this.#data.set(new Uint8Array(${vname}.buffer), ${f.offset});`);
         } else {
           switch (f.ffi) {
             case "i8":
@@ -433,7 +479,9 @@ function toSkipCMD(name: string) {
 newline();
 emit("/// FFI Library");
 
-emit(`const lib = Deno.dlopen(Deno.build.os === "windows" ? "vulkan-1" : Deno.build.os === "darwin" ? "libvulkan.dylib.1" : "libvulkan.so.1", {`);
+emit(
+  `const lib = Deno.dlopen(Deno.build.os === "windows" ? "vulkan-1" : Deno.build.os === "darwin" ? "libvulkan.dylib.1" : "libvulkan.so.1", {`,
+);
 block(() => {
   for (const cmd of commands) {
     if (toSkipCMD(cmd.name)) continue;

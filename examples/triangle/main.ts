@@ -265,7 +265,7 @@ export class TriangleApplication {
 
       if (
         queueFamilies[i].queueCount > 0 &&
-        queueFamilies[i].queueFlags & vk.QueueFlagBits.QUEUE_GRAPHICS_BIT
+        queueFamilies[i].queueFlags & vk.QueueFlagBits.GRAPHICS
       ) {
         this.graphicsQueueFamily = i;
         foundGraphicsQueueFamily = true;
@@ -301,14 +301,12 @@ export class TriangleApplication {
       pQueueCreateInfos.get(1),
     ];
 
-    queueCreateInfo[0].sType =
-      vk.StructureType.STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+    queueCreateInfo[0].sType = vk.StructureType.DEVICE_QUEUE_CREATE_INFO;
     queueCreateInfo[0].queueFamilyIndex = this.graphicsQueueFamily;
     queueCreateInfo[0].queueCount = 1;
     queueCreateInfo[0].pQueuePriorities = queuePriority;
 
-    queueCreateInfo[1].sType =
-      vk.StructureType.STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+    queueCreateInfo[1].sType = vk.StructureType.DEVICE_QUEUE_CREATE_INFO;
     queueCreateInfo[1].queueFamilyIndex = this.presentQueueFamily;
     queueCreateInfo[1].queueCount = 1;
     queueCreateInfo[1].pQueuePriorities = queuePriority;
@@ -420,7 +418,7 @@ export class TriangleApplication {
 
     const cmdBufInfo = new vk.CommandBufferAllocateInfo({
       commandPool: this.commandPool,
-      level: vk.CommandBufferLevel.COMMAND_BUFFER_LEVEL_PRIMARY,
+      level: vk.CommandBufferLevel.PRIMARY,
       commandBufferCount: 1,
     });
 
@@ -434,7 +432,7 @@ export class TriangleApplication {
 
     const vertexBufferInfo = new vk.BufferCreateInfo({
       size: vertices.byteLength,
-      usage: vk.BufferUsageFlagBits.BUFFER_USAGE_TRANSFER_SRC_BIT,
+      usage: vk.BufferUsageFlagBits.TRANSFER_SRC,
     });
 
     const vertexBufferOut = new vk.PointerRef();
@@ -454,7 +452,7 @@ export class TriangleApplication {
     memAlloc.allocationSize = memReqs.size;
     memAlloc.memoryTypeIndex = this.getMemoryType(
       memReqs.memoryTypeBits,
-      vk.MemoryPropertyFlagBits.MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+      vk.MemoryPropertyFlagBits.HOST_VISIBLE,
     );
     const vertexBufferMemoryOut = new vk.PointerRef();
     vk.AllocateMemory(
@@ -474,7 +472,9 @@ export class TriangleApplication {
       0,
       dataOut,
     );
-    vk.getBuffer(dataOut.value, vertices.byteLength, Float32Array).set(vertices);
+    vk.getBuffer(dataOut.value, vertices.byteLength, Float32Array).set(
+      vertices,
+    );
     vk.UnmapMemory(this.device, vertexBufferMemory);
     vk.BindBufferMemory(
       this.device,
@@ -483,9 +483,8 @@ export class TriangleApplication {
       0,
     );
 
-    vertexBufferInfo.usage =
-      vk.BufferUsageFlagBits.BUFFER_USAGE_TRANSFER_DST_BIT |
-      vk.BufferUsageFlagBits.BUFFER_USAGE_VERTEX_BUFFER_BIT;
+    vertexBufferInfo.usage = vk.BufferUsageFlagBits.TRANSFER_DST |
+      vk.BufferUsageFlagBits.VERTEX_BUFFER;
     vk.CreateBuffer(
       this.device,
       vertexBufferInfo,
@@ -501,7 +500,7 @@ export class TriangleApplication {
     memAlloc.allocationSize = memReqs.size;
     memAlloc.memoryTypeIndex = this.getMemoryType(
       memReqs.memoryTypeBits,
-      vk.MemoryPropertyFlagBits.MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+      vk.MemoryPropertyFlagBits.DEVICE_LOCAL,
     );
     vk.AllocateMemory(
       this.device,
@@ -519,7 +518,7 @@ export class TriangleApplication {
 
     const indexBufferInfo = new vk.BufferCreateInfo({
       size: indices.byteLength,
-      usage: vk.BufferUsageFlagBits.BUFFER_USAGE_TRANSFER_SRC_BIT,
+      usage: vk.BufferUsageFlagBits.TRANSFER_SRC,
     });
 
     const indexBufferOut = new vk.PointerRef();
@@ -538,7 +537,7 @@ export class TriangleApplication {
     memAlloc.allocationSize = memReqs.size;
     memAlloc.memoryTypeIndex = this.getMemoryType(
       memReqs.memoryTypeBits,
-      vk.MemoryPropertyFlagBits.MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+      vk.MemoryPropertyFlagBits.HOST_VISIBLE,
     );
     const indexBufferMemoryOut = new vk.PointerRef();
     vk.AllocateMemory(
@@ -565,9 +564,8 @@ export class TriangleApplication {
       0,
     );
 
-    indexBufferInfo.usage =
-      vk.BufferUsageFlagBits.BUFFER_USAGE_TRANSFER_DST_BIT |
-      vk.BufferUsageFlagBits.BUFFER_USAGE_INDEX_BUFFER_BIT;
+    indexBufferInfo.usage = vk.BufferUsageFlagBits.TRANSFER_DST |
+      vk.BufferUsageFlagBits.INDEX_BUFFER;
     vk.CreateBuffer(
       this.device,
       indexBufferInfo,
@@ -583,7 +581,7 @@ export class TriangleApplication {
     memAlloc.allocationSize = memReqs.size;
     memAlloc.memoryTypeIndex = this.getMemoryType(
       memReqs.memoryTypeBits,
-      vk.MemoryPropertyFlagBits.MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+      vk.MemoryPropertyFlagBits.DEVICE_LOCAL,
     );
     vk.AllocateMemory(
       this.device,
@@ -600,8 +598,7 @@ export class TriangleApplication {
     );
 
     const bufferBeginInfo = new vk.CommandBufferBeginInfo({
-      flags: vk.CommandBufferUsageFlagBits
-        .COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
+      flags: vk.CommandBufferUsageFlagBits.ONE_TIME_SUBMIT,
     });
 
     vk.BeginCommandBuffer(copyCommandBuffer, bufferBeginInfo);
@@ -650,7 +647,7 @@ export class TriangleApplication {
     this.vertexBindingDescription = new vk.VertexInputBindingDescription({
       binding: 0,
       stride: 4 * 3,
-      inputRate: vk.VertexInputRate.VERTEX_INPUT_RATE_VERTEX,
+      inputRate: vk.VertexInputRate.VERTEX,
     });
 
     this.vertexAttributeDescriptions = [
@@ -658,13 +655,13 @@ export class TriangleApplication {
       new vk.VertexInputAttributeDescription({
         binding: 0,
         location: 0,
-        format: vk.Format.FORMAT_R32G32B32_SFLOAT,
+        format: vk.Format.R32G32B32_SFLOAT,
       }),
       // vec3 color
       new vk.VertexInputAttributeDescription({
         binding: 0,
         location: 1,
-        format: vk.Format.FORMAT_R32G32B32_SFLOAT,
+        format: vk.Format.R32G32B32_SFLOAT,
         offset: 4 * 3,
       }),
     ];
@@ -673,7 +670,7 @@ export class TriangleApplication {
   createUniformBuffer() {
     const bufferInfo = new vk.BufferCreateInfo({
       size: 4 * 4 * 4,
-      usage: vk.BufferUsageFlagBits.BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+      usage: vk.BufferUsageFlagBits.UNIFORM_BUFFER,
     });
 
     const bufferOut = new vk.PointerRef();
@@ -696,8 +693,8 @@ export class TriangleApplication {
       allocationSize: memReqs.size,
       memoryTypeIndex: this.getMemoryType(
         memReqs.memoryTypeBits,
-        vk.MemoryPropertyFlagBits.MEMORY_PROPERTY_HOST_VISIBLE_BIT |
-          vk.MemoryPropertyFlagBits.MEMORY_PROPERTY_HOST_COHERENT_BIT,
+        vk.MemoryPropertyFlagBits.HOST_VISIBLE |
+          vk.MemoryPropertyFlagBits.HOST_COHERENT,
       ),
     });
 
@@ -734,7 +731,8 @@ export class TriangleApplication {
       0,
       dataOut,
     );
-    vk.getBuffer(dataOut.value, this.uniformBufferData.byteLength, Float32Array).set(this.uniformBufferData);
+    vk.getBuffer(dataOut.value, this.uniformBufferData.byteLength, Float32Array)
+      .set(this.uniformBufferData);
     vk.UnmapMemory(this.device, this.uniformBufferMemory);
   }
 
@@ -831,8 +829,8 @@ export class TriangleApplication {
       imageColorSpace: surfaceFormat.colorSpace,
       imageExtent: this.swapChainExtent,
       imageArrayLayers: 1,
-      imageUsage: vk.ImageUsageFlagBits.IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
-      imageSharingMode: vk.SharingMode.SHARING_MODE_EXCLUSIVE,
+      imageUsage: vk.ImageUsageFlagBits.COLOR_ATTACHMENT,
+      imageSharingMode: vk.SharingMode.EXCLUSIVE,
       queueFamilyIndexCount: 0,
       pQueueFamilyIndices: 0,
       preTransform: surfaceTransform,
@@ -880,17 +878,17 @@ export class TriangleApplication {
   chooseSurfaceFormat(availableFormats: vk.SurfaceFormatKHR[]) {
     if (
       availableFormats.length === 1 &&
-      availableFormats[0].format === vk.Format.FORMAT_UNDEFINED
+      availableFormats[0].format === vk.Format.UNDEFINED
     ) {
       return new vk.SurfaceFormatKHR({
-        format: vk.Format.FORMAT_B8G8R8A8_UNORM,
+        format: vk.Format.B8G8R8A8_UNORM,
         colorSpace: vk.ColorSpaceKHR.COLOR_SPACE_SRGB_NONLINEAR_KHR,
       });
     }
 
     for (const availableFormat of availableFormats) {
       if (
-        availableFormat.format === vk.Format.FORMAT_B8G8R8A8_UNORM &&
+        availableFormat.format === vk.Format.B8G8R8A8_UNORM &&
         availableFormat.colorSpace ===
           vk.ColorSpaceKHR.COLOR_SPACE_SRGB_NONLINEAR_KHR
       ) {
@@ -936,22 +934,22 @@ export class TriangleApplication {
   createRenderPass() {
     const attachmentDescription = new vk.AttachmentDescription({
       format: this.swapChainFormat,
-      samples: vk.SampleCountFlagBits.SAMPLE_COUNT_1_BIT,
-      loadOp: vk.AttachmentLoadOp.ATTACHMENT_LOAD_OP_CLEAR,
-      storeOp: vk.AttachmentStoreOp.ATTACHMENT_STORE_OP_STORE,
-      stencilLoadOp: vk.AttachmentLoadOp.ATTACHMENT_LOAD_OP_DONT_CARE,
-      stencilStoreOp: vk.AttachmentStoreOp.ATTACHMENT_STORE_OP_DONT_CARE,
-      initialLayout: vk.ImageLayout.IMAGE_LAYOUT_UNDEFINED,
-      finalLayout: vk.ImageLayout.IMAGE_LAYOUT_PRESENT_SRC_KHR,
+      samples: vk.SampleCountFlagBits.VK_1,
+      loadOp: vk.AttachmentLoadOp.CLEAR,
+      storeOp: vk.AttachmentStoreOp.STORE,
+      stencilLoadOp: vk.AttachmentLoadOp.DONT_CARE,
+      stencilStoreOp: vk.AttachmentStoreOp.DONT_CARE,
+      initialLayout: vk.ImageLayout.UNDEFINED,
+      finalLayout: vk.ImageLayout.PRESENT_SRC_KHR,
     });
 
     const colorAttachment = new vk.AttachmentReference({
       attachment: 0,
-      layout: vk.ImageLayout.IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
+      layout: vk.ImageLayout.COLOR_ATTACHMENT_OPTIMAL,
     });
 
     const subPassDescription = new vk.SubpassDescription({
-      pipelineBindPoint: vk.PipelineBindPoint.PIPELINE_BIND_POINT_GRAPHICS,
+      pipelineBindPoint: vk.PipelineBindPoint.GRAPHICS,
       colorAttachmentCount: 1,
       pColorAttachments: colorAttachment,
     });
@@ -978,14 +976,14 @@ export class TriangleApplication {
 
     for (let i = 0; i < this.swapChainImages.length; i++) {
       const components = new vk.ComponentMapping({
-        r: vk.ComponentSwizzle.COMPONENT_SWIZZLE_IDENTITY,
-        g: vk.ComponentSwizzle.COMPONENT_SWIZZLE_IDENTITY,
-        b: vk.ComponentSwizzle.COMPONENT_SWIZZLE_IDENTITY,
-        a: vk.ComponentSwizzle.COMPONENT_SWIZZLE_IDENTITY,
+        r: vk.ComponentSwizzle.IDENTITY,
+        g: vk.ComponentSwizzle.IDENTITY,
+        b: vk.ComponentSwizzle.IDENTITY,
+        a: vk.ComponentSwizzle.IDENTITY,
       });
 
       const subresourceRange = new vk.ImageSubresourceRange({
-        aspectMask: vk.ImageAspectFlagBits.IMAGE_ASPECT_COLOR_BIT,
+        aspectMask: vk.ImageAspectFlagBits.COLOR,
         baseMipLevel: 0,
         levelCount: 1,
         baseArrayLayer: 0,
@@ -994,7 +992,7 @@ export class TriangleApplication {
 
       const createInfo = new vk.ImageViewCreateInfo({
         image: this.swapChainImages[i],
-        viewType: vk.ImageViewType.IMAGE_VIEW_TYPE_2D,
+        viewType: vk.ImageViewType.VK_2D,
         format: this.swapChainFormat,
         components,
         subresourceRange,
@@ -1065,13 +1063,13 @@ export class TriangleApplication {
     );
 
     const vertexShaderCreateInfo = new vk.PipelineShaderStageCreateInfo({
-      stage: vk.ShaderStageFlagBits.SHADER_STAGE_VERTEX_BIT,
+      stage: vk.ShaderStageFlagBits.VERTEX,
       module: vertexShaderModule,
       pName: new vk.CString("main"),
     });
 
     const fragmentShaderCreateInfo = new vk.PipelineShaderStageCreateInfo({
-      stage: vk.ShaderStageFlagBits.SHADER_STAGE_FRAGMENT_BIT,
+      stage: vk.ShaderStageFlagBits.FRAGMENT,
       module: fragmentShaderModule,
       pName: new vk.CString("main"),
     });
@@ -1098,7 +1096,7 @@ export class TriangleApplication {
 
     const inputAssemblyCreateInfo = new vk.PipelineInputAssemblyStateCreateInfo(
       {
-        topology: vk.PrimitiveTopology.PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+        topology: vk.PrimitiveTopology.TRIANGLE_LIST,
         primitiveRestartEnable: 0,
       },
     );
@@ -1127,9 +1125,9 @@ export class TriangleApplication {
     const rasterizerCreateInfo = new vk.PipelineRasterizationStateCreateInfo({
       depthClampEnable: 0,
       rasterizerDiscardEnable: 0,
-      polygonMode: vk.PolygonMode.POLYGON_MODE_FILL,
-      cullMode: vk.CullModeFlagBits.CULL_MODE_BACK_BIT,
-      frontFace: vk.FrontFace.FRONT_FACE_CLOCKWISE,
+      polygonMode: vk.PolygonMode.FILL,
+      cullMode: vk.CullModeFlagBits.BACK,
+      frontFace: vk.FrontFace.CLOCKWISE,
       depthBiasEnable: 0,
       depthBiasConstantFactor: 0,
       depthBiasClamp: 0,
@@ -1139,7 +1137,7 @@ export class TriangleApplication {
 
     const multisampleCreateInfo = new vk.PipelineMultisampleStateCreateInfo({
       sampleShadingEnable: 0,
-      rasterizationSamples: vk.SampleCountFlagBits.SAMPLE_COUNT_1_BIT,
+      rasterizationSamples: vk.SampleCountFlagBits.VK_1,
       minSampleShading: 1,
       alphaToCoverageEnable: 0,
       alphaToOneEnable: 0,
@@ -1147,30 +1145,30 @@ export class TriangleApplication {
 
     const colorBlendAttachmentState = new vk.PipelineColorBlendAttachmentState({
       blendEnable: 0,
-      srcColorBlendFactor: vk.BlendFactor.BLEND_FACTOR_ONE,
-      dstColorBlendFactor: vk.BlendFactor.BLEND_FACTOR_ZERO,
-      colorBlendOp: vk.BlendOp.BLEND_OP_ADD,
-      srcAlphaBlendFactor: vk.BlendFactor.BLEND_FACTOR_ONE,
-      dstAlphaBlendFactor: vk.BlendFactor.BLEND_FACTOR_ZERO,
-      alphaBlendOp: vk.BlendOp.BLEND_OP_ADD,
-      colorWriteMask: vk.ColorComponentFlagBits.COLOR_COMPONENT_R_BIT |
-        vk.ColorComponentFlagBits.COLOR_COMPONENT_G_BIT |
-        vk.ColorComponentFlagBits.COLOR_COMPONENT_B_BIT |
-        vk.ColorComponentFlagBits.COLOR_COMPONENT_A_BIT,
+      srcColorBlendFactor: vk.BlendFactor.ONE,
+      dstColorBlendFactor: vk.BlendFactor.ZERO,
+      colorBlendOp: vk.BlendOp.ADD,
+      srcAlphaBlendFactor: vk.BlendFactor.ONE,
+      dstAlphaBlendFactor: vk.BlendFactor.ZERO,
+      alphaBlendOp: vk.BlendOp.ADD,
+      colorWriteMask: vk.ColorComponentFlagBits.R |
+        vk.ColorComponentFlagBits.G |
+        vk.ColorComponentFlagBits.B |
+        vk.ColorComponentFlagBits.A,
     });
 
     const colorBlendCreateInfo = new vk.PipelineColorBlendStateCreateInfo({
       logicOpEnable: 0,
-      logicOp: vk.LogicOp.LOGIC_OP_COPY,
+      logicOp: vk.LogicOp.COPY,
       attachmentCount: 1,
       pAttachments: colorBlendAttachmentState,
-      blendConstants: [0, 0, 0, 0],
+      blendConstants: new Float32Array([0, 0, 0, 0]),
     });
 
     const layoutBinding = new vk.DescriptorSetLayoutBinding({
-      descriptorType: vk.DescriptorType.DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+      descriptorType: vk.DescriptorType.UNIFORM_BUFFER,
       descriptorCount: 1,
-      stageFlags: vk.ShaderStageFlagBits.SHADER_STAGE_VERTEX_BIT,
+      stageFlags: vk.ShaderStageFlagBits.VERTEX,
     });
 
     const descriptorLayoutCreateInfo = new vk.DescriptorSetLayoutCreateInfo({
@@ -1234,7 +1232,7 @@ export class TriangleApplication {
 
   createDescriptorPool() {
     const typeCount = new vk.DescriptorPoolSize({
-      type: vk.DescriptorType.DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+      type: vk.DescriptorType.UNIFORM_BUFFER,
       descriptorCount: 1,
     });
 
@@ -1278,7 +1276,7 @@ export class TriangleApplication {
     const writeDescriptorSet = new vk.WriteDescriptorSet({
       dstSet: this.descriptorSet,
       descriptorCount: 1,
-      descriptorType: vk.DescriptorType.DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+      descriptorType: vk.DescriptorType.UNIFORM_BUFFER,
       pBufferInfo: descriptorBufferInfo,
       dstBinding: 0,
     });
@@ -1299,7 +1297,7 @@ export class TriangleApplication {
 
     const allocInfo = new vk.CommandBufferAllocateInfo({
       commandPool: this.commandPool,
-      level: vk.CommandBufferLevel.COMMAND_BUFFER_LEVEL_PRIMARY,
+      level: vk.CommandBufferLevel.PRIMARY,
       commandBufferCount: this.graphicsCommandBuffers.length,
     });
 
@@ -1310,12 +1308,11 @@ export class TriangleApplication {
     );
 
     const beginInfo = new vk.CommandBufferBeginInfo({
-      flags: vk.CommandBufferUsageFlagBits
-        .COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT,
+      flags: vk.CommandBufferUsageFlagBits.SIMULTANEOUS_USE,
     });
 
     const subResourceRange = new vk.ImageSubresourceRange({
-      aspectMask: vk.ImageAspectFlagBits.IMAGE_ASPECT_COLOR_BIT,
+      aspectMask: vk.ImageAspectFlagBits.COLOR,
       baseMipLevel: 0,
       levelCount: 1,
       baseArrayLayer: 0,
@@ -1329,9 +1326,9 @@ export class TriangleApplication {
 
       const presentToDrawBarrier = new vk.ImageMemoryBarrier({
         srcAccessMask: 0,
-        dstAccessMask: vk.AccessFlagBits.ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-        oldLayout: vk.ImageLayout.IMAGE_LAYOUT_UNDEFINED,
-        newLayout: vk.ImageLayout.IMAGE_LAYOUT_PRESENT_SRC_KHR,
+        dstAccessMask: vk.AccessFlagBits.COLOR_ATTACHMENT_WRITE,
+        oldLayout: vk.ImageLayout.UNDEFINED,
+        newLayout: vk.ImageLayout.PRESENT_SRC_KHR,
       });
 
       if (this.presentQueueFamily !== this.graphicsQueueFamily) {
@@ -1347,10 +1344,8 @@ export class TriangleApplication {
 
       vk.CmdPipelineBarrier(
         this.graphicsCommandBuffers[i],
-        vk.PipelineStageFlagBits
-          .PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
-        vk.PipelineStageFlagBits
-          .PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        vk.PipelineStageFlagBits.COLOR_ATTACHMENT_OUTPUT,
+        vk.PipelineStageFlagBits.COLOR_ATTACHMENT_OUTPUT,
         0,
         0,
         null,
@@ -1374,12 +1369,12 @@ export class TriangleApplication {
       vk.CmdBeginRenderPass(
         this.graphicsCommandBuffers[i],
         renderPassBeginInfo,
-        vk.SubpassContents.SUBPASS_CONTENTS_INLINE,
+        vk.SubpassContents.INLINE,
       );
 
       vk.CmdBindDescriptorSets(
         this.graphicsCommandBuffers[i],
-        vk.PipelineBindPoint.PIPELINE_BIND_POINT_GRAPHICS,
+        vk.PipelineBindPoint.GRAPHICS,
         this.pipelineLayout,
         0,
         1,
@@ -1390,7 +1385,7 @@ export class TriangleApplication {
 
       vk.CmdBindPipeline(
         this.graphicsCommandBuffers[i],
-        vk.PipelineBindPoint.PIPELINE_BIND_POINT_GRAPHICS,
+        vk.PipelineBindPoint.GRAPHICS,
         this.graphicsPipeline,
       );
 
@@ -1407,7 +1402,7 @@ export class TriangleApplication {
         this.graphicsCommandBuffers[i],
         this.indexBuffer,
         0,
-        vk.IndexType.INDEX_TYPE_UINT16,
+        vk.IndexType.UINT16,
       );
 
       vk.CmdDrawIndexed(this.graphicsCommandBuffers[i], 3, 1, 0, 0, 0);
@@ -1416,10 +1411,10 @@ export class TriangleApplication {
 
       if (this.presentQueueFamily !== this.graphicsQueueFamily) {
         const drawToPresentBarrier = new vk.ImageMemoryBarrier({
-          srcAccessMask: vk.AccessFlagBits.ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-          dstAccessMask: vk.AccessFlagBits.ACCESS_MEMORY_READ_BIT,
-          oldLayout: vk.ImageLayout.IMAGE_LAYOUT_PRESENT_SRC_KHR,
-          newLayout: vk.ImageLayout.IMAGE_LAYOUT_PRESENT_SRC_KHR,
+          srcAccessMask: vk.AccessFlagBits.COLOR_ATTACHMENT_WRITE,
+          dstAccessMask: vk.AccessFlagBits.MEMORY_READ,
+          oldLayout: vk.ImageLayout.PRESENT_SRC_KHR,
+          newLayout: vk.ImageLayout.PRESENT_SRC_KHR,
           srcQueueFamilyIndex: this.graphicsQueueFamily,
           dstQueueFamilyIndex: this.presentQueueFamily,
           image: this.swapChainImages[i],
@@ -1428,9 +1423,8 @@ export class TriangleApplication {
 
         vk.CmdPipelineBarrier(
           this.graphicsCommandBuffers[i],
-          vk.PipelineStageFlagBits
-            .PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
-          vk.PipelineStageFlagBits.PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+          vk.PipelineStageFlagBits.COLOR_ATTACHMENT_OUTPUT,
+          vk.PipelineStageFlagBits.BOTTOM_OF_PIPE,
           0,
           0,
           null,
@@ -1458,7 +1452,7 @@ export class TriangleApplication {
         0,
         imageIndex,
       );
-    // deno-lint-ignore no-explicit-any
+      // deno-lint-ignore no-explicit-any
     } catch (e: any) {
       if (e.code === vk.Result.ERROR_OUT_OF_DATE_KHR) {
         this.onWindowSizeChanged();
@@ -1474,8 +1468,7 @@ export class TriangleApplication {
       signalSemaphoreCount: 1,
       pSignalSemaphores: new vk.PointerArray([this.renderingFinishedSemaphore]),
       pWaitDstStageMask: new Uint32Array([
-        vk.PipelineStageFlagBits
-          .PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        vk.PipelineStageFlagBits.COLOR_ATTACHMENT_OUTPUT,
       ]),
       commandBufferCount: 1,
       pCommandBuffers: new vk.PointerArray([
@@ -1498,7 +1491,7 @@ export class TriangleApplication {
       if (res === vk.Result.SUBOPTIMAL_KHR || this.resized) {
         this.onWindowSizeChanged();
       }
-    // deno-lint-ignore no-explicit-any
+      // deno-lint-ignore no-explicit-any
     } catch (e: any) {
       if (e.code === vk.Result.ERROR_OUT_OF_DATE_KHR) {
         this.onWindowSizeChanged();

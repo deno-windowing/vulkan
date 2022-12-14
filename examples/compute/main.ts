@@ -33,7 +33,9 @@ export class ComputeApp {
           apiVersion: vk.makeVersion(1, 2, 0),
         }),
         enabledLayerCount: 1,
-        ppEnabledLayerNames: new vk.CStringArray(["VK_LAYER_KHRONOS_validation"]),
+        ppEnabledLayerNames: new vk.CStringArray([
+          "VK_LAYER_KHRONOS_validation",
+        ]),
       }),
       null,
       instOut,
@@ -46,7 +48,11 @@ export class ComputeApp {
     vk.EnumeratePhysicalDevices(this.instance, physicalDeviceCount, null);
 
     const physicalDevices = new vk.PointerArray(physicalDeviceCount[0]);
-    vk.EnumeratePhysicalDevices(this.instance, physicalDeviceCount, physicalDevices);
+    vk.EnumeratePhysicalDevices(
+      this.instance,
+      physicalDeviceCount,
+      physicalDevices,
+    );
 
     const properties: vk.PhysicalDeviceProperties[] = [];
 
@@ -92,10 +98,21 @@ export class ComputeApp {
 
   findQueueFamily() {
     const queueFamilyCount = new Uint32Array(1);
-    vk.GetPhysicalDeviceQueueFamilyProperties(this.physicalDevice, queueFamilyCount, null);
+    vk.GetPhysicalDeviceQueueFamilyProperties(
+      this.physicalDevice,
+      queueFamilyCount,
+      null,
+    );
 
-    const queueFamilies = new vk.StructArray(queueFamilyCount[0], vk.QueueFamilyProperties);
-    vk.GetPhysicalDeviceQueueFamilyProperties(this.physicalDevice, queueFamilyCount, queueFamilies);
+    const queueFamilies = new vk.StructArray(
+      queueFamilyCount[0],
+      vk.QueueFamilyProperties,
+    );
+    vk.GetPhysicalDeviceQueueFamilyProperties(
+      this.physicalDevice,
+      queueFamilyCount,
+      queueFamilies,
+    );
 
     let queueFamilyIndex = 0;
     let found = false;
@@ -159,7 +176,10 @@ export class ComputeApp {
     );
     this.descriptorPool = descriptorPoolOut.value;
 
-    const descriptorSetLayoutBindings = new vk.StructArray(descriptorCount, vk.DescriptorSetLayoutBinding);
+    const descriptorSetLayoutBindings = new vk.StructArray(
+      descriptorCount,
+      vk.DescriptorSetLayoutBinding,
+    );
     for (let i = 0; i < descriptorCount; i++) {
       const desc = descriptorSetLayoutBindings.get(i);
       desc.binding = i;
@@ -187,7 +207,11 @@ export class ComputeApp {
     });
 
     const descriptorSetOut = new vk.PointerRef();
-    vk.AllocateDescriptorSets(this.device, descriptorSetAllocateInfo, descriptorSetOut);
+    vk.AllocateDescriptorSets(
+      this.device,
+      descriptorSetAllocateInfo,
+      descriptorSetOut,
+    );
     this.descriptorSet = descriptorSetOut.value;
 
     // for (let i = 0; i < descriptorCount; i++) {
