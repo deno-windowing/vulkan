@@ -1,5 +1,5 @@
 import * as vk from "../../api/vk.ts";
-import * as dwm from "https://raw.githubusercontent.com/deno-windowing/dwm/98a2bf0/mod.ts";
+import * as dwm from "https://deno.land/x/dwm@0.1.0/mod.ts";
 
 export class TriangleApplication {
   window!: dwm.DwmWindow;
@@ -73,12 +73,12 @@ export class TriangleApplication {
       }
     });
 
-    this.setupVulkan();
+    await this.setupVulkan();
     await this.mainloop();
     this.cleanup(true);
   }
 
-  setupVulkan() {
+  async setupVulkan() {
     this.oldSwapChain = 0;
 
     this.createInstance();
@@ -96,16 +96,16 @@ export class TriangleApplication {
     this.createRenderPass();
     this.createImageViews();
     this.createFramebuffers();
-    this.createGraphicsPipeline();
+    await this.createGraphicsPipeline();
     this.createDescriptorPool();
     this.createDescriptorSet();
     this.createCommandBuffers();
   }
 
   async mainloop() {
-    await dwm.mainloop(() => {
+    await dwm.mainloop(async () => {
       this.updateUniformData();
-      this.draw();
+      await this.draw();
     });
   }
 
@@ -115,7 +115,7 @@ export class TriangleApplication {
     this.resized = true;
   }
 
-  onWindowSizeChanged() {
+  async onWindowSizeChanged() {
     this.resized = false;
 
     this.cleanup(false);
@@ -124,7 +124,7 @@ export class TriangleApplication {
     this.createRenderPass();
     this.createImageViews();
     this.createFramebuffers();
-    this.createGraphicsPipeline();
+    await this.createGraphicsPipeline();
     this.createCommandBuffers();
   }
 
@@ -192,7 +192,7 @@ export class TriangleApplication {
       enabledExtensionCount: names.length,
       ppEnabledExtensionNames: new vk.CStringArray(names),
       // enabledLayerCount: 1,
-      // ppEnabledLayerNames: new vk.CStringArray(["VK_LAYER_KHRONOS_validation"]),
+      ppEnabledLayerNames: new vk.CStringArray(["VK_LAYER_KHRONOS_validation"]),
     });
 
     const instOut = new vk.PointerRef();
@@ -1038,8 +1038,10 @@ export class TriangleApplication {
     }
   }
 
-  createShaderModule(file: string | URL) {
-    const data = Deno.readFileSync(file);
+  async createShaderModule(file: string | URL) {
+    const data = new Uint8Array(
+      await (await (await fetch(file)).arrayBuffer()),
+    );
 
     const createInfo = new vk.ShaderModuleCreateInfo({
       codeSize: data.byteLength,
@@ -1056,11 +1058,11 @@ export class TriangleApplication {
     return shaderModuleOut.value;
   }
 
-  createGraphicsPipeline() {
-    const vertexShaderModule = this.createShaderModule(
+  async createGraphicsPipeline() {
+    const vertexShaderModule = await this.createShaderModule(
       new URL("./shaders/vert.spv", import.meta.url),
     );
-    const fragmentShaderModule = this.createShaderModule(
+    const fragmentShaderModule = await this.createShaderModule(
       new URL("./shaders/frag.spv", import.meta.url),
     );
 
@@ -1443,7 +1445,7 @@ export class TriangleApplication {
     vk.DestroyPipelineLayout(this.device, this.pipelineLayout, null);
   }
 
-  draw() {
+  async draw() {
     const imageIndex = new Uint32Array(1);
     try {
       vk.AcquireNextImageKHR(
@@ -1457,7 +1459,7 @@ export class TriangleApplication {
       // deno-lint-ignore no-explicit-any
     } catch (e: any) {
       if (e.code === vk.Result.ERROR_OUT_OF_DATE_KHR) {
-        this.onWindowSizeChanged();
+        await this.onWindowSizeChanged();
         return;
       } else {
         throw e;
