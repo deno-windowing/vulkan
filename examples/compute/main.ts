@@ -117,9 +117,10 @@ export class ComputeApp {
     let queueFamilyIndex = 0;
     let found = false;
     for (const props of queueFamilies) {
-      if (props.queueFlags & vk.QueueFlagBits.QUEUE_COMPUTE_BIT) {
+      if (props.queueFlags & vk.QueueFlagBits.COMPUTE) {
         found = true;
         break;
+
       }
       queueFamilyIndex++;
     }
@@ -159,7 +160,7 @@ export class ComputeApp {
     const descriptorCount = 2;
 
     const descriptorPoolSize = new vk.DescriptorPoolSize({
-      type: vk.DescriptorType.DESCRIPTOR_TYPE_STORAGE_BUFFER,
+      type: vk.DescriptorType.STORAGE_BUFFER,
       descriptorCount,
     });
 
@@ -183,9 +184,9 @@ export class ComputeApp {
     for (let i = 0; i < descriptorCount; i++) {
       const desc = descriptorSetLayoutBindings.get(i);
       desc.binding = i;
-      desc.descriptorType = vk.DescriptorType.DESCRIPTOR_TYPE_STORAGE_BUFFER;
+      desc.descriptorType = vk.DescriptorType.STORAGE_BUFFER;
       desc.descriptorCount = 1;
-      desc.stageFlags = vk.ShaderStageFlagBits.SHADER_STAGE_COMPUTE_BIT;
+      desc.stageFlags = vk.ShaderStageFlagBits.COMPUTE;
     }
 
     const descriptorSetLayoutOut = new vk.PointerRef();

@@ -1,5 +1,5 @@
 import * as vk from "../../api/vk.ts";
-import * as dwm from "https://deno.land/x/dwm@0.2.1/mod.ts";
+import * as dwm from "https://deno.land/x/dwm@0.3.0/mod.ts";
 
 export class TriangleApplication {
   window!: dwm.DwmWindow;
