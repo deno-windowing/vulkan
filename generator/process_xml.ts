@@ -2,29 +2,42 @@ const api = JSON.parse(
   Deno.readTextFileSync(new URL("../data/vk.json", import.meta.url)),
 );
 
-let src = `/// This file is auto-generated. Do not edit.\n`;
-let ident = 0;
+type Content = string | Block | (() => void);
+type Block = Content[];
 
-export function output() {
-  return src;
-}
+export class FileBuilder {
+  lines = [] as string[];
+  ident = 0;
 
-export function getIdent() {
-  return ident;
-}
+  output() {
+    return this.lines.join("\n");
+  }
 
-export function newline() {
-  emit("");
-}
+  getIdent() {
+    return this.ident;
+  }
 
-export function emit(line: string, newline = "\n") {
-  src += ("  ".repeat(ident)) + line + newline;
-}
+  newline() {
+    this.lines.push("");
+  }
 
-export function block(fn: CallableFunction) {
-  ident += 1;
-  fn();
-  ident -= 1;
+  emit(content: Content, noIdent = false) {
+    if (Array.isArray(content)) {
+      this.ident += noIdent ? 0 : 1;
+      content.forEach((c) => this.emit(c));
+      this.ident -= noIdent ? 0 : 1;
+    } else if (typeof content == "string") {
+      this.lines.push("  ".repeat(this.ident) + content);
+    } else {
+      content();
+    }
+  }
+
+  block(fn: CallableFunction) {
+    this.ident += 1;
+    fn();
+    this.ident -= 1;
+  }
 }
 
 export function jsify(name: string) {
@@ -54,16 +67,16 @@ const C_TYPES = {
   "uint8_t": "number",
   "uint16_t": "number",
   "uint32_t": "number",
-  "uint64_t": "Deno.PointerValue",
+  "uint64_t": "number | bigint",
   "int8_t": "number",
   "int16_t": "number",
   "int32_t": "number",
-  "int64_t": "Deno.PointerValue",
+  "int64_t": "number | bigint",
   "float": "number",
   "double": "number",
   "char": "number",
-  "size_t": "Deno.PointerValue",
-  "ssize_t": "Deno.PointerValue",
+  "size_t": "number | bigint",
+  "ssize_t": "number | bigint",
   "HINSTANCE": "Deno.PointerValue",
   "HWND": "Deno.PointerValue",
   "Window": "Deno.PointerValue",
@@ -182,6 +195,7 @@ export function typeToFFI(ty: string): any {
 export interface Typedef {
   name: string;
   type: string;
+  alias?: boolean;
   ffi: any;
 }
 
@@ -627,6 +641,7 @@ for (const ty of api.registry.types.type) {
     typedefs.push({
       name: ty.$name,
       type: ty.$alias,
+      alias: true,
       ffi: typeToFFI(ty.$alias),
     });
   }

@@ -1,0 +1,90 @@
+// deno-lint-ignore-file no-unused-vars
+import {
+  AnyBuffer,
+  AnyPointer,
+  anyBuffer,
+  anyPointer,
+  BUFFER,
+  DATAVIEW,
+  LE,
+  BaseStruct,
+  pointerFromView,
+  notPointerObject,
+} from "../util.ts";
+import { StructureType } from "../enum.ts";
+import { RenderPass } from "../def.ts";
+
+export interface InitSubpassShadingPipelineCreateInfoHUAWEI {
+  pNext?: AnyPointer;
+  renderPass?: RenderPass;
+  subpass?: number;
+}
+
+export class SubpassShadingPipelineCreateInfoHUAWEI implements BaseStruct {
+  static size = 32;
+
+  #data!: Uint8Array;
+  #view!: DataView;
+
+  get [BUFFER]() { return this.#data; }
+  get [DATAVIEW]() { return this.#view; }
+
+  constructor();
+  constructor(ptr: Deno.PointerValue);
+  constructor(init: InitSubpassShadingPipelineCreateInfoHUAWEI);
+  constructor(data: Uint8Array);
+  constructor(data?: Deno.PointerValue | Uint8Array | InitSubpassShadingPipelineCreateInfoHUAWEI) {
+    if (data === undefined || data === null) {
+      this.#data = new Uint8Array(SubpassShadingPipelineCreateInfoHUAWEI.size);
+      this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);
+    } else if (data instanceof Uint8Array) {
+      if (data.byteLength < SubpassShadingPipelineCreateInfoHUAWEI.size) {
+        throw new Error("Data buffer too small");
+      }
+      this.#data = data;
+      this.#view = new DataView(data.buffer, data.byteOffset);
+    } else if(notPointerObject(data)) {
+      this.#data = new Uint8Array(SubpassShadingPipelineCreateInfoHUAWEI.size);
+      this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);
+      if (data.pNext !== undefined) this.pNext = data.pNext;
+      if (data.renderPass !== undefined) this.renderPass = data.renderPass;
+      if (data.subpass !== undefined) this.subpass = data.subpass;
+    } else {
+      this.#data = new Uint8Array(Deno.UnsafePointerView.getArrayBuffer(data, SubpassShadingPipelineCreateInfoHUAWEI.size));
+      this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);
+    }
+    this.sType = StructureType.SUBPASS_SHADING_PIPELINE_CREATE_INFO_HUAWEI;
+  }
+
+  get sType() {
+    return this.#view.getUint32(0, LE);
+  }
+
+  set sType(value: StructureType) {
+    this.#view.setUint32(0, Number(value), LE);
+  }
+
+  get pNext() {
+    return pointerFromView(this.#view, 8, LE);
+  }
+
+  set pNext(value: AnyPointer) {
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
+  }
+
+  get renderPass() {
+    return pointerFromView(this.#view, 16, LE);
+  }
+
+  set renderPass(value: RenderPass) {
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
+  }
+
+  get subpass() {
+    return this.#view.getUint32(24, LE);
+  }
+
+  set subpass(value: number) {
+    this.#view.setUint32(24, Number(value), LE);
+  }
+}

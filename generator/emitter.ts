@@ -1,24 +1,39 @@
+// deno-lint-ignore-file no-inner-declarations
 import { transform } from "https://deno.land/x/swc@0.2.1/mod.ts";
 import {
-  block,
   commands,
   constants,
-  emit,
+  Enums,
   enums,
   Field,
-  getIdent,
+  FileBuilder,
   getTypeSize,
   isArray,
   isStruct,
   jsify,
-  newline,
-  output,
+  Struct,
   structs,
   tymap,
+  Typedef,
   typedefs,
   typeToJS,
   unions,
 } from "./process_xml.ts";
+import { parse } from "https://deno.land/std@0.179.0/path/mod.ts";
+
+const nameMapDefs = new Map<string, Typedef>(
+  typedefs.map((it) => [it.name, it]),
+);
+const nameMapEnums = new Map<string, Enums>(enums.map((it) => [it.name, it]));
+const nameMapStrucs = new Map<string, Struct>(
+  structs.map((it) => [it.name, it]),
+);
+
+function writeFile(path: string, text: string) {
+  const info = parse(path);
+  Deno.mkdirSync(info.dir, { recursive: true });
+  Deno.writeTextFileSync(path, text);
+}
 
 function stripVk(name: any) {
   if (typeof name !== "string") return name;
@@ -34,419 +49,541 @@ function toConstCase(name: string) {
     .join("_");
 }
 
-console.log("Emitting...");
+// const builder = new FileBuilder();
 
-newline();
+// console.log("Emitting...");
 
-emit(
-  `import { AnyBuffer, AnyPointer, anyBuffer, anyPointer, BUFFER, DATAVIEW, LE, BaseStruct } from "./util.ts";`,
-);
+// builder.newline();
 
-newline();
-emit("/// Type definitions");
+// builder.emit(
+//   `import { AnyBuffer, AnyPointer, anyBuffer, anyPointer, BUFFER, DATAVIEW, LE, BaseStruct } from "./util.ts";`,
+// );
 
-for (const ty of typedefs) {
-  newline();
-  emit(`export type ${stripVk(ty.name)} = ${stripVk(ty.type)};`);
-}
+// builder.newline();
 
-newline();
-emit("/// Constants");
+{
+  const b = new FileBuilder();
+  b.emit("/// Type definitions");
 
-for (const e of constants) {
-  newline();
-  emit(`/// ${e.name}`);
-  if (e.comment) emit(`/// ${e.comment}`);
-  newline();
-  for (const c of e.constants) {
-    if (c.name.includes("_SPEC_VERSION")) continue;
-    if (c.comment) emit(`/** ${c.comment} */`);
-    emit(`export const ${stripVk(c.name)} = ${stripVk(c.value)};`);
+  const alias = typedefs.filter((t) => t.alias);
+  const nonAlias = typedefs.filter((t) => !t.alias);
+
+  for (const ty of nonAlias) {
+    b.newline();
+    b.emit(`export type ${stripVk(ty.name)} = ${stripVk(ty.type)};`);
   }
+
+  b.newline();
+  // imports
+  const imports = addImports(alias.map((it) => it.type));
+  if (imports.structs.length > 0) {
+    imports.structs.forEach((name) =>
+      b.emit(`import {${name}} from "./struct/${name}.ts";`)
+    );
+  }
+  if (imports.enums.length > 0) {
+    b.emit(`import { ${[...imports.enums].join(", ")} } from "./enum.ts";`);
+  }
+
+  for (const ty of alias) {
+    b.newline();
+    b.emit(`export type ${stripVk(ty.name)} = ${stripVk(ty.type)};`);
+  }
+  writeFile("api/def.ts", b.output());
 }
 
-newline();
-emit("/// Enums");
+{
+  const builder = new FileBuilder();
+  builder.emit("/// Constants");
 
-for (const e of enums) {
-  newline();
-  if (e.comment) emit(`/** ${e.comment} */`);
-  emit(`export enum ${stripVk(e.name)} {`);
-  const ec = toConstCase(stripVk(e.name)).replace("_FLAG_BITS", "");
-  block(() => {
-    const pushed: string[] = [];
-    for (const c of e.enums) {
-      if (c.comment) emit(`/** ${c.comment} */`);
-      const n = stripVk(c.name);
-      function maybeSlice(x: string, vkOnly = false) {
-        if (typeof x !== "string") return x;
-        if (vkOnly && !x.startsWith("VK_")) return x;
-        x = stripVk(x);
-        let sliced = x.startsWith?.(ec + "_") ? x.slice(ec.length + 1) : x;
-        if (e.name.endsWith("FlagBits") && sliced.endsWith("_BIT")) {
-          sliced = sliced.slice(0, -4);
+  for (const e of constants) {
+    builder.newline();
+    builder.emit(`/// ${e.name}`);
+    if (e.comment) builder.emit(`/// ${e.comment}`);
+    builder.newline();
+    for (const c of e.constants) {
+      if (c.name.includes("_SPEC_VERSION")) continue;
+      if (c.comment) builder.emit(`/** ${c.comment} */`);
+      builder.emit(`export const ${stripVk(c.name)} = ${stripVk(c.value)};`);
+    }
+  }
+  writeFile("api/constant.ts", builder.output());
+}
+
+{
+  const builder = new FileBuilder();
+  builder.emit("/// Enums");
+
+  for (const e of enums) {
+    builder.newline();
+    if (e.comment) builder.emit(`/** ${e.comment} */`);
+
+    const enumClassName = stripVk(e.name);
+    builder.emit(`export enum ${enumClassName} {`);
+    const ec = toConstCase(enumClassName).replace("_FLAG_BITS", "");
+    builder.block(() => {
+      const pushed: string[] = [];
+      for (const c of e.enums) {
+        if (c.comment) builder.emit(`/** ${c.comment} */`);
+        const n = stripVk(c.name);
+        function maybeSlice(x: string, vkOnly = false) {
+          if (typeof x !== "string") return x;
+          if (vkOnly && !x.startsWith("VK_")) return x;
+          x = stripVk(x);
+          let sliced = x.startsWith?.(ec + "_") ? x.slice(ec.length + 1) : x;
+          if (e.name.endsWith("FlagBits") && sliced.endsWith("_BIT")) {
+            sliced = sliced.slice(0, -4);
+          }
+          if (sliced.match?.(/^[0-9]/)) sliced = "VK_" + sliced;
+          return sliced;
         }
-        if (sliced.match?.(/^[0-9]/)) sliced = "VK_" + sliced;
-        return sliced;
-      }
-      const final = maybeSlice(n);
-      if (pushed.includes(final)) continue;
-      pushed.push(final);
-      emit(
-        `${final} = ${
+        const finalName = maybeSlice(n);
+        if (pushed.includes(finalName)) continue;
+        pushed.push(finalName);
+
+        const finalValue =
           typeof c.value === "string" && c.value.startsWith("VK")
             ? maybeSlice(
               e.enums.find((x) => x.name === c.value)?.value ?? c.value,
               true,
             )
-            : c.value
-        },`,
-      );
-    }
-  });
-  emit(`}`);
+            : c.value;
+        builder.emit(`${finalName} = ${finalValue},`);
+      }
+    });
+    builder.emit(`}`);
+  }
+  writeFile("api/enum.ts", builder.output());
 }
 
-newline();
-emit("/// Structs");
+function addImports(types: string[]) {
+  const _structs = new Set<string>();
+  const _enums = new Set<string>();
+  const _defs = new Set<string>();
 
-for (const s of structs) {
-  newline();
-  emit(`export interface Init${stripVk(s.name)} {`);
-  block(() => {
-    for (const f of s.fields) {
-      if (f.name === "sType" && f.values?.length === 1) continue;
-      const nativearr = isArray(f.ffi) && (f.ffi.array in tymap);
-      emit(
-        `${jsify(f.name)}?: ${
-          nativearr
-            ? tymap[f.ffi.array as keyof typeof tymap]
-            : f.text?.endsWith("*")
-            ? "AnyPointer"
-            : stripVk(typeToJS(f.type))
-        }${f.len && !nativearr ? "[]" : ""};`,
+  for (const type of types) {
+    if (nameMapStrucs.has(type)) {
+      _structs.add(stripVk(type));
+    } else if (nameMapEnums.has(type)) {
+      _enums.add(stripVk(type));
+    } else if (nameMapDefs.has(type)) {
+      _defs.add(stripVk(type));
+    }
+  }
+
+  return {
+    structs: [..._structs],
+    enums: [..._enums],
+    defs: [..._defs],
+  };
+}
+
+{
+  const classNames = [] as string[];
+  for (const s of structs) {
+    const b = new FileBuilder();
+    b.emit("// deno-lint-ignore-file no-unused-vars");
+    // imports
+    b.emit([
+      `import {`,
+      [
+        "AnyBuffer,",
+        "AnyPointer,",
+        "anyBuffer,",
+        "anyPointer,",
+        "BUFFER,",
+        "DATAVIEW,",
+        "LE,",
+        "BaseStruct,",
+        "pointerFromView,",
+        "notPointerObject,",
+      ],
+      `} from "../util.ts";`,
+    ], true);
+
+    const imports = addImports(s.fields.map((f) => f.type));
+    if (imports.structs.length > 0) {
+      imports.structs.forEach((name) =>
+        b.emit(`import {${name}} from "./${name}.ts";`)
       );
     }
-  });
-  emit("}");
-  newline();
-  if (s.comment) emit(`/** ${s.comment} */`);
-  emit(`export class ${stripVk(s.name)} implements BaseStruct {`);
-  block(() => {
-    emit(`static size = ${s.size};`);
+    if (imports.enums.length > 0) {
+      b.emit(`import { ${[...imports.enums].join(", ")} } from "../enum.ts";`);
+    }
+    if (imports.defs.length > 0) {
+      b.emit(`import { ${[...imports.defs].join(", ")} } from "../def.ts";`);
+    }
 
-    newline();
-
-    emit("#data!: Uint8Array;");
-    emit("#view!: DataView;");
-
-    newline();
-
-    emit(`get [BUFFER]() { return this.#data; }`);
-    emit(`get [DATAVIEW]() { return this.#view; }`);
-
-    newline();
-
-    emit(`constructor();`);
-    emit(`constructor(ptr: Deno.PointerValue);`);
-    emit(`constructor(init: Init${stripVk(s.name)});`);
-    emit(`constructor(data: Uint8Array);`);
-    emit(
-      `constructor(data?: Deno.PointerValue | Uint8Array | Init${
-        stripVk(s.name)
-      }) {`,
-    );
-    block(() => {
-      emit(`if (data === undefined) {`);
-      block(() => {
-        emit(`this.#data = new Uint8Array(${stripVk(s.name)}.size);`);
-        emit(
-          "this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);",
+    b.newline();
+    b.emit(`export interface Init${stripVk(s.name)} {`);
+    b.block(() => {
+      for (const f of s.fields) {
+        if (f.name === "sType" && f.values?.length === 1) continue;
+        const nativearr = isArray(f.ffi) && (f.ffi.array in tymap);
+        b.emit(
+          `${jsify(f.name)}?: ${
+            nativearr
+              ? tymap[f.ffi.array as keyof typeof tymap]
+              : f.text?.endsWith("*")
+              ? "AnyPointer"
+              : stripVk(typeToJS(f.type))
+          }${f.len && !nativearr ? "[]" : ""};`,
         );
-      });
-      emit(
-        `} else if (typeof data === "number" || typeof data === "bigint") {`,
+      }
+    });
+    b.emit("}");
+    b.newline();
+    if (s.comment) b.emit(`/** ${s.comment} */`);
+
+    const className = stripVk(s.name);
+    classNames.push(className);
+    b.emit(`export class ${className} implements BaseStruct {`);
+    b.block(() => {
+      b.emit(`static size = ${s.size};`);
+
+      b.newline();
+
+      b.emit("#data!: Uint8Array;");
+      b.emit("#view!: DataView;");
+
+      b.newline();
+
+      b.emit(`get [BUFFER]() { return this.#data; }`);
+      b.emit(`get [DATAVIEW]() { return this.#view; }`);
+
+      b.newline();
+
+      b.emit(`constructor();`);
+      b.emit(`constructor(ptr: Deno.PointerValue);`);
+      b.emit(`constructor(init: Init${className});`);
+      b.emit(`constructor(data: Uint8Array);`);
+      b.emit(
+        `constructor(data?: Deno.PointerValue | Uint8Array | Init${className}) {`,
       );
-      block(() => {
-        emit(
-          `this.#data = new Uint8Array(Deno.UnsafePointerView.getArrayBuffer(data, ${
-            stripVk(s.name)
-          }.size));`,
-        );
-        emit(
-          "this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);",
-        );
-      });
-      emit("} else if (data instanceof Uint8Array) {");
-      block(() => {
-        emit(`if (data.byteLength < ${stripVk(s.name)}.size) {`);
-        block(() => {
-          emit(`throw new Error("Data buffer too small");`);
-        });
-        emit("}");
-        emit("this.#data = data;");
-        emit("this.#view = new DataView(data.buffer, data.byteOffset);");
-      });
-      emit("} else {");
-      block(() => {
-        emit(`this.#data = new Uint8Array(${stripVk(s.name)}.size);`);
-        emit(
-          "this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);",
-        );
+
+      b.block(() => {
+        b.emit([
+          `if (data === undefined || data === null) {`,
+          [
+            `this.#data = new Uint8Array(${className}.size);`,
+            "this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);",
+          ],
+          "} else if (data instanceof Uint8Array) {",
+          [
+            `if (data.byteLength < ${className}.size) {`,
+            [
+              `throw new Error("Data buffer too small");`,
+            ],
+            "}",
+            "this.#data = data;",
+            "this.#view = new DataView(data.buffer, data.byteOffset);",
+          ],
+          "} else if(notPointerObject(data)) {",
+          [
+            `this.#data = new Uint8Array(${className}.size);`,
+            "this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);",
+            () => {
+              for (const f of s.fields) {
+                if (f.name === "sType" && f.values?.length === 1) {
+                  continue;
+                } else {
+                  const name = jsify(f.name);
+                  b.emit(
+                    `if (data.${name} !== undefined) this.${name} = data.${name};`,
+                  );
+                }
+              }
+            },
+          ],
+          `} else {`,
+          [
+            `this.#data = new Uint8Array(Deno.UnsafePointerView.getArrayBuffer(data, ${className}.size));`,
+            "this.#view = new DataView(this.#data.buffer, this.#data.byteOffset);",
+          ],
+          "}",
+        ], true);
         for (const f of s.fields) {
           if (f.name === "sType" && f.values?.length === 1) {
-            continue;
-          } else {
-            const name = jsify(f.name);
-            emit(
-              `if (data.${name} !== undefined) this.${name} = data.${name};`,
+            b.emit(
+              `this.sType = StructureType.${
+                stripVk(f.values?.[0]).slice("STRUCTURE_TYPE_".length)
+              };`,
             );
           }
         }
       });
-      emit("}");
+      b.emit("}");
+
       for (const f of s.fields) {
-        if (f.name === "sType" && f.values?.length === 1) {
-          emit(
-            `this.sType = StructureType.${
-              stripVk(f.values?.[0]).slice("STRUCTURE_TYPE_".length)
-            };`,
-          );
+        b.newline();
+        if (f.comment) b.emit(`/** ${f.comment} */`);
+        const isptr = f.text?.endsWith("*");
+        b.emit(`get ${jsify(f.name)}() {`);
+        function emitFieldGetter(f: Field) {
+          if (isptr) {
+            b.emit(`return pointerFromView(this.#view, ${f.offset}, LE);`);
+          } else {
+            switch (f.ffi) {
+              case "i8":
+                b.emit(`return this.#view.getInt8(${f.offset});`);
+                break;
+              case "u8":
+                b.emit(`return this.#view.getUint8(${f.offset});`);
+                break;
+              case "i16":
+                b.emit(`return this.#view.getInt16(${f.offset}, LE);`);
+                break;
+              case "u16":
+                b.emit(`return this.#view.getUint16(${f.offset}, LE);`);
+                break;
+              case "i32":
+                b.emit(`return this.#view.getInt32(${f.offset}, LE);`);
+                break;
+              case "u32":
+                b.emit(`return this.#view.getUint32(${f.offset}, LE);`);
+                break;
+              case "isize":
+              case "i64":
+                b.emit(`return this.#view.getBigInt64(${f.offset}, LE);`);
+                break;
+              case "usize":
+              case "u64":
+                b.emit(`return this.#view.getBigUint64(${f.offset}, LE);`);
+                break;
+              case "buffer":
+              case "pointer":
+                b.emit(`return pointerFromView(this.#view, ${f.offset}, LE);`);
+                break;
+              case "f32":
+                b.emit(`return this.#view.getFloat32(${f.offset}, LE);`);
+                break;
+              case "f64":
+                b.emit(`return this.#view.getFloat64(${f.offset}, LE);`);
+                break;
+              default: {
+                if (isStruct(f.ffi)) {
+                  const name = f.type;
+                  b.emit(
+                    `return new ${
+                      stripVk(name)
+                    }(this.#data.subarray(${f.offset}, ${f.offset} + ${
+                      stripVk(name)
+                    }.size));`,
+                  );
+                  break;
+                }
+                if (isArray(f.ffi)) {
+                  if (tymap[f.ffi.array as keyof typeof tymap]) {
+                    b.emit(
+                      `return new ${
+                        tymap[f.ffi.array as keyof typeof tymap]
+                      }(this.#data.buffer, this.#data.byteOffset + ${f.offset}, ${f.ffi.len});`,
+                    );
+                  } else {
+                    b.emit(
+                      `const result: ${stripVk(typeToJS(f.type))}[] = [];`,
+                    );
+                    b.emit(`for (let i = 0; i < ${f.ffi.len}; i++) {`);
+                    b.block(() => {
+                      b.emit(`result.push((() => {`);
+                      b.block(() => {
+                        const tysize = getTypeSize(f.ffi.array);
+                        emitFieldGetter({
+                          name: f.name,
+                          offset: `${f.offset} + i * ${tysize}` as any,
+                          type: f.type,
+                          ffi: f.ffi.array,
+                        } as any);
+                      });
+                      b.emit(`})());`);
+                    });
+                    b.emit(`}`);
+                    b.emit(`return result;`);
+                  }
+                  break;
+                }
+                b.emit(
+                  `throw new Error(\`Unknown type: ${
+                    JSON.stringify(f.ffi)
+                  }\`);`,
+                );
+                break;
+              }
+            }
+          }
         }
+        b.block(() => {
+          emitFieldGetter(f);
+        });
+        b.emit(`}`);
+        b.newline();
+        const nativearr = isArray(f.ffi) && (f.ffi.array in tymap);
+        b.emit(
+          `set ${jsify(f.name)}(value: ${
+            nativearr
+              ? `${tymap[f.ffi.array as keyof typeof tymap]}`
+              : (isptr ? "AnyPointer" : stripVk(typeToJS(f.type)))
+          }${f.len && !nativearr ? "[]" : ""}) {`,
+        );
+        function emitFieldSetter(f: Field, vname = "value") {
+          if (isptr) {
+            b.emit(
+              `this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`,
+            );
+          } else if (nativearr) {
+            b.emit(
+              `this.#data.set(new Uint8Array(${vname}.buffer), ${f.offset});`,
+            );
+          } else {
+            switch (f.ffi) {
+              case "i8":
+                b.emit(
+                  `this.#view.setInt8(${f.offset}, Number(${vname}));`,
+                );
+                break;
+              case "u8":
+                b.emit(
+                  `this.#view.setUint8(${f.offset}, Number(${vname}));`,
+                );
+                break;
+              case "i16":
+                b.emit(
+                  `this.#view.setInt16(${f.offset}, Number(${vname}), LE);`,
+                );
+                break;
+              case "u16":
+                b.emit(
+                  `this.#view.setUint16(${f.offset}, Number(${vname}), LE);`,
+                );
+                break;
+              case "i32":
+                b.emit(
+                  `this.#view.setInt32(${f.offset}, Number(${vname}), LE);`,
+                );
+                break;
+              case "u32":
+                b.emit(
+                  `this.#view.setUint32(${f.offset}, Number(${vname}), LE);`,
+                );
+                break;
+              case "isize":
+              case "i64":
+                b.emit(
+                  `this.#view.setBigInt64(${f.offset}, BigInt(${vname}), LE);`,
+                );
+                break;
+              case "usize":
+              case "u64":
+                b.emit(
+                  `this.#view.setBigUint64(${f.offset}, BigInt(${vname}), LE);`,
+                );
+                break;
+              case "buffer":
+              case "pointer":
+                b.emit(
+                  `this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`,
+                );
+                break;
+              case "f32":
+                b.emit(
+                  `this.#view.setFloat32(${f.offset}, Number(${vname}), LE);`,
+                );
+                break;
+              case "f64":
+                b.emit(
+                  `this.#view.setFloat64(${f.offset}, Number(${vname}), LE);`,
+                );
+                break;
+              default: {
+                if (isStruct(f.ffi)) {
+                  const name = f.type;
+                  b.emit(
+                    `if (${vname}[BUFFER].byteLength < ${
+                      stripVk(name)
+                    }.size) {`,
+                  );
+                  b.block(() => {
+                    b.emit(`throw new Error("Data buffer too small");`);
+                  });
+                  b.emit("}");
+                  b.emit(
+                    `this.#data.set(${vname}[BUFFER], ${f.offset});`,
+                  );
+                  break;
+                }
+                if (isArray(f.ffi)) {
+                  const tysize = getTypeSize(f.ffi.array);
+                  b.emit(`for (let i = 0; i < ${vname}.length; i++) {`);
+                  b.block(() => {
+                    emitFieldSetter({
+                      name: f.name,
+                      offset: `${f.offset} + i * ${tysize}` as any,
+                      type: f.type,
+                      ffi: f.ffi.array,
+                    } as any, `${vname}[i]`);
+                  });
+                  b.emit("}");
+                  break;
+                }
+                b.emit(
+                  `throw new Error(\`Unknown type: ${
+                    JSON.stringify(f.ffi)
+                  }\`);`,
+                );
+                break;
+              }
+            }
+          }
+        }
+        b.block(() => {
+          emitFieldSetter(f);
+        });
+        b.emit(`}`);
       }
     });
-    emit("}");
+    b.emit(`}`);
 
-    for (const f of s.fields) {
-      newline();
-      if (f.comment) emit(`/** ${f.comment} */`);
-      const isptr = f.text?.endsWith("*");
-      emit(`get ${jsify(f.name)}() {`);
-      function emitFieldGetter(f: Field) {
-        if (isptr) {
-          emit(`return this.#view.getBigUint64(${f.offset}, LE);`);
-        } else {
-          switch (f.ffi) {
-            case "i8":
-              emit(`return this.#view.getInt8(${f.offset});`);
-              break;
-            case "u8":
-              emit(`return this.#view.getUint8(${f.offset});`);
-              break;
-            case "i16":
-              emit(`return this.#view.getInt16(${f.offset}, LE);`);
-              break;
-            case "u16":
-              emit(`return this.#view.getUint16(${f.offset}, LE);`);
-              break;
-            case "i32":
-              emit(`return this.#view.getInt32(${f.offset}, LE);`);
-              break;
-            case "u32":
-              emit(`return this.#view.getUint32(${f.offset}, LE);`);
-              break;
-            case "isize":
-            case "i64":
-              emit(`return this.#view.getBigInt64(${f.offset}, LE);`);
-              break;
-            case "usize":
-            case "buffer":
-            case "pointer":
-            case "u64":
-              emit(`return this.#view.getBigUint64(${f.offset}, LE);`);
-              break;
-            case "f32":
-              emit(`return this.#view.getFloat32(${f.offset}, LE);`);
-              break;
-            case "f64":
-              emit(`return this.#view.getFloat64(${f.offset}, LE);`);
-              break;
-            default: {
-              if (isStruct(f.ffi)) {
-                const name = f.type;
-                emit(
-                  `return new ${
-                    stripVk(name)
-                  }(this.#data.subarray(${f.offset}, ${f.offset} + ${
-                    stripVk(name)
-                  }.size));`,
-                );
-                break;
-              }
-              if (isArray(f.ffi)) {
-                if (tymap[f.ffi.array as keyof typeof tymap]) {
-                  emit(
-                    `return new ${
-                      tymap[f.ffi.array as keyof typeof tymap]
-                    }(this.#data.buffer, this.#data.byteOffset + ${f.offset}, ${f.ffi.len});`,
-                  );
-                } else {
-                  emit(`const result: ${stripVk(typeToJS(f.type))}[] = [];`);
-                  emit(`for (let i = 0; i < ${f.ffi.len}; i++) {`);
-                  block(() => {
-                    emit(`result.push((() => {`);
-                    block(() => {
-                      const tysize = getTypeSize(f.ffi.array);
-                      emitFieldGetter({
-                        name: f.name,
-                        offset: `${f.offset} + i * ${tysize}` as any,
-                        type: f.type,
-                        ffi: f.ffi.array,
-                      } as any);
-                    });
-                    emit(`})());`);
-                  });
-                  emit(`}`);
-                  emit(`return result;`);
-                }
-                break;
-              }
-              emit(
-                `throw new Error(\`Unknown type: ${JSON.stringify(f.ffi)}\`);`,
-              );
-              break;
-            }
-          }
-        }
-      }
-      block(() => {
-        emitFieldGetter(f);
-      });
-      emit(`}`);
-      newline();
-      const nativearr = isArray(f.ffi) && (f.ffi.array in tymap);
-      emit(
-        `set ${jsify(f.name)}(value: ${
-          nativearr
-            ? `${tymap[f.ffi.array as keyof typeof tymap]}`
-            : (isptr ? "AnyPointer" : stripVk(typeToJS(f.type)))
-        }${f.len && !nativearr ? "[]" : ""}) {`,
-      );
-      function emitFieldSetter(f: Field, vname = "value") {
-        if (isptr) {
-          emit(
-            `this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`,
-          );
-        } else if (nativearr) {
-          emit(`this.#data.set(new Uint8Array(${vname}.buffer), ${f.offset});`);
-        } else {
-          switch (f.ffi) {
-            case "i8":
-              emit(`this.#view.setInt8(${f.offset}, Number(${vname}));`);
-              break;
-            case "u8":
-              emit(`this.#view.setUint8(${f.offset}, Number(${vname}));`);
-              break;
-            case "i16":
-              emit(`this.#view.setInt16(${f.offset}, Number(${vname}), LE);`);
-              break;
-            case "u16":
-              emit(`this.#view.setUint16(${f.offset}, Number(${vname}), LE);`);
-              break;
-            case "i32":
-              emit(`this.#view.setInt32(${f.offset}, Number(${vname}), LE);`);
-              break;
-            case "u32":
-              emit(`this.#view.setUint32(${f.offset}, Number(${vname}), LE);`);
-              break;
-            case "isize":
-            case "i64":
-              emit(
-                `this.#view.setBigInt64(${f.offset}, BigInt(${vname}), LE);`,
-              );
-              break;
-            case "usize":
-            case "u64":
-              emit(
-                `this.#view.setBigUint64(${f.offset}, BigInt(${vname}), LE);`,
-              );
-              break;
-            case "buffer":
-            case "pointer":
-              emit(
-                `this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`,
-              );
-              break;
-            case "f32":
-              emit(`this.#view.setFloat32(${f.offset}, Number(${vname}), LE);`);
-              break;
-            case "f64":
-              emit(`this.#view.setFloat64(${f.offset}, Number(${vname}), LE);`);
-              break;
-            default: {
-              if (isStruct(f.ffi)) {
-                const name = f.type;
-                emit(
-                  `if (${vname}[BUFFER].byteLength < ${stripVk(name)}.size) {`,
-                );
-                block(() => {
-                  emit(`throw new Error("Data buffer too small");`);
-                });
-                emit("}");
-                emit(`this.#data.set(${vname}[BUFFER], ${f.offset});`);
-                break;
-              }
-              if (isArray(f.ffi)) {
-                const tysize = getTypeSize(f.ffi.array);
-                emit(`for (let i = 0; i < ${vname}.length; i++) {`);
-                block(() => {
-                  emitFieldSetter({
-                    name: f.name,
-                    offset: `${f.offset} + i * ${tysize}` as any,
-                    type: f.type,
-                    ffi: f.ffi.array,
-                  } as any, `${vname}[i]`);
-                });
-                emit("}");
-                break;
-              }
-              emit(
-                `throw new Error(\`Unknown type: ${JSON.stringify(f.ffi)}\`);`,
-              );
-              break;
-            }
-          }
-        }
-      }
-      block(() => {
-        emitFieldSetter(f);
-      });
-      emit(`}`);
-    }
-  });
-  emit(`}`);
+    writeFile(`api/struct/${className}.ts`, b.output());
+  }
+  const b = new FileBuilder();
+  classNames.forEach((name) => b.emit(`export * from "./${name}.ts";`));
+  writeFile(`api/struct/mod.ts`, b.output());
 }
 
-newline();
-emit("/// Unions");
+{
+  const b = new FileBuilder();
+  b.newline();
+  b.emit("/// Unions");
 
-for (const s of unions) {
-  newline();
-  if (s.comment) emit(`/** ${s.comment} */`);
-  emit(`export class ${stripVk(s.name)} {`);
-  block(() => {
-    emit(`static size = ${s.size};`);
+  for (const s of unions) {
+    b.newline();
+    if (s.comment) b.emit(`/** ${s.comment} */`);
+    b.emit(`export class ${stripVk(s.name)} {`);
+    b.block(() => {
+      b.emit(`static size = ${s.size};`);
 
-    newline();
+      b.newline();
 
-    emit("#data: Uint8Array;");
-    emit("#view: DataView;");
+      b.emit("#data: Uint8Array;");
+      b.emit("#view: DataView;");
 
-    newline();
+      b.newline();
 
-    emit("constructor(data: Uint8Array) {");
-    block(() => {
-      emit(`if (data.byteLength < ${stripVk(s.name)}.size) {`);
-      block(() => {
-        emit(`throw new Error("Data buffer too small");`);
+      b.emit("constructor(data: Uint8Array) {");
+      b.block(() => {
+        b.emit(`if (data.byteLength < ${stripVk(s.name)}.size) {`);
+        b.block(() => {
+          b.emit(`throw new Error("Data buffer too small");`);
+        });
+        b.emit("}");
+        b.emit("this.#data = data;");
+        b.emit("this.#view = new DataView(data.buffer);");
       });
-      emit("}");
-      emit("this.#data = data;");
-      emit("this.#view = new DataView(data.buffer);");
+      b.emit("}");
     });
-    emit("}");
-  });
-  emit(`}`);
+    b.emit(`}`);
+  }
+  writeFile(`api/union.ts`, b.output());
 }
 
 function toSkipCMD(name: string) {
@@ -480,119 +617,159 @@ function toSkipCMD(name: string) {
   return false;
 }
 
-newline();
-emit("/// FFI Library");
-
-emit(
-  `const lib = Deno.dlopen(Deno.build.os === "windows" ? "vulkan-1" : Deno.build.os === "darwin" ? "libvulkan.dylib.1" : "libvulkan.so.1", {`,
-);
-block(() => {
+{
+  const b = new FileBuilder();
+  b.emit("// deno-lint-ignore-file no-unused-vars");
+  b.emit(`import { AnyBuffer, anyBuffer } from "./util.ts";`);
+  // import
+  const _types = new Set<string>();
   for (const cmd of commands) {
-    if (toSkipCMD(cmd.name)) continue;
-    emit(
-      `"${cmd.name}": ${
-        JSON.stringify(cmd.ffi, null, 2).split("\n").map((
-          e,
-          i,
-        ) => (i === 0 ? e : `${"  ".repeat(getIdent())}${e}`)).join("\n")
-      },`,
-    );
+    for (const param of cmd.params) {
+      _types.add(param.type);
+    }
   }
-});
-emit(`} as const).symbols;`);
+  const imports = addImports([..._types]);
+  if (imports.enums.length > 0) {
+    b.emit([
+      `import {`,
+      [
+        "Result,",
+        ...imports.enums.map((name) => name + ","),
+      ],
+      `} from "./enum.ts";`,
+    ], true);
+  }
+  if (imports.defs.length > 0) {
+    b.emit([
+      `import {`,
+      [
+        ...imports.defs.map((name) => name + ","),
+      ],
+      `} from "./def.ts";`,
+    ], true);
+  }
+  // if (imports.structs.length > 0) {
+  //   imports.structs.forEach((name) =>
+  //     b.emit(`import {${name}} from "./struct/${name}.ts";`)
+  //   );
+  // }
 
-newline();
-
-emit(`export class VulkanError extends Error {`);
-block(() => {
-  emit(`constructor(public code: Result) {`);
-  block(() => {
-    emit(`super(\`Vulkan error: \${code} (\${Result[code]})\`);`);
-  });
-  emit(`}`);
-});
-emit(`}`);
-
-newline();
-emit("/// Commands");
-
-for (const cmd of commands) {
-  if (toSkipCMD(cmd.name)) continue;
-  newline();
-  if (cmd.comment) emit(`/** ${cmd.comment} */`);
-  emit(`export function ${stripVk(cmd.name)}(`);
-  block(() => {
-    for (const p of cmd.params) {
-      emit(
-        `${jsify(p.name)}: ${
-          p.text?.endsWith("*") ? `AnyBuffer` : stripVk(typeToJS(p.type))
+  b.emit(
+    `const lib = Deno.dlopen(Deno.build.os === "windows" ? "vulkan-1" : Deno.build.os === "darwin" ? "libvulkan.dylib.1" : "libvulkan.so.1", {`,
+  );
+  b.block(() => {
+    for (const cmd of commands) {
+      if (toSkipCMD(cmd.name)) continue;
+      b.emit(
+        `"${cmd.name}": ${
+          JSON.stringify(cmd.ffi, null, 2).split("\n").map((
+            e,
+            i,
+          ) => (i === 0 ? e : `${"  ".repeat(b.getIdent())}${e}`)).join(
+            "\n",
+          )
         },`,
       );
     }
   });
-  emit(`): ${stripVk(typeToJS(cmd.type))} {`);
-  block(() => {
-    emit(`${cmd.type !== "void" ? "const ret = " : ""}lib.${cmd.name}(`);
-    block(() => {
+  b.emit(`} as const).symbols;`);
+
+  b.newline();
+
+  b.emit(`export class VulkanError extends Error {`);
+  b.block(() => {
+    b.emit(`constructor(public code: Result) {`);
+    b.block(() => {
+      b.emit(`super(\`Vulkan error: \${code} (\${Result[code]})\`);`);
+    });
+    b.emit(`}`);
+  });
+  b.emit(`}`);
+
+  b.newline();
+  b.emit("/// Commands");
+
+  for (const cmd of commands) {
+    if (toSkipCMD(cmd.name)) continue;
+    b.newline();
+    if (cmd.comment) b.emit(`/** ${cmd.comment} */`);
+    b.emit(`export function ${stripVk(cmd.name)}(`);
+    b.block(() => {
       for (const p of cmd.params) {
-        const jsn = jsify(p.name);
-        emit(
-          `${p.text?.endsWith("*") ? `anyBuffer(${jsn})` : jsn},`,
+        b.emit(
+          `${jsify(p.name)}: ${
+            p.text?.endsWith("*") ? `AnyBuffer` : stripVk(typeToJS(p.type))
+          },`,
         );
       }
     });
-    emit(`);`);
-    if (cmd.type !== "void") {
-      if (cmd.type === "VkResult") {
-        emit(
-          `if (${
-            cmd.successCodes.map((e) => `ret === Result.${stripVk(e)}`).join(
-              " || ",
-            )
-          }) {`,
-        );
-        block(() => {
-          emit("return ret;");
-        });
-        emit(`} else {`);
-        block(() => {
-          emit(
-            `throw new VulkanError(ret as Result);`,
+    b.emit(`): ${stripVk(typeToJS(cmd.type))} {`);
+    b.block(() => {
+      b.emit(
+        `${cmd.type !== "void" ? "const ret = " : ""}lib.${cmd.name}(`,
+      );
+      b.block(() => {
+        for (const p of cmd.params) {
+          const jsn = jsify(p.name);
+          b.emit(
+            `${p.text?.endsWith("*") ? `anyBuffer(${jsn})` : jsn},`,
           );
-        });
-        emit("}");
-      } else {
-        emit(`return ret;`);
+        }
+      });
+      b.emit(`);`);
+      if (cmd.type !== "void") {
+        if (cmd.type === "VkResult") {
+          b.emit(
+            `if (${
+              cmd.successCodes.map((e) => `ret === Result.${stripVk(e)}`).join(
+                " || ",
+              )
+            }) {`,
+          );
+          b.block(() => {
+            b.emit("return ret;");
+          });
+          b.emit(`} else {`);
+          b.block(() => {
+            b.emit(
+              `throw new VulkanError(ret as Result);`,
+            );
+          });
+          b.emit("}");
+        } else {
+          b.emit(`return ret;`);
+        }
       }
-    }
-  });
-  emit(`}`);
+    });
+    b.emit(`}`);
+  }
+
+  writeFile(`api/cmd.ts`, b.output());
 }
+// builder.newline();
 
-newline();
+// builder.emit(`export * from "./util.ts";`);
 
-emit(`export * from "./util.ts";`);
+// const src = builder.output();
 
-const src = output();
+// Deno.writeTextFileSync(new URL("../api/vk.ts", import.meta.url), src);
 
-Deno.writeTextFileSync(new URL("../api/vk.ts", import.meta.url), src);
+// console.log("Generated api/vk.ts");
 
-console.log("Generated api/vk.ts");
+// const { code } = transform(src, {
+//   "jsc": {
+//     "target": "es2022",
+//     "minify": {
+//       "compress": {
+//         "unused": true,
+//       },
+//     },
+//     "parser": {
+//       "syntax": "typescript",
+//     },
+//   },
+// });
 
-const { code } = transform(src, {
-  "jsc": {
-    "target": "es2022",
-    "minify": {
-      "compress": {
-        "unused": true,
-      },
-    },
-    "parser": {
-      "syntax": "typescript",
-    },
-  },
-});
+// Deno.writeTextFileSync(new URL("../api/vk.min.js", import.meta.url), code);
 
-Deno.writeTextFileSync(new URL("../api/vk.min.js", import.meta.url), code);
-
-console.log("Generated api/vk.min.js");
+// console.log("Generated api/vk.min.js");

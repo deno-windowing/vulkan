@@ -25,6 +25,19 @@ export type AnyBuffer =
   | null
   | BaseStruct;
 
+export function isTypedArray(x: unknown): x is TypedArray {
+  return x instanceof Uint8Array ||
+    x instanceof Uint16Array ||
+    x instanceof Uint32Array ||
+    x instanceof Int8Array ||
+    x instanceof Int16Array ||
+    x instanceof Int32Array ||
+    x instanceof Float32Array ||
+    x instanceof Float64Array ||
+    x instanceof BigUint64Array ||
+    x instanceof BigInt64Array;
+}
+
 export function anyBuffer(buffer: AnyBuffer) {
   if (!buffer) return null;
   else if (typeof buffer === "object" && BUFFER in buffer) {
@@ -37,15 +50,44 @@ export function anyBuffer(buffer: AnyBuffer) {
   );
 }
 
+export function isBaseStruct(value: unknown): value is BaseStruct {
+  return typeof value === "object" && value !== null && BUFFER in value;
+}
+
+export function addressOf(buffer: BufferSource): number | bigint {
+  return Deno.UnsafePointer.value(Deno.UnsafePointer.of(buffer));
+}
+
+export function pointerFromView(view: DataView, offset: number, le: boolean) {
+  return Deno.UnsafePointer.create(view.getBigUint64(offset, le));
+}
+export function maybePointerObject(x: unknown): boolean {
+  if (x === null) return false;
+  if (typeof x != "object") return false;
+  return Object.keys(x).length == 0 && Object.getPrototypeOf(x) === null &&
+    Object.isExtensible(x) == false;
+}
+
+export function notPointerObject<T extends unknown>(
+  x: T,
+): x is Exclude<T, NonNullable<Deno.PointerValue>> {
+  return !maybePointerObject(x);
+}
+
 export type AnyPointer = Deno.PointerValue | null | AnyBuffer;
 
-export function anyPointer(buffer: AnyPointer): Deno.PointerValue {
-  if (!buffer) return 0;
-  else if (typeof buffer === "number" || typeof buffer === "bigint") {
-    return buffer;
+export function anyPointer(value: AnyPointer): number | bigint {
+  if (value === null) {
+    return 0;
+  } else if (isTypedArray(value) || value instanceof ArrayBuffer) {
+    return value.byteLength == 0 ? 0 : addressOf(value);
+  } else if (isBaseStruct(value)) {
+    return addressOf(value[BUFFER]);
+  } else if (typeof value == "number" || typeof value == "bigint") {
+    return value;
+  } else {
+    return Deno.UnsafePointer.value(value);
   }
-  const u8 = anyBuffer(buffer);
-  return u8!.length === 0 ? 0 : Deno.UnsafePointer.of(u8 ?? new Uint8Array());
 }
 
 export class CString extends Uint8Array {
@@ -53,6 +95,13 @@ export class CString extends Uint8Array {
     super(str.length + 1);
     new TextEncoder().encodeInto(str, this);
   }
+}
+
+export function jsString(buffer: BufferSource): string {
+  const pointer = Deno.UnsafePointer.of(buffer);
+  if (pointer === null) return "";
+  const view = new Deno.UnsafePointerView(pointer);
+  return view.getCString();
 }
 
 export class CStringArray extends Uint8Array {
@@ -66,12 +115,12 @@ export class CStringArray extends Uint8Array {
       const str = strs[i];
       const data = new CString(str);
       this.#datas.push(data);
-      this.#view.setBigUint64(i * 8, BigInt(Deno.UnsafePointer.of(data)), LE);
+      this.#view.setBigUint64(i * 8, BigInt(addressOf(data)), LE);
     }
   }
 }
 
-const MAX_SAFE_INTEGER = BigInt(Number.MAX_SAFE_INTEGER);
+// const MAX_SAFE_INTEGER = BigInt(Number.MAX_SAFE_INTEGER);
 
 export class PointerRef extends Uint8Array {
   #view: DataView;
@@ -83,8 +132,7 @@ export class PointerRef extends Uint8Array {
 
   get value(): Deno.PointerValue {
     const ptr = this.#view.getBigUint64(0, LE);
-    if (ptr < MAX_SAFE_INTEGER) return Number(ptr);
-    return ptr;
+    return Deno.UnsafePointer.create(ptr);
   }
 
   set value(value: Deno.PointerValue) {
@@ -103,6 +151,11 @@ export class PointerArray extends BigUint64Array {
         this[i] = BigInt(anyPointer(ptrs[i]));
       }
     }
+  }
+
+  pointer(index: number): Deno.PointerValue {
+    if (index < 0 || index > this.length) return null;
+    return Deno.UnsafePointer.create(this[index]);
   }
 }
 
@@ -157,7 +210,7 @@ export class StructArray<T extends BaseStruct> implements BaseStruct {
 }
 
 export function getBuffer<T = TypedArray>(
-  ptr: Deno.PointerValue,
+  ptr: NonNullable<Deno.PointerValue>,
   size: number,
   arr: new (buf: ArrayBuffer) => T,
 ): T {
