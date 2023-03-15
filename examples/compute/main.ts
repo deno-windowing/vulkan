@@ -83,7 +83,7 @@ if (names.length === 0) {
 // function getQueueFamliyProperties(device: PhysicalDevice) {
 //   const queueFamilyCount = new Uint32Array(1);
 //   GetPhysicalDeviceQueueFamilyProperties(
-//     physicalDevice,
+//     device,
 //     queueFamilyCount,
 //     null,
 //   );
@@ -93,7 +93,7 @@ if (names.length === 0) {
 //     QueueFamilyProperties.size * queueFamilyCount[0],
 //   );
 //   GetPhysicalDeviceQueueFamilyProperties(
-//     physicalDevice,
+//     device,
 //     queueFamilyCount,
 //     queuesBuffer,
 //   );
@@ -127,5 +127,4 @@ if (names.length === 0) {
 
 // const queueRef = new PointerRef();
 // GetDeviceQueue(physicalDevice, queueIndex, 0, queueRef);
-// const queue = queueRef.value
-
+// const queue = queueRef.value;
