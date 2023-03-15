@@ -88,7 +88,7 @@ const C_TYPES = {
   "DWORD": "number",
   "LPCWSTR": "Deno.PointerValue",
   "int": "number",
-  "GgpFrameToken": "Deno.PointerValue",
+  "GgpFrameToken": "number | bigint",
   "HMONITOR": "Deno.PointerValue",
   "VisualID": "number",
   "xcb_visualid_t": "number",

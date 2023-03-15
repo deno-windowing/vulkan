@@ -1,9 +1,7 @@
 // deno-lint-ignore-file no-inner-declarations no-explicit-any
-import { transform } from "https://deno.land/x/swc@0.2.1/mod.ts";
 import {
   commands,
   constants,
-  Enums,
   enums,
   Field,
   FileBuilder,
@@ -11,10 +9,8 @@ import {
   isArray,
   isStruct,
   jsify,
-  Struct,
   structs,
   tymap,
-  Typedef,
   typedefs,
   typeToJS,
   unions,
@@ -69,18 +65,6 @@ function toConstCase(name: string) {
     .join("_");
 }
 
-// const builder = new FileBuilder();
-
-// console.log("Emitting...");
-
-// builder.newline();
-
-// builder.emit(
-//   `import { AnyBuffer, AnyPointer, anyBuffer, anyPointer, BUFFER, DATAVIEW, LE, BaseStruct } from "./util.ts";`,
-// );
-
-// builder.newline();
-
 {
   const b = new FileBuilder();
   b.emit("/// Type definitions");
@@ -89,17 +73,6 @@ function toConstCase(name: string) {
     b.newline();
     b.emit(`export type ${stripVk(ty.name)} = ${stripVk(ty.type)};`);
   }
-  // b.newline();
-  // // imports
-  // const imports = addImports(alias.map((it) => it.type));
-  // if (imports.structs.length > 0) {
-  //   imports.structs.forEach((name) =>
-  //     b.emit(`import {${name}} from "./struct/${name}.ts";`)
-  //   );
-  // }
-  // if (imports.enums.length > 0) {
-  //   b.emit(`import { ${[...imports.enums].join(", ")} } from "./enum.ts";`);
-  // }
 
   const alias = aliasTypeDefs.filter((def) => nameSetDefs.has(def.name));
   for (const ty of alias) {
@@ -229,9 +202,11 @@ function addImports(types: string[]) {
 
     const imports = addImports(s.fields.map((f) => f.type));
     if (imports.structs.length > 0) {
-      imports.structs.forEach((name) =>
-        b.emit(`import {${name}} from "./${name}.ts";`)
-      );
+      imports.structs.forEach((name) => {
+        if (name != "BaseInStructure" && name != "BaseOutStructure") {
+          b.emit(`import {${name}} from "./${name}.ts";`);
+        }
+      });
     }
     if (imports.enums.length > 0) {
       b.emit(`import { ${[...imports.enums].join(", ")} } from "../enum.ts";`);

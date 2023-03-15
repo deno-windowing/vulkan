@@ -15,7 +15,7 @@ import { StructureType } from "../enum.ts";
 
 export interface InitPresentFrameTokenGGP {
   pNext?: AnyPointer;
-  frameToken?: Deno.PointerValue;
+  frameToken?: number | bigint;
 }
 
 export class PresentFrameTokenGGP implements BaseStruct {
@@ -73,7 +73,7 @@ export class PresentFrameTokenGGP implements BaseStruct {
     return this.#view.getBigUint64(16, LE);
   }
 
-  set frameToken(value: Deno.PointerValue) {
+  set frameToken(value: number | bigint) {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 }

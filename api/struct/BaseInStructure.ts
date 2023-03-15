@@ -11,7 +11,6 @@ import {
   pointerFromView,
   notPointerObject,
 } from "../util.ts";
-import {BaseInStructure} from "./BaseInStructure.ts";
 import { StructureType } from "../enum.ts";
 
 export interface InitBaseInStructure {
