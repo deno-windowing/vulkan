@@ -12,6 +12,7 @@ import {
   notPointerObject,
 } from "../util.ts";
 import { ImageAspectFlags } from "../def.ts";
+import { ClearValue } from "../union.ts";
 
 export interface InitClearAttachment {
   aspectMask?: ImageAspectFlags;

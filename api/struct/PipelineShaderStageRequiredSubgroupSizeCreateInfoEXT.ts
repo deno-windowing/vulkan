@@ -1,0 +1,2 @@
+  import { PipelineShaderStageRequiredSubgroupSizeCreateInfo } from "./PipelineShaderStageRequiredSubgroupSizeCreateInfo.ts";
+  export type PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT = PipelineShaderStageRequiredSubgroupSizeCreateInfo;

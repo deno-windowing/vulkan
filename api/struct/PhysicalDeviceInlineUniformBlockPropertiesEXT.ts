@@ -1,0 +1,2 @@
+  import { PhysicalDeviceInlineUniformBlockProperties } from "./PhysicalDeviceInlineUniformBlockProperties.ts";
+  export type PhysicalDeviceInlineUniformBlockPropertiesEXT = PhysicalDeviceInlineUniformBlockProperties;

@@ -13,6 +13,7 @@ import {
 } from "../util.ts";
 import { StructureType, CopyMicromapModeEXT } from "../enum.ts";
 import { MicromapEXT } from "../def.ts";
+import { DeviceOrHostAddressKHR } from "../union.ts";
 
 export interface InitCopyMicromapToMemoryInfoEXT {
   pNext?: AnyPointer;

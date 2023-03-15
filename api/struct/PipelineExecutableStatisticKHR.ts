@@ -12,6 +12,7 @@ import {
   notPointerObject,
 } from "../util.ts";
 import { StructureType, PipelineExecutableStatisticFormatKHR } from "../enum.ts";
+import { PipelineExecutableStatisticValueKHR } from "../union.ts";
 
 export interface InitPipelineExecutableStatisticKHR {
   pNext?: AnyPointer;

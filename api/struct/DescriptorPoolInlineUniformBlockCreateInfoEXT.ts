@@ -1,0 +1,2 @@
+  import { DescriptorPoolInlineUniformBlockCreateInfo } from "./DescriptorPoolInlineUniformBlockCreateInfo.ts";
+  export type DescriptorPoolInlineUniformBlockCreateInfoEXT = DescriptorPoolInlineUniformBlockCreateInfo;

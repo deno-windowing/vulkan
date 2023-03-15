@@ -1,0 +1,2 @@
+  import { PhysicalDeviceScalarBlockLayoutFeatures } from "./PhysicalDeviceScalarBlockLayoutFeatures.ts";
+  export type PhysicalDeviceScalarBlockLayoutFeaturesEXT = PhysicalDeviceScalarBlockLayoutFeatures;

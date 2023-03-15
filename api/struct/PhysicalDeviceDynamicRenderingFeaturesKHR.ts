@@ -1,0 +1,2 @@
+  import { PhysicalDeviceDynamicRenderingFeatures } from "./PhysicalDeviceDynamicRenderingFeatures.ts";
+  export type PhysicalDeviceDynamicRenderingFeaturesKHR = PhysicalDeviceDynamicRenderingFeatures;

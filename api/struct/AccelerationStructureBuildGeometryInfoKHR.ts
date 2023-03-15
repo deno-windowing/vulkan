@@ -14,6 +14,7 @@ import {
 import {AccelerationStructureGeometryKHR} from "./AccelerationStructureGeometryKHR.ts";
 import { StructureType, AccelerationStructureTypeKHR, BuildAccelerationStructureModeKHR } from "../enum.ts";
 import { BuildAccelerationStructureFlagsKHR, AccelerationStructureKHR } from "../def.ts";
+import { DeviceOrHostAddressKHR } from "../union.ts";
 
 export interface InitAccelerationStructureBuildGeometryInfoKHR {
   pNext?: AnyPointer;

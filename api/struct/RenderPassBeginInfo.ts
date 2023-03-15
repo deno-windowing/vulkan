@@ -14,6 +14,7 @@ import {
 import {Rect2D} from "./Rect2D.ts";
 import { StructureType } from "../enum.ts";
 import { RenderPass, Framebuffer } from "../def.ts";
+import { ClearValue } from "../union.ts";
 
 export interface InitRenderPassBeginInfo {
   pNext?: AnyPointer;

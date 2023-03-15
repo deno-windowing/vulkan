@@ -1,0 +1,2 @@
+  import { PhysicalDeviceFragmentShaderBarycentricFeaturesKHR } from "./PhysicalDeviceFragmentShaderBarycentricFeaturesKHR.ts";
+  export type PhysicalDeviceFragmentShaderBarycentricFeaturesNV = PhysicalDeviceFragmentShaderBarycentricFeaturesKHR;

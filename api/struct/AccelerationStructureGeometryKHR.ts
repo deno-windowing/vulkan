@@ -13,6 +13,7 @@ import {
 } from "../util.ts";
 import { StructureType, GeometryTypeKHR } from "../enum.ts";
 import { GeometryFlagsKHR } from "../def.ts";
+import { AccelerationStructureGeometryDataKHR } from "../union.ts";
 
 export interface InitAccelerationStructureGeometryKHR {
   pNext?: AnyPointer;

@@ -1,4 +1,4 @@
-/// Enums
+// deno-lint-ignore-file no-empty-enum
 
 export enum StdVideoH264ChromaFormatIdc {
   MONOCHROME = 0,
@@ -4401,3 +4401,81 @@ export enum DeviceFaultAddressTypeEXT {
 export enum DeviceFaultVendorBinaryHeaderVersionEXT {
   DEVICE_FAULT_VENDOR_BINARY_HEADER_VERSION_ONE_EXT = 1,
 }
+
+export type PrivateDataSlotCreateFlagBitsEXT = PrivateDataSlotCreateFlagBits
+
+export type DescriptorUpdateTemplateTypeKHR = DescriptorUpdateTemplateType
+
+export type PointClippingBehaviorKHR = PointClippingBehavior
+
+export type QueueGlobalPriorityEXT = QueueGlobalPriorityKHR
+
+export type ResolveModeFlagBitsKHR = ResolveModeFlagBits
+
+export type DescriptorBindingFlagBitsEXT = DescriptorBindingFlagBits
+
+export type SemaphoreTypeKHR = SemaphoreType
+
+export type GeometryFlagBitsNV = GeometryFlagBitsKHR
+
+export type GeometryInstanceFlagBitsNV = GeometryInstanceFlagBitsKHR
+
+export type BuildAccelerationStructureFlagBitsNV = BuildAccelerationStructureFlagBitsKHR
+
+export type CopyAccelerationStructureModeNV = CopyAccelerationStructureModeKHR
+
+export type AccelerationStructureTypeNV = AccelerationStructureTypeKHR
+
+export type GeometryTypeNV = GeometryTypeKHR
+
+export type RayTracingShaderGroupTypeNV = RayTracingShaderGroupTypeKHR
+
+export type PipelineCreationFeedbackFlagBitsEXT = PipelineCreationFeedbackFlagBits
+
+export type SemaphoreWaitFlagBitsKHR = SemaphoreWaitFlagBits
+
+export type ToolPurposeFlagBitsEXT = ToolPurposeFlagBits
+
+export type AccessFlagBits2KHR = AccessFlagBits2
+
+export type PipelineStageFlagBits2KHR = PipelineStageFlagBits2
+
+export type FormatFeatureFlagBits2KHR = FormatFeatureFlagBits2
+
+export type RenderingFlagBitsKHR = RenderingFlagBits
+
+export type ExternalMemoryHandleTypeFlagBitsKHR = ExternalMemoryHandleTypeFlagBits
+
+export type ExternalMemoryFeatureFlagBitsKHR = ExternalMemoryFeatureFlagBits
+
+export type ExternalSemaphoreHandleTypeFlagBitsKHR = ExternalSemaphoreHandleTypeFlagBits
+
+export type ExternalSemaphoreFeatureFlagBitsKHR = ExternalSemaphoreFeatureFlagBits
+
+export type SemaphoreImportFlagBitsKHR = SemaphoreImportFlagBits
+
+export type ExternalFenceHandleTypeFlagBitsKHR = ExternalFenceHandleTypeFlagBits
+
+export type ExternalFenceFeatureFlagBitsKHR = ExternalFenceFeatureFlagBits
+
+export type FenceImportFlagBitsKHR = FenceImportFlagBits
+
+export type PeerMemoryFeatureFlagBitsKHR = PeerMemoryFeatureFlagBits
+
+export type MemoryAllocateFlagBitsKHR = MemoryAllocateFlagBits
+
+export type TessellationDomainOriginKHR = TessellationDomainOrigin
+
+export type SamplerYcbcrModelConversionKHR = SamplerYcbcrModelConversion
+
+export type SamplerYcbcrRangeKHR = SamplerYcbcrRange
+
+export type ChromaLocationKHR = ChromaLocation
+
+export type SamplerReductionModeEXT = SamplerReductionMode
+
+export type ShaderFloatControlsIndependenceKHR = ShaderFloatControlsIndependence
+
+export type SubmitFlagBitsKHR = SubmitFlagBits
+
+export type DriverIdKHR = DriverId

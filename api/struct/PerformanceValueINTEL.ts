@@ -12,6 +12,7 @@ import {
   notPointerObject,
 } from "../util.ts";
 import { PerformanceValueTypeINTEL } from "../enum.ts";
+import { PerformanceValueDataINTEL } from "../union.ts";
 
 export interface InitPerformanceValueINTEL {
   type?: PerformanceValueTypeINTEL;

@@ -1,0 +1,2 @@
+  import { PhysicalDeviceShaderTerminateInvocationFeatures } from "./PhysicalDeviceShaderTerminateInvocationFeatures.ts";
+  export type PhysicalDeviceShaderTerminateInvocationFeaturesKHR = PhysicalDeviceShaderTerminateInvocationFeatures;

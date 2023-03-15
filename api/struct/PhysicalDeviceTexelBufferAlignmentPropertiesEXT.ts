@@ -1,0 +1,2 @@
+  import { PhysicalDeviceTexelBufferAlignmentProperties } from "./PhysicalDeviceTexelBufferAlignmentProperties.ts";
+  export type PhysicalDeviceTexelBufferAlignmentPropertiesEXT = PhysicalDeviceTexelBufferAlignmentProperties;

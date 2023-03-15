@@ -1,0 +1,2 @@
+  import { PhysicalDeviceSynchronization2Features } from "./PhysicalDeviceSynchronization2Features.ts";
+  export type PhysicalDeviceSynchronization2FeaturesKHR = PhysicalDeviceSynchronization2Features;

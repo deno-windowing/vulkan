@@ -14,6 +14,7 @@ import {
 import {MicromapUsageEXT} from "./MicromapUsageEXT.ts";
 import { StructureType, MicromapTypeEXT, BuildMicromapModeEXT } from "../enum.ts";
 import { BuildMicromapFlagsEXT, MicromapEXT, DeviceSize } from "../def.ts";
+import { DeviceOrHostAddressConstKHR, DeviceOrHostAddressKHR } from "../union.ts";
 
 export interface InitMicromapBuildInfoEXT {
   pNext?: AnyPointer;

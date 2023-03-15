@@ -12,8 +12,8 @@ import {
   notPointerObject,
 } from "../util.ts";
 import {GeometryNV} from "./GeometryNV.ts";
-import { StructureType } from "../enum.ts";
-import { AccelerationStructureTypeNV, BuildAccelerationStructureFlagsNV } from "../def.ts";
+import { StructureType, AccelerationStructureTypeNV } from "../enum.ts";
+import { BuildAccelerationStructureFlagsNV } from "../def.ts";
 
 export interface InitAccelerationStructureInfoNV {
   pNext?: AnyPointer;

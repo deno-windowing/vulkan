@@ -1,0 +1,2 @@
+  import { PhysicalDeviceDepthStencilResolveProperties } from "./PhysicalDeviceDepthStencilResolveProperties.ts";
+  export type PhysicalDeviceDepthStencilResolvePropertiesKHR = PhysicalDeviceDepthStencilResolveProperties;

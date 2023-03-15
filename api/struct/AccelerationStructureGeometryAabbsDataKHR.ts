@@ -13,6 +13,7 @@ import {
 } from "../util.ts";
 import { StructureType } from "../enum.ts";
 import { DeviceSize } from "../def.ts";
+import { DeviceOrHostAddressConstKHR } from "../union.ts";
 
 export interface InitAccelerationStructureGeometryAabbsDataKHR {
   pNext?: AnyPointer;

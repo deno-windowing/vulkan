@@ -104,7 +104,6 @@ import {
   DebugUtilsMessageTypeFlagsEXT,
   AccelerationStructureNV,
   AccelerationStructureKHR,
-  MemoryRequirements2KHR,
   DeferredOperationKHR,
   PerformanceConfigurationINTEL,
   CullModeFlags,
@@ -118,7 +117,6 @@ import {
   CuFunctionNVX,
   BufferCollectionFUCHSIA,
   MicromapEXT,
-  PipelineInfoEXT,
   OpticalFlowSessionNV,
 } from "./def.ts";
 const lib = Deno.dlopen(Deno.build.os === "windows" ? "vulkan-1" : Deno.build.os === "darwin" ? "libvulkan.dylib.1" : "libvulkan.so.1", {
@@ -2047,7 +2045,6 @@ const lib = Deno.dlopen(Deno.build.os === "windows" ? "vulkan-1" : Deno.build.os
     "result": "void"
   },
 } as const).symbols;
-
 
 export class VulkanError extends Error {
   constructor(public code: Result) {

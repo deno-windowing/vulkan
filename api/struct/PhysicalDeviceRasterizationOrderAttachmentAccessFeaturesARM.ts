@@ -1,0 +1,2 @@
+  import { PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT } from "./PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT.ts";
+  export type PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM = PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT;

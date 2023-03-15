@@ -1,0 +1,2 @@
+  import { PhysicalDeviceDescriptorIndexingProperties } from "./PhysicalDeviceDescriptorIndexingProperties.ts";
+  export type PhysicalDeviceDescriptorIndexingPropertiesEXT = PhysicalDeviceDescriptorIndexingProperties;

@@ -1,0 +1,2 @@
+  import { PhysicalDeviceShaderAtomicInt64Features } from "./PhysicalDeviceShaderAtomicInt64Features.ts";
+  export type PhysicalDeviceShaderAtomicInt64FeaturesKHR = PhysicalDeviceShaderAtomicInt64Features;

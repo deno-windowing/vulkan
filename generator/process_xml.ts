@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 const api = JSON.parse(
   Deno.readTextFileSync(new URL("../data/vk.json", import.meta.url)),
 );
@@ -555,7 +556,7 @@ for (const ty of api.registry.types.type) {
     let size = 0;
     let alignment = 1;
     struct.fields = ty.member.map((member: any) => {
-      let field: Field = {
+      const field: Field = {
         name: member.name["#text"],
         type: member.type["#text"],
         offset: size,

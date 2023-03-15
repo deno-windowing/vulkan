@@ -12,6 +12,7 @@ import {
   notPointerObject,
 } from "../util.ts";
 import { StructureType, DescriptorType } from "../enum.ts";
+import { DescriptorDataEXT } from "../union.ts";
 
 export interface InitDescriptorGetInfoEXT {
   pNext?: AnyPointer;

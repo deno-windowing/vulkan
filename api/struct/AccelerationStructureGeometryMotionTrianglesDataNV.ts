@@ -12,6 +12,7 @@ import {
   notPointerObject,
 } from "../util.ts";
 import { StructureType } from "../enum.ts";
+import { DeviceOrHostAddressConstKHR } from "../union.ts";
 
 export interface InitAccelerationStructureGeometryMotionTrianglesDataNV {
   pNext?: AnyPointer;

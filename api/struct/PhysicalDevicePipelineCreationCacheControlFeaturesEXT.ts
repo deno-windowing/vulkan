@@ -1,0 +1,2 @@
+  import { PhysicalDevicePipelineCreationCacheControlFeatures } from "./PhysicalDevicePipelineCreationCacheControlFeatures.ts";
+  export type PhysicalDevicePipelineCreationCacheControlFeaturesEXT = PhysicalDevicePipelineCreationCacheControlFeatures;

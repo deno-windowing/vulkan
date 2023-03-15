@@ -1,0 +1,2 @@
+  import { RenderPassInputAttachmentAspectCreateInfo } from "./RenderPassInputAttachmentAspectCreateInfo.ts";
+  export type RenderPassInputAttachmentAspectCreateInfoKHR = RenderPassInputAttachmentAspectCreateInfo;

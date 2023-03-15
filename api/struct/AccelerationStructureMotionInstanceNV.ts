@@ -13,6 +13,7 @@ import {
 } from "../util.ts";
 import { AccelerationStructureMotionInstanceTypeNV } from "../enum.ts";
 import { AccelerationStructureMotionInstanceFlagsNV } from "../def.ts";
+import { AccelerationStructureMotionInstanceDataNV } from "../union.ts";
 
 export interface InitAccelerationStructureMotionInstanceNV {
   type?: AccelerationStructureMotionInstanceTypeNV;

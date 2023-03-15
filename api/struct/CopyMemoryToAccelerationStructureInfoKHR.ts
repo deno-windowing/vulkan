@@ -13,6 +13,7 @@ import {
 } from "../util.ts";
 import { StructureType, CopyAccelerationStructureModeKHR } from "../enum.ts";
 import { AccelerationStructureKHR } from "../def.ts";
+import { DeviceOrHostAddressConstKHR } from "../union.ts";
 
 export interface InitCopyMemoryToAccelerationStructureInfoKHR {
   pNext?: AnyPointer;

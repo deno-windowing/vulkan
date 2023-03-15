@@ -12,6 +12,7 @@ import {
   notPointerObject,
 } from "../util.ts";
 import { StructureType, Format } from "../enum.ts";
+import { ClearColorValue } from "../union.ts";
 
 export interface InitSamplerCustomBorderColorCreateInfoEXT {
   pNext?: AnyPointer;

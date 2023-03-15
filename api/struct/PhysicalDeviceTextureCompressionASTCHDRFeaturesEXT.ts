@@ -1,0 +1,2 @@
+  import { PhysicalDeviceTextureCompressionASTCHDRFeatures } from "./PhysicalDeviceTextureCompressionASTCHDRFeatures.ts";
+  export type PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT = PhysicalDeviceTextureCompressionASTCHDRFeatures;

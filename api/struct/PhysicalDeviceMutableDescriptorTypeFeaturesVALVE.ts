@@ -1,0 +1,2 @@
+  import { PhysicalDeviceMutableDescriptorTypeFeaturesEXT } from "./PhysicalDeviceMutableDescriptorTypeFeaturesEXT.ts";
+  export type PhysicalDeviceMutableDescriptorTypeFeaturesVALVE = PhysicalDeviceMutableDescriptorTypeFeaturesEXT;

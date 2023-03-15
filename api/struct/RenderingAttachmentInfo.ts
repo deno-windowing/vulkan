@@ -13,6 +13,7 @@ import {
 } from "../util.ts";
 import { StructureType, ImageLayout, ResolveModeFlagBits, AttachmentLoadOp, AttachmentStoreOp } from "../enum.ts";
 import { ImageView } from "../def.ts";
+import { ClearValue } from "../union.ts";
 
 export interface InitRenderingAttachmentInfo {
   pNext?: AnyPointer;

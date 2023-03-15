@@ -1,0 +1,2 @@
+  import { PhysicalDeviceSubgroupSizeControlFeatures } from "./PhysicalDeviceSubgroupSizeControlFeatures.ts";
+  export type PhysicalDeviceSubgroupSizeControlFeaturesEXT = PhysicalDeviceSubgroupSizeControlFeatures;

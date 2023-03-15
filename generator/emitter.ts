@@ -1,4 +1,4 @@
-// deno-lint-ignore-file no-inner-declarations
+// deno-lint-ignore-file no-inner-declarations no-explicit-any
 import { transform } from "https://deno.land/x/swc@0.2.1/mod.ts";
 import {
   commands,
@@ -21,18 +21,38 @@ import {
 } from "./process_xml.ts";
 import { parse } from "https://deno.land/std@0.179.0/path/mod.ts";
 
-const nameMapDefs = new Map<string, Typedef>(
-  typedefs.map((it) => [it.name, it]),
-);
-const nameMapEnums = new Map<string, Enums>(enums.map((it) => [it.name, it]));
-const nameMapStrucs = new Map<string, Struct>(
-  structs.map((it) => [it.name, it]),
-);
+const nameSetEnums = new Set<string>(enums.map((it) => it.name));
+const nameSetStrucs = new Set<string>(structs.map((it) => it.name));
+const nameSetUnions = new Set<string>(unions.map((it) => it.name));
+const nameSetDefs = new Set<string>();
 
-function writeFile(path: string, text: string) {
+/**
+ * without alias
+ */
+const pureTypeDefs = [];
+const aliasTypeDefs = [];
+for (const def of typedefs) {
+  if (!def.alias) {
+    pureTypeDefs.push(def);
+    nameSetDefs.add(def.name);
+  } else {
+    aliasTypeDefs.push(def);
+    if (nameSetStrucs.has(def.type)) {
+      nameSetStrucs.add(def.name);
+    } else if (nameSetEnums.has(def.type)) {
+      // FlagBits
+      nameSetEnums.add(def.name);
+    } else {
+      // Flags
+      nameSetDefs.add(def.name);
+    }
+  }
+}
+
+function writeFile(path: string, text: string, append = false) {
   const info = parse(path);
   Deno.mkdirSync(info.dir, { recursive: true });
-  Deno.writeTextFileSync(path, text);
+  Deno.writeTextFileSync(path, text, { append: append });
 }
 
 function stripVk(name: any) {
@@ -65,26 +85,23 @@ function toConstCase(name: string) {
   const b = new FileBuilder();
   b.emit("/// Type definitions");
 
-  const alias = typedefs.filter((t) => t.alias);
-  const nonAlias = typedefs.filter((t) => !t.alias);
-
-  for (const ty of nonAlias) {
+  for (const ty of pureTypeDefs) {
     b.newline();
     b.emit(`export type ${stripVk(ty.name)} = ${stripVk(ty.type)};`);
   }
+  // b.newline();
+  // // imports
+  // const imports = addImports(alias.map((it) => it.type));
+  // if (imports.structs.length > 0) {
+  //   imports.structs.forEach((name) =>
+  //     b.emit(`import {${name}} from "./struct/${name}.ts";`)
+  //   );
+  // }
+  // if (imports.enums.length > 0) {
+  //   b.emit(`import { ${[...imports.enums].join(", ")} } from "./enum.ts";`);
+  // }
 
-  b.newline();
-  // imports
-  const imports = addImports(alias.map((it) => it.type));
-  if (imports.structs.length > 0) {
-    imports.structs.forEach((name) =>
-      b.emit(`import {${name}} from "./struct/${name}.ts";`)
-    );
-  }
-  if (imports.enums.length > 0) {
-    b.emit(`import { ${[...imports.enums].join(", ")} } from "./enum.ts";`);
-  }
-
+  const alias = aliasTypeDefs.filter((def) => nameSetDefs.has(def.name));
   for (const ty of alias) {
     b.newline();
     b.emit(`export type ${stripVk(ty.name)} = ${stripVk(ty.type)};`);
@@ -111,20 +128,20 @@ function toConstCase(name: string) {
 }
 
 {
-  const builder = new FileBuilder();
-  builder.emit("/// Enums");
+  const b = new FileBuilder();
+  b.emit("// deno-lint-ignore-file no-empty-enum");
 
   for (const e of enums) {
-    builder.newline();
-    if (e.comment) builder.emit(`/** ${e.comment} */`);
+    b.newline();
+    if (e.comment) b.emit(`/** ${e.comment} */`);
 
     const enumClassName = stripVk(e.name);
-    builder.emit(`export enum ${enumClassName} {`);
+    b.emit(`export enum ${enumClassName} {`);
     const ec = toConstCase(enumClassName).replace("_FLAG_BITS", "");
-    builder.block(() => {
+    b.block(() => {
       const pushed: string[] = [];
       for (const c of e.enums) {
-        if (c.comment) builder.emit(`/** ${c.comment} */`);
+        if (c.comment) b.emit(`/** ${c.comment} */`);
         const n = stripVk(c.name);
         function maybeSlice(x: string, vkOnly = false) {
           if (typeof x !== "string") return x;
@@ -148,31 +165,40 @@ function toConstCase(name: string) {
               true,
             )
             : c.value;
-        builder.emit(`${finalName} = ${finalValue},`);
+        b.emit(`${finalName} = ${finalValue},`);
       }
     });
-    builder.emit(`}`);
+    b.emit(`}`);
   }
-  writeFile("api/enum.ts", builder.output());
+  const enumAlias = aliasTypeDefs.filter((def) => nameSetEnums.has(def.name));
+  for (const def of enumAlias) {
+    b.newline();
+    b.emit(`export type ${stripVk(def.name)} = ${stripVk(def.type)}`);
+  }
+  writeFile("api/enum.ts", b.output());
 }
 
 function addImports(types: string[]) {
   const _structs = new Set<string>();
+  const _unions = new Set<string>();
   const _enums = new Set<string>();
   const _defs = new Set<string>();
 
   for (const type of types) {
-    if (nameMapStrucs.has(type)) {
+    if (nameSetStrucs.has(type)) {
       _structs.add(stripVk(type));
-    } else if (nameMapEnums.has(type)) {
+    } else if (nameSetUnions.has(type)) {
+      _unions.add(stripVk(type));
+    } else if (nameSetEnums.has(type)) {
       _enums.add(stripVk(type));
-    } else if (nameMapDefs.has(type)) {
+    } else if (nameSetDefs.has(type)) {
       _defs.add(stripVk(type));
     }
   }
 
   return {
     structs: [..._structs],
+    unions: [..._unions],
     enums: [..._enums],
     defs: [..._defs],
   };
@@ -212,6 +238,11 @@ function addImports(types: string[]) {
     }
     if (imports.defs.length > 0) {
       b.emit(`import { ${[...imports.defs].join(", ")} } from "../def.ts";`);
+    }
+    if (imports.unions.length > 0) {
+      b.emit(
+        `import { ${[...imports.unions].join(", ")} } from "../union.ts";`,
+      );
     }
 
     b.newline();
@@ -545,6 +576,22 @@ function addImports(types: string[]) {
 
     writeFile(`api/struct/${className}.ts`, b.output());
   }
+  {
+    // alias
+    const structAlias = aliasTypeDefs.filter((def) =>
+      nameSetStrucs.has(def.name)
+    );
+    for (const def of structAlias) {
+      const b = new FileBuilder();
+      const className = stripVk(def.name);
+      classNames.push(className);
+      b.emit([
+        `import { ${stripVk(def.type)} } from "./${stripVk(def.type)}.ts";`,
+        `export type ${className} = ${stripVk(def.type)};`,
+      ]);
+      writeFile(`api/struct/${className}.ts`, b.output());
+    }
+  }
   const b = new FileBuilder();
   classNames.forEach((name) => b.emit(`export * from "./${name}.ts";`));
   writeFile(`api/struct/mod.ts`, b.output());
@@ -648,11 +695,6 @@ function toSkipCMD(name: string) {
       `} from "./def.ts";`,
     ], true);
   }
-  // if (imports.structs.length > 0) {
-  //   imports.structs.forEach((name) =>
-  //     b.emit(`import {${name}} from "./struct/${name}.ts";`)
-  //   );
-  // }
 
   b.emit(
     `const lib = Deno.dlopen(Deno.build.os === "windows" ? "vulkan-1" : Deno.build.os === "darwin" ? "libvulkan.dylib.1" : "libvulkan.so.1", {`,

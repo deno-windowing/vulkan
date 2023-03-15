@@ -1,0 +1,2 @@
+  import { PhysicalDeviceGlobalPriorityQueryFeaturesKHR } from "./PhysicalDeviceGlobalPriorityQueryFeaturesKHR.ts";
+  export type PhysicalDeviceGlobalPriorityQueryFeaturesEXT = PhysicalDeviceGlobalPriorityQueryFeaturesKHR;
