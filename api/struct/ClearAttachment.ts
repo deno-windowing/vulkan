@@ -55,7 +55,7 @@ export class ClearAttachment implements BaseStruct {
     }
   }
 
-  get aspectMask() {
+  get aspectMask(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class ClearAttachment implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get colorAttachment() {
+  get colorAttachment(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -71,7 +71,7 @@ export class ClearAttachment implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get clearValue() {
+  get clearValue(): unknown {
     throw new Error(`Unknown type: {"union":[{"union":["f32","i32","u32"]},{"struct":["f32","u32"]}]}`);
   }
 

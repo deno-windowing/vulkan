@@ -55,7 +55,7 @@ export class VideoDecodeH264ProfileInfoEXT implements BaseStruct {
     this.sType = StructureType.VIDEO_DECODE_H264_PROFILE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class VideoDecodeH264ProfileInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class VideoDecodeH264ProfileInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get stdProfileIdc() {
+  get stdProfileIdc(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class VideoDecodeH264ProfileInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pictureLayout() {
+  get pictureLayout(): number {
     return this.#view.getUint32(20, LE);
   }
 

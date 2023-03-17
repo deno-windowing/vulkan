@@ -60,7 +60,7 @@ export class PhysicalDeviceTexelBufferAlignmentProperties implements BaseStruct 
     this.sType = StructureType.PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class PhysicalDeviceTexelBufferAlignmentProperties implements BaseStruct 
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class PhysicalDeviceTexelBufferAlignmentProperties implements BaseStruct 
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get storageTexelBufferOffsetAlignmentBytes() {
+  get storageTexelBufferOffsetAlignmentBytes(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -84,7 +84,7 @@ export class PhysicalDeviceTexelBufferAlignmentProperties implements BaseStruct 
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get storageTexelBufferOffsetSingleTexelAlignment() {
+  get storageTexelBufferOffsetSingleTexelAlignment(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -92,7 +92,7 @@ export class PhysicalDeviceTexelBufferAlignmentProperties implements BaseStruct 
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get uniformTexelBufferOffsetAlignmentBytes() {
+  get uniformTexelBufferOffsetAlignmentBytes(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -100,7 +100,7 @@ export class PhysicalDeviceTexelBufferAlignmentProperties implements BaseStruct 
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get uniformTexelBufferOffsetSingleTexelAlignment() {
+  get uniformTexelBufferOffsetSingleTexelAlignment(): number {
     return this.#view.getUint32(40, LE);
   }
 

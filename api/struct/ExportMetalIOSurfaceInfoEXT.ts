@@ -56,7 +56,7 @@ export class ExportMetalIOSurfaceInfoEXT implements BaseStruct {
     this.sType = StructureType.EXPORT_METAL_IO_SURFACE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class ExportMetalIOSurfaceInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class ExportMetalIOSurfaceInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get image() {
+  get image(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -80,7 +80,7 @@ export class ExportMetalIOSurfaceInfoEXT implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get ioSurface() {
+  get ioSurface(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

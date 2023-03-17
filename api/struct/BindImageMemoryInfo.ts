@@ -58,7 +58,7 @@ export class BindImageMemoryInfo implements BaseStruct {
     this.sType = StructureType.BIND_IMAGE_MEMORY_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class BindImageMemoryInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class BindImageMemoryInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get image() {
+  get image(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -82,7 +82,7 @@ export class BindImageMemoryInfo implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get memory() {
+  get memory(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -90,7 +90,7 @@ export class BindImageMemoryInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get memoryOffset() {
+  get memoryOffset(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 

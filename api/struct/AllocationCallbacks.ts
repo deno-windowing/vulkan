@@ -59,7 +59,7 @@ export class AllocationCallbacks implements BaseStruct {
     }
   }
 
-  get pUserData() {
+  get pUserData(): Deno.PointerValue {
     return pointerFromView(this.#view, 0, LE);
   }
 
@@ -67,43 +67,43 @@ export class AllocationCallbacks implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
 
-  get pfnAllocation() {
-    throw new Error(`Unknown type: "function"`);
+  get pfnAllocation(): Deno.PointerValue {
+    return pointerFromView(this.#view, 8, LE);
   }
 
   set pfnAllocation(value: Deno.PointerValue) {
-    throw new Error(`Unknown type: "function"`);
+    this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get pfnReallocation() {
-    throw new Error(`Unknown type: "function"`);
+  get pfnReallocation(): Deno.PointerValue {
+    return pointerFromView(this.#view, 16, LE);
   }
 
   set pfnReallocation(value: Deno.PointerValue) {
-    throw new Error(`Unknown type: "function"`);
+    this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get pfnFree() {
-    throw new Error(`Unknown type: "function"`);
+  get pfnFree(): Deno.PointerValue {
+    return pointerFromView(this.#view, 24, LE);
   }
 
   set pfnFree(value: Deno.PointerValue) {
-    throw new Error(`Unknown type: "function"`);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pfnInternalAllocation() {
-    throw new Error(`Unknown type: "function"`);
+  get pfnInternalAllocation(): Deno.PointerValue {
+    return pointerFromView(this.#view, 32, LE);
   }
 
   set pfnInternalAllocation(value: Deno.PointerValue) {
-    throw new Error(`Unknown type: "function"`);
+    this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get pfnInternalFree() {
-    throw new Error(`Unknown type: "function"`);
+  get pfnInternalFree(): Deno.PointerValue {
+    return pointerFromView(this.#view, 40, LE);
   }
 
   set pfnInternalFree(value: Deno.PointerValue) {
-    throw new Error(`Unknown type: "function"`);
+    this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 }

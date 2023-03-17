@@ -55,7 +55,7 @@ export class BindIndexBufferIndirectCommandNV implements BaseStruct {
     }
   }
 
-  get bufferAddress() {
+  get bufferAddress(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class BindIndexBufferIndirectCommandNV implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(value), LE);
   }
 
-  get size() {
+  get size(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -71,7 +71,7 @@ export class BindIndexBufferIndirectCommandNV implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get indexType() {
+  get indexType(): number {
     return this.#view.getUint32(12, LE);
   }
 

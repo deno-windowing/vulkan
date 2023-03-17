@@ -84,7 +84,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.sType = StructureType.SAMPLER_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -92,7 +92,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -100,7 +100,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -108,7 +108,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get magFilter() {
+  get magFilter(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -116,7 +116,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get minFilter() {
+  get minFilter(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -124,7 +124,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get mipmapMode() {
+  get mipmapMode(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -132,7 +132,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get addressModeU() {
+  get addressModeU(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -140,7 +140,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get addressModeV() {
+  get addressModeV(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -148,7 +148,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get addressModeW() {
+  get addressModeW(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -156,7 +156,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get mipLodBias() {
+  get mipLodBias(): number {
     return this.#view.getFloat32(44, LE);
   }
 
@@ -164,7 +164,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setFloat32(44, Number(value), LE);
   }
 
-  get anisotropyEnable() {
+  get anisotropyEnable(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -172,7 +172,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get maxAnisotropy() {
+  get maxAnisotropy(): number {
     return this.#view.getFloat32(52, LE);
   }
 
@@ -180,7 +180,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setFloat32(52, Number(value), LE);
   }
 
-  get compareEnable() {
+  get compareEnable(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -188,7 +188,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get compareOp() {
+  get compareOp(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -196,7 +196,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get minLod() {
+  get minLod(): number {
     return this.#view.getFloat32(64, LE);
   }
 
@@ -204,7 +204,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setFloat32(64, Number(value), LE);
   }
 
-  get maxLod() {
+  get maxLod(): number {
     return this.#view.getFloat32(68, LE);
   }
 
@@ -212,7 +212,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setFloat32(68, Number(value), LE);
   }
 
-  get borderColor() {
+  get borderColor(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -220,7 +220,7 @@ export class SamplerCreateInfo implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get unnormalizedCoordinates() {
+  get unnormalizedCoordinates(): number {
     return this.#view.getUint32(76, LE);
   }
 

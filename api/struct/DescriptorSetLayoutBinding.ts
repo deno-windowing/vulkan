@@ -59,7 +59,7 @@ export class DescriptorSetLayoutBinding implements BaseStruct {
     }
   }
 
-  get binding() {
+  get binding(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class DescriptorSetLayoutBinding implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get descriptorType() {
+  get descriptorType(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -75,7 +75,7 @@ export class DescriptorSetLayoutBinding implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get descriptorCount() {
+  get descriptorCount(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -83,7 +83,7 @@ export class DescriptorSetLayoutBinding implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get stageFlags() {
+  get stageFlags(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -91,7 +91,7 @@ export class DescriptorSetLayoutBinding implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get pImmutableSamplers() {
+  get pImmutableSamplers(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 

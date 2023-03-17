@@ -54,7 +54,7 @@ export class StdVideoEncodeH264RefListModEntry implements BaseStruct {
     }
   }
 
-  get modification_of_pic_nums_idc() {
+  get modification_of_pic_nums_idc(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class StdVideoEncodeH264RefListModEntry implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get abs_diff_pic_num_minus1() {
+  get abs_diff_pic_num_minus1(): number {
     return this.#view.getUint16(4, LE);
   }
 
@@ -70,7 +70,7 @@ export class StdVideoEncodeH264RefListModEntry implements BaseStruct {
     this.#view.setUint16(4, Number(value), LE);
   }
 
-  get long_term_pic_num() {
+  get long_term_pic_num(): number {
     return this.#view.getUint16(6, LE);
   }
 

@@ -56,7 +56,7 @@ export class VideoEncodeH264DpbSlotInfoEXT implements BaseStruct {
     this.sType = StructureType.VIDEO_ENCODE_H264_DPB_SLOT_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class VideoEncodeH264DpbSlotInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class VideoEncodeH264DpbSlotInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get slotIndex() {
+  get slotIndex(): number {
     return this.#view.getInt8(16);
   }
 
@@ -80,7 +80,7 @@ export class VideoEncodeH264DpbSlotInfoEXT implements BaseStruct {
     this.#view.setInt8(16, Number(value));
   }
 
-  get pStdReferenceInfo() {
+  get pStdReferenceInfo(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

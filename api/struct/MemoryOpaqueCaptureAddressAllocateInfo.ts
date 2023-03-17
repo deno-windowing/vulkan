@@ -53,7 +53,7 @@ export class MemoryOpaqueCaptureAddressAllocateInfo implements BaseStruct {
     this.sType = StructureType.MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class MemoryOpaqueCaptureAddressAllocateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -69,7 +69,7 @@ export class MemoryOpaqueCaptureAddressAllocateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get opaqueCaptureAddress() {
+  get opaqueCaptureAddress(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 

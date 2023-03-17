@@ -70,7 +70,7 @@ export class RenderingInfo implements BaseStruct {
     this.sType = StructureType.RENDERING_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -78,7 +78,7 @@ export class RenderingInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -86,7 +86,7 @@ export class RenderingInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -94,7 +94,7 @@ export class RenderingInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get renderArea() {
+  get renderArea(): Rect2D {
     return new Rect2D(this.#data.subarray(20, 20 + Rect2D.size));
   }
 
@@ -105,7 +105,7 @@ export class RenderingInfo implements BaseStruct {
     this.#data.set(value[BUFFER], 20);
   }
 
-  get layerCount() {
+  get layerCount(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -113,7 +113,7 @@ export class RenderingInfo implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get viewMask() {
+  get viewMask(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -121,7 +121,7 @@ export class RenderingInfo implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get colorAttachmentCount() {
+  get colorAttachmentCount(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -129,7 +129,7 @@ export class RenderingInfo implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get pColorAttachments() {
+  get pColorAttachments(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 
@@ -137,7 +137,7 @@ export class RenderingInfo implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 
-  get pDepthAttachment() {
+  get pDepthAttachment(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -145,7 +145,7 @@ export class RenderingInfo implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get pStencilAttachment() {
+  get pStencilAttachment(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 

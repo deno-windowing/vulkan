@@ -57,7 +57,7 @@ export class DrawIndexedIndirectCommand implements BaseStruct {
     }
   }
 
-  get indexCount() {
+  get indexCount(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class DrawIndexedIndirectCommand implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get instanceCount() {
+  get instanceCount(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -73,7 +73,7 @@ export class DrawIndexedIndirectCommand implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get firstIndex() {
+  get firstIndex(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -81,7 +81,7 @@ export class DrawIndexedIndirectCommand implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get vertexOffset() {
+  get vertexOffset(): number {
     return this.#view.getInt32(12, LE);
   }
 
@@ -89,7 +89,7 @@ export class DrawIndexedIndirectCommand implements BaseStruct {
     this.#view.setInt32(12, Number(value), LE);
   }
 
-  get firstInstance() {
+  get firstInstance(): number {
     return this.#view.getUint32(16, LE);
   }
 

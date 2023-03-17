@@ -54,7 +54,7 @@ export class MemoryGetAndroidHardwareBufferInfoANDROID implements BaseStruct {
     this.sType = StructureType.MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class MemoryGetAndroidHardwareBufferInfoANDROID implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class MemoryGetAndroidHardwareBufferInfoANDROID implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get memory() {
+  get memory(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 

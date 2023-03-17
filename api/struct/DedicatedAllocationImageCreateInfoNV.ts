@@ -54,7 +54,7 @@ export class DedicatedAllocationImageCreateInfoNV implements BaseStruct {
     this.sType = StructureType.DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class DedicatedAllocationImageCreateInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class DedicatedAllocationImageCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get dedicatedAllocation() {
+  get dedicatedAllocation(): number {
     return this.#view.getUint32(16, LE);
   }
 

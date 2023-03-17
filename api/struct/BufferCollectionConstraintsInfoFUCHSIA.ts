@@ -61,7 +61,7 @@ export class BufferCollectionConstraintsInfoFUCHSIA implements BaseStruct {
     this.sType = StructureType.BUFFER_COLLECTION_CONSTRAINTS_INFO_FUCHSIA;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class BufferCollectionConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class BufferCollectionConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get minBufferCount() {
+  get minBufferCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -85,7 +85,7 @@ export class BufferCollectionConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get maxBufferCount() {
+  get maxBufferCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -93,7 +93,7 @@ export class BufferCollectionConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get minBufferCountForCamping() {
+  get minBufferCountForCamping(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -101,7 +101,7 @@ export class BufferCollectionConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get minBufferCountForDedicatedSlack() {
+  get minBufferCountForDedicatedSlack(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -109,7 +109,7 @@ export class BufferCollectionConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get minBufferCountForSharedSlack() {
+  get minBufferCountForSharedSlack(): number {
     return this.#view.getUint32(32, LE);
   }
 

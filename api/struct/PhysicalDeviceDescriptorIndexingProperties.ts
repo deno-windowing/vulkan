@@ -98,7 +98,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -106,7 +106,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -114,7 +114,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get maxUpdateAfterBindDescriptorsInAllPools() {
+  get maxUpdateAfterBindDescriptorsInAllPools(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -122,7 +122,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get shaderUniformBufferArrayNonUniformIndexingNative() {
+  get shaderUniformBufferArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -130,7 +130,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get shaderSampledImageArrayNonUniformIndexingNative() {
+  get shaderSampledImageArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -138,7 +138,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get shaderStorageBufferArrayNonUniformIndexingNative() {
+  get shaderStorageBufferArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -146,7 +146,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get shaderStorageImageArrayNonUniformIndexingNative() {
+  get shaderStorageImageArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -154,7 +154,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get shaderInputAttachmentArrayNonUniformIndexingNative() {
+  get shaderInputAttachmentArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -162,7 +162,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get robustBufferAccessUpdateAfterBind() {
+  get robustBufferAccessUpdateAfterBind(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -170,7 +170,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get quadDivergentImplicitLod() {
+  get quadDivergentImplicitLod(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -178,7 +178,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindSamplers() {
+  get maxPerStageDescriptorUpdateAfterBindSamplers(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -186,7 +186,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindUniformBuffers() {
+  get maxPerStageDescriptorUpdateAfterBindUniformBuffers(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -194,7 +194,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindStorageBuffers() {
+  get maxPerStageDescriptorUpdateAfterBindStorageBuffers(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -202,7 +202,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindSampledImages() {
+  get maxPerStageDescriptorUpdateAfterBindSampledImages(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -210,7 +210,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindStorageImages() {
+  get maxPerStageDescriptorUpdateAfterBindStorageImages(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -218,7 +218,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindInputAttachments() {
+  get maxPerStageDescriptorUpdateAfterBindInputAttachments(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -226,7 +226,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get maxPerStageUpdateAfterBindResources() {
+  get maxPerStageUpdateAfterBindResources(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -234,7 +234,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindSamplers() {
+  get maxDescriptorSetUpdateAfterBindSamplers(): number {
     return this.#view.getUint32(76, LE);
   }
 
@@ -242,7 +242,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(76, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindUniformBuffers() {
+  get maxDescriptorSetUpdateAfterBindUniformBuffers(): number {
     return this.#view.getUint32(80, LE);
   }
 
@@ -250,7 +250,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(80, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindUniformBuffersDynamic() {
+  get maxDescriptorSetUpdateAfterBindUniformBuffersDynamic(): number {
     return this.#view.getUint32(84, LE);
   }
 
@@ -258,7 +258,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(84, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindStorageBuffers() {
+  get maxDescriptorSetUpdateAfterBindStorageBuffers(): number {
     return this.#view.getUint32(88, LE);
   }
 
@@ -266,7 +266,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindStorageBuffersDynamic() {
+  get maxDescriptorSetUpdateAfterBindStorageBuffersDynamic(): number {
     return this.#view.getUint32(92, LE);
   }
 
@@ -274,7 +274,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(92, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindSampledImages() {
+  get maxDescriptorSetUpdateAfterBindSampledImages(): number {
     return this.#view.getUint32(96, LE);
   }
 
@@ -282,7 +282,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(96, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindStorageImages() {
+  get maxDescriptorSetUpdateAfterBindStorageImages(): number {
     return this.#view.getUint32(100, LE);
   }
 
@@ -290,7 +290,7 @@ export class PhysicalDeviceDescriptorIndexingProperties implements BaseStruct {
     this.#view.setUint32(100, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindInputAttachments() {
+  get maxDescriptorSetUpdateAfterBindInputAttachments(): number {
     return this.#view.getUint32(104, LE);
   }
 

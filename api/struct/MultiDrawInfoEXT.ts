@@ -51,7 +51,7 @@ export class MultiDrawInfoEXT implements BaseStruct {
     }
   }
 
-  get firstVertex() {
+  get firstVertex(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -59,7 +59,7 @@ export class MultiDrawInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get vertexCount() {
+  get vertexCount(): number {
     return this.#view.getUint32(4, LE);
   }
 

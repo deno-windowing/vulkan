@@ -70,7 +70,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     }
   }
 
-  get cpb_cnt_minus1() {
+  get cpb_cnt_minus1(): number {
     return this.#view.getUint8(0);
   }
 
@@ -78,7 +78,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#view.setUint8(0, Number(value));
   }
 
-  get bit_rate_scale() {
+  get bit_rate_scale(): number {
     return this.#view.getUint8(1);
   }
 
@@ -86,7 +86,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#view.setUint8(1, Number(value));
   }
 
-  get cpb_size_scale() {
+  get cpb_size_scale(): number {
     return this.#view.getUint8(2);
   }
 
@@ -94,7 +94,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#view.setUint8(2, Number(value));
   }
 
-  get reserved1() {
+  get reserved1(): number {
     return this.#view.getUint8(3);
   }
 
@@ -102,7 +102,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#view.setUint8(3, Number(value));
   }
 
-  get bit_rate_value_minus1() {
+  get bit_rate_value_minus1(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 4, 32);
   }
 
@@ -110,7 +110,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 4);
   }
 
-  get cpb_size_value_minus1() {
+  get cpb_size_value_minus1(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 132, 32);
   }
 
@@ -118,7 +118,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 132);
   }
 
-  get cbr_flag() {
+  get cbr_flag(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 260, 32);
   }
 
@@ -126,7 +126,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 260);
   }
 
-  get initial_cpb_removal_delay_length_minus1() {
+  get initial_cpb_removal_delay_length_minus1(): number {
     return this.#view.getUint32(292, LE);
   }
 
@@ -134,7 +134,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#view.setUint32(292, Number(value), LE);
   }
 
-  get cpb_removal_delay_length_minus1() {
+  get cpb_removal_delay_length_minus1(): number {
     return this.#view.getUint32(296, LE);
   }
 
@@ -142,7 +142,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#view.setUint32(296, Number(value), LE);
   }
 
-  get dpb_output_delay_length_minus1() {
+  get dpb_output_delay_length_minus1(): number {
     return this.#view.getUint32(300, LE);
   }
 
@@ -150,7 +150,7 @@ export class StdVideoH264HrdParameters implements BaseStruct {
     this.#view.setUint32(300, Number(value), LE);
   }
 
-  get time_offset_length() {
+  get time_offset_length(): number {
     return this.#view.getUint32(304, LE);
   }
 

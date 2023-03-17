@@ -53,7 +53,7 @@ export class PhysicalDeviceRayTracingInvocationReorderPropertiesNV implements Ba
     this.sType = StructureType.PHYSICAL_DEVICE_RAY_TRACING_INVOCATION_REORDER_PROPERTIES_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class PhysicalDeviceRayTracingInvocationReorderPropertiesNV implements Ba
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -69,7 +69,7 @@ export class PhysicalDeviceRayTracingInvocationReorderPropertiesNV implements Ba
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get rayTracingInvocationReorderReorderingHint() {
+  get rayTracingInvocationReorderReorderingHint(): number {
     return this.#view.getUint32(16, LE);
   }
 

@@ -82,7 +82,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -90,7 +90,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -98,7 +98,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get deviceUUID() {
+  get deviceUUID(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 16, 16);
   }
 
@@ -106,7 +106,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 16);
   }
 
-  get driverUUID() {
+  get driverUUID(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 32, 16);
   }
 
@@ -114,7 +114,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 32);
   }
 
-  get deviceLUID() {
+  get deviceLUID(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 48, 8);
   }
 
@@ -122,7 +122,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 48);
   }
 
-  get deviceNodeMask() {
+  get deviceNodeMask(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -130,7 +130,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get deviceLUIDValid() {
+  get deviceLUIDValid(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -138,7 +138,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get subgroupSize() {
+  get subgroupSize(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -146,7 +146,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get subgroupSupportedStages() {
+  get subgroupSupportedStages(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -154,7 +154,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get subgroupSupportedOperations() {
+  get subgroupSupportedOperations(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -162,7 +162,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get subgroupQuadOperationsInAllStages() {
+  get subgroupQuadOperationsInAllStages(): number {
     return this.#view.getUint32(76, LE);
   }
 
@@ -170,7 +170,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(76, Number(value), LE);
   }
 
-  get pointClippingBehavior() {
+  get pointClippingBehavior(): number {
     return this.#view.getUint32(80, LE);
   }
 
@@ -178,7 +178,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(80, Number(value), LE);
   }
 
-  get maxMultiviewViewCount() {
+  get maxMultiviewViewCount(): number {
     return this.#view.getUint32(84, LE);
   }
 
@@ -186,7 +186,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(84, Number(value), LE);
   }
 
-  get maxMultiviewInstanceIndex() {
+  get maxMultiviewInstanceIndex(): number {
     return this.#view.getUint32(88, LE);
   }
 
@@ -194,7 +194,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get protectedNoFault() {
+  get protectedNoFault(): number {
     return this.#view.getUint32(92, LE);
   }
 
@@ -202,7 +202,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(92, Number(value), LE);
   }
 
-  get maxPerSetDescriptors() {
+  get maxPerSetDescriptors(): number {
     return this.#view.getUint32(96, LE);
   }
 
@@ -210,7 +210,7 @@ export class PhysicalDeviceVulkan11Properties implements BaseStruct {
     this.#view.setUint32(96, Number(value), LE);
   }
 
-  get maxMemoryAllocationSize() {
+  get maxMemoryAllocationSize(): bigint {
     return this.#view.getBigUint64(104, LE);
   }
 

@@ -102,7 +102,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoH265SpsVuiFlags {
     return new StdVideoH265SpsVuiFlags(this.#data.subarray(0, 0 + StdVideoH265SpsVuiFlags.size));
   }
 
@@ -113,7 +113,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get aspect_ratio_idc() {
+  get aspect_ratio_idc(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -121,7 +121,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get sar_width() {
+  get sar_width(): number {
     return this.#view.getUint16(76, LE);
   }
 
@@ -129,7 +129,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(76, Number(value), LE);
   }
 
-  get sar_height() {
+  get sar_height(): number {
     return this.#view.getUint16(78, LE);
   }
 
@@ -137,7 +137,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(78, Number(value), LE);
   }
 
-  get video_format() {
+  get video_format(): number {
     return this.#view.getUint8(80);
   }
 
@@ -145,7 +145,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(80, Number(value));
   }
 
-  get colour_primaries() {
+  get colour_primaries(): number {
     return this.#view.getUint8(81);
   }
 
@@ -153,7 +153,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(81, Number(value));
   }
 
-  get transfer_characteristics() {
+  get transfer_characteristics(): number {
     return this.#view.getUint8(82);
   }
 
@@ -161,7 +161,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(82, Number(value));
   }
 
-  get matrix_coeffs() {
+  get matrix_coeffs(): number {
     return this.#view.getUint8(83);
   }
 
@@ -169,7 +169,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(83, Number(value));
   }
 
-  get chroma_sample_loc_type_top_field() {
+  get chroma_sample_loc_type_top_field(): number {
     return this.#view.getUint8(84);
   }
 
@@ -177,7 +177,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(84, Number(value));
   }
 
-  get chroma_sample_loc_type_bottom_field() {
+  get chroma_sample_loc_type_bottom_field(): number {
     return this.#view.getUint8(85);
   }
 
@@ -185,7 +185,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(85, Number(value));
   }
 
-  get reserved1() {
+  get reserved1(): number {
     return this.#view.getUint8(86);
   }
 
@@ -193,7 +193,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(86, Number(value));
   }
 
-  get reserved2() {
+  get reserved2(): number {
     return this.#view.getUint8(87);
   }
 
@@ -201,7 +201,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(87, Number(value));
   }
 
-  get def_disp_win_left_offset() {
+  get def_disp_win_left_offset(): number {
     return this.#view.getUint16(88, LE);
   }
 
@@ -209,7 +209,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(88, Number(value), LE);
   }
 
-  get def_disp_win_right_offset() {
+  get def_disp_win_right_offset(): number {
     return this.#view.getUint16(90, LE);
   }
 
@@ -217,7 +217,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(90, Number(value), LE);
   }
 
-  get def_disp_win_top_offset() {
+  get def_disp_win_top_offset(): number {
     return this.#view.getUint16(92, LE);
   }
 
@@ -225,7 +225,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(92, Number(value), LE);
   }
 
-  get def_disp_win_bottom_offset() {
+  get def_disp_win_bottom_offset(): number {
     return this.#view.getUint16(94, LE);
   }
 
@@ -233,7 +233,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(94, Number(value), LE);
   }
 
-  get vui_num_units_in_tick() {
+  get vui_num_units_in_tick(): number {
     return this.#view.getUint32(96, LE);
   }
 
@@ -241,7 +241,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint32(96, Number(value), LE);
   }
 
-  get vui_time_scale() {
+  get vui_time_scale(): number {
     return this.#view.getUint32(100, LE);
   }
 
@@ -249,7 +249,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint32(100, Number(value), LE);
   }
 
-  get vui_num_ticks_poc_diff_one_minus1() {
+  get vui_num_ticks_poc_diff_one_minus1(): number {
     return this.#view.getUint32(104, LE);
   }
 
@@ -257,7 +257,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint32(104, Number(value), LE);
   }
 
-  get min_spatial_segmentation_idc() {
+  get min_spatial_segmentation_idc(): number {
     return this.#view.getUint16(108, LE);
   }
 
@@ -265,7 +265,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(108, Number(value), LE);
   }
 
-  get reserved3() {
+  get reserved3(): number {
     return this.#view.getUint16(110, LE);
   }
 
@@ -273,7 +273,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(110, Number(value), LE);
   }
 
-  get max_bytes_per_pic_denom() {
+  get max_bytes_per_pic_denom(): number {
     return this.#view.getUint8(112);
   }
 
@@ -281,7 +281,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(112, Number(value));
   }
 
-  get max_bits_per_min_cu_denom() {
+  get max_bits_per_min_cu_denom(): number {
     return this.#view.getUint8(113);
   }
 
@@ -289,7 +289,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(113, Number(value));
   }
 
-  get log2_max_mv_length_horizontal() {
+  get log2_max_mv_length_horizontal(): number {
     return this.#view.getUint8(114);
   }
 
@@ -297,7 +297,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(114, Number(value));
   }
 
-  get log2_max_mv_length_vertical() {
+  get log2_max_mv_length_vertical(): number {
     return this.#view.getUint8(115);
   }
 
@@ -305,7 +305,7 @@ export class StdVideoH265SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(115, Number(value));
   }
 
-  get pHrdParameters() {
+  get pHrdParameters(): Deno.PointerValue {
     return pointerFromView(this.#view, 120, LE);
   }
 

@@ -54,7 +54,7 @@ export class DrmFormatModifierPropertiesEXT implements BaseStruct {
     }
   }
 
-  get drmFormatModifier() {
+  get drmFormatModifier(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class DrmFormatModifierPropertiesEXT implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(value), LE);
   }
 
-  get drmFormatModifierPlaneCount() {
+  get drmFormatModifierPlaneCount(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -70,7 +70,7 @@ export class DrmFormatModifierPropertiesEXT implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get drmFormatModifierTilingFeatures() {
+  get drmFormatModifierTilingFeatures(): number {
     return this.#view.getUint32(12, LE);
   }
 

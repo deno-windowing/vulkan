@@ -53,7 +53,7 @@ export class DeviceFaultVendorInfoEXT implements BaseStruct {
     }
   }
 
-  get description() {
+  get description(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 0, 256);
   }
 
@@ -61,7 +61,7 @@ export class DeviceFaultVendorInfoEXT implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 0);
   }
 
-  get vendorFaultCode() {
+  get vendorFaultCode(): bigint {
     return this.#view.getBigUint64(256, LE);
   }
 
@@ -69,7 +69,7 @@ export class DeviceFaultVendorInfoEXT implements BaseStruct {
     this.#view.setBigUint64(256, BigInt(value), LE);
   }
 
-  get vendorFaultData() {
+  get vendorFaultData(): bigint {
     return this.#view.getBigUint64(264, LE);
   }
 

@@ -59,7 +59,7 @@ export class ColorBlendAdvancedEXT implements BaseStruct {
     }
   }
 
-  get advancedBlendOp() {
+  get advancedBlendOp(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class ColorBlendAdvancedEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get srcPremultiplied() {
+  get srcPremultiplied(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -75,7 +75,7 @@ export class ColorBlendAdvancedEXT implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get dstPremultiplied() {
+  get dstPremultiplied(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -83,7 +83,7 @@ export class ColorBlendAdvancedEXT implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get blendOverlap() {
+  get blendOverlap(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -91,7 +91,7 @@ export class ColorBlendAdvancedEXT implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get clampResults() {
+  get clampResults(): number {
     return this.#view.getUint32(16, LE);
   }
 

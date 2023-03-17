@@ -66,7 +66,7 @@ export class ImageFormatConstraintsInfoFUCHSIA implements BaseStruct {
     this.sType = StructureType.IMAGE_FORMAT_CONSTRAINTS_INFO_FUCHSIA;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -74,7 +74,7 @@ export class ImageFormatConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -82,7 +82,7 @@ export class ImageFormatConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get imageCreateInfo() {
+  get imageCreateInfo(): ImageCreateInfo {
     return new ImageCreateInfo(this.#data.subarray(16, 16 + ImageCreateInfo.size));
   }
 
@@ -93,7 +93,7 @@ export class ImageFormatConstraintsInfoFUCHSIA implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get requiredFormatFeatures() {
+  get requiredFormatFeatures(): number {
     return this.#view.getUint32(104, LE);
   }
 
@@ -101,7 +101,7 @@ export class ImageFormatConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(104, Number(value), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(108, LE);
   }
 
@@ -109,7 +109,7 @@ export class ImageFormatConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(108, Number(value), LE);
   }
 
-  get sysmemPixelFormat() {
+  get sysmemPixelFormat(): bigint {
     return this.#view.getBigUint64(112, LE);
   }
 
@@ -117,7 +117,7 @@ export class ImageFormatConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setBigUint64(112, BigInt(value), LE);
   }
 
-  get colorSpaceCount() {
+  get colorSpaceCount(): number {
     return this.#view.getUint32(120, LE);
   }
 
@@ -125,7 +125,7 @@ export class ImageFormatConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(120, Number(value), LE);
   }
 
-  get pColorSpaces() {
+  get pColorSpaces(): Deno.PointerValue {
     return pointerFromView(this.#view, 128, LE);
   }
 

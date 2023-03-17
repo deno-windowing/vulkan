@@ -51,7 +51,7 @@ export class StdVideoDecodeH265ReferenceInfoFlags implements BaseStruct {
     }
   }
 
-  get used_for_long_term_reference() {
+  get used_for_long_term_reference(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -59,7 +59,7 @@ export class StdVideoDecodeH265ReferenceInfoFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get unused_for_reference() {
+  get unused_for_reference(): number {
     return this.#view.getUint32(4, LE);
   }
 

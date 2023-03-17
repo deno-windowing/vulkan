@@ -60,7 +60,7 @@ export class SemaphoreWaitInfo implements BaseStruct {
     this.sType = StructureType.SEMAPHORE_WAIT_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class SemaphoreWaitInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class SemaphoreWaitInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -84,7 +84,7 @@ export class SemaphoreWaitInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get semaphoreCount() {
+  get semaphoreCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -92,7 +92,7 @@ export class SemaphoreWaitInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get pSemaphores() {
+  get pSemaphores(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -100,7 +100,7 @@ export class SemaphoreWaitInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pValues() {
+  get pValues(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

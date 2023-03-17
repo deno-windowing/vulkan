@@ -69,7 +69,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.sType = StructureType.RENDERING_ATTACHMENT_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -77,7 +77,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -85,7 +85,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get imageView() {
+  get imageView(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -93,7 +93,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get imageLayout() {
+  get imageLayout(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -101,7 +101,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get resolveMode() {
+  get resolveMode(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -109,7 +109,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get resolveImageView() {
+  get resolveImageView(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -117,7 +117,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get resolveImageLayout() {
+  get resolveImageLayout(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -125,7 +125,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get loadOp() {
+  get loadOp(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -133,7 +133,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get storeOp() {
+  get storeOp(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -141,7 +141,7 @@ export class RenderingAttachmentInfo implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get clearValue() {
+  get clearValue(): unknown {
     throw new Error(`Unknown type: {"union":[{"union":["f32","i32","u32"]},{"struct":["f32","u32"]}]}`);
   }
 

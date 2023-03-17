@@ -59,7 +59,7 @@ export class PipelineViewportWScalingStateCreateInfoNV implements BaseStruct {
     this.sType = StructureType.PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class PipelineViewportWScalingStateCreateInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class PipelineViewportWScalingStateCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get viewportWScalingEnable() {
+  get viewportWScalingEnable(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -83,7 +83,7 @@ export class PipelineViewportWScalingStateCreateInfoNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get viewportCount() {
+  get viewportCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -91,7 +91,7 @@ export class PipelineViewportWScalingStateCreateInfoNV implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get pViewportWScalings() {
+  get pViewportWScalings(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

@@ -53,7 +53,7 @@ export class MicromapUsageEXT implements BaseStruct {
     }
   }
 
-  get count() {
+  get count(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class MicromapUsageEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get subdivisionLevel() {
+  get subdivisionLevel(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -69,7 +69,7 @@ export class MicromapUsageEXT implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getUint32(8, LE);
   }
 

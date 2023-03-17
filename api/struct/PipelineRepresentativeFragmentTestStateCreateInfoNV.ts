@@ -54,7 +54,7 @@ export class PipelineRepresentativeFragmentTestStateCreateInfoNV implements Base
     this.sType = StructureType.PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class PipelineRepresentativeFragmentTestStateCreateInfoNV implements Base
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class PipelineRepresentativeFragmentTestStateCreateInfoNV implements Base
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get representativeFragmentTestEnable() {
+  get representativeFragmentTestEnable(): number {
     return this.#view.getUint32(16, LE);
   }
 

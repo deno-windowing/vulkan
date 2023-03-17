@@ -72,7 +72,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.sType = StructureType.VIDEO_CAPABILITIES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -80,7 +80,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -88,7 +88,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -96,7 +96,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get minBitstreamBufferOffsetAlignment() {
+  get minBitstreamBufferOffsetAlignment(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -104,7 +104,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get minBitstreamBufferSizeAlignment() {
+  get minBitstreamBufferSizeAlignment(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -112,7 +112,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get pictureAccessGranularity() {
+  get pictureAccessGranularity(): Extent2D {
     return new Extent2D(this.#data.subarray(40, 40 + Extent2D.size));
   }
 
@@ -123,7 +123,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 40);
   }
 
-  get minCodedExtent() {
+  get minCodedExtent(): Extent2D {
     return new Extent2D(this.#data.subarray(48, 48 + Extent2D.size));
   }
 
@@ -134,7 +134,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 48);
   }
 
-  get maxCodedExtent() {
+  get maxCodedExtent(): Extent2D {
     return new Extent2D(this.#data.subarray(56, 56 + Extent2D.size));
   }
 
@@ -145,7 +145,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 56);
   }
 
-  get maxDpbSlots() {
+  get maxDpbSlots(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -153,7 +153,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get maxActiveReferencePictures() {
+  get maxActiveReferencePictures(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -161,7 +161,7 @@ export class VideoCapabilitiesKHR implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get stdHeaderVersion() {
+  get stdHeaderVersion(): ExtensionProperties {
     return new ExtensionProperties(this.#data.subarray(72, 72 + ExtensionProperties.size));
   }
 

@@ -49,7 +49,7 @@ export class StdVideoH265PredictorPaletteEntries implements BaseStruct {
     }
   }
 
-  get PredictorPaletteEntries() {
+  get PredictorPaletteEntries(): Uint16Array {
     return new Uint16Array(this.#data.buffer, this.#data.byteOffset + 0, 384);
   }
 

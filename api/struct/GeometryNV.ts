@@ -59,7 +59,7 @@ export class GeometryNV implements BaseStruct {
     this.sType = StructureType.GEOMETRY_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class GeometryNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class GeometryNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get geometryType() {
+  get geometryType(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -83,7 +83,7 @@ export class GeometryNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get geometry() {
+  get geometry(): GeometryDataNV {
     return new GeometryDataNV(this.#data.subarray(20, 20 + GeometryDataNV.size));
   }
 
@@ -94,7 +94,7 @@ export class GeometryNV implements BaseStruct {
     this.#data.set(value[BUFFER], 20);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(156, LE);
   }
 

@@ -63,7 +63,7 @@ export class AccelerationStructureMatrixMotionInstanceNV implements BaseStruct {
     }
   }
 
-  get transformT0() {
+  get transformT0(): TransformMatrixKHR {
     return new TransformMatrixKHR(this.#data.subarray(0, 0 + TransformMatrixKHR.size));
   }
 
@@ -74,7 +74,7 @@ export class AccelerationStructureMatrixMotionInstanceNV implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get transformT1() {
+  get transformT1(): TransformMatrixKHR {
     return new TransformMatrixKHR(this.#data.subarray(4, 4 + TransformMatrixKHR.size));
   }
 
@@ -85,7 +85,7 @@ export class AccelerationStructureMatrixMotionInstanceNV implements BaseStruct {
     this.#data.set(value[BUFFER], 4);
   }
 
-  get instanceCustomIndex() {
+  get instanceCustomIndex(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -93,7 +93,7 @@ export class AccelerationStructureMatrixMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get mask() {
+  get mask(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -101,7 +101,7 @@ export class AccelerationStructureMatrixMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get instanceShaderBindingTableRecordOffset() {
+  get instanceShaderBindingTableRecordOffset(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -109,7 +109,7 @@ export class AccelerationStructureMatrixMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -117,7 +117,7 @@ export class AccelerationStructureMatrixMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get accelerationStructureReference() {
+  get accelerationStructureReference(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 

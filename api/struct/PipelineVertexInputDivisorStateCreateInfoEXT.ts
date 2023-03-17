@@ -56,7 +56,7 @@ export class PipelineVertexInputDivisorStateCreateInfoEXT implements BaseStruct 
     this.sType = StructureType.PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class PipelineVertexInputDivisorStateCreateInfoEXT implements BaseStruct 
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class PipelineVertexInputDivisorStateCreateInfoEXT implements BaseStruct 
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get vertexBindingDivisorCount() {
+  get vertexBindingDivisorCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -80,7 +80,7 @@ export class PipelineVertexInputDivisorStateCreateInfoEXT implements BaseStruct 
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pVertexBindingDivisors() {
+  get pVertexBindingDivisors(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

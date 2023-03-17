@@ -63,7 +63,7 @@ export class VideoEncodeRateControlLayerInfoKHR implements BaseStruct {
     this.sType = StructureType.VIDEO_ENCODE_RATE_CONTROL_LAYER_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class VideoEncodeRateControlLayerInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -79,7 +79,7 @@ export class VideoEncodeRateControlLayerInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get averageBitrate() {
+  get averageBitrate(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -87,7 +87,7 @@ export class VideoEncodeRateControlLayerInfoKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get maxBitrate() {
+  get maxBitrate(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -95,7 +95,7 @@ export class VideoEncodeRateControlLayerInfoKHR implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get frameRateNumerator() {
+  get frameRateNumerator(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -103,7 +103,7 @@ export class VideoEncodeRateControlLayerInfoKHR implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get frameRateDenominator() {
+  get frameRateDenominator(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -111,7 +111,7 @@ export class VideoEncodeRateControlLayerInfoKHR implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get virtualBufferSizeInMs() {
+  get virtualBufferSizeInMs(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -119,7 +119,7 @@ export class VideoEncodeRateControlLayerInfoKHR implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get initialVirtualBufferSizeInMs() {
+  get initialVirtualBufferSizeInMs(): number {
     return this.#view.getUint32(36, LE);
   }
 

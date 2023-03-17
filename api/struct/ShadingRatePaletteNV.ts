@@ -52,7 +52,7 @@ export class ShadingRatePaletteNV implements BaseStruct {
     }
   }
 
-  get shadingRatePaletteEntryCount() {
+  get shadingRatePaletteEntryCount(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class ShadingRatePaletteNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pShadingRatePaletteEntries() {
+  get pShadingRatePaletteEntries(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 

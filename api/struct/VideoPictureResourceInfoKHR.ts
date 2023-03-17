@@ -62,7 +62,7 @@ export class VideoPictureResourceInfoKHR implements BaseStruct {
     this.sType = StructureType.VIDEO_PICTURE_RESOURCE_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -70,7 +70,7 @@ export class VideoPictureResourceInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -78,7 +78,7 @@ export class VideoPictureResourceInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get codedOffset() {
+  get codedOffset(): Offset2D {
     return new Offset2D(this.#data.subarray(16, 16 + Offset2D.size));
   }
 
@@ -89,7 +89,7 @@ export class VideoPictureResourceInfoKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get codedExtent() {
+  get codedExtent(): Extent2D {
     return new Extent2D(this.#data.subarray(24, 24 + Extent2D.size));
   }
 
@@ -100,7 +100,7 @@ export class VideoPictureResourceInfoKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 24);
   }
 
-  get baseArrayLayer() {
+  get baseArrayLayer(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -108,7 +108,7 @@ export class VideoPictureResourceInfoKHR implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get imageViewBinding() {
+  get imageViewBinding(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 

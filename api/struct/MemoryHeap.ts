@@ -52,7 +52,7 @@ export class MemoryHeap implements BaseStruct {
     }
   }
 
-  get size() {
+  get size(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class MemoryHeap implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(value), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(8, LE);
   }
 

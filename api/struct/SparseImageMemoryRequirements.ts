@@ -59,7 +59,7 @@ export class SparseImageMemoryRequirements implements BaseStruct {
     }
   }
 
-  get formatProperties() {
+  get formatProperties(): SparseImageFormatProperties {
     return new SparseImageFormatProperties(this.#data.subarray(0, 0 + SparseImageFormatProperties.size));
   }
 
@@ -70,7 +70,7 @@ export class SparseImageMemoryRequirements implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get imageMipTailFirstLod() {
+  get imageMipTailFirstLod(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -78,7 +78,7 @@ export class SparseImageMemoryRequirements implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get imageMipTailSize() {
+  get imageMipTailSize(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -86,7 +86,7 @@ export class SparseImageMemoryRequirements implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get imageMipTailOffset() {
+  get imageMipTailOffset(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -94,7 +94,7 @@ export class SparseImageMemoryRequirements implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get imageMipTailStride() {
+  get imageMipTailStride(): bigint {
     return this.#view.getBigUint64(40, LE);
   }
 

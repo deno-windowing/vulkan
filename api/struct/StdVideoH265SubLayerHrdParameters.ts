@@ -58,7 +58,7 @@ export class StdVideoH265SubLayerHrdParameters implements BaseStruct {
     }
   }
 
-  get bit_rate_value_minus1() {
+  get bit_rate_value_minus1(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 0, 32);
   }
 
@@ -66,7 +66,7 @@ export class StdVideoH265SubLayerHrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 0);
   }
 
-  get cpb_size_value_minus1() {
+  get cpb_size_value_minus1(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 128, 32);
   }
 
@@ -74,7 +74,7 @@ export class StdVideoH265SubLayerHrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 128);
   }
 
-  get cpb_size_du_value_minus1() {
+  get cpb_size_du_value_minus1(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 256, 32);
   }
 
@@ -82,7 +82,7 @@ export class StdVideoH265SubLayerHrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 256);
   }
 
-  get bit_rate_du_value_minus1() {
+  get bit_rate_du_value_minus1(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 384, 32);
   }
 
@@ -90,7 +90,7 @@ export class StdVideoH265SubLayerHrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 384);
   }
 
-  get cbr_flag() {
+  get cbr_flag(): number {
     return this.#view.getUint32(512, LE);
   }
 

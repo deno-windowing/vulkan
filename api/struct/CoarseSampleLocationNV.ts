@@ -53,7 +53,7 @@ export class CoarseSampleLocationNV implements BaseStruct {
     }
   }
 
-  get pixelX() {
+  get pixelX(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class CoarseSampleLocationNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pixelY() {
+  get pixelY(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -69,7 +69,7 @@ export class CoarseSampleLocationNV implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get sample() {
+  get sample(): number {
     return this.#view.getUint32(8, LE);
   }
 

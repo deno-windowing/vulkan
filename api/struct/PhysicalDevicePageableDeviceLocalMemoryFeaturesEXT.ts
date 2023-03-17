@@ -54,7 +54,7 @@ export class PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT implements BaseS
     this.sType = StructureType.PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT implements BaseS
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT implements BaseS
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get pageableDeviceLocalMemory() {
+  get pageableDeviceLocalMemory(): number {
     return this.#view.getUint32(16, LE);
   }
 

@@ -76,7 +76,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoH265ShortTermRefPicSetFlags {
     return new StdVideoH265ShortTermRefPicSetFlags(this.#data.subarray(0, 0 + StdVideoH265ShortTermRefPicSetFlags.size));
   }
 
@@ -87,7 +87,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get delta_idx_minus1() {
+  get delta_idx_minus1(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -95,7 +95,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get use_delta_flag() {
+  get use_delta_flag(): number {
     return this.#view.getUint16(12, LE);
   }
 
@@ -103,7 +103,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint16(12, Number(value), LE);
   }
 
-  get abs_delta_rps_minus1() {
+  get abs_delta_rps_minus1(): number {
     return this.#view.getUint16(14, LE);
   }
 
@@ -111,7 +111,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint16(14, Number(value), LE);
   }
 
-  get used_by_curr_pic_flag() {
+  get used_by_curr_pic_flag(): number {
     return this.#view.getUint16(16, LE);
   }
 
@@ -119,7 +119,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint16(16, Number(value), LE);
   }
 
-  get used_by_curr_pic_s0_flag() {
+  get used_by_curr_pic_s0_flag(): number {
     return this.#view.getUint16(18, LE);
   }
 
@@ -127,7 +127,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint16(18, Number(value), LE);
   }
 
-  get used_by_curr_pic_s1_flag() {
+  get used_by_curr_pic_s1_flag(): number {
     return this.#view.getUint16(20, LE);
   }
 
@@ -135,7 +135,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint16(20, Number(value), LE);
   }
 
-  get reserved1() {
+  get reserved1(): number {
     return this.#view.getUint16(22, LE);
   }
 
@@ -143,7 +143,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint16(22, Number(value), LE);
   }
 
-  get reserved2() {
+  get reserved2(): number {
     return this.#view.getUint8(24);
   }
 
@@ -151,7 +151,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint8(24, Number(value));
   }
 
-  get reserved3() {
+  get reserved3(): number {
     return this.#view.getUint8(25);
   }
 
@@ -159,7 +159,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint8(25, Number(value));
   }
 
-  get num_negative_pics() {
+  get num_negative_pics(): number {
     return this.#view.getUint8(26);
   }
 
@@ -167,7 +167,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint8(26, Number(value));
   }
 
-  get num_positive_pics() {
+  get num_positive_pics(): number {
     return this.#view.getUint8(27);
   }
 
@@ -175,7 +175,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#view.setUint8(27, Number(value));
   }
 
-  get delta_poc_s0_minus1() {
+  get delta_poc_s0_minus1(): Uint16Array {
     return new Uint16Array(this.#data.buffer, this.#data.byteOffset + 28, 16);
   }
 
@@ -183,7 +183,7 @@ export class StdVideoH265ShortTermRefPicSet implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 28);
   }
 
-  get delta_poc_s1_minus1() {
+  get delta_poc_s1_minus1(): Uint16Array {
     return new Uint16Array(this.#data.buffer, this.#data.byteOffset + 60, 16);
   }
 

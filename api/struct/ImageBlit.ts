@@ -57,7 +57,7 @@ export class ImageBlit implements BaseStruct {
     }
   }
 
-  get srcSubresource() {
+  get srcSubresource(): ImageSubresourceLayers {
     return new ImageSubresourceLayers(this.#data.subarray(0, 0 + ImageSubresourceLayers.size));
   }
 
@@ -68,7 +68,7 @@ export class ImageBlit implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get srcOffsets() {
+  get srcOffsets(): Offset3D[] {
     const result: Offset3D[] = [];
     for (let i = 0; i < 2; i++) {
       result.push((() => {
@@ -87,7 +87,7 @@ export class ImageBlit implements BaseStruct {
     }
   }
 
-  get dstSubresource() {
+  get dstSubresource(): ImageSubresourceLayers {
     return new ImageSubresourceLayers(this.#data.subarray(40, 40 + ImageSubresourceLayers.size));
   }
 
@@ -98,7 +98,7 @@ export class ImageBlit implements BaseStruct {
     this.#data.set(value[BUFFER], 40);
   }
 
-  get dstOffsets() {
+  get dstOffsets(): Offset3D[] {
     const result: Offset3D[] = [];
     for (let i = 0; i < 2; i++) {
       result.push((() => {

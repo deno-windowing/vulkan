@@ -54,7 +54,7 @@ export class MultisamplePropertiesEXT implements BaseStruct {
     this.sType = StructureType.MULTISAMPLE_PROPERTIES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class MultisamplePropertiesEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class MultisamplePropertiesEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get maxSampleLocationGridSize() {
+  get maxSampleLocationGridSize(): Extent2D {
     return new Extent2D(this.#data.subarray(16, 16 + Extent2D.size));
   }
 

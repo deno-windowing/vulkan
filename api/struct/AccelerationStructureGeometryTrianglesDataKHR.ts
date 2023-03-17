@@ -67,7 +67,7 @@ export class AccelerationStructureGeometryTrianglesDataKHR implements BaseStruct
     this.sType = StructureType.ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -75,7 +75,7 @@ export class AccelerationStructureGeometryTrianglesDataKHR implements BaseStruct
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -83,7 +83,7 @@ export class AccelerationStructureGeometryTrianglesDataKHR implements BaseStruct
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get vertexFormat() {
+  get vertexFormat(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -91,7 +91,7 @@ export class AccelerationStructureGeometryTrianglesDataKHR implements BaseStruct
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get vertexData() {
+  get vertexData(): unknown {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
@@ -99,7 +99,7 @@ export class AccelerationStructureGeometryTrianglesDataKHR implements BaseStruct
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
-  get vertexStride() {
+  get vertexStride(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -107,7 +107,7 @@ export class AccelerationStructureGeometryTrianglesDataKHR implements BaseStruct
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get maxVertex() {
+  get maxVertex(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -115,7 +115,7 @@ export class AccelerationStructureGeometryTrianglesDataKHR implements BaseStruct
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get indexType() {
+  get indexType(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -123,7 +123,7 @@ export class AccelerationStructureGeometryTrianglesDataKHR implements BaseStruct
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get indexData() {
+  get indexData(): unknown {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
@@ -131,7 +131,7 @@ export class AccelerationStructureGeometryTrianglesDataKHR implements BaseStruct
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
-  get transformData() {
+  get transformData(): unknown {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 

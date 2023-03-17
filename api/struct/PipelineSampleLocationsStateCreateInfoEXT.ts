@@ -57,7 +57,7 @@ export class PipelineSampleLocationsStateCreateInfoEXT implements BaseStruct {
     this.sType = StructureType.PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class PipelineSampleLocationsStateCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -73,7 +73,7 @@ export class PipelineSampleLocationsStateCreateInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get sampleLocationsEnable() {
+  get sampleLocationsEnable(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -81,7 +81,7 @@ export class PipelineSampleLocationsStateCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get sampleLocationsInfo() {
+  get sampleLocationsInfo(): SampleLocationsInfoEXT {
     return new SampleLocationsInfoEXT(this.#data.subarray(20, 20 + SampleLocationsInfoEXT.size));
   }
 

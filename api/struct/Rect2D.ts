@@ -53,7 +53,7 @@ export class Rect2D implements BaseStruct {
     }
   }
 
-  get offset() {
+  get offset(): Offset2D {
     return new Offset2D(this.#data.subarray(0, 0 + Offset2D.size));
   }
 
@@ -64,7 +64,7 @@ export class Rect2D implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get extent() {
+  get extent(): Extent2D {
     return new Extent2D(this.#data.subarray(8, 8 + Extent2D.size));
   }
 

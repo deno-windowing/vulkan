@@ -52,7 +52,7 @@ export class BaseOutStructure implements BaseStruct {
     }
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class BaseOutStructure implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 

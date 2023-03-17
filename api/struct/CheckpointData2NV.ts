@@ -56,7 +56,7 @@ export class CheckpointData2NV implements BaseStruct {
     this.sType = StructureType.CHECKPOINT_DATA_2_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class CheckpointData2NV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class CheckpointData2NV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get stage() {
+  get stage(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -80,7 +80,7 @@ export class CheckpointData2NV implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get pCheckpointMarker() {
+  get pCheckpointMarker(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

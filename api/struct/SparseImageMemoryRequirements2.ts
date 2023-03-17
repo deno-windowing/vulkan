@@ -54,7 +54,7 @@ export class SparseImageMemoryRequirements2 implements BaseStruct {
     this.sType = StructureType.SPARSE_IMAGE_MEMORY_REQUIREMENTS_2;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class SparseImageMemoryRequirements2 implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class SparseImageMemoryRequirements2 implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get memoryRequirements() {
+  get memoryRequirements(): SparseImageMemoryRequirements {
     return new SparseImageMemoryRequirements(this.#data.subarray(16, 16 + SparseImageMemoryRequirements.size));
   }
 

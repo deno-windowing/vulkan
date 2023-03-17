@@ -60,7 +60,7 @@ export class DeviceAddressBindingCallbackDataEXT implements BaseStruct {
     this.sType = StructureType.DEVICE_ADDRESS_BINDING_CALLBACK_DATA_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class DeviceAddressBindingCallbackDataEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class DeviceAddressBindingCallbackDataEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -84,7 +84,7 @@ export class DeviceAddressBindingCallbackDataEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get baseAddress() {
+  get baseAddress(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -92,7 +92,7 @@ export class DeviceAddressBindingCallbackDataEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get size() {
+  get size(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -100,7 +100,7 @@ export class DeviceAddressBindingCallbackDataEXT implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get bindingType() {
+  get bindingType(): number {
     return this.#view.getUint32(40, LE);
   }
 

@@ -54,7 +54,7 @@ export class PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD implements
     this.sType = StructureType.PHYSICAL_DEVICE_SHADER_EARLY_AND_LATE_FRAGMENT_TESTS_FEATURES_AMD;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD implements
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD implements
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get shaderEarlyAndLateFragmentTests() {
+  get shaderEarlyAndLateFragmentTests(): number {
     return this.#view.getUint32(16, LE);
   }
 

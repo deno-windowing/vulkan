@@ -86,7 +86,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -94,7 +94,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -102,7 +102,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get denormBehaviorIndependence() {
+  get denormBehaviorIndependence(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -110,7 +110,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get roundingModeIndependence() {
+  get roundingModeIndependence(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -118,7 +118,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get shaderSignedZeroInfNanPreserveFloat16() {
+  get shaderSignedZeroInfNanPreserveFloat16(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -126,7 +126,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get shaderSignedZeroInfNanPreserveFloat32() {
+  get shaderSignedZeroInfNanPreserveFloat32(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -134,7 +134,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get shaderSignedZeroInfNanPreserveFloat64() {
+  get shaderSignedZeroInfNanPreserveFloat64(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -142,7 +142,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get shaderDenormPreserveFloat16() {
+  get shaderDenormPreserveFloat16(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -150,7 +150,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get shaderDenormPreserveFloat32() {
+  get shaderDenormPreserveFloat32(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -158,7 +158,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get shaderDenormPreserveFloat64() {
+  get shaderDenormPreserveFloat64(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -166,7 +166,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get shaderDenormFlushToZeroFloat16() {
+  get shaderDenormFlushToZeroFloat16(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -174,7 +174,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get shaderDenormFlushToZeroFloat32() {
+  get shaderDenormFlushToZeroFloat32(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -182,7 +182,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get shaderDenormFlushToZeroFloat64() {
+  get shaderDenormFlushToZeroFloat64(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -190,7 +190,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get shaderRoundingModeRTEFloat16() {
+  get shaderRoundingModeRTEFloat16(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -198,7 +198,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get shaderRoundingModeRTEFloat32() {
+  get shaderRoundingModeRTEFloat32(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -206,7 +206,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get shaderRoundingModeRTEFloat64() {
+  get shaderRoundingModeRTEFloat64(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -214,7 +214,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get shaderRoundingModeRTZFloat16() {
+  get shaderRoundingModeRTZFloat16(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -222,7 +222,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get shaderRoundingModeRTZFloat32() {
+  get shaderRoundingModeRTZFloat32(): number {
     return this.#view.getUint32(76, LE);
   }
 
@@ -230,7 +230,7 @@ export class PhysicalDeviceFloatControlsProperties implements BaseStruct {
     this.#view.setUint32(76, Number(value), LE);
   }
 
-  get shaderRoundingModeRTZFloat64() {
+  get shaderRoundingModeRTZFloat64(): number {
     return this.#view.getUint32(80, LE);
   }
 

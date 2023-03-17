@@ -71,7 +71,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     }
   }
 
-  get aspect_ratio_info_present_flag() {
+  get aspect_ratio_info_present_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -79,7 +79,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get overscan_info_present_flag() {
+  get overscan_info_present_flag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -87,7 +87,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get overscan_appropriate_flag() {
+  get overscan_appropriate_flag(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -95,7 +95,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get video_signal_type_present_flag() {
+  get video_signal_type_present_flag(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -103,7 +103,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get video_full_range_flag() {
+  get video_full_range_flag(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -111,7 +111,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get color_description_present_flag() {
+  get color_description_present_flag(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -119,7 +119,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get chroma_loc_info_present_flag() {
+  get chroma_loc_info_present_flag(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -127,7 +127,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get timing_info_present_flag() {
+  get timing_info_present_flag(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -135,7 +135,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get fixed_frame_rate_flag() {
+  get fixed_frame_rate_flag(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -143,7 +143,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get bitstream_restriction_flag() {
+  get bitstream_restriction_flag(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -151,7 +151,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get nal_hrd_parameters_present_flag() {
+  get nal_hrd_parameters_present_flag(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -159,7 +159,7 @@ export class StdVideoH264SpsVuiFlags implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get vcl_hrd_parameters_present_flag() {
+  get vcl_hrd_parameters_present_flag(): number {
     return this.#view.getUint32(44, LE);
   }
 

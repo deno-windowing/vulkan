@@ -62,7 +62,7 @@ export class GraphicsShaderGroupCreateInfoNV implements BaseStruct {
     this.sType = StructureType.GRAPHICS_SHADER_GROUP_CREATE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -70,7 +70,7 @@ export class GraphicsShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -78,7 +78,7 @@ export class GraphicsShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get stageCount() {
+  get stageCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -86,7 +86,7 @@ export class GraphicsShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pStages() {
+  get pStages(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -94,7 +94,7 @@ export class GraphicsShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pVertexInputState() {
+  get pVertexInputState(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -102,7 +102,7 @@ export class GraphicsShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get pTessellationState() {
+  get pTessellationState(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 

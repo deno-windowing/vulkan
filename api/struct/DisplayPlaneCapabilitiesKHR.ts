@@ -68,7 +68,7 @@ export class DisplayPlaneCapabilitiesKHR implements BaseStruct {
     }
   }
 
-  get supportedAlpha() {
+  get supportedAlpha(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -76,7 +76,7 @@ export class DisplayPlaneCapabilitiesKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get minSrcPosition() {
+  get minSrcPosition(): Offset2D {
     return new Offset2D(this.#data.subarray(4, 4 + Offset2D.size));
   }
 
@@ -87,7 +87,7 @@ export class DisplayPlaneCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 4);
   }
 
-  get maxSrcPosition() {
+  get maxSrcPosition(): Offset2D {
     return new Offset2D(this.#data.subarray(12, 12 + Offset2D.size));
   }
 
@@ -98,7 +98,7 @@ export class DisplayPlaneCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 12);
   }
 
-  get minSrcExtent() {
+  get minSrcExtent(): Extent2D {
     return new Extent2D(this.#data.subarray(20, 20 + Extent2D.size));
   }
 
@@ -109,7 +109,7 @@ export class DisplayPlaneCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 20);
   }
 
-  get maxSrcExtent() {
+  get maxSrcExtent(): Extent2D {
     return new Extent2D(this.#data.subarray(28, 28 + Extent2D.size));
   }
 
@@ -120,7 +120,7 @@ export class DisplayPlaneCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 28);
   }
 
-  get minDstPosition() {
+  get minDstPosition(): Offset2D {
     return new Offset2D(this.#data.subarray(36, 36 + Offset2D.size));
   }
 
@@ -131,7 +131,7 @@ export class DisplayPlaneCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 36);
   }
 
-  get maxDstPosition() {
+  get maxDstPosition(): Offset2D {
     return new Offset2D(this.#data.subarray(44, 44 + Offset2D.size));
   }
 
@@ -142,7 +142,7 @@ export class DisplayPlaneCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 44);
   }
 
-  get minDstExtent() {
+  get minDstExtent(): Extent2D {
     return new Extent2D(this.#data.subarray(52, 52 + Extent2D.size));
   }
 
@@ -153,7 +153,7 @@ export class DisplayPlaneCapabilitiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 52);
   }
 
-  get maxDstExtent() {
+  get maxDstExtent(): Extent2D {
     return new Extent2D(this.#data.subarray(60, 60 + Extent2D.size));
   }
 

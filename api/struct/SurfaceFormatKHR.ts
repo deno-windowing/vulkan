@@ -52,7 +52,7 @@ export class SurfaceFormatKHR implements BaseStruct {
     }
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class SurfaceFormatKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get colorSpace() {
+  get colorSpace(): number {
     return this.#view.getUint32(4, LE);
   }
 

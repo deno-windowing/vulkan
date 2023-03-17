@@ -61,7 +61,7 @@ export class StdVideoEncodeH265SliceSegmentLongTermRefPics implements BaseStruct
     }
   }
 
-  get num_long_term_sps() {
+  get num_long_term_sps(): number {
     return this.#view.getUint8(0);
   }
 
@@ -69,7 +69,7 @@ export class StdVideoEncodeH265SliceSegmentLongTermRefPics implements BaseStruct
     this.#view.setUint8(0, Number(value));
   }
 
-  get num_long_term_pics() {
+  get num_long_term_pics(): number {
     return this.#view.getUint8(1);
   }
 
@@ -77,7 +77,7 @@ export class StdVideoEncodeH265SliceSegmentLongTermRefPics implements BaseStruct
     this.#view.setUint8(1, Number(value));
   }
 
-  get lt_idx_sps() {
+  get lt_idx_sps(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 2, 32);
   }
 
@@ -85,7 +85,7 @@ export class StdVideoEncodeH265SliceSegmentLongTermRefPics implements BaseStruct
     this.#data.set(new Uint8Array(value.buffer), 2);
   }
 
-  get poc_lsb_lt() {
+  get poc_lsb_lt(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 34, 16);
   }
 
@@ -93,7 +93,7 @@ export class StdVideoEncodeH265SliceSegmentLongTermRefPics implements BaseStruct
     this.#data.set(new Uint8Array(value.buffer), 34);
   }
 
-  get used_by_curr_pic_lt_flag() {
+  get used_by_curr_pic_lt_flag(): number {
     return this.#view.getUint16(50, LE);
   }
 
@@ -101,7 +101,7 @@ export class StdVideoEncodeH265SliceSegmentLongTermRefPics implements BaseStruct
     this.#view.setUint16(50, Number(value), LE);
   }
 
-  get delta_poc_msb_present_flag() {
+  get delta_poc_msb_present_flag(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 52, 48);
   }
 
@@ -109,7 +109,7 @@ export class StdVideoEncodeH265SliceSegmentLongTermRefPics implements BaseStruct
     this.#data.set(new Uint8Array(value.buffer), 52);
   }
 
-  get delta_poc_msb_cycle_lt() {
+  get delta_poc_msb_cycle_lt(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 100, 48);
   }
 

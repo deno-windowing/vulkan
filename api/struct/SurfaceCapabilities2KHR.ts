@@ -54,7 +54,7 @@ export class SurfaceCapabilities2KHR implements BaseStruct {
     this.sType = StructureType.SURFACE_CAPABILITIES_2_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class SurfaceCapabilities2KHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class SurfaceCapabilities2KHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get surfaceCapabilities() {
+  get surfaceCapabilities(): SurfaceCapabilitiesKHR {
     return new SurfaceCapabilitiesKHR(this.#data.subarray(16, 16 + SurfaceCapabilitiesKHR.size));
   }
 

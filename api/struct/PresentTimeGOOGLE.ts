@@ -51,7 +51,7 @@ export class PresentTimeGOOGLE implements BaseStruct {
     }
   }
 
-  get presentID() {
+  get presentID(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -59,7 +59,7 @@ export class PresentTimeGOOGLE implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get desiredPresentTime() {
+  get desiredPresentTime(): bigint {
     return this.#view.getBigUint64(8, LE);
   }
 

@@ -62,7 +62,7 @@ export class SubpassDependency implements BaseStruct {
     }
   }
 
-  get srcSubpass() {
+  get srcSubpass(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -70,7 +70,7 @@ export class SubpassDependency implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get dstSubpass() {
+  get dstSubpass(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -78,7 +78,7 @@ export class SubpassDependency implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get srcStageMask() {
+  get srcStageMask(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -86,7 +86,7 @@ export class SubpassDependency implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get dstStageMask() {
+  get dstStageMask(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -94,7 +94,7 @@ export class SubpassDependency implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get srcAccessMask() {
+  get srcAccessMask(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -102,7 +102,7 @@ export class SubpassDependency implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get dstAccessMask() {
+  get dstAccessMask(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -110,7 +110,7 @@ export class SubpassDependency implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get dependencyFlags() {
+  get dependencyFlags(): number {
     return this.#view.getUint32(24, LE);
   }
 

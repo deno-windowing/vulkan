@@ -76,7 +76,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.sType = StructureType.BUFFER_COLLECTION_PROPERTIES_FUCHSIA;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -84,7 +84,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -92,7 +92,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get memoryTypeBits() {
+  get memoryTypeBits(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -100,7 +100,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get bufferCount() {
+  get bufferCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -108,7 +108,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get createInfoIndex() {
+  get createInfoIndex(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -116,7 +116,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get sysmemPixelFormat() {
+  get sysmemPixelFormat(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -124,7 +124,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get formatFeatures() {
+  get formatFeatures(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -132,7 +132,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get sysmemColorSpaceIndex() {
+  get sysmemColorSpaceIndex(): SysmemColorSpaceFUCHSIA {
     return new SysmemColorSpaceFUCHSIA(this.#data.subarray(44, 44 + SysmemColorSpaceFUCHSIA.size));
   }
 
@@ -143,7 +143,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#data.set(value[BUFFER], 44);
   }
 
-  get samplerYcbcrConversionComponents() {
+  get samplerYcbcrConversionComponents(): ComponentMapping {
     return new ComponentMapping(this.#data.subarray(68, 68 + ComponentMapping.size));
   }
 
@@ -154,7 +154,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#data.set(value[BUFFER], 68);
   }
 
-  get suggestedYcbcrModel() {
+  get suggestedYcbcrModel(): number {
     return this.#view.getUint32(84, LE);
   }
 
@@ -162,7 +162,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setUint32(84, Number(value), LE);
   }
 
-  get suggestedYcbcrRange() {
+  get suggestedYcbcrRange(): number {
     return this.#view.getUint32(88, LE);
   }
 
@@ -170,7 +170,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get suggestedXChromaOffset() {
+  get suggestedXChromaOffset(): number {
     return this.#view.getUint32(92, LE);
   }
 
@@ -178,7 +178,7 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
     this.#view.setUint32(92, Number(value), LE);
   }
 
-  get suggestedYChromaOffset() {
+  get suggestedYChromaOffset(): number {
     return this.#view.getUint32(96, LE);
   }
 

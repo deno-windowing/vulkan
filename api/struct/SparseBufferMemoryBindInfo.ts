@@ -55,7 +55,7 @@ export class SparseBufferMemoryBindInfo implements BaseStruct {
     }
   }
 
-  get buffer() {
+  get buffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 0, LE);
   }
 
@@ -63,7 +63,7 @@ export class SparseBufferMemoryBindInfo implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
 
-  get bindCount() {
+  get bindCount(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -71,7 +71,7 @@ export class SparseBufferMemoryBindInfo implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get pBinds() {
+  get pBinds(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 

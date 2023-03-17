@@ -158,7 +158,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     }
   }
 
-  get robustBufferAccess() {
+  get robustBufferAccess(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -166,7 +166,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get fullDrawIndexUint32() {
+  get fullDrawIndexUint32(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -174,7 +174,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get imageCubeArray() {
+  get imageCubeArray(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -182,7 +182,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get independentBlend() {
+  get independentBlend(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -190,7 +190,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get geometryShader() {
+  get geometryShader(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -198,7 +198,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get tessellationShader() {
+  get tessellationShader(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -206,7 +206,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get sampleRateShading() {
+  get sampleRateShading(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -214,7 +214,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get dualSrcBlend() {
+  get dualSrcBlend(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -222,7 +222,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get logicOp() {
+  get logicOp(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -230,7 +230,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get multiDrawIndirect() {
+  get multiDrawIndirect(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -238,7 +238,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get drawIndirectFirstInstance() {
+  get drawIndirectFirstInstance(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -246,7 +246,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get depthClamp() {
+  get depthClamp(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -254,7 +254,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get depthBiasClamp() {
+  get depthBiasClamp(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -262,7 +262,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get fillModeNonSolid() {
+  get fillModeNonSolid(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -270,7 +270,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get depthBounds() {
+  get depthBounds(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -278,7 +278,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get wideLines() {
+  get wideLines(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -286,7 +286,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get largePoints() {
+  get largePoints(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -294,7 +294,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get alphaToOne() {
+  get alphaToOne(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -302,7 +302,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get multiViewport() {
+  get multiViewport(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -310,7 +310,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get samplerAnisotropy() {
+  get samplerAnisotropy(): number {
     return this.#view.getUint32(76, LE);
   }
 
@@ -318,7 +318,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(76, Number(value), LE);
   }
 
-  get textureCompressionETC2() {
+  get textureCompressionETC2(): number {
     return this.#view.getUint32(80, LE);
   }
 
@@ -326,7 +326,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(80, Number(value), LE);
   }
 
-  get textureCompressionASTC_LDR() {
+  get textureCompressionASTC_LDR(): number {
     return this.#view.getUint32(84, LE);
   }
 
@@ -334,7 +334,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(84, Number(value), LE);
   }
 
-  get textureCompressionBC() {
+  get textureCompressionBC(): number {
     return this.#view.getUint32(88, LE);
   }
 
@@ -342,7 +342,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get occlusionQueryPrecise() {
+  get occlusionQueryPrecise(): number {
     return this.#view.getUint32(92, LE);
   }
 
@@ -350,7 +350,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(92, Number(value), LE);
   }
 
-  get pipelineStatisticsQuery() {
+  get pipelineStatisticsQuery(): number {
     return this.#view.getUint32(96, LE);
   }
 
@@ -358,7 +358,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(96, Number(value), LE);
   }
 
-  get vertexPipelineStoresAndAtomics() {
+  get vertexPipelineStoresAndAtomics(): number {
     return this.#view.getUint32(100, LE);
   }
 
@@ -366,7 +366,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(100, Number(value), LE);
   }
 
-  get fragmentStoresAndAtomics() {
+  get fragmentStoresAndAtomics(): number {
     return this.#view.getUint32(104, LE);
   }
 
@@ -374,7 +374,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(104, Number(value), LE);
   }
 
-  get shaderTessellationAndGeometryPointSize() {
+  get shaderTessellationAndGeometryPointSize(): number {
     return this.#view.getUint32(108, LE);
   }
 
@@ -382,7 +382,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(108, Number(value), LE);
   }
 
-  get shaderImageGatherExtended() {
+  get shaderImageGatherExtended(): number {
     return this.#view.getUint32(112, LE);
   }
 
@@ -390,7 +390,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(112, Number(value), LE);
   }
 
-  get shaderStorageImageExtendedFormats() {
+  get shaderStorageImageExtendedFormats(): number {
     return this.#view.getUint32(116, LE);
   }
 
@@ -398,7 +398,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(116, Number(value), LE);
   }
 
-  get shaderStorageImageMultisample() {
+  get shaderStorageImageMultisample(): number {
     return this.#view.getUint32(120, LE);
   }
 
@@ -406,7 +406,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(120, Number(value), LE);
   }
 
-  get shaderStorageImageReadWithoutFormat() {
+  get shaderStorageImageReadWithoutFormat(): number {
     return this.#view.getUint32(124, LE);
   }
 
@@ -414,7 +414,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(124, Number(value), LE);
   }
 
-  get shaderStorageImageWriteWithoutFormat() {
+  get shaderStorageImageWriteWithoutFormat(): number {
     return this.#view.getUint32(128, LE);
   }
 
@@ -422,7 +422,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(128, Number(value), LE);
   }
 
-  get shaderUniformBufferArrayDynamicIndexing() {
+  get shaderUniformBufferArrayDynamicIndexing(): number {
     return this.#view.getUint32(132, LE);
   }
 
@@ -430,7 +430,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(132, Number(value), LE);
   }
 
-  get shaderSampledImageArrayDynamicIndexing() {
+  get shaderSampledImageArrayDynamicIndexing(): number {
     return this.#view.getUint32(136, LE);
   }
 
@@ -438,7 +438,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(136, Number(value), LE);
   }
 
-  get shaderStorageBufferArrayDynamicIndexing() {
+  get shaderStorageBufferArrayDynamicIndexing(): number {
     return this.#view.getUint32(140, LE);
   }
 
@@ -446,7 +446,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(140, Number(value), LE);
   }
 
-  get shaderStorageImageArrayDynamicIndexing() {
+  get shaderStorageImageArrayDynamicIndexing(): number {
     return this.#view.getUint32(144, LE);
   }
 
@@ -454,7 +454,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(144, Number(value), LE);
   }
 
-  get shaderClipDistance() {
+  get shaderClipDistance(): number {
     return this.#view.getUint32(148, LE);
   }
 
@@ -462,7 +462,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(148, Number(value), LE);
   }
 
-  get shaderCullDistance() {
+  get shaderCullDistance(): number {
     return this.#view.getUint32(152, LE);
   }
 
@@ -470,7 +470,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(152, Number(value), LE);
   }
 
-  get shaderFloat64() {
+  get shaderFloat64(): number {
     return this.#view.getUint32(156, LE);
   }
 
@@ -478,7 +478,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(156, Number(value), LE);
   }
 
-  get shaderInt64() {
+  get shaderInt64(): number {
     return this.#view.getUint32(160, LE);
   }
 
@@ -486,7 +486,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(160, Number(value), LE);
   }
 
-  get shaderInt16() {
+  get shaderInt16(): number {
     return this.#view.getUint32(164, LE);
   }
 
@@ -494,7 +494,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(164, Number(value), LE);
   }
 
-  get shaderResourceResidency() {
+  get shaderResourceResidency(): number {
     return this.#view.getUint32(168, LE);
   }
 
@@ -502,7 +502,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(168, Number(value), LE);
   }
 
-  get shaderResourceMinLod() {
+  get shaderResourceMinLod(): number {
     return this.#view.getUint32(172, LE);
   }
 
@@ -510,7 +510,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(172, Number(value), LE);
   }
 
-  get sparseBinding() {
+  get sparseBinding(): number {
     return this.#view.getUint32(176, LE);
   }
 
@@ -518,7 +518,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(176, Number(value), LE);
   }
 
-  get sparseResidencyBuffer() {
+  get sparseResidencyBuffer(): number {
     return this.#view.getUint32(180, LE);
   }
 
@@ -526,7 +526,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(180, Number(value), LE);
   }
 
-  get sparseResidencyImage2D() {
+  get sparseResidencyImage2D(): number {
     return this.#view.getUint32(184, LE);
   }
 
@@ -534,7 +534,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(184, Number(value), LE);
   }
 
-  get sparseResidencyImage3D() {
+  get sparseResidencyImage3D(): number {
     return this.#view.getUint32(188, LE);
   }
 
@@ -542,7 +542,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(188, Number(value), LE);
   }
 
-  get sparseResidency2Samples() {
+  get sparseResidency2Samples(): number {
     return this.#view.getUint32(192, LE);
   }
 
@@ -550,7 +550,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(192, Number(value), LE);
   }
 
-  get sparseResidency4Samples() {
+  get sparseResidency4Samples(): number {
     return this.#view.getUint32(196, LE);
   }
 
@@ -558,7 +558,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(196, Number(value), LE);
   }
 
-  get sparseResidency8Samples() {
+  get sparseResidency8Samples(): number {
     return this.#view.getUint32(200, LE);
   }
 
@@ -566,7 +566,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(200, Number(value), LE);
   }
 
-  get sparseResidency16Samples() {
+  get sparseResidency16Samples(): number {
     return this.#view.getUint32(204, LE);
   }
 
@@ -574,7 +574,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(204, Number(value), LE);
   }
 
-  get sparseResidencyAliased() {
+  get sparseResidencyAliased(): number {
     return this.#view.getUint32(208, LE);
   }
 
@@ -582,7 +582,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(208, Number(value), LE);
   }
 
-  get variableMultisampleRate() {
+  get variableMultisampleRate(): number {
     return this.#view.getUint32(212, LE);
   }
 
@@ -590,7 +590,7 @@ export class PhysicalDeviceFeatures implements BaseStruct {
     this.#view.setUint32(212, Number(value), LE);
   }
 
-  get inheritedQueries() {
+  get inheritedQueries(): number {
     return this.#view.getUint32(216, LE);
   }
 

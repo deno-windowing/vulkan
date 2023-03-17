@@ -70,7 +70,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     this.sType = StructureType.ACCELERATION_STRUCTURE_TRIANGLES_OPACITY_MICROMAP_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -78,7 +78,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -86,7 +86,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get indexType() {
+  get indexType(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -94,7 +94,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get indexBuffer() {
+  get indexBuffer(): unknown {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
@@ -102,7 +102,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
-  get indexStride() {
+  get indexStride(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -110,7 +110,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get baseTriangle() {
+  get baseTriangle(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -118,7 +118,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get usageCountsCount() {
+  get usageCountsCount(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -126,7 +126,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get pUsageCounts() {
+  get pUsageCounts(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 
@@ -134,7 +134,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 
-  get ppUsageCounts() {
+  get ppUsageCounts(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -142,7 +142,7 @@ export class AccelerationStructureTrianglesOpacityMicromapEXT implements BaseStr
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get micromap() {
+  get micromap(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 

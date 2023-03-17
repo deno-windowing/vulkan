@@ -56,7 +56,7 @@ export class CommandBufferInheritanceRenderPassTransformInfoQCOM implements Base
     this.sType = StructureType.COMMAND_BUFFER_INHERITANCE_RENDER_PASS_TRANSFORM_INFO_QCOM;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class CommandBufferInheritanceRenderPassTransformInfoQCOM implements Base
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class CommandBufferInheritanceRenderPassTransformInfoQCOM implements Base
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get transform() {
+  get transform(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -80,7 +80,7 @@ export class CommandBufferInheritanceRenderPassTransformInfoQCOM implements Base
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get renderArea() {
+  get renderArea(): Rect2D {
     return new Rect2D(this.#data.subarray(20, 20 + Rect2D.size));
   }
 

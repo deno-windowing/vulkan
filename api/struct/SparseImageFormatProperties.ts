@@ -55,7 +55,7 @@ export class SparseImageFormatProperties implements BaseStruct {
     }
   }
 
-  get aspectMask() {
+  get aspectMask(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class SparseImageFormatProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get imageGranularity() {
+  get imageGranularity(): Extent3D {
     return new Extent3D(this.#data.subarray(4, 4 + Extent3D.size));
   }
 
@@ -74,7 +74,7 @@ export class SparseImageFormatProperties implements BaseStruct {
     this.#data.set(value[BUFFER], 4);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 

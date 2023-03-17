@@ -58,7 +58,7 @@ export class PipelineViewportCoarseSampleOrderStateCreateInfoNV implements BaseS
     this.sType = StructureType.PIPELINE_VIEWPORT_COARSE_SAMPLE_ORDER_STATE_CREATE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class PipelineViewportCoarseSampleOrderStateCreateInfoNV implements BaseS
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class PipelineViewportCoarseSampleOrderStateCreateInfoNV implements BaseS
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get sampleOrderType() {
+  get sampleOrderType(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -82,7 +82,7 @@ export class PipelineViewportCoarseSampleOrderStateCreateInfoNV implements BaseS
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get customSampleOrderCount() {
+  get customSampleOrderCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -90,7 +90,7 @@ export class PipelineViewportCoarseSampleOrderStateCreateInfoNV implements BaseS
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get pCustomSampleOrders() {
+  get pCustomSampleOrders(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

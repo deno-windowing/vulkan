@@ -63,7 +63,7 @@ export class CopyMemoryToImageIndirectCommandNV implements BaseStruct {
     }
   }
 
-  get srcAddress() {
+  get srcAddress(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class CopyMemoryToImageIndirectCommandNV implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(value), LE);
   }
 
-  get bufferRowLength() {
+  get bufferRowLength(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -79,7 +79,7 @@ export class CopyMemoryToImageIndirectCommandNV implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get bufferImageHeight() {
+  get bufferImageHeight(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -87,7 +87,7 @@ export class CopyMemoryToImageIndirectCommandNV implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get imageSubresource() {
+  get imageSubresource(): ImageSubresourceLayers {
     return new ImageSubresourceLayers(this.#data.subarray(16, 16 + ImageSubresourceLayers.size));
   }
 
@@ -98,7 +98,7 @@ export class CopyMemoryToImageIndirectCommandNV implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get imageOffset() {
+  get imageOffset(): Offset3D {
     return new Offset3D(this.#data.subarray(32, 32 + Offset3D.size));
   }
 
@@ -109,7 +109,7 @@ export class CopyMemoryToImageIndirectCommandNV implements BaseStruct {
     this.#data.set(value[BUFFER], 32);
   }
 
-  get imageExtent() {
+  get imageExtent(): Extent3D {
     return new Extent3D(this.#data.subarray(44, 44 + Extent3D.size));
   }
 

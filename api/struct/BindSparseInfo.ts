@@ -75,7 +75,7 @@ export class BindSparseInfo implements BaseStruct {
     this.sType = StructureType.BIND_SPARSE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -83,7 +83,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -91,7 +91,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get waitSemaphoreCount() {
+  get waitSemaphoreCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -99,7 +99,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pWaitSemaphores() {
+  get pWaitSemaphores(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -107,7 +107,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get bufferBindCount() {
+  get bufferBindCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -115,7 +115,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get pBufferBinds() {
+  get pBufferBinds(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -123,7 +123,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get imageOpaqueBindCount() {
+  get imageOpaqueBindCount(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -131,7 +131,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get pImageOpaqueBinds() {
+  get pImageOpaqueBinds(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -139,7 +139,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get imageBindCount() {
+  get imageBindCount(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -147,7 +147,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get pImageBinds() {
+  get pImageBinds(): Deno.PointerValue {
     return pointerFromView(this.#view, 72, LE);
   }
 
@@ -155,7 +155,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
 
-  get signalSemaphoreCount() {
+  get signalSemaphoreCount(): number {
     return this.#view.getUint32(80, LE);
   }
 
@@ -163,7 +163,7 @@ export class BindSparseInfo implements BaseStruct {
     this.#view.setUint32(80, Number(value), LE);
   }
 
-  get pSignalSemaphores() {
+  get pSignalSemaphores(): Deno.PointerValue {
     return pointerFromView(this.#view, 88, LE);
   }
 

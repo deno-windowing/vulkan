@@ -60,7 +60,7 @@ export class TilePropertiesQCOM implements BaseStruct {
     this.sType = StructureType.TILE_PROPERTIES_QCOM;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class TilePropertiesQCOM implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class TilePropertiesQCOM implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get tileSize() {
+  get tileSize(): Extent3D {
     return new Extent3D(this.#data.subarray(16, 16 + Extent3D.size));
   }
 
@@ -87,7 +87,7 @@ export class TilePropertiesQCOM implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get apronSize() {
+  get apronSize(): Extent2D {
     return new Extent2D(this.#data.subarray(28, 28 + Extent2D.size));
   }
 
@@ -98,7 +98,7 @@ export class TilePropertiesQCOM implements BaseStruct {
     this.#data.set(value[BUFFER], 28);
   }
 
-  get origin() {
+  get origin(): Offset2D {
     return new Offset2D(this.#data.subarray(36, 36 + Offset2D.size));
   }
 

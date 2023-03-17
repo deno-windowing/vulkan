@@ -60,7 +60,7 @@ export class ImageResolve implements BaseStruct {
     }
   }
 
-  get srcSubresource() {
+  get srcSubresource(): ImageSubresourceLayers {
     return new ImageSubresourceLayers(this.#data.subarray(0, 0 + ImageSubresourceLayers.size));
   }
 
@@ -71,7 +71,7 @@ export class ImageResolve implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get srcOffset() {
+  get srcOffset(): Offset3D {
     return new Offset3D(this.#data.subarray(16, 16 + Offset3D.size));
   }
 
@@ -82,7 +82,7 @@ export class ImageResolve implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get dstSubresource() {
+  get dstSubresource(): ImageSubresourceLayers {
     return new ImageSubresourceLayers(this.#data.subarray(28, 28 + ImageSubresourceLayers.size));
   }
 
@@ -93,7 +93,7 @@ export class ImageResolve implements BaseStruct {
     this.#data.set(value[BUFFER], 28);
   }
 
-  get dstOffset() {
+  get dstOffset(): Offset3D {
     return new Offset3D(this.#data.subarray(44, 44 + Offset3D.size));
   }
 
@@ -104,7 +104,7 @@ export class ImageResolve implements BaseStruct {
     this.#data.set(value[BUFFER], 44);
   }
 
-  get extent() {
+  get extent(): Extent3D {
     return new Extent3D(this.#data.subarray(56, 56 + Extent3D.size));
   }
 

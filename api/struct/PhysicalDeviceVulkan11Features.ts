@@ -76,7 +76,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_VULKAN_1_1_FEATURES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -84,7 +84,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -92,7 +92,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get storageBuffer16BitAccess() {
+  get storageBuffer16BitAccess(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -100,7 +100,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get uniformAndStorageBuffer16BitAccess() {
+  get uniformAndStorageBuffer16BitAccess(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -108,7 +108,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get storagePushConstant16() {
+  get storagePushConstant16(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -116,7 +116,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get storageInputOutput16() {
+  get storageInputOutput16(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -124,7 +124,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get multiview() {
+  get multiview(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -132,7 +132,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get multiviewGeometryShader() {
+  get multiviewGeometryShader(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -140,7 +140,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get multiviewTessellationShader() {
+  get multiviewTessellationShader(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -148,7 +148,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get variablePointersStorageBuffer() {
+  get variablePointersStorageBuffer(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -156,7 +156,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get variablePointers() {
+  get variablePointers(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -164,7 +164,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get protectedMemory() {
+  get protectedMemory(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -172,7 +172,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get samplerYcbcrConversion() {
+  get samplerYcbcrConversion(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -180,7 +180,7 @@ export class PhysicalDeviceVulkan11Features implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get shaderDrawParameters() {
+  get shaderDrawParameters(): number {
     return this.#view.getUint32(60, LE);
   }
 

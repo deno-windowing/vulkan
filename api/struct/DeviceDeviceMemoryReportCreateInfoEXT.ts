@@ -58,7 +58,7 @@ export class DeviceDeviceMemoryReportCreateInfoEXT implements BaseStruct {
     this.sType = StructureType.DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class DeviceDeviceMemoryReportCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class DeviceDeviceMemoryReportCreateInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -82,15 +82,15 @@ export class DeviceDeviceMemoryReportCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pfnUserCallback() {
-    throw new Error(`Unknown type: "function"`);
+  get pfnUserCallback(): Deno.PointerValue {
+    return pointerFromView(this.#view, 24, LE);
   }
 
   set pfnUserCallback(value: Deno.PointerValue) {
-    throw new Error(`Unknown type: "function"`);
+    this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pUserData() {
+  get pUserData(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

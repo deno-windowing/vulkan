@@ -49,7 +49,7 @@ export class TransformMatrixKHR implements BaseStruct {
     }
   }
 
-  get matrix() {
+  get matrix(): Float32Array {
     return new Float32Array(this.#data.buffer, this.#data.byteOffset + 0, 3);
   }
 

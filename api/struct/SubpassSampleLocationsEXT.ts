@@ -52,7 +52,7 @@ export class SubpassSampleLocationsEXT implements BaseStruct {
     }
   }
 
-  get subpassIndex() {
+  get subpassIndex(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class SubpassSampleLocationsEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get sampleLocationsInfo() {
+  get sampleLocationsInfo(): SampleLocationsInfoEXT {
     return new SampleLocationsInfoEXT(this.#data.subarray(4, 4 + SampleLocationsInfoEXT.size));
   }
 

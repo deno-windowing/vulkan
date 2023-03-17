@@ -52,7 +52,7 @@ export class AttachmentSampleLocationsEXT implements BaseStruct {
     }
   }
 
-  get attachmentIndex() {
+  get attachmentIndex(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class AttachmentSampleLocationsEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get sampleLocationsInfo() {
+  get sampleLocationsInfo(): SampleLocationsInfoEXT {
     return new SampleLocationsInfoEXT(this.#data.subarray(4, 4 + SampleLocationsInfoEXT.size));
   }
 

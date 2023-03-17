@@ -75,7 +75,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.sType = StructureType.SUBPASS_DESCRIPTION_2;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -83,7 +83,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -91,7 +91,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -99,7 +99,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pipelineBindPoint() {
+  get pipelineBindPoint(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -107,7 +107,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get viewMask() {
+  get viewMask(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -115,7 +115,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get inputAttachmentCount() {
+  get inputAttachmentCount(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -123,7 +123,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get pInputAttachments() {
+  get pInputAttachments(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -131,7 +131,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get colorAttachmentCount() {
+  get colorAttachmentCount(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -139,7 +139,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get pColorAttachments() {
+  get pColorAttachments(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 
@@ -147,7 +147,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 
-  get pResolveAttachments() {
+  get pResolveAttachments(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -155,7 +155,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get pDepthStencilAttachment() {
+  get pDepthStencilAttachment(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 
@@ -163,7 +163,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 
-  get preserveAttachmentCount() {
+  get preserveAttachmentCount(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -171,7 +171,7 @@ export class SubpassDescription2 implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get pPreserveAttachments() {
+  get pPreserveAttachments(): Deno.PointerValue {
     return pointerFromView(this.#view, 80, LE);
   }
 

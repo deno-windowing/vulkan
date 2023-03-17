@@ -72,7 +72,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.sType = StructureType.VIDEO_ENCODE_H264_RATE_CONTROL_LAYER_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -80,7 +80,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -88,7 +88,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get temporalLayerId() {
+  get temporalLayerId(): number {
     return this.#view.getUint8(16);
   }
 
@@ -96,7 +96,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#view.setUint8(16, Number(value));
   }
 
-  get useInitialRcQp() {
+  get useInitialRcQp(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -104,7 +104,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get initialRcQp() {
+  get initialRcQp(): VideoEncodeH264QpEXT {
     return new VideoEncodeH264QpEXT(this.#data.subarray(24, 24 + VideoEncodeH264QpEXT.size));
   }
 
@@ -115,7 +115,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#data.set(value[BUFFER], 24);
   }
 
-  get useMinQp() {
+  get useMinQp(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -123,7 +123,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get minQp() {
+  get minQp(): VideoEncodeH264QpEXT {
     return new VideoEncodeH264QpEXT(this.#data.subarray(40, 40 + VideoEncodeH264QpEXT.size));
   }
 
@@ -134,7 +134,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#data.set(value[BUFFER], 40);
   }
 
-  get useMaxQp() {
+  get useMaxQp(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -142,7 +142,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get maxQp() {
+  get maxQp(): VideoEncodeH264QpEXT {
     return new VideoEncodeH264QpEXT(this.#data.subarray(56, 56 + VideoEncodeH264QpEXT.size));
   }
 
@@ -153,7 +153,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#data.set(value[BUFFER], 56);
   }
 
-  get useMaxFrameSize() {
+  get useMaxFrameSize(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -161,7 +161,7 @@ export class VideoEncodeH264RateControlLayerInfoEXT implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get maxFrameSize() {
+  get maxFrameSize(): VideoEncodeH264FrameSizeEXT {
     return new VideoEncodeH264FrameSizeEXT(this.#data.subarray(72, 72 + VideoEncodeH264FrameSizeEXT.size));
   }
 

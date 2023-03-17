@@ -61,7 +61,7 @@ export class GraphicsPipelineShaderGroupsCreateInfoNV implements BaseStruct {
     this.sType = StructureType.GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class GraphicsPipelineShaderGroupsCreateInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class GraphicsPipelineShaderGroupsCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get groupCount() {
+  get groupCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -85,7 +85,7 @@ export class GraphicsPipelineShaderGroupsCreateInfoNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pGroups() {
+  get pGroups(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -93,7 +93,7 @@ export class GraphicsPipelineShaderGroupsCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pipelineCount() {
+  get pipelineCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -101,7 +101,7 @@ export class GraphicsPipelineShaderGroupsCreateInfoNV implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get pPipelines() {
+  get pPipelines(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 

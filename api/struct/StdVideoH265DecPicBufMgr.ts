@@ -54,7 +54,7 @@ export class StdVideoH265DecPicBufMgr implements BaseStruct {
     }
   }
 
-  get max_latency_increase_plus1() {
+  get max_latency_increase_plus1(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 0, 7);
   }
 
@@ -62,7 +62,7 @@ export class StdVideoH265DecPicBufMgr implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 0);
   }
 
-  get max_dec_pic_buffering_minus1() {
+  get max_dec_pic_buffering_minus1(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 28, 7);
   }
 
@@ -70,7 +70,7 @@ export class StdVideoH265DecPicBufMgr implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 28);
   }
 
-  get max_num_reorder_pics() {
+  get max_num_reorder_pics(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 35, 7);
   }
 

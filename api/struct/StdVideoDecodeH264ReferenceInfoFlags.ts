@@ -55,7 +55,7 @@ export class StdVideoDecodeH264ReferenceInfoFlags implements BaseStruct {
     }
   }
 
-  get top_field_flag() {
+  get top_field_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class StdVideoDecodeH264ReferenceInfoFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get bottom_field_flag() {
+  get bottom_field_flag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -71,7 +71,7 @@ export class StdVideoDecodeH264ReferenceInfoFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get used_for_long_term_reference() {
+  get used_for_long_term_reference(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -79,7 +79,7 @@ export class StdVideoDecodeH264ReferenceInfoFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get is_non_existing() {
+  get is_non_existing(): number {
     return this.#view.getUint32(12, LE);
   }
 

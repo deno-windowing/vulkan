@@ -70,7 +70,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.sType = StructureType.BUFFER_MEMORY_BARRIER_2;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -78,7 +78,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -86,7 +86,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get srcStageMask() {
+  get srcStageMask(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -94,7 +94,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get srcAccessMask() {
+  get srcAccessMask(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -102,7 +102,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get dstStageMask() {
+  get dstStageMask(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -110,7 +110,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get dstAccessMask() {
+  get dstAccessMask(): bigint {
     return this.#view.getBigUint64(40, LE);
   }
 
@@ -118,7 +118,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(value), LE);
   }
 
-  get srcQueueFamilyIndex() {
+  get srcQueueFamilyIndex(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -126,7 +126,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get dstQueueFamilyIndex() {
+  get dstQueueFamilyIndex(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -134,7 +134,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get buffer() {
+  get buffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -142,7 +142,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get offset() {
+  get offset(): bigint {
     return this.#view.getBigUint64(64, LE);
   }
 
@@ -150,7 +150,7 @@ export class BufferMemoryBarrier2 implements BaseStruct {
     this.#view.setBigUint64(64, BigInt(value), LE);
   }
 
-  get size() {
+  get size(): bigint {
     return this.#view.getBigUint64(72, LE);
   }
 

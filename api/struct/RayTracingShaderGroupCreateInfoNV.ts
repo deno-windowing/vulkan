@@ -61,7 +61,7 @@ export class RayTracingShaderGroupCreateInfoNV implements BaseStruct {
     this.sType = StructureType.RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class RayTracingShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class RayTracingShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get type() {
+  get type(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -85,7 +85,7 @@ export class RayTracingShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get generalShader() {
+  get generalShader(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -93,7 +93,7 @@ export class RayTracingShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get closestHitShader() {
+  get closestHitShader(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -101,7 +101,7 @@ export class RayTracingShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get anyHitShader() {
+  get anyHitShader(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -109,7 +109,7 @@ export class RayTracingShaderGroupCreateInfoNV implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get intersectionShader() {
+  get intersectionShader(): number {
     return this.#view.getUint32(32, LE);
   }
 

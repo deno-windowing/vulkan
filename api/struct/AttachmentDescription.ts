@@ -67,7 +67,7 @@ export class AttachmentDescription implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -75,7 +75,7 @@ export class AttachmentDescription implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -83,7 +83,7 @@ export class AttachmentDescription implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get samples() {
+  get samples(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -91,7 +91,7 @@ export class AttachmentDescription implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get loadOp() {
+  get loadOp(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -99,7 +99,7 @@ export class AttachmentDescription implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get storeOp() {
+  get storeOp(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -107,7 +107,7 @@ export class AttachmentDescription implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get stencilLoadOp() {
+  get stencilLoadOp(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -115,7 +115,7 @@ export class AttachmentDescription implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get stencilStoreOp() {
+  get stencilStoreOp(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -123,7 +123,7 @@ export class AttachmentDescription implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get initialLayout() {
+  get initialLayout(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -131,7 +131,7 @@ export class AttachmentDescription implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get finalLayout() {
+  get finalLayout(): number {
     return this.#view.getUint32(32, LE);
   }
 

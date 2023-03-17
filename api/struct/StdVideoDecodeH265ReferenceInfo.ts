@@ -52,7 +52,7 @@ export class StdVideoDecodeH265ReferenceInfo implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoDecodeH265ReferenceInfoFlags {
     return new StdVideoDecodeH265ReferenceInfoFlags(this.#data.subarray(0, 0 + StdVideoDecodeH265ReferenceInfoFlags.size));
   }
 
@@ -63,7 +63,7 @@ export class StdVideoDecodeH265ReferenceInfo implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get PicOrderCntVal() {
+  get PicOrderCntVal(): number {
     return this.#view.getInt32(8, LE);
   }
 

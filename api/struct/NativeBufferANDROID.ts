@@ -62,7 +62,7 @@ export class NativeBufferANDROID implements BaseStruct {
     this.sType = StructureType.NATIVE_BUFFER_ANDROID;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -70,7 +70,7 @@ export class NativeBufferANDROID implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -78,7 +78,7 @@ export class NativeBufferANDROID implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get handle() {
+  get handle(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -86,7 +86,7 @@ export class NativeBufferANDROID implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get stride() {
+  get stride(): number {
     return this.#view.getInt32(24, LE);
   }
 
@@ -94,7 +94,7 @@ export class NativeBufferANDROID implements BaseStruct {
     this.#view.setInt32(24, Number(value), LE);
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getInt32(28, LE);
   }
 
@@ -102,7 +102,7 @@ export class NativeBufferANDROID implements BaseStruct {
     this.#view.setInt32(28, Number(value), LE);
   }
 
-  get usage() {
+  get usage(): number {
     return this.#view.getInt32(32, LE);
   }
 
@@ -110,7 +110,7 @@ export class NativeBufferANDROID implements BaseStruct {
     this.#view.setInt32(32, Number(value), LE);
   }
 
-  get usage2() {
+  get usage2(): NativeBufferUsage2ANDROID {
     return new NativeBufferUsage2ANDROID(this.#data.subarray(40, 40 + NativeBufferUsage2ANDROID.size));
   }
 

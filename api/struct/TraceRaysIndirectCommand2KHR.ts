@@ -76,7 +76,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     }
   }
 
-  get raygenShaderRecordAddress() {
+  get raygenShaderRecordAddress(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 
@@ -84,7 +84,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(value), LE);
   }
 
-  get raygenShaderRecordSize() {
+  get raygenShaderRecordSize(): bigint {
     return this.#view.getBigUint64(8, LE);
   }
 
@@ -92,7 +92,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(value), LE);
   }
 
-  get missShaderBindingTableAddress() {
+  get missShaderBindingTableAddress(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -100,7 +100,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get missShaderBindingTableSize() {
+  get missShaderBindingTableSize(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -108,7 +108,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get missShaderBindingTableStride() {
+  get missShaderBindingTableStride(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -116,7 +116,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get hitShaderBindingTableAddress() {
+  get hitShaderBindingTableAddress(): bigint {
     return this.#view.getBigUint64(40, LE);
   }
 
@@ -124,7 +124,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(value), LE);
   }
 
-  get hitShaderBindingTableSize() {
+  get hitShaderBindingTableSize(): bigint {
     return this.#view.getBigUint64(48, LE);
   }
 
@@ -132,7 +132,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(value), LE);
   }
 
-  get hitShaderBindingTableStride() {
+  get hitShaderBindingTableStride(): bigint {
     return this.#view.getBigUint64(56, LE);
   }
 
@@ -140,7 +140,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(value), LE);
   }
 
-  get callableShaderBindingTableAddress() {
+  get callableShaderBindingTableAddress(): bigint {
     return this.#view.getBigUint64(64, LE);
   }
 
@@ -148,7 +148,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(64, BigInt(value), LE);
   }
 
-  get callableShaderBindingTableSize() {
+  get callableShaderBindingTableSize(): bigint {
     return this.#view.getBigUint64(72, LE);
   }
 
@@ -156,7 +156,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(72, BigInt(value), LE);
   }
 
-  get callableShaderBindingTableStride() {
+  get callableShaderBindingTableStride(): bigint {
     return this.#view.getBigUint64(80, LE);
   }
 
@@ -164,7 +164,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setBigUint64(80, BigInt(value), LE);
   }
 
-  get width() {
+  get width(): number {
     return this.#view.getUint32(88, LE);
   }
 
@@ -172,7 +172,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get height() {
+  get height(): number {
     return this.#view.getUint32(92, LE);
   }
 
@@ -180,7 +180,7 @@ export class TraceRaysIndirectCommand2KHR implements BaseStruct {
     this.#view.setUint32(92, Number(value), LE);
   }
 
-  get depth() {
+  get depth(): number {
     return this.#view.getUint32(96, LE);
   }
 

@@ -54,7 +54,7 @@ export class DescriptorBufferBindingPushDescriptorBufferHandleEXT implements Bas
     this.sType = StructureType.DESCRIPTOR_BUFFER_BINDING_PUSH_DESCRIPTOR_BUFFER_HANDLE_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class DescriptorBufferBindingPushDescriptorBufferHandleEXT implements Bas
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class DescriptorBufferBindingPushDescriptorBufferHandleEXT implements Bas
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get buffer() {
+  get buffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 

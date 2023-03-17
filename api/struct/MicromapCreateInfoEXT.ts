@@ -64,7 +64,7 @@ export class MicromapCreateInfoEXT implements BaseStruct {
     this.sType = StructureType.MICROMAP_CREATE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -72,7 +72,7 @@ export class MicromapCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -80,7 +80,7 @@ export class MicromapCreateInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get createFlags() {
+  get createFlags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -88,7 +88,7 @@ export class MicromapCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get buffer() {
+  get buffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -96,7 +96,7 @@ export class MicromapCreateInfoEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get offset() {
+  get offset(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -104,7 +104,7 @@ export class MicromapCreateInfoEXT implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get size() {
+  get size(): bigint {
     return this.#view.getBigUint64(40, LE);
   }
 
@@ -112,7 +112,7 @@ export class MicromapCreateInfoEXT implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(value), LE);
   }
 
-  get type() {
+  get type(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -120,7 +120,7 @@ export class MicromapCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get deviceAddress() {
+  get deviceAddress(): bigint {
     return this.#view.getBigUint64(56, LE);
   }
 

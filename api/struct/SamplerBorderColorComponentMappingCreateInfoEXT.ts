@@ -57,7 +57,7 @@ export class SamplerBorderColorComponentMappingCreateInfoEXT implements BaseStru
     this.sType = StructureType.SAMPLER_BORDER_COLOR_COMPONENT_MAPPING_CREATE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class SamplerBorderColorComponentMappingCreateInfoEXT implements BaseStru
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -73,7 +73,7 @@ export class SamplerBorderColorComponentMappingCreateInfoEXT implements BaseStru
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get components() {
+  get components(): ComponentMapping {
     return new ComponentMapping(this.#data.subarray(16, 16 + ComponentMapping.size));
   }
 
@@ -84,7 +84,7 @@ export class SamplerBorderColorComponentMappingCreateInfoEXT implements BaseStru
     this.#data.set(value[BUFFER], 16);
   }
 
-  get srgb() {
+  get srgb(): number {
     return this.#view.getUint32(32, LE);
   }
 

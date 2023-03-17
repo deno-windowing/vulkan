@@ -55,7 +55,7 @@ export class BindBufferMemoryDeviceGroupInfo implements BaseStruct {
     this.sType = StructureType.BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class BindBufferMemoryDeviceGroupInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class BindBufferMemoryDeviceGroupInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get deviceIndexCount() {
+  get deviceIndexCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class BindBufferMemoryDeviceGroupInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pDeviceIndices() {
+  get pDeviceIndices(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

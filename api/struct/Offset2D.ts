@@ -51,7 +51,7 @@ export class Offset2D implements BaseStruct {
     }
   }
 
-  get x() {
+  get x(): number {
     return this.#view.getInt32(0, LE);
   }
 
@@ -59,7 +59,7 @@ export class Offset2D implements BaseStruct {
     this.#view.setInt32(0, Number(value), LE);
   }
 
-  get y() {
+  get y(): number {
     return this.#view.getInt32(4, LE);
   }
 

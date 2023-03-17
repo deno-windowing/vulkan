@@ -85,7 +85,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.sType = StructureType.SWAPCHAIN_CREATE_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -93,7 +93,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -101,7 +101,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -109,7 +109,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get surface() {
+  get surface(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -117,7 +117,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get minImageCount() {
+  get minImageCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -125,7 +125,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get imageFormat() {
+  get imageFormat(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -133,7 +133,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get imageColorSpace() {
+  get imageColorSpace(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -141,7 +141,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get imageExtent() {
+  get imageExtent(): Extent2D {
     return new Extent2D(this.#data.subarray(44, 44 + Extent2D.size));
   }
 
@@ -152,7 +152,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 44);
   }
 
-  get imageArrayLayers() {
+  get imageArrayLayers(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -160,7 +160,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get imageUsage() {
+  get imageUsage(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -168,7 +168,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get imageSharingMode() {
+  get imageSharingMode(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -176,7 +176,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get queueFamilyIndexCount() {
+  get queueFamilyIndexCount(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -184,7 +184,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get pQueueFamilyIndices() {
+  get pQueueFamilyIndices(): Deno.PointerValue {
     return pointerFromView(this.#view, 72, LE);
   }
 
@@ -192,7 +192,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
 
-  get preTransform() {
+  get preTransform(): number {
     return this.#view.getUint32(80, LE);
   }
 
@@ -200,7 +200,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(80, Number(value), LE);
   }
 
-  get compositeAlpha() {
+  get compositeAlpha(): number {
     return this.#view.getUint32(84, LE);
   }
 
@@ -208,7 +208,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(84, Number(value), LE);
   }
 
-  get presentMode() {
+  get presentMode(): number {
     return this.#view.getUint32(88, LE);
   }
 
@@ -216,7 +216,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get clipped() {
+  get clipped(): number {
     return this.#view.getUint32(92, LE);
   }
 
@@ -224,7 +224,7 @@ export class SwapchainCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(92, Number(value), LE);
   }
 
-  get oldSwapchain() {
+  get oldSwapchain(): Deno.PointerValue {
     return pointerFromView(this.#view, 96, LE);
   }
 

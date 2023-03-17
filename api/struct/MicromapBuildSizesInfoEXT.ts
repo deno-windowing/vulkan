@@ -58,7 +58,7 @@ export class MicromapBuildSizesInfoEXT implements BaseStruct {
     this.sType = StructureType.MICROMAP_BUILD_SIZES_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class MicromapBuildSizesInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class MicromapBuildSizesInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get micromapSize() {
+  get micromapSize(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -82,7 +82,7 @@ export class MicromapBuildSizesInfoEXT implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get buildScratchSize() {
+  get buildScratchSize(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -90,7 +90,7 @@ export class MicromapBuildSizesInfoEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get discardable() {
+  get discardable(): number {
     return this.#view.getUint32(32, LE);
   }
 

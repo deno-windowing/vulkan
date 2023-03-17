@@ -70,7 +70,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoEncodeH264WeightTableFlags {
     return new StdVideoEncodeH264WeightTableFlags(this.#data.subarray(0, 0 + StdVideoEncodeH264WeightTableFlags.size));
   }
 
@@ -81,7 +81,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get luma_log2_weight_denom() {
+  get luma_log2_weight_denom(): number {
     return this.#view.getUint8(16);
   }
 
@@ -89,7 +89,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#view.setUint8(16, Number(value));
   }
 
-  get chroma_log2_weight_denom() {
+  get chroma_log2_weight_denom(): number {
     return this.#view.getUint8(17);
   }
 
@@ -97,7 +97,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#view.setUint8(17, Number(value));
   }
 
-  get luma_weight_l0() {
+  get luma_weight_l0(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 18, 32);
   }
 
@@ -105,7 +105,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 18);
   }
 
-  get luma_offset_l0() {
+  get luma_offset_l0(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 50, 32);
   }
 
@@ -113,7 +113,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 50);
   }
 
-  get chroma_weight_l0() {
+  get chroma_weight_l0(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 82, 64);
   }
 
@@ -121,7 +121,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 82);
   }
 
-  get chroma_offset_l0() {
+  get chroma_offset_l0(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 146, 64);
   }
 
@@ -129,7 +129,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 146);
   }
 
-  get luma_weight_l1() {
+  get luma_weight_l1(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 210, 32);
   }
 
@@ -137,7 +137,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 210);
   }
 
-  get luma_offset_l1() {
+  get luma_offset_l1(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 242, 32);
   }
 
@@ -145,7 +145,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 242);
   }
 
-  get chroma_weight_l1() {
+  get chroma_weight_l1(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 274, 64);
   }
 
@@ -153,7 +153,7 @@ export class StdVideoEncodeH264WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 274);
   }
 
-  get chroma_offset_l1() {
+  get chroma_offset_l1(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 338, 64);
   }
 

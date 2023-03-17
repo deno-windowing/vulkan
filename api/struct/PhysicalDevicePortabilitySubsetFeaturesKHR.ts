@@ -82,7 +82,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -90,7 +90,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -98,7 +98,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get constantAlphaColorBlendFactors() {
+  get constantAlphaColorBlendFactors(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -106,7 +106,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get events() {
+  get events(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -114,7 +114,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get imageViewFormatReinterpretation() {
+  get imageViewFormatReinterpretation(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -122,7 +122,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get imageViewFormatSwizzle() {
+  get imageViewFormatSwizzle(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -130,7 +130,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get imageView2DOn3DImage() {
+  get imageView2DOn3DImage(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -138,7 +138,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get multisampleArrayImage() {
+  get multisampleArrayImage(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -146,7 +146,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get mutableComparisonSamplers() {
+  get mutableComparisonSamplers(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -154,7 +154,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get pointPolygons() {
+  get pointPolygons(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -162,7 +162,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get samplerMipLodBias() {
+  get samplerMipLodBias(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -170,7 +170,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get separateStencilMaskRef() {
+  get separateStencilMaskRef(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -178,7 +178,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get shaderSampleRateInterpolationFunctions() {
+  get shaderSampleRateInterpolationFunctions(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -186,7 +186,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get tessellationIsolines() {
+  get tessellationIsolines(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -194,7 +194,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get tessellationPointMode() {
+  get tessellationPointMode(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -202,7 +202,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get triangleFans() {
+  get triangleFans(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -210,7 +210,7 @@ export class PhysicalDevicePortabilitySubsetFeaturesKHR implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get vertexAttributeAccessBeyondStride() {
+  get vertexAttributeAccessBeyondStride(): number {
     return this.#view.getUint32(72, LE);
   }
 

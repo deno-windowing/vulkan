@@ -56,7 +56,7 @@ export class DeviceGroupPresentCapabilitiesKHR implements BaseStruct {
     this.sType = StructureType.DEVICE_GROUP_PRESENT_CAPABILITIES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class DeviceGroupPresentCapabilitiesKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class DeviceGroupPresentCapabilitiesKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get presentMask() {
+  get presentMask(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 16, 32);
   }
 
@@ -80,7 +80,7 @@ export class DeviceGroupPresentCapabilitiesKHR implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 16);
   }
 
-  get modes() {
+  get modes(): number {
     return this.#view.getUint32(144, LE);
   }
 

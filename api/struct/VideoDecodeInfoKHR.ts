@@ -70,7 +70,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.sType = StructureType.VIDEO_DECODE_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -78,7 +78,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -86,7 +86,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -94,7 +94,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get srcBuffer() {
+  get srcBuffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -102,7 +102,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get srcBufferOffset() {
+  get srcBufferOffset(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -110,7 +110,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get srcBufferRange() {
+  get srcBufferRange(): bigint {
     return this.#view.getBigUint64(40, LE);
   }
 
@@ -118,7 +118,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(value), LE);
   }
 
-  get dstPictureResource() {
+  get dstPictureResource(): VideoPictureResourceInfoKHR {
     return new VideoPictureResourceInfoKHR(this.#data.subarray(48, 48 + VideoPictureResourceInfoKHR.size));
   }
 
@@ -129,7 +129,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 48);
   }
 
-  get pSetupReferenceSlot() {
+  get pSetupReferenceSlot(): Deno.PointerValue {
     return pointerFromView(this.#view, 96, LE);
   }
 
@@ -137,7 +137,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.#view.setBigUint64(96, BigInt(anyPointer(value)), LE);
   }
 
-  get referenceSlotCount() {
+  get referenceSlotCount(): number {
     return this.#view.getUint32(104, LE);
   }
 
@@ -145,7 +145,7 @@ export class VideoDecodeInfoKHR implements BaseStruct {
     this.#view.setUint32(104, Number(value), LE);
   }
 
-  get pReferenceSlots() {
+  get pReferenceSlots(): Deno.PointerValue {
     return pointerFromView(this.#view, 112, LE);
   }
 

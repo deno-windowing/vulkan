@@ -54,7 +54,7 @@ export class PushConstantRange implements BaseStruct {
     }
   }
 
-  get stageFlags() {
+  get stageFlags(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class PushConstantRange implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get offset() {
+  get offset(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -70,7 +70,7 @@ export class PushConstantRange implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get size() {
+  get size(): number {
     return this.#view.getUint32(8, LE);
   }
 

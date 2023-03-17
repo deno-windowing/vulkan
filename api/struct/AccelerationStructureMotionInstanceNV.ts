@@ -56,7 +56,7 @@ export class AccelerationStructureMotionInstanceNV implements BaseStruct {
     }
   }
 
-  get type() {
+  get type(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class AccelerationStructureMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -72,7 +72,7 @@ export class AccelerationStructureMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get data() {
+  get data(): unknown {
     throw new Error(`Unknown type: {"union":[{"struct":[{"struct":["f32"]},"u32","u32","u32","u32","u64"]},{"struct":[{"struct":["f32"]},{"struct":["f32"]},"u32","u32","u32","u32","u64"]},{"struct":[{"struct":["f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32"]},{"struct":["f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32","f32"]},"u32","u32","u32","u32","u64"]}]}`);
   }
 

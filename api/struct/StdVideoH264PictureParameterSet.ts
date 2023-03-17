@@ -72,7 +72,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoH264PpsFlags {
     return new StdVideoH264PpsFlags(this.#data.subarray(0, 0 + StdVideoH264PpsFlags.size));
   }
 
@@ -83,7 +83,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get seq_parameter_set_id() {
+  get seq_parameter_set_id(): number {
     return this.#view.getUint8(32);
   }
 
@@ -91,7 +91,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#view.setUint8(32, Number(value));
   }
 
-  get pic_parameter_set_id() {
+  get pic_parameter_set_id(): number {
     return this.#view.getUint8(33);
   }
 
@@ -99,7 +99,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#view.setUint8(33, Number(value));
   }
 
-  get num_ref_idx_l0_default_active_minus1() {
+  get num_ref_idx_l0_default_active_minus1(): number {
     return this.#view.getUint8(34);
   }
 
@@ -107,7 +107,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#view.setUint8(34, Number(value));
   }
 
-  get num_ref_idx_l1_default_active_minus1() {
+  get num_ref_idx_l1_default_active_minus1(): number {
     return this.#view.getUint8(35);
   }
 
@@ -115,7 +115,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#view.setUint8(35, Number(value));
   }
 
-  get weighted_bipred_idc() {
+  get weighted_bipred_idc(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -123,7 +123,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get pic_init_qp_minus26() {
+  get pic_init_qp_minus26(): number {
     return this.#view.getInt8(40);
   }
 
@@ -131,7 +131,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#view.setInt8(40, Number(value));
   }
 
-  get pic_init_qs_minus26() {
+  get pic_init_qs_minus26(): number {
     return this.#view.getInt8(41);
   }
 
@@ -139,7 +139,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#view.setInt8(41, Number(value));
   }
 
-  get chroma_qp_index_offset() {
+  get chroma_qp_index_offset(): number {
     return this.#view.getInt8(42);
   }
 
@@ -147,7 +147,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#view.setInt8(42, Number(value));
   }
 
-  get second_chroma_qp_index_offset() {
+  get second_chroma_qp_index_offset(): number {
     return this.#view.getInt8(43);
   }
 
@@ -155,7 +155,7 @@ export class StdVideoH264PictureParameterSet implements BaseStruct {
     this.#view.setInt8(43, Number(value));
   }
 
-  get pScalingLists() {
+  get pScalingLists(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 

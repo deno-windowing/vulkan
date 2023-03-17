@@ -157,7 +157,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -165,7 +165,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -173,7 +173,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get driverID() {
+  get driverID(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -181,7 +181,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get driverName() {
+  get driverName(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 20, 256);
   }
 
@@ -189,7 +189,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 20);
   }
 
-  get driverInfo() {
+  get driverInfo(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 276, 256);
   }
 
@@ -197,7 +197,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 276);
   }
 
-  get conformanceVersion() {
+  get conformanceVersion(): ConformanceVersion {
     return new ConformanceVersion(this.#data.subarray(532, 532 + ConformanceVersion.size));
   }
 
@@ -208,7 +208,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#data.set(value[BUFFER], 532);
   }
 
-  get denormBehaviorIndependence() {
+  get denormBehaviorIndependence(): number {
     return this.#view.getUint32(536, LE);
   }
 
@@ -216,7 +216,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(536, Number(value), LE);
   }
 
-  get roundingModeIndependence() {
+  get roundingModeIndependence(): number {
     return this.#view.getUint32(540, LE);
   }
 
@@ -224,7 +224,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(540, Number(value), LE);
   }
 
-  get shaderSignedZeroInfNanPreserveFloat16() {
+  get shaderSignedZeroInfNanPreserveFloat16(): number {
     return this.#view.getUint32(544, LE);
   }
 
@@ -232,7 +232,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(544, Number(value), LE);
   }
 
-  get shaderSignedZeroInfNanPreserveFloat32() {
+  get shaderSignedZeroInfNanPreserveFloat32(): number {
     return this.#view.getUint32(548, LE);
   }
 
@@ -240,7 +240,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(548, Number(value), LE);
   }
 
-  get shaderSignedZeroInfNanPreserveFloat64() {
+  get shaderSignedZeroInfNanPreserveFloat64(): number {
     return this.#view.getUint32(552, LE);
   }
 
@@ -248,7 +248,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(552, Number(value), LE);
   }
 
-  get shaderDenormPreserveFloat16() {
+  get shaderDenormPreserveFloat16(): number {
     return this.#view.getUint32(556, LE);
   }
 
@@ -256,7 +256,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(556, Number(value), LE);
   }
 
-  get shaderDenormPreserveFloat32() {
+  get shaderDenormPreserveFloat32(): number {
     return this.#view.getUint32(560, LE);
   }
 
@@ -264,7 +264,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(560, Number(value), LE);
   }
 
-  get shaderDenormPreserveFloat64() {
+  get shaderDenormPreserveFloat64(): number {
     return this.#view.getUint32(564, LE);
   }
 
@@ -272,7 +272,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(564, Number(value), LE);
   }
 
-  get shaderDenormFlushToZeroFloat16() {
+  get shaderDenormFlushToZeroFloat16(): number {
     return this.#view.getUint32(568, LE);
   }
 
@@ -280,7 +280,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(568, Number(value), LE);
   }
 
-  get shaderDenormFlushToZeroFloat32() {
+  get shaderDenormFlushToZeroFloat32(): number {
     return this.#view.getUint32(572, LE);
   }
 
@@ -288,7 +288,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(572, Number(value), LE);
   }
 
-  get shaderDenormFlushToZeroFloat64() {
+  get shaderDenormFlushToZeroFloat64(): number {
     return this.#view.getUint32(576, LE);
   }
 
@@ -296,7 +296,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(576, Number(value), LE);
   }
 
-  get shaderRoundingModeRTEFloat16() {
+  get shaderRoundingModeRTEFloat16(): number {
     return this.#view.getUint32(580, LE);
   }
 
@@ -304,7 +304,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(580, Number(value), LE);
   }
 
-  get shaderRoundingModeRTEFloat32() {
+  get shaderRoundingModeRTEFloat32(): number {
     return this.#view.getUint32(584, LE);
   }
 
@@ -312,7 +312,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(584, Number(value), LE);
   }
 
-  get shaderRoundingModeRTEFloat64() {
+  get shaderRoundingModeRTEFloat64(): number {
     return this.#view.getUint32(588, LE);
   }
 
@@ -320,7 +320,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(588, Number(value), LE);
   }
 
-  get shaderRoundingModeRTZFloat16() {
+  get shaderRoundingModeRTZFloat16(): number {
     return this.#view.getUint32(592, LE);
   }
 
@@ -328,7 +328,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(592, Number(value), LE);
   }
 
-  get shaderRoundingModeRTZFloat32() {
+  get shaderRoundingModeRTZFloat32(): number {
     return this.#view.getUint32(596, LE);
   }
 
@@ -336,7 +336,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(596, Number(value), LE);
   }
 
-  get shaderRoundingModeRTZFloat64() {
+  get shaderRoundingModeRTZFloat64(): number {
     return this.#view.getUint32(600, LE);
   }
 
@@ -344,7 +344,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(600, Number(value), LE);
   }
 
-  get maxUpdateAfterBindDescriptorsInAllPools() {
+  get maxUpdateAfterBindDescriptorsInAllPools(): number {
     return this.#view.getUint32(604, LE);
   }
 
@@ -352,7 +352,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(604, Number(value), LE);
   }
 
-  get shaderUniformBufferArrayNonUniformIndexingNative() {
+  get shaderUniformBufferArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(608, LE);
   }
 
@@ -360,7 +360,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(608, Number(value), LE);
   }
 
-  get shaderSampledImageArrayNonUniformIndexingNative() {
+  get shaderSampledImageArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(612, LE);
   }
 
@@ -368,7 +368,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(612, Number(value), LE);
   }
 
-  get shaderStorageBufferArrayNonUniformIndexingNative() {
+  get shaderStorageBufferArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(616, LE);
   }
 
@@ -376,7 +376,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(616, Number(value), LE);
   }
 
-  get shaderStorageImageArrayNonUniformIndexingNative() {
+  get shaderStorageImageArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(620, LE);
   }
 
@@ -384,7 +384,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(620, Number(value), LE);
   }
 
-  get shaderInputAttachmentArrayNonUniformIndexingNative() {
+  get shaderInputAttachmentArrayNonUniformIndexingNative(): number {
     return this.#view.getUint32(624, LE);
   }
 
@@ -392,7 +392,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(624, Number(value), LE);
   }
 
-  get robustBufferAccessUpdateAfterBind() {
+  get robustBufferAccessUpdateAfterBind(): number {
     return this.#view.getUint32(628, LE);
   }
 
@@ -400,7 +400,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(628, Number(value), LE);
   }
 
-  get quadDivergentImplicitLod() {
+  get quadDivergentImplicitLod(): number {
     return this.#view.getUint32(632, LE);
   }
 
@@ -408,7 +408,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(632, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindSamplers() {
+  get maxPerStageDescriptorUpdateAfterBindSamplers(): number {
     return this.#view.getUint32(636, LE);
   }
 
@@ -416,7 +416,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(636, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindUniformBuffers() {
+  get maxPerStageDescriptorUpdateAfterBindUniformBuffers(): number {
     return this.#view.getUint32(640, LE);
   }
 
@@ -424,7 +424,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(640, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindStorageBuffers() {
+  get maxPerStageDescriptorUpdateAfterBindStorageBuffers(): number {
     return this.#view.getUint32(644, LE);
   }
 
@@ -432,7 +432,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(644, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindSampledImages() {
+  get maxPerStageDescriptorUpdateAfterBindSampledImages(): number {
     return this.#view.getUint32(648, LE);
   }
 
@@ -440,7 +440,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(648, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindStorageImages() {
+  get maxPerStageDescriptorUpdateAfterBindStorageImages(): number {
     return this.#view.getUint32(652, LE);
   }
 
@@ -448,7 +448,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(652, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindInputAttachments() {
+  get maxPerStageDescriptorUpdateAfterBindInputAttachments(): number {
     return this.#view.getUint32(656, LE);
   }
 
@@ -456,7 +456,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(656, Number(value), LE);
   }
 
-  get maxPerStageUpdateAfterBindResources() {
+  get maxPerStageUpdateAfterBindResources(): number {
     return this.#view.getUint32(660, LE);
   }
 
@@ -464,7 +464,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(660, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindSamplers() {
+  get maxDescriptorSetUpdateAfterBindSamplers(): number {
     return this.#view.getUint32(664, LE);
   }
 
@@ -472,7 +472,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(664, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindUniformBuffers() {
+  get maxDescriptorSetUpdateAfterBindUniformBuffers(): number {
     return this.#view.getUint32(668, LE);
   }
 
@@ -480,7 +480,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(668, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindUniformBuffersDynamic() {
+  get maxDescriptorSetUpdateAfterBindUniformBuffersDynamic(): number {
     return this.#view.getUint32(672, LE);
   }
 
@@ -488,7 +488,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(672, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindStorageBuffers() {
+  get maxDescriptorSetUpdateAfterBindStorageBuffers(): number {
     return this.#view.getUint32(676, LE);
   }
 
@@ -496,7 +496,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(676, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindStorageBuffersDynamic() {
+  get maxDescriptorSetUpdateAfterBindStorageBuffersDynamic(): number {
     return this.#view.getUint32(680, LE);
   }
 
@@ -504,7 +504,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(680, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindSampledImages() {
+  get maxDescriptorSetUpdateAfterBindSampledImages(): number {
     return this.#view.getUint32(684, LE);
   }
 
@@ -512,7 +512,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(684, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindStorageImages() {
+  get maxDescriptorSetUpdateAfterBindStorageImages(): number {
     return this.#view.getUint32(688, LE);
   }
 
@@ -520,7 +520,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(688, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindInputAttachments() {
+  get maxDescriptorSetUpdateAfterBindInputAttachments(): number {
     return this.#view.getUint32(692, LE);
   }
 
@@ -528,7 +528,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(692, Number(value), LE);
   }
 
-  get supportedDepthResolveModes() {
+  get supportedDepthResolveModes(): number {
     return this.#view.getUint32(696, LE);
   }
 
@@ -536,7 +536,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(696, Number(value), LE);
   }
 
-  get supportedStencilResolveModes() {
+  get supportedStencilResolveModes(): number {
     return this.#view.getUint32(700, LE);
   }
 
@@ -544,7 +544,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(700, Number(value), LE);
   }
 
-  get independentResolveNone() {
+  get independentResolveNone(): number {
     return this.#view.getUint32(704, LE);
   }
 
@@ -552,7 +552,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(704, Number(value), LE);
   }
 
-  get independentResolve() {
+  get independentResolve(): number {
     return this.#view.getUint32(708, LE);
   }
 
@@ -560,7 +560,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(708, Number(value), LE);
   }
 
-  get filterMinmaxSingleComponentFormats() {
+  get filterMinmaxSingleComponentFormats(): number {
     return this.#view.getUint32(712, LE);
   }
 
@@ -568,7 +568,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(712, Number(value), LE);
   }
 
-  get filterMinmaxImageComponentMapping() {
+  get filterMinmaxImageComponentMapping(): number {
     return this.#view.getUint32(716, LE);
   }
 
@@ -576,7 +576,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setUint32(716, Number(value), LE);
   }
 
-  get maxTimelineSemaphoreValueDifference() {
+  get maxTimelineSemaphoreValueDifference(): bigint {
     return this.#view.getBigUint64(720, LE);
   }
 
@@ -584,7 +584,7 @@ export class PhysicalDeviceVulkan12Properties implements BaseStruct {
     this.#view.setBigUint64(720, BigInt(value), LE);
   }
 
-  get framebufferIntegerColorSampleCounts() {
+  get framebufferIntegerColorSampleCounts(): number {
     return this.#view.getUint32(728, LE);
   }
 

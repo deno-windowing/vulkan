@@ -63,7 +63,7 @@ export class AccelerationStructureSRTMotionInstanceNV implements BaseStruct {
     }
   }
 
-  get transformT0() {
+  get transformT0(): SRTDataNV {
     return new SRTDataNV(this.#data.subarray(0, 0 + SRTDataNV.size));
   }
 
@@ -74,7 +74,7 @@ export class AccelerationStructureSRTMotionInstanceNV implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get transformT1() {
+  get transformT1(): SRTDataNV {
     return new SRTDataNV(this.#data.subarray(64, 64 + SRTDataNV.size));
   }
 
@@ -85,7 +85,7 @@ export class AccelerationStructureSRTMotionInstanceNV implements BaseStruct {
     this.#data.set(value[BUFFER], 64);
   }
 
-  get instanceCustomIndex() {
+  get instanceCustomIndex(): number {
     return this.#view.getUint32(128, LE);
   }
 
@@ -93,7 +93,7 @@ export class AccelerationStructureSRTMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(128, Number(value), LE);
   }
 
-  get mask() {
+  get mask(): number {
     return this.#view.getUint32(132, LE);
   }
 
@@ -101,7 +101,7 @@ export class AccelerationStructureSRTMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(132, Number(value), LE);
   }
 
-  get instanceShaderBindingTableRecordOffset() {
+  get instanceShaderBindingTableRecordOffset(): number {
     return this.#view.getUint32(136, LE);
   }
 
@@ -109,7 +109,7 @@ export class AccelerationStructureSRTMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(136, Number(value), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(140, LE);
   }
 
@@ -117,7 +117,7 @@ export class AccelerationStructureSRTMotionInstanceNV implements BaseStruct {
     this.#view.setUint32(140, Number(value), LE);
   }
 
-  get accelerationStructureReference() {
+  get accelerationStructureReference(): bigint {
     return this.#view.getBigUint64(144, LE);
   }
 

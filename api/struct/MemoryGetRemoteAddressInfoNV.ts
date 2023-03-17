@@ -56,7 +56,7 @@ export class MemoryGetRemoteAddressInfoNV implements BaseStruct {
     this.sType = StructureType.MEMORY_GET_REMOTE_ADDRESS_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class MemoryGetRemoteAddressInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class MemoryGetRemoteAddressInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get memory() {
+  get memory(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -80,7 +80,7 @@ export class MemoryGetRemoteAddressInfoNV implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get handleType() {
+  get handleType(): number {
     return this.#view.getUint32(24, LE);
   }
 

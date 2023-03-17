@@ -53,7 +53,7 @@ export class Extent3D implements BaseStruct {
     }
   }
 
-  get width() {
+  get width(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class Extent3D implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get height() {
+  get height(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -69,7 +69,7 @@ export class Extent3D implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get depth() {
+  get depth(): number {
     return this.#view.getUint32(8, LE);
   }
 

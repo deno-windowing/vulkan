@@ -63,7 +63,7 @@ export class StdVideoH264PpsFlags implements BaseStruct {
     }
   }
 
-  get transform_8x8_mode_flag() {
+  get transform_8x8_mode_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class StdVideoH264PpsFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get redundant_pic_cnt_present_flag() {
+  get redundant_pic_cnt_present_flag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -79,7 +79,7 @@ export class StdVideoH264PpsFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get constrained_intra_pred_flag() {
+  get constrained_intra_pred_flag(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -87,7 +87,7 @@ export class StdVideoH264PpsFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get deblocking_filter_control_present_flag() {
+  get deblocking_filter_control_present_flag(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -95,7 +95,7 @@ export class StdVideoH264PpsFlags implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get weighted_pred_flag() {
+  get weighted_pred_flag(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -103,7 +103,7 @@ export class StdVideoH264PpsFlags implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get bottom_field_pic_order_in_frame_present_flag() {
+  get bottom_field_pic_order_in_frame_present_flag(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -111,7 +111,7 @@ export class StdVideoH264PpsFlags implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get entropy_coding_mode_flag() {
+  get entropy_coding_mode_flag(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -119,7 +119,7 @@ export class StdVideoH264PpsFlags implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get pic_scaling_matrix_present_flag() {
+  get pic_scaling_matrix_present_flag(): number {
     return this.#view.getUint32(28, LE);
   }
 

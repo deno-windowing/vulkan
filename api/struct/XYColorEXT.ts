@@ -52,7 +52,7 @@ export class XYColorEXT implements BaseStruct {
     }
   }
 
-  get x() {
+  get x(): number {
     return this.#view.getFloat32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class XYColorEXT implements BaseStruct {
     this.#view.setFloat32(0, Number(value), LE);
   }
 
-  get y() {
+  get y(): number {
     return this.#view.getFloat32(4, LE);
   }
 

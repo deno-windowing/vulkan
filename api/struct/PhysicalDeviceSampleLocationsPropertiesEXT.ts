@@ -63,7 +63,7 @@ export class PhysicalDeviceSampleLocationsPropertiesEXT implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class PhysicalDeviceSampleLocationsPropertiesEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -79,7 +79,7 @@ export class PhysicalDeviceSampleLocationsPropertiesEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get sampleLocationSampleCounts() {
+  get sampleLocationSampleCounts(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -87,7 +87,7 @@ export class PhysicalDeviceSampleLocationsPropertiesEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get maxSampleLocationGridSize() {
+  get maxSampleLocationGridSize(): Extent2D {
     return new Extent2D(this.#data.subarray(20, 20 + Extent2D.size));
   }
 
@@ -98,7 +98,7 @@ export class PhysicalDeviceSampleLocationsPropertiesEXT implements BaseStruct {
     this.#data.set(value[BUFFER], 20);
   }
 
-  get sampleLocationCoordinateRange() {
+  get sampleLocationCoordinateRange(): Float32Array {
     return new Float32Array(this.#data.buffer, this.#data.byteOffset + 28, 2);
   }
 
@@ -106,7 +106,7 @@ export class PhysicalDeviceSampleLocationsPropertiesEXT implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 28);
   }
 
-  get sampleLocationSubPixelBits() {
+  get sampleLocationSubPixelBits(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -114,7 +114,7 @@ export class PhysicalDeviceSampleLocationsPropertiesEXT implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get variableSampleLocations() {
+  get variableSampleLocations(): number {
     return this.#view.getUint32(40, LE);
   }
 

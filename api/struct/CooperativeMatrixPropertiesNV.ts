@@ -67,7 +67,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.sType = StructureType.COOPERATIVE_MATRIX_PROPERTIES_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -75,7 +75,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -83,7 +83,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get MSize() {
+  get MSize(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -91,7 +91,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get NSize() {
+  get NSize(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -99,7 +99,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get KSize() {
+  get KSize(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -107,7 +107,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get AType() {
+  get AType(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -115,7 +115,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get BType() {
+  get BType(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -123,7 +123,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get CType() {
+  get CType(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -131,7 +131,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get DType() {
+  get DType(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -139,7 +139,7 @@ export class CooperativeMatrixPropertiesNV implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get scope() {
+  get scope(): number {
     return this.#view.getUint32(44, LE);
   }
 

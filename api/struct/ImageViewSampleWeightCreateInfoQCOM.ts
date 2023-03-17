@@ -59,7 +59,7 @@ export class ImageViewSampleWeightCreateInfoQCOM implements BaseStruct {
     this.sType = StructureType.IMAGE_VIEW_SAMPLE_WEIGHT_CREATE_INFO_QCOM;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class ImageViewSampleWeightCreateInfoQCOM implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class ImageViewSampleWeightCreateInfoQCOM implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get filterCenter() {
+  get filterCenter(): Offset2D {
     return new Offset2D(this.#data.subarray(16, 16 + Offset2D.size));
   }
 
@@ -86,7 +86,7 @@ export class ImageViewSampleWeightCreateInfoQCOM implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get filterSize() {
+  get filterSize(): Extent2D {
     return new Extent2D(this.#data.subarray(24, 24 + Extent2D.size));
   }
 
@@ -97,7 +97,7 @@ export class ImageViewSampleWeightCreateInfoQCOM implements BaseStruct {
     this.#data.set(value[BUFFER], 24);
   }
 
-  get numPhases() {
+  get numPhases(): number {
     return this.#view.getUint32(32, LE);
   }
 

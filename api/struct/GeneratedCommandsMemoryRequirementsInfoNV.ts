@@ -60,7 +60,7 @@ export class GeneratedCommandsMemoryRequirementsInfoNV implements BaseStruct {
     this.sType = StructureType.GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class GeneratedCommandsMemoryRequirementsInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class GeneratedCommandsMemoryRequirementsInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get pipelineBindPoint() {
+  get pipelineBindPoint(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -84,7 +84,7 @@ export class GeneratedCommandsMemoryRequirementsInfoNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pipeline() {
+  get pipeline(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -92,7 +92,7 @@ export class GeneratedCommandsMemoryRequirementsInfoNV implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get indirectCommandsLayout() {
+  get indirectCommandsLayout(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -100,7 +100,7 @@ export class GeneratedCommandsMemoryRequirementsInfoNV implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get maxSequencesCount() {
+  get maxSequencesCount(): number {
     return this.#view.getUint32(40, LE);
   }
 

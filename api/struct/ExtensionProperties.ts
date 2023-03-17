@@ -51,7 +51,7 @@ export class ExtensionProperties implements BaseStruct {
     }
   }
 
-  get extensionName() {
+  get extensionName(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 0, 256);
   }
 
@@ -59,7 +59,7 @@ export class ExtensionProperties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 0);
   }
 
-  get specVersion() {
+  get specVersion(): number {
     return this.#view.getUint32(256, LE);
   }
 

@@ -82,7 +82,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoH264SpsVuiFlags {
     return new StdVideoH264SpsVuiFlags(this.#data.subarray(0, 0 + StdVideoH264SpsVuiFlags.size));
   }
 
@@ -93,7 +93,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get aspect_ratio_idc() {
+  get aspect_ratio_idc(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -101,7 +101,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get sar_width() {
+  get sar_width(): number {
     return this.#view.getUint16(52, LE);
   }
 
@@ -109,7 +109,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(52, Number(value), LE);
   }
 
-  get sar_height() {
+  get sar_height(): number {
     return this.#view.getUint16(54, LE);
   }
 
@@ -117,7 +117,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint16(54, Number(value), LE);
   }
 
-  get video_format() {
+  get video_format(): number {
     return this.#view.getUint8(56);
   }
 
@@ -125,7 +125,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(56, Number(value));
   }
 
-  get colour_primaries() {
+  get colour_primaries(): number {
     return this.#view.getUint8(57);
   }
 
@@ -133,7 +133,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(57, Number(value));
   }
 
-  get transfer_characteristics() {
+  get transfer_characteristics(): number {
     return this.#view.getUint8(58);
   }
 
@@ -141,7 +141,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(58, Number(value));
   }
 
-  get matrix_coefficients() {
+  get matrix_coefficients(): number {
     return this.#view.getUint8(59);
   }
 
@@ -149,7 +149,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(59, Number(value));
   }
 
-  get num_units_in_tick() {
+  get num_units_in_tick(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -157,7 +157,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get time_scale() {
+  get time_scale(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -165,7 +165,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get max_num_reorder_frames() {
+  get max_num_reorder_frames(): number {
     return this.#view.getUint8(68);
   }
 
@@ -173,7 +173,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(68, Number(value));
   }
 
-  get max_dec_frame_buffering() {
+  get max_dec_frame_buffering(): number {
     return this.#view.getUint8(69);
   }
 
@@ -181,7 +181,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(69, Number(value));
   }
 
-  get chroma_sample_loc_type_top_field() {
+  get chroma_sample_loc_type_top_field(): number {
     return this.#view.getUint8(70);
   }
 
@@ -189,7 +189,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(70, Number(value));
   }
 
-  get chroma_sample_loc_type_bottom_field() {
+  get chroma_sample_loc_type_bottom_field(): number {
     return this.#view.getUint8(71);
   }
 
@@ -197,7 +197,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint8(71, Number(value));
   }
 
-  get reserved1() {
+  get reserved1(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -205,7 +205,7 @@ export class StdVideoH264SequenceParameterSetVui implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get pHrdParameters() {
+  get pHrdParameters(): Deno.PointerValue {
     return pointerFromView(this.#view, 80, LE);
   }
 

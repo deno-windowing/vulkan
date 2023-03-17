@@ -53,7 +53,7 @@ export class BufferCollectionCreateInfoFUCHSIA implements BaseStruct {
     this.sType = StructureType.BUFFER_COLLECTION_CREATE_INFO_FUCHSIA;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class BufferCollectionCreateInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -69,7 +69,7 @@ export class BufferCollectionCreateInfoFUCHSIA implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get collectionToken() {
+  get collectionToken(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 

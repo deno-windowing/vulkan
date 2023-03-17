@@ -54,7 +54,7 @@ export class RenderPassSubpassFeedbackInfoEXT implements BaseStruct {
     }
   }
 
-  get subpassMergeStatus() {
+  get subpassMergeStatus(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class RenderPassSubpassFeedbackInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get description() {
+  get description(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 4, 256);
   }
 
@@ -70,7 +70,7 @@ export class RenderPassSubpassFeedbackInfoEXT implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 4);
   }
 
-  get postMergeIndex() {
+  get postMergeIndex(): number {
     return this.#view.getUint32(260, LE);
   }
 

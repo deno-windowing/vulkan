@@ -59,7 +59,7 @@ export class VideoEncodeH264NaluSliceInfoEXT implements BaseStruct {
     this.sType = StructureType.VIDEO_ENCODE_H264_NALU_SLICE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class VideoEncodeH264NaluSliceInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class VideoEncodeH264NaluSliceInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get mbCount() {
+  get mbCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -83,7 +83,7 @@ export class VideoEncodeH264NaluSliceInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pReferenceFinalLists() {
+  get pReferenceFinalLists(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -91,7 +91,7 @@ export class VideoEncodeH264NaluSliceInfoEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pSliceHeaderStd() {
+  get pSliceHeaderStd(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

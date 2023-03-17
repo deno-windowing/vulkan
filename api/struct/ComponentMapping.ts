@@ -56,7 +56,7 @@ export class ComponentMapping implements BaseStruct {
     }
   }
 
-  get r() {
+  get r(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class ComponentMapping implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get g() {
+  get g(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -72,7 +72,7 @@ export class ComponentMapping implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get b() {
+  get b(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -80,7 +80,7 @@ export class ComponentMapping implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get a() {
+  get a(): number {
     return this.#view.getUint32(12, LE);
   }
 

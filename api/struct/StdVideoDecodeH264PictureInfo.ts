@@ -65,7 +65,7 @@ export class StdVideoDecodeH264PictureInfo implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoDecodeH264PictureInfoFlags {
     return new StdVideoDecodeH264PictureInfoFlags(this.#data.subarray(0, 0 + StdVideoDecodeH264PictureInfoFlags.size));
   }
 
@@ -76,7 +76,7 @@ export class StdVideoDecodeH264PictureInfo implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get seq_parameter_set_id() {
+  get seq_parameter_set_id(): number {
     return this.#view.getUint8(24);
   }
 
@@ -84,7 +84,7 @@ export class StdVideoDecodeH264PictureInfo implements BaseStruct {
     this.#view.setUint8(24, Number(value));
   }
 
-  get pic_parameter_set_id() {
+  get pic_parameter_set_id(): number {
     return this.#view.getUint8(25);
   }
 
@@ -92,7 +92,7 @@ export class StdVideoDecodeH264PictureInfo implements BaseStruct {
     this.#view.setUint8(25, Number(value));
   }
 
-  get reserved1() {
+  get reserved1(): number {
     return this.#view.getUint8(26);
   }
 
@@ -100,7 +100,7 @@ export class StdVideoDecodeH264PictureInfo implements BaseStruct {
     this.#view.setUint8(26, Number(value));
   }
 
-  get reserved2() {
+  get reserved2(): number {
     return this.#view.getUint8(27);
   }
 
@@ -108,7 +108,7 @@ export class StdVideoDecodeH264PictureInfo implements BaseStruct {
     this.#view.setUint8(27, Number(value));
   }
 
-  get frame_num() {
+  get frame_num(): number {
     return this.#view.getUint16(28, LE);
   }
 
@@ -116,7 +116,7 @@ export class StdVideoDecodeH264PictureInfo implements BaseStruct {
     this.#view.setUint16(28, Number(value), LE);
   }
 
-  get idr_pic_id() {
+  get idr_pic_id(): number {
     return this.#view.getUint16(30, LE);
   }
 
@@ -124,7 +124,7 @@ export class StdVideoDecodeH264PictureInfo implements BaseStruct {
     this.#view.setUint16(30, Number(value), LE);
   }
 
-  get PicOrderCnt() {
+  get PicOrderCnt(): Int32Array {
     return new Int32Array(this.#data.buffer, this.#data.byteOffset + 32, 2);
   }
 

@@ -260,7 +260,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     }
   }
 
-  get maxImageDimension1D() {
+  get maxImageDimension1D(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -268,7 +268,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get maxImageDimension2D() {
+  get maxImageDimension2D(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -276,7 +276,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get maxImageDimension3D() {
+  get maxImageDimension3D(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -284,7 +284,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get maxImageDimensionCube() {
+  get maxImageDimensionCube(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -292,7 +292,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get maxImageArrayLayers() {
+  get maxImageArrayLayers(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -300,7 +300,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get maxTexelBufferElements() {
+  get maxTexelBufferElements(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -308,7 +308,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get maxUniformBufferRange() {
+  get maxUniformBufferRange(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -316,7 +316,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get maxStorageBufferRange() {
+  get maxStorageBufferRange(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -324,7 +324,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get maxPushConstantsSize() {
+  get maxPushConstantsSize(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -332,7 +332,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get maxMemoryAllocationCount() {
+  get maxMemoryAllocationCount(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -340,7 +340,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get maxSamplerAllocationCount() {
+  get maxSamplerAllocationCount(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -348,7 +348,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get bufferImageGranularity() {
+  get bufferImageGranularity(): bigint {
     return this.#view.getBigUint64(48, LE);
   }
 
@@ -356,7 +356,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(value), LE);
   }
 
-  get sparseAddressSpaceSize() {
+  get sparseAddressSpaceSize(): bigint {
     return this.#view.getBigUint64(56, LE);
   }
 
@@ -364,7 +364,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(value), LE);
   }
 
-  get maxBoundDescriptorSets() {
+  get maxBoundDescriptorSets(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -372,7 +372,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get maxPerStageDescriptorSamplers() {
+  get maxPerStageDescriptorSamplers(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -380,7 +380,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUniformBuffers() {
+  get maxPerStageDescriptorUniformBuffers(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -388,7 +388,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get maxPerStageDescriptorStorageBuffers() {
+  get maxPerStageDescriptorStorageBuffers(): number {
     return this.#view.getUint32(76, LE);
   }
 
@@ -396,7 +396,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(76, Number(value), LE);
   }
 
-  get maxPerStageDescriptorSampledImages() {
+  get maxPerStageDescriptorSampledImages(): number {
     return this.#view.getUint32(80, LE);
   }
 
@@ -404,7 +404,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(80, Number(value), LE);
   }
 
-  get maxPerStageDescriptorStorageImages() {
+  get maxPerStageDescriptorStorageImages(): number {
     return this.#view.getUint32(84, LE);
   }
 
@@ -412,7 +412,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(84, Number(value), LE);
   }
 
-  get maxPerStageDescriptorInputAttachments() {
+  get maxPerStageDescriptorInputAttachments(): number {
     return this.#view.getUint32(88, LE);
   }
 
@@ -420,7 +420,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get maxPerStageResources() {
+  get maxPerStageResources(): number {
     return this.#view.getUint32(92, LE);
   }
 
@@ -428,7 +428,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(92, Number(value), LE);
   }
 
-  get maxDescriptorSetSamplers() {
+  get maxDescriptorSetSamplers(): number {
     return this.#view.getUint32(96, LE);
   }
 
@@ -436,7 +436,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(96, Number(value), LE);
   }
 
-  get maxDescriptorSetUniformBuffers() {
+  get maxDescriptorSetUniformBuffers(): number {
     return this.#view.getUint32(100, LE);
   }
 
@@ -444,7 +444,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(100, Number(value), LE);
   }
 
-  get maxDescriptorSetUniformBuffersDynamic() {
+  get maxDescriptorSetUniformBuffersDynamic(): number {
     return this.#view.getUint32(104, LE);
   }
 
@@ -452,7 +452,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(104, Number(value), LE);
   }
 
-  get maxDescriptorSetStorageBuffers() {
+  get maxDescriptorSetStorageBuffers(): number {
     return this.#view.getUint32(108, LE);
   }
 
@@ -460,7 +460,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(108, Number(value), LE);
   }
 
-  get maxDescriptorSetStorageBuffersDynamic() {
+  get maxDescriptorSetStorageBuffersDynamic(): number {
     return this.#view.getUint32(112, LE);
   }
 
@@ -468,7 +468,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(112, Number(value), LE);
   }
 
-  get maxDescriptorSetSampledImages() {
+  get maxDescriptorSetSampledImages(): number {
     return this.#view.getUint32(116, LE);
   }
 
@@ -476,7 +476,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(116, Number(value), LE);
   }
 
-  get maxDescriptorSetStorageImages() {
+  get maxDescriptorSetStorageImages(): number {
     return this.#view.getUint32(120, LE);
   }
 
@@ -484,7 +484,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(120, Number(value), LE);
   }
 
-  get maxDescriptorSetInputAttachments() {
+  get maxDescriptorSetInputAttachments(): number {
     return this.#view.getUint32(124, LE);
   }
 
@@ -492,7 +492,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(124, Number(value), LE);
   }
 
-  get maxVertexInputAttributes() {
+  get maxVertexInputAttributes(): number {
     return this.#view.getUint32(128, LE);
   }
 
@@ -500,7 +500,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(128, Number(value), LE);
   }
 
-  get maxVertexInputBindings() {
+  get maxVertexInputBindings(): number {
     return this.#view.getUint32(132, LE);
   }
 
@@ -508,7 +508,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(132, Number(value), LE);
   }
 
-  get maxVertexInputAttributeOffset() {
+  get maxVertexInputAttributeOffset(): number {
     return this.#view.getUint32(136, LE);
   }
 
@@ -516,7 +516,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(136, Number(value), LE);
   }
 
-  get maxVertexInputBindingStride() {
+  get maxVertexInputBindingStride(): number {
     return this.#view.getUint32(140, LE);
   }
 
@@ -524,7 +524,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(140, Number(value), LE);
   }
 
-  get maxVertexOutputComponents() {
+  get maxVertexOutputComponents(): number {
     return this.#view.getUint32(144, LE);
   }
 
@@ -532,7 +532,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(144, Number(value), LE);
   }
 
-  get maxTessellationGenerationLevel() {
+  get maxTessellationGenerationLevel(): number {
     return this.#view.getUint32(148, LE);
   }
 
@@ -540,7 +540,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(148, Number(value), LE);
   }
 
-  get maxTessellationPatchSize() {
+  get maxTessellationPatchSize(): number {
     return this.#view.getUint32(152, LE);
   }
 
@@ -548,7 +548,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(152, Number(value), LE);
   }
 
-  get maxTessellationControlPerVertexInputComponents() {
+  get maxTessellationControlPerVertexInputComponents(): number {
     return this.#view.getUint32(156, LE);
   }
 
@@ -556,7 +556,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(156, Number(value), LE);
   }
 
-  get maxTessellationControlPerVertexOutputComponents() {
+  get maxTessellationControlPerVertexOutputComponents(): number {
     return this.#view.getUint32(160, LE);
   }
 
@@ -564,7 +564,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(160, Number(value), LE);
   }
 
-  get maxTessellationControlPerPatchOutputComponents() {
+  get maxTessellationControlPerPatchOutputComponents(): number {
     return this.#view.getUint32(164, LE);
   }
 
@@ -572,7 +572,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(164, Number(value), LE);
   }
 
-  get maxTessellationControlTotalOutputComponents() {
+  get maxTessellationControlTotalOutputComponents(): number {
     return this.#view.getUint32(168, LE);
   }
 
@@ -580,7 +580,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(168, Number(value), LE);
   }
 
-  get maxTessellationEvaluationInputComponents() {
+  get maxTessellationEvaluationInputComponents(): number {
     return this.#view.getUint32(172, LE);
   }
 
@@ -588,7 +588,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(172, Number(value), LE);
   }
 
-  get maxTessellationEvaluationOutputComponents() {
+  get maxTessellationEvaluationOutputComponents(): number {
     return this.#view.getUint32(176, LE);
   }
 
@@ -596,7 +596,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(176, Number(value), LE);
   }
 
-  get maxGeometryShaderInvocations() {
+  get maxGeometryShaderInvocations(): number {
     return this.#view.getUint32(180, LE);
   }
 
@@ -604,7 +604,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(180, Number(value), LE);
   }
 
-  get maxGeometryInputComponents() {
+  get maxGeometryInputComponents(): number {
     return this.#view.getUint32(184, LE);
   }
 
@@ -612,7 +612,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(184, Number(value), LE);
   }
 
-  get maxGeometryOutputComponents() {
+  get maxGeometryOutputComponents(): number {
     return this.#view.getUint32(188, LE);
   }
 
@@ -620,7 +620,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(188, Number(value), LE);
   }
 
-  get maxGeometryOutputVertices() {
+  get maxGeometryOutputVertices(): number {
     return this.#view.getUint32(192, LE);
   }
 
@@ -628,7 +628,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(192, Number(value), LE);
   }
 
-  get maxGeometryTotalOutputComponents() {
+  get maxGeometryTotalOutputComponents(): number {
     return this.#view.getUint32(196, LE);
   }
 
@@ -636,7 +636,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(196, Number(value), LE);
   }
 
-  get maxFragmentInputComponents() {
+  get maxFragmentInputComponents(): number {
     return this.#view.getUint32(200, LE);
   }
 
@@ -644,7 +644,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(200, Number(value), LE);
   }
 
-  get maxFragmentOutputAttachments() {
+  get maxFragmentOutputAttachments(): number {
     return this.#view.getUint32(204, LE);
   }
 
@@ -652,7 +652,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(204, Number(value), LE);
   }
 
-  get maxFragmentDualSrcAttachments() {
+  get maxFragmentDualSrcAttachments(): number {
     return this.#view.getUint32(208, LE);
   }
 
@@ -660,7 +660,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(208, Number(value), LE);
   }
 
-  get maxFragmentCombinedOutputResources() {
+  get maxFragmentCombinedOutputResources(): number {
     return this.#view.getUint32(212, LE);
   }
 
@@ -668,7 +668,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(212, Number(value), LE);
   }
 
-  get maxComputeSharedMemorySize() {
+  get maxComputeSharedMemorySize(): number {
     return this.#view.getUint32(216, LE);
   }
 
@@ -676,7 +676,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(216, Number(value), LE);
   }
 
-  get maxComputeWorkGroupCount() {
+  get maxComputeWorkGroupCount(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 220, 3);
   }
 
@@ -684,7 +684,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 220);
   }
 
-  get maxComputeWorkGroupInvocations() {
+  get maxComputeWorkGroupInvocations(): number {
     return this.#view.getUint32(232, LE);
   }
 
@@ -692,7 +692,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(232, Number(value), LE);
   }
 
-  get maxComputeWorkGroupSize() {
+  get maxComputeWorkGroupSize(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 236, 3);
   }
 
@@ -700,7 +700,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 236);
   }
 
-  get subPixelPrecisionBits() {
+  get subPixelPrecisionBits(): number {
     return this.#view.getUint32(248, LE);
   }
 
@@ -708,7 +708,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(248, Number(value), LE);
   }
 
-  get subTexelPrecisionBits() {
+  get subTexelPrecisionBits(): number {
     return this.#view.getUint32(252, LE);
   }
 
@@ -716,7 +716,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(252, Number(value), LE);
   }
 
-  get mipmapPrecisionBits() {
+  get mipmapPrecisionBits(): number {
     return this.#view.getUint32(256, LE);
   }
 
@@ -724,7 +724,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(256, Number(value), LE);
   }
 
-  get maxDrawIndexedIndexValue() {
+  get maxDrawIndexedIndexValue(): number {
     return this.#view.getUint32(260, LE);
   }
 
@@ -732,7 +732,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(260, Number(value), LE);
   }
 
-  get maxDrawIndirectCount() {
+  get maxDrawIndirectCount(): number {
     return this.#view.getUint32(264, LE);
   }
 
@@ -740,7 +740,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(264, Number(value), LE);
   }
 
-  get maxSamplerLodBias() {
+  get maxSamplerLodBias(): number {
     return this.#view.getFloat32(268, LE);
   }
 
@@ -748,7 +748,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setFloat32(268, Number(value), LE);
   }
 
-  get maxSamplerAnisotropy() {
+  get maxSamplerAnisotropy(): number {
     return this.#view.getFloat32(272, LE);
   }
 
@@ -756,7 +756,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setFloat32(272, Number(value), LE);
   }
 
-  get maxViewports() {
+  get maxViewports(): number {
     return this.#view.getUint32(276, LE);
   }
 
@@ -764,7 +764,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(276, Number(value), LE);
   }
 
-  get maxViewportDimensions() {
+  get maxViewportDimensions(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 280, 2);
   }
 
@@ -772,7 +772,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 280);
   }
 
-  get viewportBoundsRange() {
+  get viewportBoundsRange(): Float32Array {
     return new Float32Array(this.#data.buffer, this.#data.byteOffset + 288, 2);
   }
 
@@ -780,7 +780,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 288);
   }
 
-  get viewportSubPixelBits() {
+  get viewportSubPixelBits(): number {
     return this.#view.getUint32(296, LE);
   }
 
@@ -788,7 +788,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(296, Number(value), LE);
   }
 
-  get minMemoryMapAlignment() {
+  get minMemoryMapAlignment(): bigint {
     return this.#view.getBigUint64(304, LE);
   }
 
@@ -796,7 +796,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setBigUint64(304, BigInt(value), LE);
   }
 
-  get minTexelBufferOffsetAlignment() {
+  get minTexelBufferOffsetAlignment(): bigint {
     return this.#view.getBigUint64(312, LE);
   }
 
@@ -804,7 +804,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setBigUint64(312, BigInt(value), LE);
   }
 
-  get minUniformBufferOffsetAlignment() {
+  get minUniformBufferOffsetAlignment(): bigint {
     return this.#view.getBigUint64(320, LE);
   }
 
@@ -812,7 +812,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setBigUint64(320, BigInt(value), LE);
   }
 
-  get minStorageBufferOffsetAlignment() {
+  get minStorageBufferOffsetAlignment(): bigint {
     return this.#view.getBigUint64(328, LE);
   }
 
@@ -820,7 +820,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setBigUint64(328, BigInt(value), LE);
   }
 
-  get minTexelOffset() {
+  get minTexelOffset(): number {
     return this.#view.getInt32(336, LE);
   }
 
@@ -828,7 +828,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setInt32(336, Number(value), LE);
   }
 
-  get maxTexelOffset() {
+  get maxTexelOffset(): number {
     return this.#view.getUint32(340, LE);
   }
 
@@ -836,7 +836,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(340, Number(value), LE);
   }
 
-  get minTexelGatherOffset() {
+  get minTexelGatherOffset(): number {
     return this.#view.getInt32(344, LE);
   }
 
@@ -844,7 +844,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setInt32(344, Number(value), LE);
   }
 
-  get maxTexelGatherOffset() {
+  get maxTexelGatherOffset(): number {
     return this.#view.getUint32(348, LE);
   }
 
@@ -852,7 +852,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(348, Number(value), LE);
   }
 
-  get minInterpolationOffset() {
+  get minInterpolationOffset(): number {
     return this.#view.getFloat32(352, LE);
   }
 
@@ -860,7 +860,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setFloat32(352, Number(value), LE);
   }
 
-  get maxInterpolationOffset() {
+  get maxInterpolationOffset(): number {
     return this.#view.getFloat32(356, LE);
   }
 
@@ -868,7 +868,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setFloat32(356, Number(value), LE);
   }
 
-  get subPixelInterpolationOffsetBits() {
+  get subPixelInterpolationOffsetBits(): number {
     return this.#view.getUint32(360, LE);
   }
 
@@ -876,7 +876,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(360, Number(value), LE);
   }
 
-  get maxFramebufferWidth() {
+  get maxFramebufferWidth(): number {
     return this.#view.getUint32(364, LE);
   }
 
@@ -884,7 +884,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(364, Number(value), LE);
   }
 
-  get maxFramebufferHeight() {
+  get maxFramebufferHeight(): number {
     return this.#view.getUint32(368, LE);
   }
 
@@ -892,7 +892,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(368, Number(value), LE);
   }
 
-  get maxFramebufferLayers() {
+  get maxFramebufferLayers(): number {
     return this.#view.getUint32(372, LE);
   }
 
@@ -900,7 +900,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(372, Number(value), LE);
   }
 
-  get framebufferColorSampleCounts() {
+  get framebufferColorSampleCounts(): number {
     return this.#view.getUint32(376, LE);
   }
 
@@ -908,7 +908,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(376, Number(value), LE);
   }
 
-  get framebufferDepthSampleCounts() {
+  get framebufferDepthSampleCounts(): number {
     return this.#view.getUint32(380, LE);
   }
 
@@ -916,7 +916,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(380, Number(value), LE);
   }
 
-  get framebufferStencilSampleCounts() {
+  get framebufferStencilSampleCounts(): number {
     return this.#view.getUint32(384, LE);
   }
 
@@ -924,7 +924,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(384, Number(value), LE);
   }
 
-  get framebufferNoAttachmentsSampleCounts() {
+  get framebufferNoAttachmentsSampleCounts(): number {
     return this.#view.getUint32(388, LE);
   }
 
@@ -932,7 +932,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(388, Number(value), LE);
   }
 
-  get maxColorAttachments() {
+  get maxColorAttachments(): number {
     return this.#view.getUint32(392, LE);
   }
 
@@ -940,7 +940,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(392, Number(value), LE);
   }
 
-  get sampledImageColorSampleCounts() {
+  get sampledImageColorSampleCounts(): number {
     return this.#view.getUint32(396, LE);
   }
 
@@ -948,7 +948,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(396, Number(value), LE);
   }
 
-  get sampledImageIntegerSampleCounts() {
+  get sampledImageIntegerSampleCounts(): number {
     return this.#view.getUint32(400, LE);
   }
 
@@ -956,7 +956,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(400, Number(value), LE);
   }
 
-  get sampledImageDepthSampleCounts() {
+  get sampledImageDepthSampleCounts(): number {
     return this.#view.getUint32(404, LE);
   }
 
@@ -964,7 +964,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(404, Number(value), LE);
   }
 
-  get sampledImageStencilSampleCounts() {
+  get sampledImageStencilSampleCounts(): number {
     return this.#view.getUint32(408, LE);
   }
 
@@ -972,7 +972,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(408, Number(value), LE);
   }
 
-  get storageImageSampleCounts() {
+  get storageImageSampleCounts(): number {
     return this.#view.getUint32(412, LE);
   }
 
@@ -980,7 +980,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(412, Number(value), LE);
   }
 
-  get maxSampleMaskWords() {
+  get maxSampleMaskWords(): number {
     return this.#view.getUint32(416, LE);
   }
 
@@ -988,7 +988,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(416, Number(value), LE);
   }
 
-  get timestampComputeAndGraphics() {
+  get timestampComputeAndGraphics(): number {
     return this.#view.getUint32(420, LE);
   }
 
@@ -996,7 +996,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(420, Number(value), LE);
   }
 
-  get timestampPeriod() {
+  get timestampPeriod(): number {
     return this.#view.getFloat32(424, LE);
   }
 
@@ -1004,7 +1004,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setFloat32(424, Number(value), LE);
   }
 
-  get maxClipDistances() {
+  get maxClipDistances(): number {
     return this.#view.getUint32(428, LE);
   }
 
@@ -1012,7 +1012,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(428, Number(value), LE);
   }
 
-  get maxCullDistances() {
+  get maxCullDistances(): number {
     return this.#view.getUint32(432, LE);
   }
 
@@ -1020,7 +1020,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(432, Number(value), LE);
   }
 
-  get maxCombinedClipAndCullDistances() {
+  get maxCombinedClipAndCullDistances(): number {
     return this.#view.getUint32(436, LE);
   }
 
@@ -1028,7 +1028,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(436, Number(value), LE);
   }
 
-  get discreteQueuePriorities() {
+  get discreteQueuePriorities(): number {
     return this.#view.getUint32(440, LE);
   }
 
@@ -1036,7 +1036,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(440, Number(value), LE);
   }
 
-  get pointSizeRange() {
+  get pointSizeRange(): Float32Array {
     return new Float32Array(this.#data.buffer, this.#data.byteOffset + 444, 2);
   }
 
@@ -1044,7 +1044,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 444);
   }
 
-  get lineWidthRange() {
+  get lineWidthRange(): Float32Array {
     return new Float32Array(this.#data.buffer, this.#data.byteOffset + 452, 2);
   }
 
@@ -1052,7 +1052,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 452);
   }
 
-  get pointSizeGranularity() {
+  get pointSizeGranularity(): number {
     return this.#view.getFloat32(460, LE);
   }
 
@@ -1060,7 +1060,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setFloat32(460, Number(value), LE);
   }
 
-  get lineWidthGranularity() {
+  get lineWidthGranularity(): number {
     return this.#view.getFloat32(464, LE);
   }
 
@@ -1068,7 +1068,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setFloat32(464, Number(value), LE);
   }
 
-  get strictLines() {
+  get strictLines(): number {
     return this.#view.getUint32(468, LE);
   }
 
@@ -1076,7 +1076,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(468, Number(value), LE);
   }
 
-  get standardSampleLocations() {
+  get standardSampleLocations(): number {
     return this.#view.getUint32(472, LE);
   }
 
@@ -1084,7 +1084,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setUint32(472, Number(value), LE);
   }
 
-  get optimalBufferCopyOffsetAlignment() {
+  get optimalBufferCopyOffsetAlignment(): bigint {
     return this.#view.getBigUint64(480, LE);
   }
 
@@ -1092,7 +1092,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setBigUint64(480, BigInt(value), LE);
   }
 
-  get optimalBufferCopyRowPitchAlignment() {
+  get optimalBufferCopyRowPitchAlignment(): bigint {
     return this.#view.getBigUint64(488, LE);
   }
 
@@ -1100,7 +1100,7 @@ export class PhysicalDeviceLimits implements BaseStruct {
     this.#view.setBigUint64(488, BigInt(value), LE);
   }
 
-  get nonCoherentAtomSize() {
+  get nonCoherentAtomSize(): bigint {
     return this.#view.getBigUint64(496, LE);
   }
 

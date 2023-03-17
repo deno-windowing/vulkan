@@ -56,7 +56,7 @@ export class PipelineFragmentShadingRateStateCreateInfoKHR implements BaseStruct
     this.sType = StructureType.PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class PipelineFragmentShadingRateStateCreateInfoKHR implements BaseStruct
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class PipelineFragmentShadingRateStateCreateInfoKHR implements BaseStruct
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get fragmentSize() {
+  get fragmentSize(): Extent2D {
     return new Extent2D(this.#data.subarray(16, 16 + Extent2D.size));
   }
 
@@ -83,7 +83,7 @@ export class PipelineFragmentShadingRateStateCreateInfoKHR implements BaseStruct
     this.#data.set(value[BUFFER], 16);
   }
 
-  get combinerOps() {
+  get combinerOps(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 24, 2);
   }
 

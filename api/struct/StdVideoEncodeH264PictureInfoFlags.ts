@@ -53,7 +53,7 @@ export class StdVideoEncodeH264PictureInfoFlags implements BaseStruct {
     }
   }
 
-  get idr_flag() {
+  get idr_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class StdVideoEncodeH264PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get is_reference_flag() {
+  get is_reference_flag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -69,7 +69,7 @@ export class StdVideoEncodeH264PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get used_for_long_term_reference() {
+  get used_for_long_term_reference(): number {
     return this.#view.getUint32(8, LE);
   }
 

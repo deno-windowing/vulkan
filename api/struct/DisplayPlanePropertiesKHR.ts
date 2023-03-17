@@ -52,7 +52,7 @@ export class DisplayPlanePropertiesKHR implements BaseStruct {
     }
   }
 
-  get currentDisplay() {
+  get currentDisplay(): Deno.PointerValue {
     return pointerFromView(this.#view, 0, LE);
   }
 
@@ -60,7 +60,7 @@ export class DisplayPlanePropertiesKHR implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
 
-  get currentStackIndex() {
+  get currentStackIndex(): number {
     return this.#view.getUint32(8, LE);
   }
 

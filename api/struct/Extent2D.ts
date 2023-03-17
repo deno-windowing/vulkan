@@ -51,7 +51,7 @@ export class Extent2D implements BaseStruct {
     }
   }
 
-  get width() {
+  get width(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -59,7 +59,7 @@ export class Extent2D implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get height() {
+  get height(): number {
     return this.#view.getUint32(4, LE);
   }
 

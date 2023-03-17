@@ -58,7 +58,7 @@ export class VideoSessionParametersCreateInfoKHR implements BaseStruct {
     this.sType = StructureType.VIDEO_SESSION_PARAMETERS_CREATE_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class VideoSessionParametersCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class VideoSessionParametersCreateInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -82,7 +82,7 @@ export class VideoSessionParametersCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get videoSessionParametersTemplate() {
+  get videoSessionParametersTemplate(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -90,7 +90,7 @@ export class VideoSessionParametersCreateInfoKHR implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get videoSession() {
+  get videoSession(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

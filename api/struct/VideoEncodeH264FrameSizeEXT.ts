@@ -53,7 +53,7 @@ export class VideoEncodeH264FrameSizeEXT implements BaseStruct {
     }
   }
 
-  get frameISize() {
+  get frameISize(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class VideoEncodeH264FrameSizeEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get framePSize() {
+  get framePSize(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -69,7 +69,7 @@ export class VideoEncodeH264FrameSizeEXT implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get frameBSize() {
+  get frameBSize(): number {
     return this.#view.getUint32(8, LE);
   }
 

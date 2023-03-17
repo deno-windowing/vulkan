@@ -14,6 +14,7 @@ import {
   typedefs,
   typeToJS,
   unions,
+  vendors,
 } from "./process_xml.ts";
 import { parse } from "https://deno.land/std@0.179.0/path/mod.ts";
 
@@ -324,7 +325,47 @@ function addImports(types: string[]) {
         b.newline();
         if (f.comment) b.emit(`/** ${f.comment} */`);
         const isptr = f.text?.endsWith("*");
-        b.emit(`get ${jsify(f.name)}() {`);
+        function getGetterType(f: Field) {
+          if (isptr) {
+            return "Deno.PointerValue";
+          } else {
+            switch (f.ffi) {
+              case "i8":
+              case "u8":
+              case "i16":
+              case "u16":
+              case "i32":
+              case "u32":
+              case "f32":
+              case "f64":
+                return "number";
+              case "isize":
+              case "i64":
+              case "usize":
+              case "u64":
+                return "bigint";
+              case "buffer":
+              case "pointer":
+              case "function":
+                return "Deno.PointerValue";
+              default: {
+                if (isStruct(f.ffi)) {
+                  const name = f.type;
+                  return stripVk(name);
+                }
+                if (isArray(f.ffi)) {
+                  if (tymap[f.ffi.array as keyof typeof tymap]) {
+                    return tymap[f.ffi.array as keyof typeof tymap];
+                  } else {
+                    return `${stripVk(typeToJS(f.type))}[]`;
+                  }
+                }
+                return "unknown";
+              }
+            }
+          }
+        }
+        b.emit(`get ${jsify(f.name)}(): ${getGetterType(f)} {`);
         function emitFieldGetter(f: Field) {
           if (isptr) {
             b.emit(`return pointerFromView(this.#view, ${f.offset}, LE);`);
@@ -358,6 +399,7 @@ function addImports(types: string[]) {
                 break;
               case "buffer":
               case "pointer":
+              case "function":
                 b.emit(`return pointerFromView(this.#view, ${f.offset}, LE);`);
                 break;
               case "f32":
@@ -486,6 +528,7 @@ function addImports(types: string[]) {
                 break;
               case "buffer":
               case "pointer":
+              case "function":
                 b.emit(
                   `this.#view.setBigUint64(${f.offset}, BigInt(anyPointer(${vname})), LE);`,
                 );
@@ -567,9 +610,25 @@ function addImports(types: string[]) {
       writeFile(`api/struct/${className}.ts`, b.output());
     }
   }
-  const b = new FileBuilder();
-  classNames.forEach((name) => b.emit(`export * from "./${name}.ts";`));
-  writeFile(`api/struct/mod.ts`, b.output());
+  {
+    // complete re-export
+    const b = new FileBuilder();
+    classNames.forEach((name) => b.emit(`export * from "./${name}.ts";`));
+    writeFile(`api/struct/mod.ts`, b.output());
+  }
+  {
+    // common re-export
+    const b = new FileBuilder();
+    const commonStructs = classNames.filter((name) => {
+      for (const vendor of vendors) {
+        if (name.endsWith(vendor.name)) return false;
+      }
+      if (name.startsWith("StdVideo")) return false;
+      return true;
+    });
+    commonStructs.forEach((name) => b.emit(`export * from "./${name}.ts";`));
+    writeFile(`api/struct/common.ts`, b.output());
+  }
 }
 
 {

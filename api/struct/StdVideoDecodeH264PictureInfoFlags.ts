@@ -59,7 +59,7 @@ export class StdVideoDecodeH264PictureInfoFlags implements BaseStruct {
     }
   }
 
-  get field_pic_flag() {
+  get field_pic_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class StdVideoDecodeH264PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get is_intra() {
+  get is_intra(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -75,7 +75,7 @@ export class StdVideoDecodeH264PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get IdrPicFlag() {
+  get IdrPicFlag(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -83,7 +83,7 @@ export class StdVideoDecodeH264PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get bottom_field_flag() {
+  get bottom_field_flag(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -91,7 +91,7 @@ export class StdVideoDecodeH264PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get is_reference() {
+  get is_reference(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -99,7 +99,7 @@ export class StdVideoDecodeH264PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get complementary_field_pair() {
+  get complementary_field_pair(): number {
     return this.#view.getUint32(20, LE);
   }
 

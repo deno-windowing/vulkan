@@ -51,7 +51,7 @@ export class DrawMeshTasksIndirectCommandNV implements BaseStruct {
     }
   }
 
-  get taskCount() {
+  get taskCount(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -59,7 +59,7 @@ export class DrawMeshTasksIndirectCommandNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get firstTask() {
+  get firstTask(): number {
     return this.#view.getUint32(4, LE);
   }
 

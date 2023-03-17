@@ -59,7 +59,7 @@ export class PhysicalDeviceImageDrmFormatModifierInfoEXT implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class PhysicalDeviceImageDrmFormatModifierInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class PhysicalDeviceImageDrmFormatModifierInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get drmFormatModifier() {
+  get drmFormatModifier(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -83,7 +83,7 @@ export class PhysicalDeviceImageDrmFormatModifierInfoEXT implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get sharingMode() {
+  get sharingMode(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -91,7 +91,7 @@ export class PhysicalDeviceImageDrmFormatModifierInfoEXT implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get queueFamilyIndexCount() {
+  get queueFamilyIndexCount(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -99,7 +99,7 @@ export class PhysicalDeviceImageDrmFormatModifierInfoEXT implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get pQueueFamilyIndices() {
+  get pQueueFamilyIndices(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

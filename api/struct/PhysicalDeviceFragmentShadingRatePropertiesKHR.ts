@@ -87,7 +87,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.sType = StructureType.PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_PROPERTIES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -95,7 +95,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -103,7 +103,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get minFragmentShadingRateAttachmentTexelSize() {
+  get minFragmentShadingRateAttachmentTexelSize(): Extent2D {
     return new Extent2D(this.#data.subarray(16, 16 + Extent2D.size));
   }
 
@@ -114,7 +114,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#data.set(value[BUFFER], 16);
   }
 
-  get maxFragmentShadingRateAttachmentTexelSize() {
+  get maxFragmentShadingRateAttachmentTexelSize(): Extent2D {
     return new Extent2D(this.#data.subarray(24, 24 + Extent2D.size));
   }
 
@@ -125,7 +125,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#data.set(value[BUFFER], 24);
   }
 
-  get maxFragmentShadingRateAttachmentTexelSizeAspectRatio() {
+  get maxFragmentShadingRateAttachmentTexelSizeAspectRatio(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -133,7 +133,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get primitiveFragmentShadingRateWithMultipleViewports() {
+  get primitiveFragmentShadingRateWithMultipleViewports(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -141,7 +141,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get layeredShadingRateAttachments() {
+  get layeredShadingRateAttachments(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -149,7 +149,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get fragmentShadingRateNonTrivialCombinerOps() {
+  get fragmentShadingRateNonTrivialCombinerOps(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -157,7 +157,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get maxFragmentSize() {
+  get maxFragmentSize(): Extent2D {
     return new Extent2D(this.#data.subarray(48, 48 + Extent2D.size));
   }
 
@@ -168,7 +168,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#data.set(value[BUFFER], 48);
   }
 
-  get maxFragmentSizeAspectRatio() {
+  get maxFragmentSizeAspectRatio(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -176,7 +176,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get maxFragmentShadingRateCoverageSamples() {
+  get maxFragmentShadingRateCoverageSamples(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -184,7 +184,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get maxFragmentShadingRateRasterizationSamples() {
+  get maxFragmentShadingRateRasterizationSamples(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -192,7 +192,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get fragmentShadingRateWithShaderDepthStencilWrites() {
+  get fragmentShadingRateWithShaderDepthStencilWrites(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -200,7 +200,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get fragmentShadingRateWithSampleMask() {
+  get fragmentShadingRateWithSampleMask(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -208,7 +208,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get fragmentShadingRateWithShaderSampleMask() {
+  get fragmentShadingRateWithShaderSampleMask(): number {
     return this.#view.getUint32(76, LE);
   }
 
@@ -216,7 +216,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(76, Number(value), LE);
   }
 
-  get fragmentShadingRateWithConservativeRasterization() {
+  get fragmentShadingRateWithConservativeRasterization(): number {
     return this.#view.getUint32(80, LE);
   }
 
@@ -224,7 +224,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(80, Number(value), LE);
   }
 
-  get fragmentShadingRateWithFragmentShaderInterlock() {
+  get fragmentShadingRateWithFragmentShaderInterlock(): number {
     return this.#view.getUint32(84, LE);
   }
 
@@ -232,7 +232,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(84, Number(value), LE);
   }
 
-  get fragmentShadingRateWithCustomSampleLocations() {
+  get fragmentShadingRateWithCustomSampleLocations(): number {
     return this.#view.getUint32(88, LE);
   }
 
@@ -240,7 +240,7 @@ export class PhysicalDeviceFragmentShadingRatePropertiesKHR implements BaseStruc
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get fragmentShadingRateStrictMultiplyCombiner() {
+  get fragmentShadingRateStrictMultiplyCombiner(): number {
     return this.#view.getUint32(92, LE);
   }
 

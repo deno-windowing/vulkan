@@ -51,7 +51,7 @@ export class StdVideoH265LongTermRefPicsSps implements BaseStruct {
     }
   }
 
-  get used_by_curr_pic_lt_sps_flag() {
+  get used_by_curr_pic_lt_sps_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -59,7 +59,7 @@ export class StdVideoH265LongTermRefPicsSps implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get lt_ref_pic_poc_lsb_sps() {
+  get lt_ref_pic_poc_lsb_sps(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 4, 32);
   }
 

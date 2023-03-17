@@ -56,7 +56,7 @@ export class DescriptorBufferBindingInfoEXT implements BaseStruct {
     this.sType = StructureType.DESCRIPTOR_BUFFER_BINDING_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class DescriptorBufferBindingInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class DescriptorBufferBindingInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get address() {
+  get address(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -80,7 +80,7 @@ export class DescriptorBufferBindingInfoEXT implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get usage() {
+  get usage(): number {
     return this.#view.getUint32(24, LE);
   }
 

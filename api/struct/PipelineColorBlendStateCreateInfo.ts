@@ -65,7 +65,7 @@ export class PipelineColorBlendStateCreateInfo implements BaseStruct {
     this.sType = StructureType.PIPELINE_COLOR_BLEND_STATE_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -73,7 +73,7 @@ export class PipelineColorBlendStateCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -81,7 +81,7 @@ export class PipelineColorBlendStateCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -89,7 +89,7 @@ export class PipelineColorBlendStateCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get logicOpEnable() {
+  get logicOpEnable(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -97,7 +97,7 @@ export class PipelineColorBlendStateCreateInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get logicOp() {
+  get logicOp(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -105,7 +105,7 @@ export class PipelineColorBlendStateCreateInfo implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get attachmentCount() {
+  get attachmentCount(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -113,7 +113,7 @@ export class PipelineColorBlendStateCreateInfo implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get pAttachments() {
+  get pAttachments(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -121,7 +121,7 @@ export class PipelineColorBlendStateCreateInfo implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get blendConstants() {
+  get blendConstants(): Float32Array {
     return new Float32Array(this.#data.buffer, this.#data.byteOffset + 40, 4);
   }
 

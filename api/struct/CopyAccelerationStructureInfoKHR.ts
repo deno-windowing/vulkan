@@ -58,7 +58,7 @@ export class CopyAccelerationStructureInfoKHR implements BaseStruct {
     this.sType = StructureType.COPY_ACCELERATION_STRUCTURE_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class CopyAccelerationStructureInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class CopyAccelerationStructureInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get src() {
+  get src(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -82,7 +82,7 @@ export class CopyAccelerationStructureInfoKHR implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get dst() {
+  get dst(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -90,7 +90,7 @@ export class CopyAccelerationStructureInfoKHR implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get mode() {
+  get mode(): number {
     return this.#view.getUint32(32, LE);
   }
 

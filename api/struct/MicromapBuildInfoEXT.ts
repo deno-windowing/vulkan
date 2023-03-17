@@ -76,7 +76,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.sType = StructureType.MICROMAP_BUILD_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -84,7 +84,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -92,7 +92,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get type() {
+  get type(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -100,7 +100,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -108,7 +108,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get mode() {
+  get mode(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -116,7 +116,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get dstMicromap() {
+  get dstMicromap(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -124,7 +124,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get usageCountsCount() {
+  get usageCountsCount(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -132,7 +132,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get pUsageCounts() {
+  get pUsageCounts(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 
@@ -140,7 +140,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 
-  get ppUsageCounts() {
+  get ppUsageCounts(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -148,7 +148,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get data() {
+  get data(): unknown {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
@@ -156,7 +156,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
-  get scratchData() {
+  get scratchData(): unknown {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
@@ -164,7 +164,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
-  get triangleArray() {
+  get triangleArray(): unknown {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
@@ -172,7 +172,7 @@ export class MicromapBuildInfoEXT implements BaseStruct {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
-  get triangleArrayStride() {
+  get triangleArrayStride(): bigint {
     return this.#view.getBigUint64(88, LE);
   }
 

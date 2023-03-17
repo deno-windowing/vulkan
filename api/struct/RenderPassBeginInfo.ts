@@ -64,7 +64,7 @@ export class RenderPassBeginInfo implements BaseStruct {
     this.sType = StructureType.RENDER_PASS_BEGIN_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -72,7 +72,7 @@ export class RenderPassBeginInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -80,7 +80,7 @@ export class RenderPassBeginInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get renderPass() {
+  get renderPass(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -88,7 +88,7 @@ export class RenderPassBeginInfo implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get framebuffer() {
+  get framebuffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -96,7 +96,7 @@ export class RenderPassBeginInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get renderArea() {
+  get renderArea(): Rect2D {
     return new Rect2D(this.#data.subarray(32, 32 + Rect2D.size));
   }
 
@@ -107,7 +107,7 @@ export class RenderPassBeginInfo implements BaseStruct {
     this.#data.set(value[BUFFER], 32);
   }
 
-  get clearValueCount() {
+  get clearValueCount(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -115,7 +115,7 @@ export class RenderPassBeginInfo implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get pClearValues() {
+  get pClearValues(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 

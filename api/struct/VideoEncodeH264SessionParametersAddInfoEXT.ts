@@ -61,7 +61,7 @@ export class VideoEncodeH264SessionParametersAddInfoEXT implements BaseStruct {
     this.sType = StructureType.VIDEO_ENCODE_H264_SESSION_PARAMETERS_ADD_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class VideoEncodeH264SessionParametersAddInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class VideoEncodeH264SessionParametersAddInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get stdSPSCount() {
+  get stdSPSCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -85,7 +85,7 @@ export class VideoEncodeH264SessionParametersAddInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pStdSPSs() {
+  get pStdSPSs(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -93,7 +93,7 @@ export class VideoEncodeH264SessionParametersAddInfoEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get stdPPSCount() {
+  get stdPPSCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -101,7 +101,7 @@ export class VideoEncodeH264SessionParametersAddInfoEXT implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get pStdPPSs() {
+  get pStdPPSs(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 

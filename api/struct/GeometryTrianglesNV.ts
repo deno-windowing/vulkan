@@ -74,7 +74,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.sType = StructureType.GEOMETRY_TRIANGLES_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -82,7 +82,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -90,7 +90,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get vertexData() {
+  get vertexData(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -98,7 +98,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get vertexOffset() {
+  get vertexOffset(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -106,7 +106,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get vertexCount() {
+  get vertexCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -114,7 +114,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get vertexStride() {
+  get vertexStride(): bigint {
     return this.#view.getBigUint64(40, LE);
   }
 
@@ -122,7 +122,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(value), LE);
   }
 
-  get vertexFormat() {
+  get vertexFormat(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -130,7 +130,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get indexData() {
+  get indexData(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -138,7 +138,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get indexOffset() {
+  get indexOffset(): bigint {
     return this.#view.getBigUint64(64, LE);
   }
 
@@ -146,7 +146,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setBigUint64(64, BigInt(value), LE);
   }
 
-  get indexCount() {
+  get indexCount(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -154,7 +154,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get indexType() {
+  get indexType(): number {
     return this.#view.getUint32(76, LE);
   }
 
@@ -162,7 +162,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setUint32(76, Number(value), LE);
   }
 
-  get transformData() {
+  get transformData(): Deno.PointerValue {
     return pointerFromView(this.#view, 80, LE);
   }
 
@@ -170,7 +170,7 @@ export class GeometryTrianglesNV implements BaseStruct {
     this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
 
-  get transformOffset() {
+  get transformOffset(): bigint {
     return this.#view.getBigUint64(88, LE);
   }
 

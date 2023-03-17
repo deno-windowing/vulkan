@@ -63,7 +63,7 @@ export class ComputePipelineCreateInfo implements BaseStruct {
     this.sType = StructureType.COMPUTE_PIPELINE_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class ComputePipelineCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -79,7 +79,7 @@ export class ComputePipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -87,7 +87,7 @@ export class ComputePipelineCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get stage() {
+  get stage(): PipelineShaderStageCreateInfo {
     return new PipelineShaderStageCreateInfo(this.#data.subarray(20, 20 + PipelineShaderStageCreateInfo.size));
   }
 
@@ -98,7 +98,7 @@ export class ComputePipelineCreateInfo implements BaseStruct {
     this.#data.set(value[BUFFER], 20);
   }
 
-  get layout() {
+  get layout(): Deno.PointerValue {
     return pointerFromView(this.#view, 72, LE);
   }
 
@@ -106,7 +106,7 @@ export class ComputePipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
 
-  get basePipelineHandle() {
+  get basePipelineHandle(): Deno.PointerValue {
     return pointerFromView(this.#view, 80, LE);
   }
 
@@ -114,7 +114,7 @@ export class ComputePipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
 
-  get basePipelineIndex() {
+  get basePipelineIndex(): number {
     return this.#view.getInt32(88, LE);
   }
 

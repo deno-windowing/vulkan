@@ -61,7 +61,7 @@ export class SampleLocationsInfoEXT implements BaseStruct {
     this.sType = StructureType.SAMPLE_LOCATIONS_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class SampleLocationsInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class SampleLocationsInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get sampleLocationsPerPixel() {
+  get sampleLocationsPerPixel(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -85,7 +85,7 @@ export class SampleLocationsInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get sampleLocationGridSize() {
+  get sampleLocationGridSize(): Extent2D {
     return new Extent2D(this.#data.subarray(20, 20 + Extent2D.size));
   }
 
@@ -96,7 +96,7 @@ export class SampleLocationsInfoEXT implements BaseStruct {
     this.#data.set(value[BUFFER], 20);
   }
 
-  get sampleLocationsCount() {
+  get sampleLocationsCount(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -104,7 +104,7 @@ export class SampleLocationsInfoEXT implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get pSampleLocations() {
+  get pSampleLocations(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

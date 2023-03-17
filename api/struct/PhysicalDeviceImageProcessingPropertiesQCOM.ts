@@ -60,7 +60,7 @@ export class PhysicalDeviceImageProcessingPropertiesQCOM implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_IMAGE_PROCESSING_PROPERTIES_QCOM;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class PhysicalDeviceImageProcessingPropertiesQCOM implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class PhysicalDeviceImageProcessingPropertiesQCOM implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get maxWeightFilterPhases() {
+  get maxWeightFilterPhases(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -84,7 +84,7 @@ export class PhysicalDeviceImageProcessingPropertiesQCOM implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get maxWeightFilterDimension() {
+  get maxWeightFilterDimension(): Extent2D {
     return new Extent2D(this.#data.subarray(20, 20 + Extent2D.size));
   }
 
@@ -95,7 +95,7 @@ export class PhysicalDeviceImageProcessingPropertiesQCOM implements BaseStruct {
     this.#data.set(value[BUFFER], 20);
   }
 
-  get maxBlockMatchRegion() {
+  get maxBlockMatchRegion(): Extent2D {
     return new Extent2D(this.#data.subarray(28, 28 + Extent2D.size));
   }
 
@@ -106,7 +106,7 @@ export class PhysicalDeviceImageProcessingPropertiesQCOM implements BaseStruct {
     this.#data.set(value[BUFFER], 28);
   }
 
-  get maxBoxFilterBlockSize() {
+  get maxBoxFilterBlockSize(): Extent2D {
     return new Extent2D(this.#data.subarray(36, 36 + Extent2D.size));
   }
 

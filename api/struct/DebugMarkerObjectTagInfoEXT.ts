@@ -61,7 +61,7 @@ export class DebugMarkerObjectTagInfoEXT implements BaseStruct {
     this.sType = StructureType.DEBUG_MARKER_OBJECT_TAG_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class DebugMarkerObjectTagInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class DebugMarkerObjectTagInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get objectType() {
+  get objectType(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -85,7 +85,7 @@ export class DebugMarkerObjectTagInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get object() {
+  get object(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -93,7 +93,7 @@ export class DebugMarkerObjectTagInfoEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get tagName() {
+  get tagName(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -101,7 +101,7 @@ export class DebugMarkerObjectTagInfoEXT implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get tagSize() {
+  get tagSize(): bigint {
     return this.#view.getBigUint64(40, LE);
   }
 
@@ -109,7 +109,7 @@ export class DebugMarkerObjectTagInfoEXT implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(value), LE);
   }
 
-  get pTag() {
+  get pTag(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 

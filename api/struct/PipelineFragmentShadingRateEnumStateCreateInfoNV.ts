@@ -57,7 +57,7 @@ export class PipelineFragmentShadingRateEnumStateCreateInfoNV implements BaseStr
     this.sType = StructureType.PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class PipelineFragmentShadingRateEnumStateCreateInfoNV implements BaseStr
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -73,7 +73,7 @@ export class PipelineFragmentShadingRateEnumStateCreateInfoNV implements BaseStr
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get shadingRateType() {
+  get shadingRateType(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -81,7 +81,7 @@ export class PipelineFragmentShadingRateEnumStateCreateInfoNV implements BaseStr
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get shadingRate() {
+  get shadingRate(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -89,7 +89,7 @@ export class PipelineFragmentShadingRateEnumStateCreateInfoNV implements BaseStr
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get combinerOps() {
+  get combinerOps(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 24, 2);
   }
 

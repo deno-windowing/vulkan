@@ -74,7 +74,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.sType = StructureType.DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -82,7 +82,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -90,7 +90,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -98,7 +98,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pMessageIdName() {
+  get pMessageIdName(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -106,7 +106,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get messageIdNumber() {
+  get messageIdNumber(): number {
     return this.#view.getInt32(32, LE);
   }
 
@@ -114,7 +114,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setInt32(32, Number(value), LE);
   }
 
-  get pMessage() {
+  get pMessage(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -122,7 +122,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get queueLabelCount() {
+  get queueLabelCount(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -130,7 +130,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get pQueueLabels() {
+  get pQueueLabels(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -138,7 +138,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get cmdBufLabelCount() {
+  get cmdBufLabelCount(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -146,7 +146,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get pCmdBufLabels() {
+  get pCmdBufLabels(): Deno.PointerValue {
     return pointerFromView(this.#view, 72, LE);
   }
 
@@ -154,7 +154,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
 
-  get objectCount() {
+  get objectCount(): number {
     return this.#view.getUint32(80, LE);
   }
 
@@ -162,7 +162,7 @@ export class DebugUtilsMessengerCallbackDataEXT implements BaseStruct {
     this.#view.setUint32(80, Number(value), LE);
   }
 
-  get pObjects() {
+  get pObjects(): Deno.PointerValue {
     return pointerFromView(this.#view, 88, LE);
   }
 

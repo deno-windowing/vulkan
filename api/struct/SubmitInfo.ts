@@ -66,7 +66,7 @@ export class SubmitInfo implements BaseStruct {
     this.sType = StructureType.SUBMIT_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -74,7 +74,7 @@ export class SubmitInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -82,7 +82,7 @@ export class SubmitInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get waitSemaphoreCount() {
+  get waitSemaphoreCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -90,7 +90,7 @@ export class SubmitInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pWaitSemaphores() {
+  get pWaitSemaphores(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -98,7 +98,7 @@ export class SubmitInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pWaitDstStageMask() {
+  get pWaitDstStageMask(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -106,7 +106,7 @@ export class SubmitInfo implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get commandBufferCount() {
+  get commandBufferCount(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -114,7 +114,7 @@ export class SubmitInfo implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get pCommandBuffers() {
+  get pCommandBuffers(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 
@@ -122,7 +122,7 @@ export class SubmitInfo implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 
-  get signalSemaphoreCount() {
+  get signalSemaphoreCount(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -130,7 +130,7 @@ export class SubmitInfo implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get pSignalSemaphores() {
+  get pSignalSemaphores(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 

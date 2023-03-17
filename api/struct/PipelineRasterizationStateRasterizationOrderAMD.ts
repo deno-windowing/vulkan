@@ -53,7 +53,7 @@ export class PipelineRasterizationStateRasterizationOrderAMD implements BaseStru
     this.sType = StructureType.PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class PipelineRasterizationStateRasterizationOrderAMD implements BaseStru
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -69,7 +69,7 @@ export class PipelineRasterizationStateRasterizationOrderAMD implements BaseStru
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get rasterizationOrder() {
+  get rasterizationOrder(): number {
     return this.#view.getUint32(16, LE);
   }
 

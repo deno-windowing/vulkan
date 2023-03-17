@@ -54,7 +54,7 @@ export class PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT implements BaseStruc
     this.sType = StructureType.PHYSICAL_DEVICE_YCBCR_2_PLANE_444_FORMATS_FEATURES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT implements BaseStruc
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT implements BaseStruc
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get ycbcr2plane444Formats() {
+  get ycbcr2plane444Formats(): number {
     return this.#view.getUint32(16, LE);
   }
 

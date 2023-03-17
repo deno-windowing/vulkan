@@ -64,7 +64,7 @@ export class PhysicalDeviceBlendOperationAdvancedPropertiesEXT implements BaseSt
     this.sType = StructureType.PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -72,7 +72,7 @@ export class PhysicalDeviceBlendOperationAdvancedPropertiesEXT implements BaseSt
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -80,7 +80,7 @@ export class PhysicalDeviceBlendOperationAdvancedPropertiesEXT implements BaseSt
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get advancedBlendMaxColorAttachments() {
+  get advancedBlendMaxColorAttachments(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -88,7 +88,7 @@ export class PhysicalDeviceBlendOperationAdvancedPropertiesEXT implements BaseSt
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get advancedBlendIndependentBlend() {
+  get advancedBlendIndependentBlend(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -96,7 +96,7 @@ export class PhysicalDeviceBlendOperationAdvancedPropertiesEXT implements BaseSt
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get advancedBlendNonPremultipliedSrcColor() {
+  get advancedBlendNonPremultipliedSrcColor(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -104,7 +104,7 @@ export class PhysicalDeviceBlendOperationAdvancedPropertiesEXT implements BaseSt
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get advancedBlendNonPremultipliedDstColor() {
+  get advancedBlendNonPremultipliedDstColor(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -112,7 +112,7 @@ export class PhysicalDeviceBlendOperationAdvancedPropertiesEXT implements BaseSt
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get advancedBlendCorrelatedOverlap() {
+  get advancedBlendCorrelatedOverlap(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -120,7 +120,7 @@ export class PhysicalDeviceBlendOperationAdvancedPropertiesEXT implements BaseSt
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get advancedBlendAllOperations() {
+  get advancedBlendAllOperations(): number {
     return this.#view.getUint32(36, LE);
   }
 

@@ -63,7 +63,7 @@ export class ShaderStatisticsInfoAMD implements BaseStruct {
     }
   }
 
-  get shaderStageMask() {
+  get shaderStageMask(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class ShaderStatisticsInfoAMD implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get resourceUsage() {
+  get resourceUsage(): ShaderResourceUsageAMD {
     return new ShaderResourceUsageAMD(this.#data.subarray(4, 4 + ShaderResourceUsageAMD.size));
   }
 
@@ -82,7 +82,7 @@ export class ShaderStatisticsInfoAMD implements BaseStruct {
     this.#data.set(value[BUFFER], 4);
   }
 
-  get numPhysicalVgprs() {
+  get numPhysicalVgprs(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -90,7 +90,7 @@ export class ShaderStatisticsInfoAMD implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get numPhysicalSgprs() {
+  get numPhysicalSgprs(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -98,7 +98,7 @@ export class ShaderStatisticsInfoAMD implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get numAvailableVgprs() {
+  get numAvailableVgprs(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -106,7 +106,7 @@ export class ShaderStatisticsInfoAMD implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get numAvailableSgprs() {
+  get numAvailableSgprs(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -114,7 +114,7 @@ export class ShaderStatisticsInfoAMD implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get computeWorkGroupSize() {
+  get computeWorkGroupSize(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 52, 3);
   }
 

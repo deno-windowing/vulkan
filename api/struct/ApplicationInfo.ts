@@ -61,7 +61,7 @@ export class ApplicationInfo implements BaseStruct {
     this.sType = StructureType.APPLICATION_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class ApplicationInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class ApplicationInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get pApplicationName() {
+  get pApplicationName(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -85,7 +85,7 @@ export class ApplicationInfo implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get applicationVersion() {
+  get applicationVersion(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -93,7 +93,7 @@ export class ApplicationInfo implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get pEngineName() {
+  get pEngineName(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -101,7 +101,7 @@ export class ApplicationInfo implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get engineVersion() {
+  get engineVersion(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -109,7 +109,7 @@ export class ApplicationInfo implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get apiVersion() {
+  get apiVersion(): number {
     return this.#view.getUint32(44, LE);
   }
 

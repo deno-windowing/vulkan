@@ -63,7 +63,7 @@ export class PipelineShaderStageCreateInfo implements BaseStruct {
     this.sType = StructureType.PIPELINE_SHADER_STAGE_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class PipelineShaderStageCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -79,7 +79,7 @@ export class PipelineShaderStageCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -87,7 +87,7 @@ export class PipelineShaderStageCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get stage() {
+  get stage(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -95,7 +95,7 @@ export class PipelineShaderStageCreateInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get module() {
+  get module(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -103,7 +103,7 @@ export class PipelineShaderStageCreateInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pName() {
+  get pName(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -111,7 +111,7 @@ export class PipelineShaderStageCreateInfo implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get pSpecializationInfo() {
+  get pSpecializationInfo(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 

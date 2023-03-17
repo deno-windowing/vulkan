@@ -56,7 +56,7 @@ export class VideoDecodeH264CapabilitiesEXT implements BaseStruct {
     this.sType = StructureType.VIDEO_DECODE_H264_CAPABILITIES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class VideoDecodeH264CapabilitiesEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class VideoDecodeH264CapabilitiesEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get maxLevelIdc() {
+  get maxLevelIdc(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -80,7 +80,7 @@ export class VideoDecodeH264CapabilitiesEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get fieldOffsetGranularity() {
+  get fieldOffsetGranularity(): Offset2D {
     return new Offset2D(this.#data.subarray(20, 20 + Offset2D.size));
   }
 

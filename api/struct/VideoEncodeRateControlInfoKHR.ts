@@ -61,7 +61,7 @@ export class VideoEncodeRateControlInfoKHR implements BaseStruct {
     this.sType = StructureType.VIDEO_ENCODE_RATE_CONTROL_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class VideoEncodeRateControlInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class VideoEncodeRateControlInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -85,7 +85,7 @@ export class VideoEncodeRateControlInfoKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get rateControlMode() {
+  get rateControlMode(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -93,7 +93,7 @@ export class VideoEncodeRateControlInfoKHR implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get layerCount() {
+  get layerCount(): number {
     return this.#view.getUint8(24);
   }
 
@@ -101,7 +101,7 @@ export class VideoEncodeRateControlInfoKHR implements BaseStruct {
     this.#view.setUint8(24, Number(value));
   }
 
-  get pLayerConfigs() {
+  get pLayerConfigs(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

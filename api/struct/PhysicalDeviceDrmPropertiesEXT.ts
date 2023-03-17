@@ -64,7 +64,7 @@ export class PhysicalDeviceDrmPropertiesEXT implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_DRM_PROPERTIES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -72,7 +72,7 @@ export class PhysicalDeviceDrmPropertiesEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -80,7 +80,7 @@ export class PhysicalDeviceDrmPropertiesEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get hasPrimary() {
+  get hasPrimary(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -88,7 +88,7 @@ export class PhysicalDeviceDrmPropertiesEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get hasRender() {
+  get hasRender(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -96,7 +96,7 @@ export class PhysicalDeviceDrmPropertiesEXT implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get primaryMajor() {
+  get primaryMajor(): bigint {
     return this.#view.getBigInt64(24, LE);
   }
 
@@ -104,7 +104,7 @@ export class PhysicalDeviceDrmPropertiesEXT implements BaseStruct {
     this.#view.setBigInt64(24, BigInt(value), LE);
   }
 
-  get primaryMinor() {
+  get primaryMinor(): bigint {
     return this.#view.getBigInt64(32, LE);
   }
 
@@ -112,7 +112,7 @@ export class PhysicalDeviceDrmPropertiesEXT implements BaseStruct {
     this.#view.setBigInt64(32, BigInt(value), LE);
   }
 
-  get renderMajor() {
+  get renderMajor(): bigint {
     return this.#view.getBigInt64(40, LE);
   }
 
@@ -120,7 +120,7 @@ export class PhysicalDeviceDrmPropertiesEXT implements BaseStruct {
     this.#view.setBigInt64(40, BigInt(value), LE);
   }
 
-  get renderMinor() {
+  get renderMinor(): bigint {
     return this.#view.getBigInt64(48, LE);
   }
 

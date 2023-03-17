@@ -60,7 +60,7 @@ export class ImportSemaphoreFdInfoKHR implements BaseStruct {
     this.sType = StructureType.IMPORT_SEMAPHORE_FD_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class ImportSemaphoreFdInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class ImportSemaphoreFdInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get semaphore() {
+  get semaphore(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -84,7 +84,7 @@ export class ImportSemaphoreFdInfoKHR implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -92,7 +92,7 @@ export class ImportSemaphoreFdInfoKHR implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get handleType() {
+  get handleType(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -100,7 +100,7 @@ export class ImportSemaphoreFdInfoKHR implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get fd() {
+  get fd(): number {
     return this.#view.getInt32(32, LE);
   }
 

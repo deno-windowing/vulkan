@@ -79,7 +79,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -87,7 +87,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -95,7 +95,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get shaderEngineCount() {
+  get shaderEngineCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -103,7 +103,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get shaderArraysPerEngineCount() {
+  get shaderArraysPerEngineCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -111,7 +111,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get computeUnitsPerShaderArray() {
+  get computeUnitsPerShaderArray(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -119,7 +119,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get simdPerComputeUnit() {
+  get simdPerComputeUnit(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -127,7 +127,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get wavefrontsPerSimd() {
+  get wavefrontsPerSimd(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -135,7 +135,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get wavefrontSize() {
+  get wavefrontSize(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -143,7 +143,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get sgprsPerSimd() {
+  get sgprsPerSimd(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -151,7 +151,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get minSgprAllocation() {
+  get minSgprAllocation(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -159,7 +159,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get maxSgprAllocation() {
+  get maxSgprAllocation(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -167,7 +167,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get sgprAllocationGranularity() {
+  get sgprAllocationGranularity(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -175,7 +175,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get vgprsPerSimd() {
+  get vgprsPerSimd(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -183,7 +183,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get minVgprAllocation() {
+  get minVgprAllocation(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -191,7 +191,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get maxVgprAllocation() {
+  get maxVgprAllocation(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -199,7 +199,7 @@ export class PhysicalDeviceShaderCorePropertiesAMD implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get vgprAllocationGranularity() {
+  get vgprAllocationGranularity(): number {
     return this.#view.getUint32(68, LE);
   }
 

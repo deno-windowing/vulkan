@@ -66,7 +66,7 @@ export class CopyDescriptorSet implements BaseStruct {
     this.sType = StructureType.COPY_DESCRIPTOR_SET;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -74,7 +74,7 @@ export class CopyDescriptorSet implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -82,7 +82,7 @@ export class CopyDescriptorSet implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get srcSet() {
+  get srcSet(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -90,7 +90,7 @@ export class CopyDescriptorSet implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get srcBinding() {
+  get srcBinding(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -98,7 +98,7 @@ export class CopyDescriptorSet implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get srcArrayElement() {
+  get srcArrayElement(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -106,7 +106,7 @@ export class CopyDescriptorSet implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get dstSet() {
+  get dstSet(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -114,7 +114,7 @@ export class CopyDescriptorSet implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get dstBinding() {
+  get dstBinding(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -122,7 +122,7 @@ export class CopyDescriptorSet implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get dstArrayElement() {
+  get dstArrayElement(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -130,7 +130,7 @@ export class CopyDescriptorSet implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get descriptorCount() {
+  get descriptorCount(): number {
     return this.#view.getUint32(48, LE);
   }
 

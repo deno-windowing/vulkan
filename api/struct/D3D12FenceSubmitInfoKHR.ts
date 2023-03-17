@@ -59,7 +59,7 @@ export class D3D12FenceSubmitInfoKHR implements BaseStruct {
     this.sType = StructureType.D3D12_FENCE_SUBMIT_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class D3D12FenceSubmitInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class D3D12FenceSubmitInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get waitSemaphoreValuesCount() {
+  get waitSemaphoreValuesCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -83,7 +83,7 @@ export class D3D12FenceSubmitInfoKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pWaitSemaphoreValues() {
+  get pWaitSemaphoreValues(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -91,7 +91,7 @@ export class D3D12FenceSubmitInfoKHR implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get signalSemaphoreValuesCount() {
+  get signalSemaphoreValuesCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -99,7 +99,7 @@ export class D3D12FenceSubmitInfoKHR implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get pSignalSemaphoreValues() {
+  get pSignalSemaphoreValues(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 

@@ -56,7 +56,7 @@ export class StdVideoH265ProfileTierLevel implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoH265ProfileTierLevelFlags {
     return new StdVideoH265ProfileTierLevelFlags(this.#data.subarray(0, 0 + StdVideoH265ProfileTierLevelFlags.size));
   }
 
@@ -67,7 +67,7 @@ export class StdVideoH265ProfileTierLevel implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get general_profile_idc() {
+  get general_profile_idc(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -75,7 +75,7 @@ export class StdVideoH265ProfileTierLevel implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get general_level_idc() {
+  get general_level_idc(): number {
     return this.#view.getUint32(24, LE);
   }
 

@@ -70,7 +70,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.sType = StructureType.WRITE_DESCRIPTOR_SET;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -78,7 +78,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -86,7 +86,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get dstSet() {
+  get dstSet(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -94,7 +94,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get dstBinding() {
+  get dstBinding(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -102,7 +102,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get dstArrayElement() {
+  get dstArrayElement(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -110,7 +110,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get descriptorCount() {
+  get descriptorCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -118,7 +118,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get descriptorType() {
+  get descriptorType(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -126,7 +126,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get pImageInfo() {
+  get pImageInfo(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -134,7 +134,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get pBufferInfo() {
+  get pBufferInfo(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 
@@ -142,7 +142,7 @@ export class WriteDescriptorSet implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 
-  get pTexelBufferView() {
+  get pTexelBufferView(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 

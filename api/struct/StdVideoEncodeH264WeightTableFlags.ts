@@ -55,7 +55,7 @@ export class StdVideoEncodeH264WeightTableFlags implements BaseStruct {
     }
   }
 
-  get luma_weight_l0_flag() {
+  get luma_weight_l0_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class StdVideoEncodeH264WeightTableFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get chroma_weight_l0_flag() {
+  get chroma_weight_l0_flag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -71,7 +71,7 @@ export class StdVideoEncodeH264WeightTableFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get luma_weight_l1_flag() {
+  get luma_weight_l1_flag(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -79,7 +79,7 @@ export class StdVideoEncodeH264WeightTableFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get chroma_weight_l1_flag() {
+  get chroma_weight_l1_flag(): number {
     return this.#view.getUint32(12, LE);
   }
 

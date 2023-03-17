@@ -82,7 +82,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_VULKAN_1_3_FEATURES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -90,7 +90,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -98,7 +98,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get robustImageAccess() {
+  get robustImageAccess(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -106,7 +106,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get inlineUniformBlock() {
+  get inlineUniformBlock(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -114,7 +114,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get descriptorBindingInlineUniformBlockUpdateAfterBind() {
+  get descriptorBindingInlineUniformBlockUpdateAfterBind(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -122,7 +122,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get pipelineCreationCacheControl() {
+  get pipelineCreationCacheControl(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -130,7 +130,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get privateData() {
+  get privateData(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -138,7 +138,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get shaderDemoteToHelperInvocation() {
+  get shaderDemoteToHelperInvocation(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -146,7 +146,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get shaderTerminateInvocation() {
+  get shaderTerminateInvocation(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -154,7 +154,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get subgroupSizeControl() {
+  get subgroupSizeControl(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -162,7 +162,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get computeFullSubgroups() {
+  get computeFullSubgroups(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -170,7 +170,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get synchronization2() {
+  get synchronization2(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -178,7 +178,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get textureCompressionASTC_HDR() {
+  get textureCompressionASTC_HDR(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -186,7 +186,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get shaderZeroInitializeWorkgroupMemory() {
+  get shaderZeroInitializeWorkgroupMemory(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -194,7 +194,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get dynamicRendering() {
+  get dynamicRendering(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -202,7 +202,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get shaderIntegerDotProduct() {
+  get shaderIntegerDotProduct(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -210,7 +210,7 @@ export class PhysicalDeviceVulkan13Features implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get maintenance4() {
+  get maintenance4(): number {
     return this.#view.getUint32(72, LE);
   }
 

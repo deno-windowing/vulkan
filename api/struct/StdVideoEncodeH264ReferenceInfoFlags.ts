@@ -49,7 +49,7 @@ export class StdVideoEncodeH264ReferenceInfoFlags implements BaseStruct {
     }
   }
 
-  get used_for_long_term_reference() {
+  get used_for_long_term_reference(): number {
     return this.#view.getUint32(0, LE);
   }
 

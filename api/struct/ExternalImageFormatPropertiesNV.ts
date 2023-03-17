@@ -57,7 +57,7 @@ export class ExternalImageFormatPropertiesNV implements BaseStruct {
     }
   }
 
-  get imageFormatProperties() {
+  get imageFormatProperties(): ImageFormatProperties {
     return new ImageFormatProperties(this.#data.subarray(0, 0 + ImageFormatProperties.size));
   }
 
@@ -68,7 +68,7 @@ export class ExternalImageFormatPropertiesNV implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get externalMemoryFeatures() {
+  get externalMemoryFeatures(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -76,7 +76,7 @@ export class ExternalImageFormatPropertiesNV implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get exportFromImportedHandleTypes() {
+  get exportFromImportedHandleTypes(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -84,7 +84,7 @@ export class ExternalImageFormatPropertiesNV implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get compatibleHandleTypes() {
+  get compatibleHandleTypes(): number {
     return this.#view.getUint32(40, LE);
   }
 

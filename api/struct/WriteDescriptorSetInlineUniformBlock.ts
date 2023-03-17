@@ -55,7 +55,7 @@ export class WriteDescriptorSetInlineUniformBlock implements BaseStruct {
     this.sType = StructureType.WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class WriteDescriptorSetInlineUniformBlock implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class WriteDescriptorSetInlineUniformBlock implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get dataSize() {
+  get dataSize(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class WriteDescriptorSetInlineUniformBlock implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pData() {
+  get pData(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

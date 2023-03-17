@@ -59,7 +59,7 @@ export class CopyMemoryToMicromapInfoEXT implements BaseStruct {
     this.sType = StructureType.COPY_MEMORY_TO_MICROMAP_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class CopyMemoryToMicromapInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class CopyMemoryToMicromapInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get src() {
+  get src(): unknown {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
@@ -83,7 +83,7 @@ export class CopyMemoryToMicromapInfoEXT implements BaseStruct {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
-  get dst() {
+  get dst(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -91,7 +91,7 @@ export class CopyMemoryToMicromapInfoEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get mode() {
+  get mode(): number {
     return this.#view.getUint32(32, LE);
   }
 

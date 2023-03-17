@@ -54,7 +54,7 @@ export class PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT implements BaseStr
     this.sType = StructureType.PHYSICAL_DEVICE_GRAPHICS_PIPELINE_LIBRARY_FEATURES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT implements BaseStr
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT implements BaseStr
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get graphicsPipelineLibrary() {
+  get graphicsPipelineLibrary(): number {
     return this.#view.getUint32(16, LE);
   }
 

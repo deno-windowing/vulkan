@@ -63,7 +63,7 @@ export class AccelerationStructureInfoNV implements BaseStruct {
     this.sType = StructureType.ACCELERATION_STRUCTURE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class AccelerationStructureInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -79,7 +79,7 @@ export class AccelerationStructureInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get type() {
+  get type(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -87,7 +87,7 @@ export class AccelerationStructureInfoNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -95,7 +95,7 @@ export class AccelerationStructureInfoNV implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get instanceCount() {
+  get instanceCount(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -103,7 +103,7 @@ export class AccelerationStructureInfoNV implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get geometryCount() {
+  get geometryCount(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -111,7 +111,7 @@ export class AccelerationStructureInfoNV implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get pGeometries() {
+  get pGeometries(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

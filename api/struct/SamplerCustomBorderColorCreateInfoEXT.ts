@@ -56,7 +56,7 @@ export class SamplerCustomBorderColorCreateInfoEXT implements BaseStruct {
     this.sType = StructureType.SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class SamplerCustomBorderColorCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class SamplerCustomBorderColorCreateInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get customBorderColor() {
+  get customBorderColor(): unknown {
     throw new Error(`Unknown type: {"union":["f32","i32","u32"]}`);
   }
 
@@ -80,7 +80,7 @@ export class SamplerCustomBorderColorCreateInfoEXT implements BaseStruct {
     throw new Error(`Unknown type: {"union":["f32","i32","u32"]}`);
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getUint32(20, LE);
   }
 

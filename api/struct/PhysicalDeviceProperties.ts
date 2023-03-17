@@ -68,7 +68,7 @@ export class PhysicalDeviceProperties implements BaseStruct {
     }
   }
 
-  get apiVersion() {
+  get apiVersion(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -76,7 +76,7 @@ export class PhysicalDeviceProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get driverVersion() {
+  get driverVersion(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -84,7 +84,7 @@ export class PhysicalDeviceProperties implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get vendorID() {
+  get vendorID(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -92,7 +92,7 @@ export class PhysicalDeviceProperties implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get deviceID() {
+  get deviceID(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -100,7 +100,7 @@ export class PhysicalDeviceProperties implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get deviceType() {
+  get deviceType(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -108,7 +108,7 @@ export class PhysicalDeviceProperties implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get deviceName() {
+  get deviceName(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 20, 256);
   }
 
@@ -116,7 +116,7 @@ export class PhysicalDeviceProperties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 20);
   }
 
-  get pipelineCacheUUID() {
+  get pipelineCacheUUID(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 276, 16);
   }
 
@@ -124,7 +124,7 @@ export class PhysicalDeviceProperties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 276);
   }
 
-  get limits() {
+  get limits(): PhysicalDeviceLimits {
     return new PhysicalDeviceLimits(this.#data.subarray(292, 292 + PhysicalDeviceLimits.size));
   }
 
@@ -135,7 +135,7 @@ export class PhysicalDeviceProperties implements BaseStruct {
     this.#data.set(value[BUFFER], 292);
   }
 
-  get sparseProperties() {
+  get sparseProperties(): PhysicalDeviceSparseProperties {
     return new PhysicalDeviceSparseProperties(this.#data.subarray(764, 764 + PhysicalDeviceSparseProperties.size));
   }
 

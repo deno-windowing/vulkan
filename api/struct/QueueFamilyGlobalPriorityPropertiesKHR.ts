@@ -55,7 +55,7 @@ export class QueueFamilyGlobalPriorityPropertiesKHR implements BaseStruct {
     this.sType = StructureType.QUEUE_FAMILY_GLOBAL_PRIORITY_PROPERTIES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class QueueFamilyGlobalPriorityPropertiesKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class QueueFamilyGlobalPriorityPropertiesKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get priorityCount() {
+  get priorityCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class QueueFamilyGlobalPriorityPropertiesKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get priorities() {
+  get priorities(): Uint32Array {
     return new Uint32Array(this.#data.buffer, this.#data.byteOffset + 20, 16);
   }
 

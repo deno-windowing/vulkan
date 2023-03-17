@@ -58,7 +58,7 @@ export class MappedMemoryRange implements BaseStruct {
     this.sType = StructureType.MAPPED_MEMORY_RANGE;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class MappedMemoryRange implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class MappedMemoryRange implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get memory() {
+  get memory(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -82,7 +82,7 @@ export class MappedMemoryRange implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get offset() {
+  get offset(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -90,7 +90,7 @@ export class MappedMemoryRange implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get size() {
+  get size(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 

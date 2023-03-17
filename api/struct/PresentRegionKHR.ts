@@ -52,7 +52,7 @@ export class PresentRegionKHR implements BaseStruct {
     }
   }
 
-  get rectangleCount() {
+  get rectangleCount(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class PresentRegionKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pRectangles() {
+  get pRectangles(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 

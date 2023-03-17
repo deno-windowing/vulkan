@@ -63,7 +63,7 @@ export class DisplayPropertiesKHR implements BaseStruct {
     }
   }
 
-  get display() {
+  get display(): Deno.PointerValue {
     return pointerFromView(this.#view, 0, LE);
   }
 
@@ -71,7 +71,7 @@ export class DisplayPropertiesKHR implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
 
-  get displayName() {
+  get displayName(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -79,7 +79,7 @@ export class DisplayPropertiesKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get physicalDimensions() {
+  get physicalDimensions(): Extent2D {
     return new Extent2D(this.#data.subarray(16, 16 + Extent2D.size));
   }
 
@@ -90,7 +90,7 @@ export class DisplayPropertiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get physicalResolution() {
+  get physicalResolution(): Extent2D {
     return new Extent2D(this.#data.subarray(24, 24 + Extent2D.size));
   }
 
@@ -101,7 +101,7 @@ export class DisplayPropertiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 24);
   }
 
-  get supportedTransforms() {
+  get supportedTransforms(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -109,7 +109,7 @@ export class DisplayPropertiesKHR implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get planeReorderPossible() {
+  get planeReorderPossible(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -117,7 +117,7 @@ export class DisplayPropertiesKHR implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get persistentContent() {
+  get persistentContent(): number {
     return this.#view.getUint32(40, LE);
   }
 

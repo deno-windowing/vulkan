@@ -54,7 +54,7 @@ export class ClearRect implements BaseStruct {
     }
   }
 
-  get rect() {
+  get rect(): Rect2D {
     return new Rect2D(this.#data.subarray(0, 0 + Rect2D.size));
   }
 
@@ -65,7 +65,7 @@ export class ClearRect implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get baseArrayLayer() {
+  get baseArrayLayer(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -73,7 +73,7 @@ export class ClearRect implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get layerCount() {
+  get layerCount(): number {
     return this.#view.getUint32(20, LE);
   }
 

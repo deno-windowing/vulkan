@@ -112,7 +112,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.sType = StructureType.PHYSICAL_DEVICE_SHADER_INTEGER_DOT_PRODUCT_PROPERTIES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -120,7 +120,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -128,7 +128,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get integerDotProduct8BitUnsignedAccelerated() {
+  get integerDotProduct8BitUnsignedAccelerated(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -136,7 +136,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get integerDotProduct8BitSignedAccelerated() {
+  get integerDotProduct8BitSignedAccelerated(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -144,7 +144,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get integerDotProduct8BitMixedSignednessAccelerated() {
+  get integerDotProduct8BitMixedSignednessAccelerated(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -152,7 +152,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get integerDotProduct4x8BitPackedUnsignedAccelerated() {
+  get integerDotProduct4x8BitPackedUnsignedAccelerated(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -160,7 +160,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get integerDotProduct4x8BitPackedSignedAccelerated() {
+  get integerDotProduct4x8BitPackedSignedAccelerated(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -168,7 +168,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get integerDotProduct4x8BitPackedMixedSignednessAccelerated() {
+  get integerDotProduct4x8BitPackedMixedSignednessAccelerated(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -176,7 +176,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get integerDotProduct16BitUnsignedAccelerated() {
+  get integerDotProduct16BitUnsignedAccelerated(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -184,7 +184,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get integerDotProduct16BitSignedAccelerated() {
+  get integerDotProduct16BitSignedAccelerated(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -192,7 +192,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get integerDotProduct16BitMixedSignednessAccelerated() {
+  get integerDotProduct16BitMixedSignednessAccelerated(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -200,7 +200,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get integerDotProduct32BitUnsignedAccelerated() {
+  get integerDotProduct32BitUnsignedAccelerated(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -208,7 +208,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get integerDotProduct32BitSignedAccelerated() {
+  get integerDotProduct32BitSignedAccelerated(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -216,7 +216,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get integerDotProduct32BitMixedSignednessAccelerated() {
+  get integerDotProduct32BitMixedSignednessAccelerated(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -224,7 +224,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get integerDotProduct64BitUnsignedAccelerated() {
+  get integerDotProduct64BitUnsignedAccelerated(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -232,7 +232,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get integerDotProduct64BitSignedAccelerated() {
+  get integerDotProduct64BitSignedAccelerated(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -240,7 +240,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get integerDotProduct64BitMixedSignednessAccelerated() {
+  get integerDotProduct64BitMixedSignednessAccelerated(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -248,7 +248,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating8BitUnsignedAccelerated() {
+  get integerDotProductAccumulatingSaturating8BitUnsignedAccelerated(): number {
     return this.#view.getUint32(76, LE);
   }
 
@@ -256,7 +256,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(76, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating8BitSignedAccelerated() {
+  get integerDotProductAccumulatingSaturating8BitSignedAccelerated(): number {
     return this.#view.getUint32(80, LE);
   }
 
@@ -264,7 +264,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(80, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating8BitMixedSignednessAccelerated() {
+  get integerDotProductAccumulatingSaturating8BitMixedSignednessAccelerated(): number {
     return this.#view.getUint32(84, LE);
   }
 
@@ -272,7 +272,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(84, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating4x8BitPackedUnsignedAccelerated() {
+  get integerDotProductAccumulatingSaturating4x8BitPackedUnsignedAccelerated(): number {
     return this.#view.getUint32(88, LE);
   }
 
@@ -280,7 +280,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating4x8BitPackedSignedAccelerated() {
+  get integerDotProductAccumulatingSaturating4x8BitPackedSignedAccelerated(): number {
     return this.#view.getUint32(92, LE);
   }
 
@@ -288,7 +288,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(92, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating4x8BitPackedMixedSignednessAccelerated() {
+  get integerDotProductAccumulatingSaturating4x8BitPackedMixedSignednessAccelerated(): number {
     return this.#view.getUint32(96, LE);
   }
 
@@ -296,7 +296,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(96, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating16BitUnsignedAccelerated() {
+  get integerDotProductAccumulatingSaturating16BitUnsignedAccelerated(): number {
     return this.#view.getUint32(100, LE);
   }
 
@@ -304,7 +304,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(100, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating16BitSignedAccelerated() {
+  get integerDotProductAccumulatingSaturating16BitSignedAccelerated(): number {
     return this.#view.getUint32(104, LE);
   }
 
@@ -312,7 +312,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(104, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating16BitMixedSignednessAccelerated() {
+  get integerDotProductAccumulatingSaturating16BitMixedSignednessAccelerated(): number {
     return this.#view.getUint32(108, LE);
   }
 
@@ -320,7 +320,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(108, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating32BitUnsignedAccelerated() {
+  get integerDotProductAccumulatingSaturating32BitUnsignedAccelerated(): number {
     return this.#view.getUint32(112, LE);
   }
 
@@ -328,7 +328,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(112, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating32BitSignedAccelerated() {
+  get integerDotProductAccumulatingSaturating32BitSignedAccelerated(): number {
     return this.#view.getUint32(116, LE);
   }
 
@@ -336,7 +336,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(116, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating32BitMixedSignednessAccelerated() {
+  get integerDotProductAccumulatingSaturating32BitMixedSignednessAccelerated(): number {
     return this.#view.getUint32(120, LE);
   }
 
@@ -344,7 +344,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(120, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating64BitUnsignedAccelerated() {
+  get integerDotProductAccumulatingSaturating64BitUnsignedAccelerated(): number {
     return this.#view.getUint32(124, LE);
   }
 
@@ -352,7 +352,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(124, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating64BitSignedAccelerated() {
+  get integerDotProductAccumulatingSaturating64BitSignedAccelerated(): number {
     return this.#view.getUint32(128, LE);
   }
 
@@ -360,7 +360,7 @@ export class PhysicalDeviceShaderIntegerDotProductProperties implements BaseStru
     this.#view.setUint32(128, Number(value), LE);
   }
 
-  get integerDotProductAccumulatingSaturating64BitMixedSignednessAccelerated() {
+  get integerDotProductAccumulatingSaturating64BitMixedSignednessAccelerated(): number {
     return this.#view.getUint32(132, LE);
   }
 

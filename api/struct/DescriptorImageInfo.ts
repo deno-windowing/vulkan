@@ -55,7 +55,7 @@ export class DescriptorImageInfo implements BaseStruct {
     }
   }
 
-  get sampler() {
+  get sampler(): Deno.PointerValue {
     return pointerFromView(this.#view, 0, LE);
   }
 
@@ -63,7 +63,7 @@ export class DescriptorImageInfo implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
 
-  get imageView() {
+  get imageView(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class DescriptorImageInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get imageLayout() {
+  get imageLayout(): number {
     return this.#view.getUint32(16, LE);
   }
 

@@ -60,7 +60,7 @@ export class ColorBlendEquationEXT implements BaseStruct {
     }
   }
 
-  get srcColorBlendFactor() {
+  get srcColorBlendFactor(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class ColorBlendEquationEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get dstColorBlendFactor() {
+  get dstColorBlendFactor(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -76,7 +76,7 @@ export class ColorBlendEquationEXT implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get colorBlendOp() {
+  get colorBlendOp(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -84,7 +84,7 @@ export class ColorBlendEquationEXT implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get srcAlphaBlendFactor() {
+  get srcAlphaBlendFactor(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -92,7 +92,7 @@ export class ColorBlendEquationEXT implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get dstAlphaBlendFactor() {
+  get dstAlphaBlendFactor(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -100,7 +100,7 @@ export class ColorBlendEquationEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get alphaBlendOp() {
+  get alphaBlendOp(): number {
     return this.#view.getUint32(20, LE);
   }
 

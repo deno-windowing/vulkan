@@ -64,7 +64,7 @@ export class CommandBufferInheritanceInfo implements BaseStruct {
     this.sType = StructureType.COMMAND_BUFFER_INHERITANCE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -72,7 +72,7 @@ export class CommandBufferInheritanceInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -80,7 +80,7 @@ export class CommandBufferInheritanceInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get renderPass() {
+  get renderPass(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -88,7 +88,7 @@ export class CommandBufferInheritanceInfo implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get subpass() {
+  get subpass(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -96,7 +96,7 @@ export class CommandBufferInheritanceInfo implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get framebuffer() {
+  get framebuffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -104,7 +104,7 @@ export class CommandBufferInheritanceInfo implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get occlusionQueryEnable() {
+  get occlusionQueryEnable(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -112,7 +112,7 @@ export class CommandBufferInheritanceInfo implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get queryFlags() {
+  get queryFlags(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -120,7 +120,7 @@ export class CommandBufferInheritanceInfo implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get pipelineStatistics() {
+  get pipelineStatistics(): number {
     return this.#view.getUint32(48, LE);
   }
 

@@ -58,7 +58,7 @@ export class DescriptorSetAllocateInfo implements BaseStruct {
     this.sType = StructureType.DESCRIPTOR_SET_ALLOCATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class DescriptorSetAllocateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class DescriptorSetAllocateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get descriptorPool() {
+  get descriptorPool(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -82,7 +82,7 @@ export class DescriptorSetAllocateInfo implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get descriptorSetCount() {
+  get descriptorSetCount(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -90,7 +90,7 @@ export class DescriptorSetAllocateInfo implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get pSetLayouts() {
+  get pSetLayouts(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

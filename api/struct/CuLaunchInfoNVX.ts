@@ -76,7 +76,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.sType = StructureType.CU_LAUNCH_INFO_NVX;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -84,7 +84,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -92,7 +92,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get vk_function() {
+  get vk_function(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -100,7 +100,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get gridDimX() {
+  get gridDimX(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -108,7 +108,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get gridDimY() {
+  get gridDimY(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -116,7 +116,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get gridDimZ() {
+  get gridDimZ(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -124,7 +124,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get blockDimX() {
+  get blockDimX(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -132,7 +132,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get blockDimY() {
+  get blockDimY(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -140,7 +140,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get blockDimZ() {
+  get blockDimZ(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -148,7 +148,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get sharedMemBytes() {
+  get sharedMemBytes(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -156,7 +156,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get paramCount() {
+  get paramCount(): bigint {
     return this.#view.getBigUint64(56, LE);
   }
 
@@ -164,7 +164,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(value), LE);
   }
 
-  get pParams() {
+  get pParams(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 
@@ -172,7 +172,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 
-  get extraCount() {
+  get extraCount(): bigint {
     return this.#view.getBigUint64(72, LE);
   }
 
@@ -180,7 +180,7 @@ export class CuLaunchInfoNVX implements BaseStruct {
     this.#view.setBigUint64(72, BigInt(value), LE);
   }
 
-  get pExtras() {
+  get pExtras(): Deno.PointerValue {
     return pointerFromView(this.#view, 80, LE);
   }
 

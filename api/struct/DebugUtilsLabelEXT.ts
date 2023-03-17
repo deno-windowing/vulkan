@@ -55,7 +55,7 @@ export class DebugUtilsLabelEXT implements BaseStruct {
     this.sType = StructureType.DEBUG_UTILS_LABEL_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class DebugUtilsLabelEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class DebugUtilsLabelEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get pLabelName() {
+  get pLabelName(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -79,7 +79,7 @@ export class DebugUtilsLabelEXT implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get color() {
+  get color(): Float32Array {
     return new Float32Array(this.#data.buffer, this.#data.byteOffset + 24, 4);
   }
 

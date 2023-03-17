@@ -69,7 +69,7 @@ export class DependencyInfo implements BaseStruct {
     this.sType = StructureType.DEPENDENCY_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -77,7 +77,7 @@ export class DependencyInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -85,7 +85,7 @@ export class DependencyInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get dependencyFlags() {
+  get dependencyFlags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -93,7 +93,7 @@ export class DependencyInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get memoryBarrierCount() {
+  get memoryBarrierCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -101,7 +101,7 @@ export class DependencyInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get pMemoryBarriers() {
+  get pMemoryBarriers(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -109,7 +109,7 @@ export class DependencyInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get bufferMemoryBarrierCount() {
+  get bufferMemoryBarrierCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -117,7 +117,7 @@ export class DependencyInfo implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get pBufferMemoryBarriers() {
+  get pBufferMemoryBarriers(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -125,7 +125,7 @@ export class DependencyInfo implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get imageMemoryBarrierCount() {
+  get imageMemoryBarrierCount(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -133,7 +133,7 @@ export class DependencyInfo implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get pImageMemoryBarriers() {
+  get pImageMemoryBarriers(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 

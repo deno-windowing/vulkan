@@ -54,7 +54,7 @@ export class VertexInputBindingDescription implements BaseStruct {
     }
   }
 
-  get binding() {
+  get binding(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class VertexInputBindingDescription implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get stride() {
+  get stride(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -70,7 +70,7 @@ export class VertexInputBindingDescription implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get inputRate() {
+  get inputRate(): number {
     return this.#view.getUint32(8, LE);
   }
 

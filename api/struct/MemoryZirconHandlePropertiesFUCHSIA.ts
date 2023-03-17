@@ -53,7 +53,7 @@ export class MemoryZirconHandlePropertiesFUCHSIA implements BaseStruct {
     this.sType = StructureType.MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class MemoryZirconHandlePropertiesFUCHSIA implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -69,7 +69,7 @@ export class MemoryZirconHandlePropertiesFUCHSIA implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get memoryTypeBits() {
+  get memoryTypeBits(): number {
     return this.#view.getUint32(16, LE);
   }
 

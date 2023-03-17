@@ -59,7 +59,7 @@ export class RenderingFragmentShadingRateAttachmentInfoKHR implements BaseStruct
     this.sType = StructureType.RENDERING_FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class RenderingFragmentShadingRateAttachmentInfoKHR implements BaseStruct
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class RenderingFragmentShadingRateAttachmentInfoKHR implements BaseStruct
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get imageView() {
+  get imageView(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -83,7 +83,7 @@ export class RenderingFragmentShadingRateAttachmentInfoKHR implements BaseStruct
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get imageLayout() {
+  get imageLayout(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -91,7 +91,7 @@ export class RenderingFragmentShadingRateAttachmentInfoKHR implements BaseStruct
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get shadingRateAttachmentTexelSize() {
+  get shadingRateAttachmentTexelSize(): Extent2D {
     return new Extent2D(this.#data.subarray(28, 28 + Extent2D.size));
   }
 

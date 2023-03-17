@@ -69,7 +69,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.sType = StructureType.SAMPLER_YCBCR_CONVERSION_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -77,7 +77,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -85,7 +85,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -93,7 +93,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get ycbcrModel() {
+  get ycbcrModel(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -101,7 +101,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get ycbcrRange() {
+  get ycbcrRange(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -109,7 +109,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get components() {
+  get components(): ComponentMapping {
     return new ComponentMapping(this.#data.subarray(28, 28 + ComponentMapping.size));
   }
 
@@ -120,7 +120,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.#data.set(value[BUFFER], 28);
   }
 
-  get xChromaOffset() {
+  get xChromaOffset(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -128,7 +128,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get yChromaOffset() {
+  get yChromaOffset(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -136,7 +136,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get chromaFilter() {
+  get chromaFilter(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -144,7 +144,7 @@ export class SamplerYcbcrConversionCreateInfo implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get forceExplicitReconstruction() {
+  get forceExplicitReconstruction(): number {
     return this.#view.getUint32(56, LE);
   }
 

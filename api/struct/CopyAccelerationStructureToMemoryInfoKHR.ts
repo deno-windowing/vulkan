@@ -59,7 +59,7 @@ export class CopyAccelerationStructureToMemoryInfoKHR implements BaseStruct {
     this.sType = StructureType.COPY_ACCELERATION_STRUCTURE_TO_MEMORY_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class CopyAccelerationStructureToMemoryInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class CopyAccelerationStructureToMemoryInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get src() {
+  get src(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -83,7 +83,7 @@ export class CopyAccelerationStructureToMemoryInfoKHR implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get dst() {
+  get dst(): unknown {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
@@ -91,7 +91,7 @@ export class CopyAccelerationStructureToMemoryInfoKHR implements BaseStruct {
     throw new Error(`Unknown type: {"union":["u64","buffer"]}`);
   }
 
-  get mode() {
+  get mode(): number {
     return this.#view.getUint32(32, LE);
   }
 

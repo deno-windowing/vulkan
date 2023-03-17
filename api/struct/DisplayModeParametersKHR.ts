@@ -52,7 +52,7 @@ export class DisplayModeParametersKHR implements BaseStruct {
     }
   }
 
-  get visibleRegion() {
+  get visibleRegion(): Extent2D {
     return new Extent2D(this.#data.subarray(0, 0 + Extent2D.size));
   }
 
@@ -63,7 +63,7 @@ export class DisplayModeParametersKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get refreshRate() {
+  get refreshRate(): number {
     return this.#view.getUint32(8, LE);
   }
 

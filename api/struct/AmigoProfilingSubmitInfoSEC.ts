@@ -55,7 +55,7 @@ export class AmigoProfilingSubmitInfoSEC implements BaseStruct {
     this.sType = StructureType.AMIGO_PROFILING_SUBMIT_INFO_SEC;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class AmigoProfilingSubmitInfoSEC implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class AmigoProfilingSubmitInfoSEC implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get firstDrawTimestamp() {
+  get firstDrawTimestamp(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class AmigoProfilingSubmitInfoSEC implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get swapBufferTimestamp() {
+  get swapBufferTimestamp(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 

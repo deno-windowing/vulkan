@@ -55,7 +55,7 @@ export class DescriptorSetLayoutHostMappingInfoVALVE implements BaseStruct {
     this.sType = StructureType.DESCRIPTOR_SET_LAYOUT_HOST_MAPPING_INFO_VALVE;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class DescriptorSetLayoutHostMappingInfoVALVE implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class DescriptorSetLayoutHostMappingInfoVALVE implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get descriptorOffset() {
+  get descriptorOffset(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class DescriptorSetLayoutHostMappingInfoVALVE implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get descriptorSize() {
+  get descriptorSize(): number {
     return this.#view.getUint32(24, LE);
   }
 

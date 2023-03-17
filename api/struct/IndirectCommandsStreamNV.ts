@@ -52,7 +52,7 @@ export class IndirectCommandsStreamNV implements BaseStruct {
     }
   }
 
-  get buffer() {
+  get buffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 0, LE);
   }
 
@@ -60,7 +60,7 @@ export class IndirectCommandsStreamNV implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
 
-  get offset() {
+  get offset(): bigint {
     return this.#view.getBigUint64(8, LE);
   }
 

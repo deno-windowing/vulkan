@@ -68,7 +68,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.sType = StructureType.HDR_METADATA_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -76,7 +76,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -84,7 +84,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get displayPrimaryRed() {
+  get displayPrimaryRed(): XYColorEXT {
     return new XYColorEXT(this.#data.subarray(16, 16 + XYColorEXT.size));
   }
 
@@ -95,7 +95,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get displayPrimaryGreen() {
+  get displayPrimaryGreen(): XYColorEXT {
     return new XYColorEXT(this.#data.subarray(24, 24 + XYColorEXT.size));
   }
 
@@ -106,7 +106,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.#data.set(value[BUFFER], 24);
   }
 
-  get displayPrimaryBlue() {
+  get displayPrimaryBlue(): XYColorEXT {
     return new XYColorEXT(this.#data.subarray(32, 32 + XYColorEXT.size));
   }
 
@@ -117,7 +117,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.#data.set(value[BUFFER], 32);
   }
 
-  get whitePoint() {
+  get whitePoint(): XYColorEXT {
     return new XYColorEXT(this.#data.subarray(40, 40 + XYColorEXT.size));
   }
 
@@ -128,7 +128,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.#data.set(value[BUFFER], 40);
   }
 
-  get maxLuminance() {
+  get maxLuminance(): number {
     return this.#view.getFloat32(48, LE);
   }
 
@@ -136,7 +136,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.#view.setFloat32(48, Number(value), LE);
   }
 
-  get minLuminance() {
+  get minLuminance(): number {
     return this.#view.getFloat32(52, LE);
   }
 
@@ -144,7 +144,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.#view.setFloat32(52, Number(value), LE);
   }
 
-  get maxContentLightLevel() {
+  get maxContentLightLevel(): number {
     return this.#view.getFloat32(56, LE);
   }
 
@@ -152,7 +152,7 @@ export class HdrMetadataEXT implements BaseStruct {
     this.#view.setFloat32(56, Number(value), LE);
   }
 
-  get maxFrameAverageLightLevel() {
+  get maxFrameAverageLightLevel(): number {
     return this.#view.getFloat32(60, LE);
   }
 

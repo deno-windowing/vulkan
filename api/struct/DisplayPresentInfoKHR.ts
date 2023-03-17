@@ -59,7 +59,7 @@ export class DisplayPresentInfoKHR implements BaseStruct {
     this.sType = StructureType.DISPLAY_PRESENT_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class DisplayPresentInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class DisplayPresentInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get srcRect() {
+  get srcRect(): Rect2D {
     return new Rect2D(this.#data.subarray(16, 16 + Rect2D.size));
   }
 
@@ -86,7 +86,7 @@ export class DisplayPresentInfoKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get dstRect() {
+  get dstRect(): Rect2D {
     return new Rect2D(this.#data.subarray(32, 32 + Rect2D.size));
   }
 
@@ -97,7 +97,7 @@ export class DisplayPresentInfoKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 32);
   }
 
-  get persistent() {
+  get persistent(): number {
     return this.#view.getUint32(48, LE);
   }
 

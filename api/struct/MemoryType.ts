@@ -52,7 +52,7 @@ export class MemoryType implements BaseStruct {
     }
   }
 
-  get propertyFlags() {
+  get propertyFlags(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class MemoryType implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get heapIndex() {
+  get heapIndex(): number {
     return this.#view.getUint32(4, LE);
   }
 

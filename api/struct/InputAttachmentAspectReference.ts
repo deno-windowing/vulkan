@@ -54,7 +54,7 @@ export class InputAttachmentAspectReference implements BaseStruct {
     }
   }
 
-  get subpass() {
+  get subpass(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class InputAttachmentAspectReference implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get inputAttachmentIndex() {
+  get inputAttachmentIndex(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -70,7 +70,7 @@ export class InputAttachmentAspectReference implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get aspectMask() {
+  get aspectMask(): number {
     return this.#view.getUint32(8, LE);
   }
 

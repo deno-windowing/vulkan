@@ -55,7 +55,7 @@ export class StdVideoH265VpsFlags implements BaseStruct {
     }
   }
 
-  get vps_temporal_id_nesting_flag() {
+  get vps_temporal_id_nesting_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class StdVideoH265VpsFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get vps_sub_layer_ordering_info_present_flag() {
+  get vps_sub_layer_ordering_info_present_flag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -71,7 +71,7 @@ export class StdVideoH265VpsFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get vps_timing_info_present_flag() {
+  get vps_timing_info_present_flag(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -79,7 +79,7 @@ export class StdVideoH265VpsFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get vps_poc_proportional_to_timing_flag() {
+  get vps_poc_proportional_to_timing_flag(): number {
     return this.#view.getUint32(12, LE);
   }
 

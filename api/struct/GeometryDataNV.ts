@@ -53,7 +53,7 @@ export class GeometryDataNV implements BaseStruct {
     }
   }
 
-  get triangles() {
+  get triangles(): GeometryTrianglesNV {
     return new GeometryTrianglesNV(this.#data.subarray(0, 0 + GeometryTrianglesNV.size));
   }
 
@@ -64,7 +64,7 @@ export class GeometryDataNV implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get aabbs() {
+  get aabbs(): GeometryAABBNV {
     return new GeometryAABBNV(this.#data.subarray(96, 96 + GeometryAABBNV.size));
   }
 

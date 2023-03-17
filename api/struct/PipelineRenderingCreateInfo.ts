@@ -61,7 +61,7 @@ export class PipelineRenderingCreateInfo implements BaseStruct {
     this.sType = StructureType.PIPELINE_RENDERING_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class PipelineRenderingCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class PipelineRenderingCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get viewMask() {
+  get viewMask(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -85,7 +85,7 @@ export class PipelineRenderingCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get colorAttachmentCount() {
+  get colorAttachmentCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -93,7 +93,7 @@ export class PipelineRenderingCreateInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get pColorAttachmentFormats() {
+  get pColorAttachmentFormats(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -101,7 +101,7 @@ export class PipelineRenderingCreateInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get depthAttachmentFormat() {
+  get depthAttachmentFormat(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -109,7 +109,7 @@ export class PipelineRenderingCreateInfo implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get stencilAttachmentFormat() {
+  get stencilAttachmentFormat(): number {
     return this.#view.getUint32(36, LE);
   }
 

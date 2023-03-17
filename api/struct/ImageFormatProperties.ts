@@ -59,7 +59,7 @@ export class ImageFormatProperties implements BaseStruct {
     }
   }
 
-  get maxExtent() {
+  get maxExtent(): Extent3D {
     return new Extent3D(this.#data.subarray(0, 0 + Extent3D.size));
   }
 
@@ -70,7 +70,7 @@ export class ImageFormatProperties implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get maxMipLevels() {
+  get maxMipLevels(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -78,7 +78,7 @@ export class ImageFormatProperties implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get maxArrayLayers() {
+  get maxArrayLayers(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -86,7 +86,7 @@ export class ImageFormatProperties implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get sampleCounts() {
+  get sampleCounts(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -94,7 +94,7 @@ export class ImageFormatProperties implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get maxResourceSize() {
+  get maxResourceSize(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 

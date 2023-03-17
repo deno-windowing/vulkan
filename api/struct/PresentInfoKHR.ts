@@ -64,7 +64,7 @@ export class PresentInfoKHR implements BaseStruct {
     this.sType = StructureType.PRESENT_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -72,7 +72,7 @@ export class PresentInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -80,7 +80,7 @@ export class PresentInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get waitSemaphoreCount() {
+  get waitSemaphoreCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -88,7 +88,7 @@ export class PresentInfoKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pWaitSemaphores() {
+  get pWaitSemaphores(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -96,7 +96,7 @@ export class PresentInfoKHR implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get swapchainCount() {
+  get swapchainCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -104,7 +104,7 @@ export class PresentInfoKHR implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get pSwapchains() {
+  get pSwapchains(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -112,7 +112,7 @@ export class PresentInfoKHR implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get pImageIndices() {
+  get pImageIndices(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 
@@ -120,7 +120,7 @@ export class PresentInfoKHR implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 
-  get pResults() {
+  get pResults(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 

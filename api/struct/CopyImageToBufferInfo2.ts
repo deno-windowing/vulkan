@@ -63,7 +63,7 @@ export class CopyImageToBufferInfo2 implements BaseStruct {
     this.sType = StructureType.COPY_IMAGE_TO_BUFFER_INFO_2;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class CopyImageToBufferInfo2 implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -79,7 +79,7 @@ export class CopyImageToBufferInfo2 implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get srcImage() {
+  get srcImage(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -87,7 +87,7 @@ export class CopyImageToBufferInfo2 implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get srcImageLayout() {
+  get srcImageLayout(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -95,7 +95,7 @@ export class CopyImageToBufferInfo2 implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get dstBuffer() {
+  get dstBuffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -103,7 +103,7 @@ export class CopyImageToBufferInfo2 implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get regionCount() {
+  get regionCount(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -111,7 +111,7 @@ export class CopyImageToBufferInfo2 implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get pRegions() {
+  get pRegions(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 

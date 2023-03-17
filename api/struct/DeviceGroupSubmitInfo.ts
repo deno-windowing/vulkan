@@ -63,7 +63,7 @@ export class DeviceGroupSubmitInfo implements BaseStruct {
     this.sType = StructureType.DEVICE_GROUP_SUBMIT_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class DeviceGroupSubmitInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -79,7 +79,7 @@ export class DeviceGroupSubmitInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get waitSemaphoreCount() {
+  get waitSemaphoreCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -87,7 +87,7 @@ export class DeviceGroupSubmitInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pWaitSemaphoreDeviceIndices() {
+  get pWaitSemaphoreDeviceIndices(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -95,7 +95,7 @@ export class DeviceGroupSubmitInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get commandBufferCount() {
+  get commandBufferCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -103,7 +103,7 @@ export class DeviceGroupSubmitInfo implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get pCommandBufferDeviceMasks() {
+  get pCommandBufferDeviceMasks(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -111,7 +111,7 @@ export class DeviceGroupSubmitInfo implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get signalSemaphoreCount() {
+  get signalSemaphoreCount(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -119,7 +119,7 @@ export class DeviceGroupSubmitInfo implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get pSignalSemaphoreDeviceIndices() {
+  get pSignalSemaphoreDeviceIndices(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 

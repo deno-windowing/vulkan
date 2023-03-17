@@ -59,7 +59,7 @@ export class AabbPositionsKHR implements BaseStruct {
     }
   }
 
-  get minX() {
+  get minX(): number {
     return this.#view.getFloat32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class AabbPositionsKHR implements BaseStruct {
     this.#view.setFloat32(0, Number(value), LE);
   }
 
-  get minY() {
+  get minY(): number {
     return this.#view.getFloat32(4, LE);
   }
 
@@ -75,7 +75,7 @@ export class AabbPositionsKHR implements BaseStruct {
     this.#view.setFloat32(4, Number(value), LE);
   }
 
-  get minZ() {
+  get minZ(): number {
     return this.#view.getFloat32(8, LE);
   }
 
@@ -83,7 +83,7 @@ export class AabbPositionsKHR implements BaseStruct {
     this.#view.setFloat32(8, Number(value), LE);
   }
 
-  get maxX() {
+  get maxX(): number {
     return this.#view.getFloat32(12, LE);
   }
 
@@ -91,7 +91,7 @@ export class AabbPositionsKHR implements BaseStruct {
     this.#view.setFloat32(12, Number(value), LE);
   }
 
-  get maxY() {
+  get maxY(): number {
     return this.#view.getFloat32(16, LE);
   }
 
@@ -99,7 +99,7 @@ export class AabbPositionsKHR implements BaseStruct {
     this.#view.setFloat32(16, Number(value), LE);
   }
 
-  get maxZ() {
+  get maxZ(): number {
     return this.#view.getFloat32(20, LE);
   }
 

@@ -59,7 +59,7 @@ export class PerformanceCounterKHR implements BaseStruct {
     this.sType = StructureType.PERFORMANCE_COUNTER_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class PerformanceCounterKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class PerformanceCounterKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get unit() {
+  get unit(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -83,7 +83,7 @@ export class PerformanceCounterKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get scope() {
+  get scope(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -91,7 +91,7 @@ export class PerformanceCounterKHR implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get storage() {
+  get storage(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -99,7 +99,7 @@ export class PerformanceCounterKHR implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get uuid() {
+  get uuid(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 28, 16);
   }
 

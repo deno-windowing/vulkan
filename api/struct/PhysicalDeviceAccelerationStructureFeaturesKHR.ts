@@ -62,7 +62,7 @@ export class PhysicalDeviceAccelerationStructureFeaturesKHR implements BaseStruc
     this.sType = StructureType.PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -70,7 +70,7 @@ export class PhysicalDeviceAccelerationStructureFeaturesKHR implements BaseStruc
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -78,7 +78,7 @@ export class PhysicalDeviceAccelerationStructureFeaturesKHR implements BaseStruc
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get accelerationStructure() {
+  get accelerationStructure(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -86,7 +86,7 @@ export class PhysicalDeviceAccelerationStructureFeaturesKHR implements BaseStruc
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get accelerationStructureCaptureReplay() {
+  get accelerationStructureCaptureReplay(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -94,7 +94,7 @@ export class PhysicalDeviceAccelerationStructureFeaturesKHR implements BaseStruc
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get accelerationStructureIndirectBuild() {
+  get accelerationStructureIndirectBuild(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -102,7 +102,7 @@ export class PhysicalDeviceAccelerationStructureFeaturesKHR implements BaseStruc
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get accelerationStructureHostCommands() {
+  get accelerationStructureHostCommands(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -110,7 +110,7 @@ export class PhysicalDeviceAccelerationStructureFeaturesKHR implements BaseStruc
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get descriptorBindingAccelerationStructureUpdateAfterBind() {
+  get descriptorBindingAccelerationStructureUpdateAfterBind(): number {
     return this.#view.getUint32(32, LE);
   }
 

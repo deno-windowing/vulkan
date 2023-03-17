@@ -54,7 +54,7 @@ export class PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures implements Base
     this.sType = StructureType.PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures implements Base
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures implements Base
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get shaderZeroInitializeWorkgroupMemory() {
+  get shaderZeroInitializeWorkgroupMemory(): number {
     return this.#view.getUint32(16, LE);
   }
 

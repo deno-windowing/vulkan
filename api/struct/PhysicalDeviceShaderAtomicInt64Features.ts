@@ -56,7 +56,7 @@ export class PhysicalDeviceShaderAtomicInt64Features implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class PhysicalDeviceShaderAtomicInt64Features implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class PhysicalDeviceShaderAtomicInt64Features implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get shaderBufferInt64Atomics() {
+  get shaderBufferInt64Atomics(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -80,7 +80,7 @@ export class PhysicalDeviceShaderAtomicInt64Features implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get shaderSharedInt64Atomics() {
+  get shaderSharedInt64Atomics(): number {
     return this.#view.getUint32(20, LE);
   }
 

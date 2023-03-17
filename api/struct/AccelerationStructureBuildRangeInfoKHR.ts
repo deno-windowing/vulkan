@@ -55,7 +55,7 @@ export class AccelerationStructureBuildRangeInfoKHR implements BaseStruct {
     }
   }
 
-  get primitiveCount() {
+  get primitiveCount(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class AccelerationStructureBuildRangeInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get primitiveOffset() {
+  get primitiveOffset(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -71,7 +71,7 @@ export class AccelerationStructureBuildRangeInfoKHR implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get firstVertex() {
+  get firstVertex(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -79,7 +79,7 @@ export class AccelerationStructureBuildRangeInfoKHR implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get transformOffset() {
+  get transformOffset(): number {
     return this.#view.getUint32(12, LE);
   }
 

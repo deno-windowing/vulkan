@@ -57,7 +57,7 @@ export class PastPresentationTimingGOOGLE implements BaseStruct {
     }
   }
 
-  get presentID() {
+  get presentID(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class PastPresentationTimingGOOGLE implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get desiredPresentTime() {
+  get desiredPresentTime(): bigint {
     return this.#view.getBigUint64(8, LE);
   }
 
@@ -73,7 +73,7 @@ export class PastPresentationTimingGOOGLE implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(value), LE);
   }
 
-  get actualPresentTime() {
+  get actualPresentTime(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -81,7 +81,7 @@ export class PastPresentationTimingGOOGLE implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get earliestPresentTime() {
+  get earliestPresentTime(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -89,7 +89,7 @@ export class PastPresentationTimingGOOGLE implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get presentMargin() {
+  get presentMargin(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 

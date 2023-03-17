@@ -62,7 +62,7 @@ export class PipelineExecutableInternalRepresentationKHR implements BaseStruct {
     this.sType = StructureType.PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -70,7 +70,7 @@ export class PipelineExecutableInternalRepresentationKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -78,7 +78,7 @@ export class PipelineExecutableInternalRepresentationKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get name() {
+  get name(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 16, 256);
   }
 
@@ -86,7 +86,7 @@ export class PipelineExecutableInternalRepresentationKHR implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 16);
   }
 
-  get description() {
+  get description(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 272, 256);
   }
 
@@ -94,7 +94,7 @@ export class PipelineExecutableInternalRepresentationKHR implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 272);
   }
 
-  get isText() {
+  get isText(): number {
     return this.#view.getUint32(528, LE);
   }
 
@@ -102,7 +102,7 @@ export class PipelineExecutableInternalRepresentationKHR implements BaseStruct {
     this.#view.setUint32(528, Number(value), LE);
   }
 
-  get dataSize() {
+  get dataSize(): bigint {
     return this.#view.getBigUint64(536, LE);
   }
 
@@ -110,7 +110,7 @@ export class PipelineExecutableInternalRepresentationKHR implements BaseStruct {
     this.#view.setBigUint64(536, BigInt(value), LE);
   }
 
-  get pData() {
+  get pData(): Deno.PointerValue {
     return pointerFromView(this.#view, 544, LE);
   }
 

@@ -61,7 +61,7 @@ export class ImageBlit2 implements BaseStruct {
     this.sType = StructureType.IMAGE_BLIT_2;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class ImageBlit2 implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class ImageBlit2 implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get srcSubresource() {
+  get srcSubresource(): ImageSubresourceLayers {
     return new ImageSubresourceLayers(this.#data.subarray(16, 16 + ImageSubresourceLayers.size));
   }
 
@@ -88,7 +88,7 @@ export class ImageBlit2 implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get srcOffsets() {
+  get srcOffsets(): Offset3D[] {
     const result: Offset3D[] = [];
     for (let i = 0; i < 2; i++) {
       result.push((() => {
@@ -107,7 +107,7 @@ export class ImageBlit2 implements BaseStruct {
     }
   }
 
-  get dstSubresource() {
+  get dstSubresource(): ImageSubresourceLayers {
     return new ImageSubresourceLayers(this.#data.subarray(56, 56 + ImageSubresourceLayers.size));
   }
 
@@ -118,7 +118,7 @@ export class ImageBlit2 implements BaseStruct {
     this.#data.set(value[BUFFER], 56);
   }
 
-  get dstOffsets() {
+  get dstOffsets(): Offset3D[] {
     const result: Offset3D[] = [];
     for (let i = 0; i < 2; i++) {
       result.push((() => {

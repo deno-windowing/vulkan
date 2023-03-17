@@ -92,7 +92,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.sType = StructureType.VIDEO_ENCODE_H265_CAPABILITIES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -100,7 +100,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -108,7 +108,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -116,7 +116,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get inputModeFlags() {
+  get inputModeFlags(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -124,7 +124,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get outputModeFlags() {
+  get outputModeFlags(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -132,7 +132,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get ctbSizes() {
+  get ctbSizes(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -140,7 +140,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get transformBlockSizes() {
+  get transformBlockSizes(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -148,7 +148,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get maxPPictureL0ReferenceCount() {
+  get maxPPictureL0ReferenceCount(): number {
     return this.#view.getUint8(36);
   }
 
@@ -156,7 +156,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(36, Number(value));
   }
 
-  get maxBPictureL0ReferenceCount() {
+  get maxBPictureL0ReferenceCount(): number {
     return this.#view.getUint8(37);
   }
 
@@ -164,7 +164,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(37, Number(value));
   }
 
-  get maxL1ReferenceCount() {
+  get maxL1ReferenceCount(): number {
     return this.#view.getUint8(38);
   }
 
@@ -172,7 +172,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(38, Number(value));
   }
 
-  get maxSubLayersCount() {
+  get maxSubLayersCount(): number {
     return this.#view.getUint8(39);
   }
 
@@ -180,7 +180,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(39, Number(value));
   }
 
-  get minLog2MinLumaCodingBlockSizeMinus3() {
+  get minLog2MinLumaCodingBlockSizeMinus3(): number {
     return this.#view.getUint8(40);
   }
 
@@ -188,7 +188,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(40, Number(value));
   }
 
-  get maxLog2MinLumaCodingBlockSizeMinus3() {
+  get maxLog2MinLumaCodingBlockSizeMinus3(): number {
     return this.#view.getUint8(41);
   }
 
@@ -196,7 +196,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(41, Number(value));
   }
 
-  get minLog2MinLumaTransformBlockSizeMinus2() {
+  get minLog2MinLumaTransformBlockSizeMinus2(): number {
     return this.#view.getUint8(42);
   }
 
@@ -204,7 +204,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(42, Number(value));
   }
 
-  get maxLog2MinLumaTransformBlockSizeMinus2() {
+  get maxLog2MinLumaTransformBlockSizeMinus2(): number {
     return this.#view.getUint8(43);
   }
 
@@ -212,7 +212,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(43, Number(value));
   }
 
-  get minMaxTransformHierarchyDepthInter() {
+  get minMaxTransformHierarchyDepthInter(): number {
     return this.#view.getUint8(44);
   }
 
@@ -220,7 +220,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(44, Number(value));
   }
 
-  get maxMaxTransformHierarchyDepthInter() {
+  get maxMaxTransformHierarchyDepthInter(): number {
     return this.#view.getUint8(45);
   }
 
@@ -228,7 +228,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(45, Number(value));
   }
 
-  get minMaxTransformHierarchyDepthIntra() {
+  get minMaxTransformHierarchyDepthIntra(): number {
     return this.#view.getUint8(46);
   }
 
@@ -236,7 +236,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(46, Number(value));
   }
 
-  get maxMaxTransformHierarchyDepthIntra() {
+  get maxMaxTransformHierarchyDepthIntra(): number {
     return this.#view.getUint8(47);
   }
 
@@ -244,7 +244,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(47, Number(value));
   }
 
-  get maxDiffCuQpDeltaDepth() {
+  get maxDiffCuQpDeltaDepth(): number {
     return this.#view.getUint8(48);
   }
 
@@ -252,7 +252,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(48, Number(value));
   }
 
-  get minMaxNumMergeCand() {
+  get minMaxNumMergeCand(): number {
     return this.#view.getUint8(49);
   }
 
@@ -260,7 +260,7 @@ export class VideoEncodeH265CapabilitiesEXT implements BaseStruct {
     this.#view.setUint8(49, Number(value));
   }
 
-  get maxMaxNumMergeCand() {
+  get maxMaxNumMergeCand(): number {
     return this.#view.getUint8(50);
   }
 

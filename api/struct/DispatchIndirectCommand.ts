@@ -53,7 +53,7 @@ export class DispatchIndirectCommand implements BaseStruct {
     }
   }
 
-  get x() {
+  get x(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class DispatchIndirectCommand implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get y() {
+  get y(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -69,7 +69,7 @@ export class DispatchIndirectCommand implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get z() {
+  get z(): number {
     return this.#view.getUint32(8, LE);
   }
 

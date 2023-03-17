@@ -58,7 +58,11 @@ export function addressOf(buffer: BufferSource): number | bigint {
   return Deno.UnsafePointer.value(Deno.UnsafePointer.of(buffer));
 }
 
-export function pointerFromView(view: DataView, offset: number, le: boolean) {
+export function pointerFromView(
+  view: DataView,
+  offset: number,
+  le: boolean,
+): Deno.PointerValue {
   return Deno.UnsafePointer.create(view.getBigUint64(offset, le));
 }
 export function maybePointerObject(x: unknown): boolean {
@@ -97,11 +101,18 @@ export class CString extends Uint8Array {
   }
 }
 
-export function jsString(buffer: BufferSource): string {
-  const pointer = Deno.UnsafePointer.of(buffer);
-  if (pointer === null) return "";
-  const view = new Deno.UnsafePointerView(pointer);
-  return view.getCString();
+export function jsString(source: BufferSource | Deno.PointerValue): string {
+  if (source === null) {
+    return "";
+  } else if (notPointerObject(source)) {
+    const pointer = Deno.UnsafePointer.of(source);
+    if (pointer === null) return "";
+    const view = new Deno.UnsafePointerView(pointer);
+    return view.getCString();
+  } else {
+    const view = new Deno.UnsafePointerView(source);
+    return view.getCString();
+  }
 }
 
 export class CStringArray extends Uint8Array {

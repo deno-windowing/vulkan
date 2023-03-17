@@ -55,7 +55,7 @@ export class StdVideoH264ScalingLists implements BaseStruct {
     }
   }
 
-  get scaling_list_present_mask() {
+  get scaling_list_present_mask(): number {
     return this.#view.getUint16(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class StdVideoH264ScalingLists implements BaseStruct {
     this.#view.setUint16(0, Number(value), LE);
   }
 
-  get use_default_scaling_matrix_mask() {
+  get use_default_scaling_matrix_mask(): number {
     return this.#view.getUint16(2, LE);
   }
 
@@ -71,7 +71,7 @@ export class StdVideoH264ScalingLists implements BaseStruct {
     this.#view.setUint16(2, Number(value), LE);
   }
 
-  get ScalingList4x4() {
+  get ScalingList4x4(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 4, 96);
   }
 
@@ -79,7 +79,7 @@ export class StdVideoH264ScalingLists implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 4);
   }
 
-  get ScalingList8x8() {
+  get ScalingList8x8(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 100, 384);
   }
 

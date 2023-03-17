@@ -56,7 +56,7 @@ export class PhysicalDeviceShaderFloat16Int8Features implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class PhysicalDeviceShaderFloat16Int8Features implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class PhysicalDeviceShaderFloat16Int8Features implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get shaderFloat16() {
+  get shaderFloat16(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -80,7 +80,7 @@ export class PhysicalDeviceShaderFloat16Int8Features implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get shaderInt8() {
+  get shaderInt8(): number {
     return this.#view.getUint32(20, LE);
   }
 

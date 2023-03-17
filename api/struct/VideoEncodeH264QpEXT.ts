@@ -53,7 +53,7 @@ export class VideoEncodeH264QpEXT implements BaseStruct {
     }
   }
 
-  get qpI() {
+  get qpI(): number {
     return this.#view.getInt32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class VideoEncodeH264QpEXT implements BaseStruct {
     this.#view.setInt32(0, Number(value), LE);
   }
 
-  get qpP() {
+  get qpP(): number {
     return this.#view.getInt32(4, LE);
   }
 
@@ -69,7 +69,7 @@ export class VideoEncodeH264QpEXT implements BaseStruct {
     this.#view.setInt32(4, Number(value), LE);
   }
 
-  get qpB() {
+  get qpB(): number {
     return this.#view.getInt32(8, LE);
   }
 

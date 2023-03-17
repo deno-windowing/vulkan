@@ -55,7 +55,7 @@ export class StdVideoDecodeH265PictureInfoFlags implements BaseStruct {
     }
   }
 
-  get IrapPicFlag() {
+  get IrapPicFlag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class StdVideoDecodeH265PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get IdrPicFlag() {
+  get IdrPicFlag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -71,7 +71,7 @@ export class StdVideoDecodeH265PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get IsReference() {
+  get IsReference(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -79,7 +79,7 @@ export class StdVideoDecodeH265PictureInfoFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get short_term_ref_pic_set_sps_flag() {
+  get short_term_ref_pic_set_sps_flag(): number {
     return this.#view.getUint32(12, LE);
   }
 

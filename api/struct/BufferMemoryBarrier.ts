@@ -66,7 +66,7 @@ export class BufferMemoryBarrier implements BaseStruct {
     this.sType = StructureType.BUFFER_MEMORY_BARRIER;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -74,7 +74,7 @@ export class BufferMemoryBarrier implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -82,7 +82,7 @@ export class BufferMemoryBarrier implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get srcAccessMask() {
+  get srcAccessMask(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -90,7 +90,7 @@ export class BufferMemoryBarrier implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get dstAccessMask() {
+  get dstAccessMask(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -98,7 +98,7 @@ export class BufferMemoryBarrier implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get srcQueueFamilyIndex() {
+  get srcQueueFamilyIndex(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -106,7 +106,7 @@ export class BufferMemoryBarrier implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get dstQueueFamilyIndex() {
+  get dstQueueFamilyIndex(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -114,7 +114,7 @@ export class BufferMemoryBarrier implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get buffer() {
+  get buffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -122,7 +122,7 @@ export class BufferMemoryBarrier implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get offset() {
+  get offset(): bigint {
     return this.#view.getBigUint64(40, LE);
   }
 
@@ -130,7 +130,7 @@ export class BufferMemoryBarrier implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(value), LE);
   }
 
-  get size() {
+  get size(): bigint {
     return this.#view.getBigUint64(48, LE);
   }
 

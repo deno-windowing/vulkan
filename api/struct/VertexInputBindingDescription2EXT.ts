@@ -59,7 +59,7 @@ export class VertexInputBindingDescription2EXT implements BaseStruct {
     this.sType = StructureType.VERTEX_INPUT_BINDING_DESCRIPTION_2_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class VertexInputBindingDescription2EXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class VertexInputBindingDescription2EXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get binding() {
+  get binding(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -83,7 +83,7 @@ export class VertexInputBindingDescription2EXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get stride() {
+  get stride(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -91,7 +91,7 @@ export class VertexInputBindingDescription2EXT implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get inputRate() {
+  get inputRate(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -99,7 +99,7 @@ export class VertexInputBindingDescription2EXT implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get divisor() {
+  get divisor(): number {
     return this.#view.getUint32(28, LE);
   }
 

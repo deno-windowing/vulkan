@@ -64,7 +64,7 @@ export class ImageCopy2 implements BaseStruct {
     this.sType = StructureType.IMAGE_COPY_2;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -72,7 +72,7 @@ export class ImageCopy2 implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -80,7 +80,7 @@ export class ImageCopy2 implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get srcSubresource() {
+  get srcSubresource(): ImageSubresourceLayers {
     return new ImageSubresourceLayers(this.#data.subarray(16, 16 + ImageSubresourceLayers.size));
   }
 
@@ -91,7 +91,7 @@ export class ImageCopy2 implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get srcOffset() {
+  get srcOffset(): Offset3D {
     return new Offset3D(this.#data.subarray(32, 32 + Offset3D.size));
   }
 
@@ -102,7 +102,7 @@ export class ImageCopy2 implements BaseStruct {
     this.#data.set(value[BUFFER], 32);
   }
 
-  get dstSubresource() {
+  get dstSubresource(): ImageSubresourceLayers {
     return new ImageSubresourceLayers(this.#data.subarray(44, 44 + ImageSubresourceLayers.size));
   }
 
@@ -113,7 +113,7 @@ export class ImageCopy2 implements BaseStruct {
     this.#data.set(value[BUFFER], 44);
   }
 
-  get dstOffset() {
+  get dstOffset(): Offset3D {
     return new Offset3D(this.#data.subarray(60, 60 + Offset3D.size));
   }
 
@@ -124,7 +124,7 @@ export class ImageCopy2 implements BaseStruct {
     this.#data.set(value[BUFFER], 60);
   }
 
-  get extent() {
+  get extent(): Extent3D {
     return new Extent3D(this.#data.subarray(72, 72 + Extent3D.size));
   }
 

@@ -70,7 +70,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.sType = StructureType.PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -78,7 +78,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -86,7 +86,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get primitiveOverestimationSize() {
+  get primitiveOverestimationSize(): number {
     return this.#view.getFloat32(16, LE);
   }
 
@@ -94,7 +94,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setFloat32(16, Number(value), LE);
   }
 
-  get maxExtraPrimitiveOverestimationSize() {
+  get maxExtraPrimitiveOverestimationSize(): number {
     return this.#view.getFloat32(20, LE);
   }
 
@@ -102,7 +102,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setFloat32(20, Number(value), LE);
   }
 
-  get extraPrimitiveOverestimationSizeGranularity() {
+  get extraPrimitiveOverestimationSizeGranularity(): number {
     return this.#view.getFloat32(24, LE);
   }
 
@@ -110,7 +110,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setFloat32(24, Number(value), LE);
   }
 
-  get primitiveUnderestimation() {
+  get primitiveUnderestimation(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -118,7 +118,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get conservativePointAndLineRasterization() {
+  get conservativePointAndLineRasterization(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -126,7 +126,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get degenerateTrianglesRasterized() {
+  get degenerateTrianglesRasterized(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -134,7 +134,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get degenerateLinesRasterized() {
+  get degenerateLinesRasterized(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -142,7 +142,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get fullyCoveredFragmentShaderInputVariable() {
+  get fullyCoveredFragmentShaderInputVariable(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -150,7 +150,7 @@ export class PhysicalDeviceConservativeRasterizationPropertiesEXT implements Bas
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get conservativeRasterizationPostDepthCoverage() {
+  get conservativeRasterizationPostDepthCoverage(): number {
     return this.#view.getUint32(48, LE);
   }
 

@@ -55,7 +55,7 @@ export class AttachmentDescriptionStencilLayout implements BaseStruct {
     this.sType = StructureType.ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class AttachmentDescriptionStencilLayout implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class AttachmentDescriptionStencilLayout implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get stencilInitialLayout() {
+  get stencilInitialLayout(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class AttachmentDescriptionStencilLayout implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get stencilFinalLayout() {
+  get stencilFinalLayout(): number {
     return this.#view.getUint32(20, LE);
   }
 

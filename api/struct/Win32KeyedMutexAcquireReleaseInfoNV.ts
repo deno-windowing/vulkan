@@ -66,7 +66,7 @@ export class Win32KeyedMutexAcquireReleaseInfoNV implements BaseStruct {
     this.sType = StructureType.WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -74,7 +74,7 @@ export class Win32KeyedMutexAcquireReleaseInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -82,7 +82,7 @@ export class Win32KeyedMutexAcquireReleaseInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get acquireCount() {
+  get acquireCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -90,7 +90,7 @@ export class Win32KeyedMutexAcquireReleaseInfoNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pAcquireSyncs() {
+  get pAcquireSyncs(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -98,7 +98,7 @@ export class Win32KeyedMutexAcquireReleaseInfoNV implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pAcquireKeys() {
+  get pAcquireKeys(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -106,7 +106,7 @@ export class Win32KeyedMutexAcquireReleaseInfoNV implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get pAcquireTimeoutMilliseconds() {
+  get pAcquireTimeoutMilliseconds(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -114,7 +114,7 @@ export class Win32KeyedMutexAcquireReleaseInfoNV implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get releaseCount() {
+  get releaseCount(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -122,7 +122,7 @@ export class Win32KeyedMutexAcquireReleaseInfoNV implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get pReleaseSyncs() {
+  get pReleaseSyncs(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -130,7 +130,7 @@ export class Win32KeyedMutexAcquireReleaseInfoNV implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get pReleaseKeys() {
+  get pReleaseKeys(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 

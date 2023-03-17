@@ -58,7 +58,7 @@ export class StdVideoEncodeH264RefPicMarkingEntry implements BaseStruct {
     }
   }
 
-  get operation() {
+  get operation(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class StdVideoEncodeH264RefPicMarkingEntry implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get difference_of_pic_nums_minus1() {
+  get difference_of_pic_nums_minus1(): number {
     return this.#view.getUint16(4, LE);
   }
 
@@ -74,7 +74,7 @@ export class StdVideoEncodeH264RefPicMarkingEntry implements BaseStruct {
     this.#view.setUint16(4, Number(value), LE);
   }
 
-  get long_term_pic_num() {
+  get long_term_pic_num(): number {
     return this.#view.getUint16(6, LE);
   }
 
@@ -82,7 +82,7 @@ export class StdVideoEncodeH264RefPicMarkingEntry implements BaseStruct {
     this.#view.setUint16(6, Number(value), LE);
   }
 
-  get long_term_frame_idx() {
+  get long_term_frame_idx(): number {
     return this.#view.getUint16(8, LE);
   }
 
@@ -90,7 +90,7 @@ export class StdVideoEncodeH264RefPicMarkingEntry implements BaseStruct {
     this.#view.setUint16(8, Number(value), LE);
   }
 
-  get max_long_term_frame_idx_plus1() {
+  get max_long_term_frame_idx_plus1(): number {
     return this.#view.getUint16(10, LE);
   }
 

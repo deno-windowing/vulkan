@@ -76,7 +76,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_2_FEATURES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -84,7 +84,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -92,7 +92,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get shaderBufferFloat16Atomics() {
+  get shaderBufferFloat16Atomics(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -100,7 +100,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get shaderBufferFloat16AtomicAdd() {
+  get shaderBufferFloat16AtomicAdd(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -108,7 +108,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get shaderBufferFloat16AtomicMinMax() {
+  get shaderBufferFloat16AtomicMinMax(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -116,7 +116,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get shaderBufferFloat32AtomicMinMax() {
+  get shaderBufferFloat32AtomicMinMax(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -124,7 +124,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get shaderBufferFloat64AtomicMinMax() {
+  get shaderBufferFloat64AtomicMinMax(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -132,7 +132,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get shaderSharedFloat16Atomics() {
+  get shaderSharedFloat16Atomics(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -140,7 +140,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get shaderSharedFloat16AtomicAdd() {
+  get shaderSharedFloat16AtomicAdd(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -148,7 +148,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get shaderSharedFloat16AtomicMinMax() {
+  get shaderSharedFloat16AtomicMinMax(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -156,7 +156,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get shaderSharedFloat32AtomicMinMax() {
+  get shaderSharedFloat32AtomicMinMax(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -164,7 +164,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get shaderSharedFloat64AtomicMinMax() {
+  get shaderSharedFloat64AtomicMinMax(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -172,7 +172,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get shaderImageFloat32AtomicMinMax() {
+  get shaderImageFloat32AtomicMinMax(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -180,7 +180,7 @@ export class PhysicalDeviceShaderAtomicFloat2FeaturesEXT implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get sparseImageFloat32AtomicMinMax() {
+  get sparseImageFloat32AtomicMinMax(): number {
     return this.#view.getUint32(60, LE);
   }
 

@@ -57,7 +57,7 @@ export class QueueFamilyProperties implements BaseStruct {
     }
   }
 
-  get queueFlags() {
+  get queueFlags(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class QueueFamilyProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get queueCount() {
+  get queueCount(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -73,7 +73,7 @@ export class QueueFamilyProperties implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get timestampValidBits() {
+  get timestampValidBits(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -81,7 +81,7 @@ export class QueueFamilyProperties implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get minImageTransferGranularity() {
+  get minImageTransferGranularity(): Extent3D {
     return new Extent3D(this.#data.subarray(12, 12 + Extent3D.size));
   }
 

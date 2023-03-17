@@ -60,7 +60,7 @@ export class PipelineExecutableStatisticKHR implements BaseStruct {
     this.sType = StructureType.PIPELINE_EXECUTABLE_STATISTIC_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class PipelineExecutableStatisticKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class PipelineExecutableStatisticKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get name() {
+  get name(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 16, 256);
   }
 
@@ -84,7 +84,7 @@ export class PipelineExecutableStatisticKHR implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 16);
   }
 
-  get description() {
+  get description(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 272, 256);
   }
 
@@ -92,7 +92,7 @@ export class PipelineExecutableStatisticKHR implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 272);
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getUint32(528, LE);
   }
 
@@ -100,7 +100,7 @@ export class PipelineExecutableStatisticKHR implements BaseStruct {
     this.#view.setUint32(528, Number(value), LE);
   }
 
-  get value() {
+  get value(): unknown {
     throw new Error(`Unknown type: {"union":["u32","i64","u64","f64"]}`);
   }
 

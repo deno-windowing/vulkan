@@ -56,7 +56,7 @@ export class PhysicalDeviceMemoryBudgetPropertiesEXT implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class PhysicalDeviceMemoryBudgetPropertiesEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class PhysicalDeviceMemoryBudgetPropertiesEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get heapBudget() {
+  get heapBudget(): BigUint64Array {
     return new BigUint64Array(this.#data.buffer, this.#data.byteOffset + 16, 16);
   }
 
@@ -80,7 +80,7 @@ export class PhysicalDeviceMemoryBudgetPropertiesEXT implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 16);
   }
 
-  get heapUsage() {
+  get heapUsage(): BigUint64Array {
     return new BigUint64Array(this.#data.buffer, this.#data.byteOffset + 144, 16);
   }
 

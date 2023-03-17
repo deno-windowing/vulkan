@@ -53,7 +53,7 @@ export class PipelinePropertiesIdentifierEXT implements BaseStruct {
     this.sType = StructureType.PIPELINE_PROPERTIES_IDENTIFIER_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class PipelinePropertiesIdentifierEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -69,7 +69,7 @@ export class PipelinePropertiesIdentifierEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get pipelineIdentifier() {
+  get pipelineIdentifier(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 16, 16);
   }
 

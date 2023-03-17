@@ -60,7 +60,7 @@ export class SemaphoreSubmitInfo implements BaseStruct {
     this.sType = StructureType.SEMAPHORE_SUBMIT_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class SemaphoreSubmitInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class SemaphoreSubmitInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get semaphore() {
+  get semaphore(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -84,7 +84,7 @@ export class SemaphoreSubmitInfo implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get value() {
+  get value(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -92,7 +92,7 @@ export class SemaphoreSubmitInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get stageMask() {
+  get stageMask(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -100,7 +100,7 @@ export class SemaphoreSubmitInfo implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get deviceIndex() {
+  get deviceIndex(): number {
     return this.#view.getUint32(40, LE);
   }
 

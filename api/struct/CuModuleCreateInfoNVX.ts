@@ -55,7 +55,7 @@ export class CuModuleCreateInfoNVX implements BaseStruct {
     this.sType = StructureType.CU_MODULE_CREATE_INFO_NVX;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class CuModuleCreateInfoNVX implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class CuModuleCreateInfoNVX implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get dataSize() {
+  get dataSize(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class CuModuleCreateInfoNVX implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get pData() {
+  get pData(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

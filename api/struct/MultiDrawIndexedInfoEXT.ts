@@ -53,7 +53,7 @@ export class MultiDrawIndexedInfoEXT implements BaseStruct {
     }
   }
 
-  get firstIndex() {
+  get firstIndex(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class MultiDrawIndexedInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get indexCount() {
+  get indexCount(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -69,7 +69,7 @@ export class MultiDrawIndexedInfoEXT implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get vertexOffset() {
+  get vertexOffset(): number {
     return this.#view.getInt32(8, LE);
   }
 

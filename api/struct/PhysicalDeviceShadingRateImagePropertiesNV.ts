@@ -58,7 +58,7 @@ export class PhysicalDeviceShadingRateImagePropertiesNV implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class PhysicalDeviceShadingRateImagePropertiesNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class PhysicalDeviceShadingRateImagePropertiesNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get shadingRateTexelSize() {
+  get shadingRateTexelSize(): Extent2D {
     return new Extent2D(this.#data.subarray(16, 16 + Extent2D.size));
   }
 
@@ -85,7 +85,7 @@ export class PhysicalDeviceShadingRateImagePropertiesNV implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get shadingRatePaletteSize() {
+  get shadingRatePaletteSize(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -93,7 +93,7 @@ export class PhysicalDeviceShadingRateImagePropertiesNV implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get shadingRateMaxCoarseSamples() {
+  get shadingRateMaxCoarseSamples(): number {
     return this.#view.getUint32(28, LE);
   }
 

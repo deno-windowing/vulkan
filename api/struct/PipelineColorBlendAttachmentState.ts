@@ -65,7 +65,7 @@ export class PipelineColorBlendAttachmentState implements BaseStruct {
     }
   }
 
-  get blendEnable() {
+  get blendEnable(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -73,7 +73,7 @@ export class PipelineColorBlendAttachmentState implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get srcColorBlendFactor() {
+  get srcColorBlendFactor(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -81,7 +81,7 @@ export class PipelineColorBlendAttachmentState implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get dstColorBlendFactor() {
+  get dstColorBlendFactor(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -89,7 +89,7 @@ export class PipelineColorBlendAttachmentState implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get colorBlendOp() {
+  get colorBlendOp(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -97,7 +97,7 @@ export class PipelineColorBlendAttachmentState implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get srcAlphaBlendFactor() {
+  get srcAlphaBlendFactor(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -105,7 +105,7 @@ export class PipelineColorBlendAttachmentState implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get dstAlphaBlendFactor() {
+  get dstAlphaBlendFactor(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -113,7 +113,7 @@ export class PipelineColorBlendAttachmentState implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get alphaBlendOp() {
+  get alphaBlendOp(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -121,7 +121,7 @@ export class PipelineColorBlendAttachmentState implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get colorWriteMask() {
+  get colorWriteMask(): number {
     return this.#view.getUint32(28, LE);
   }
 

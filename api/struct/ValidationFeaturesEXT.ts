@@ -59,7 +59,7 @@ export class ValidationFeaturesEXT implements BaseStruct {
     this.sType = StructureType.VALIDATION_FEATURES_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class ValidationFeaturesEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class ValidationFeaturesEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get enabledValidationFeatureCount() {
+  get enabledValidationFeatureCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -83,7 +83,7 @@ export class ValidationFeaturesEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pEnabledValidationFeatures() {
+  get pEnabledValidationFeatures(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -91,7 +91,7 @@ export class ValidationFeaturesEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get disabledValidationFeatureCount() {
+  get disabledValidationFeatureCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -99,7 +99,7 @@ export class ValidationFeaturesEXT implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get pDisabledValidationFeatures() {
+  get pDisabledValidationFeatures(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 

@@ -54,7 +54,7 @@ export class SurfaceFormat2KHR implements BaseStruct {
     this.sType = StructureType.SURFACE_FORMAT_2_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class SurfaceFormat2KHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class SurfaceFormat2KHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get surfaceFormat() {
+  get surfaceFormat(): SurfaceFormatKHR {
     return new SurfaceFormatKHR(this.#data.subarray(16, 16 + SurfaceFormatKHR.size));
   }
 

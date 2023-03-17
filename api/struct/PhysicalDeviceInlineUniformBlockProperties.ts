@@ -61,7 +61,7 @@ export class PhysicalDeviceInlineUniformBlockProperties implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class PhysicalDeviceInlineUniformBlockProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -77,7 +77,7 @@ export class PhysicalDeviceInlineUniformBlockProperties implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get maxInlineUniformBlockSize() {
+  get maxInlineUniformBlockSize(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -85,7 +85,7 @@ export class PhysicalDeviceInlineUniformBlockProperties implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get maxPerStageDescriptorInlineUniformBlocks() {
+  get maxPerStageDescriptorInlineUniformBlocks(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -93,7 +93,7 @@ export class PhysicalDeviceInlineUniformBlockProperties implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks() {
+  get maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -101,7 +101,7 @@ export class PhysicalDeviceInlineUniformBlockProperties implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get maxDescriptorSetInlineUniformBlocks() {
+  get maxDescriptorSetInlineUniformBlocks(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -109,7 +109,7 @@ export class PhysicalDeviceInlineUniformBlockProperties implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get maxDescriptorSetUpdateAfterBindInlineUniformBlocks() {
+  get maxDescriptorSetUpdateAfterBindInlineUniformBlocks(): number {
     return this.#view.getUint32(32, LE);
   }
 

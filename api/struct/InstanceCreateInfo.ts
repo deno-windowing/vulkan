@@ -65,7 +65,7 @@ export class InstanceCreateInfo implements BaseStruct {
     this.sType = StructureType.INSTANCE_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -73,7 +73,7 @@ export class InstanceCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -81,7 +81,7 @@ export class InstanceCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -89,7 +89,7 @@ export class InstanceCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pApplicationInfo() {
+  get pApplicationInfo(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -97,7 +97,7 @@ export class InstanceCreateInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get enabledLayerCount() {
+  get enabledLayerCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -105,7 +105,7 @@ export class InstanceCreateInfo implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get ppEnabledLayerNames() {
+  get ppEnabledLayerNames(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -113,7 +113,7 @@ export class InstanceCreateInfo implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get enabledExtensionCount() {
+  get enabledExtensionCount(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -121,7 +121,7 @@ export class InstanceCreateInfo implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get ppEnabledExtensionNames() {
+  get ppEnabledExtensionNames(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 

@@ -63,7 +63,7 @@ export class StdVideoEncodeH265PictureInfo implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoEncodeH265PictureInfoFlags {
     return new StdVideoEncodeH265PictureInfoFlags(this.#data.subarray(0, 0 + StdVideoEncodeH265PictureInfoFlags.size));
   }
 
@@ -74,7 +74,7 @@ export class StdVideoEncodeH265PictureInfo implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get PictureType() {
+  get PictureType(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -82,7 +82,7 @@ export class StdVideoEncodeH265PictureInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get sps_video_parameter_set_id() {
+  get sps_video_parameter_set_id(): number {
     return this.#view.getUint8(24);
   }
 
@@ -90,7 +90,7 @@ export class StdVideoEncodeH265PictureInfo implements BaseStruct {
     this.#view.setUint8(24, Number(value));
   }
 
-  get pps_seq_parameter_set_id() {
+  get pps_seq_parameter_set_id(): number {
     return this.#view.getUint8(25);
   }
 
@@ -98,7 +98,7 @@ export class StdVideoEncodeH265PictureInfo implements BaseStruct {
     this.#view.setUint8(25, Number(value));
   }
 
-  get pps_pic_parameter_set_id() {
+  get pps_pic_parameter_set_id(): number {
     return this.#view.getUint8(26);
   }
 
@@ -106,7 +106,7 @@ export class StdVideoEncodeH265PictureInfo implements BaseStruct {
     this.#view.setUint8(26, Number(value));
   }
 
-  get PicOrderCntVal() {
+  get PicOrderCntVal(): number {
     return this.#view.getInt32(28, LE);
   }
 
@@ -114,7 +114,7 @@ export class StdVideoEncodeH265PictureInfo implements BaseStruct {
     this.#view.setInt32(28, Number(value), LE);
   }
 
-  get TemporalId() {
+  get TemporalId(): number {
     return this.#view.getUint8(32);
   }
 

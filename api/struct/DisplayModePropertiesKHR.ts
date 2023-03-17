@@ -53,7 +53,7 @@ export class DisplayModePropertiesKHR implements BaseStruct {
     }
   }
 
-  get displayMode() {
+  get displayMode(): Deno.PointerValue {
     return pointerFromView(this.#view, 0, LE);
   }
 
@@ -61,7 +61,7 @@ export class DisplayModePropertiesKHR implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
   }
 
-  get parameters() {
+  get parameters(): DisplayModeParametersKHR {
     return new DisplayModeParametersKHR(this.#data.subarray(8, 8 + DisplayModeParametersKHR.size));
   }
 

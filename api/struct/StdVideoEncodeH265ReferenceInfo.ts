@@ -54,7 +54,7 @@ export class StdVideoEncodeH265ReferenceInfo implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoEncodeH265ReferenceInfoFlags {
     return new StdVideoEncodeH265ReferenceInfoFlags(this.#data.subarray(0, 0 + StdVideoEncodeH265ReferenceInfoFlags.size));
   }
 
@@ -65,7 +65,7 @@ export class StdVideoEncodeH265ReferenceInfo implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get PicOrderCntVal() {
+  get PicOrderCntVal(): number {
     return this.#view.getInt32(8, LE);
   }
 
@@ -73,7 +73,7 @@ export class StdVideoEncodeH265ReferenceInfo implements BaseStruct {
     this.#view.setInt32(8, Number(value), LE);
   }
 
-  get TemporalId() {
+  get TemporalId(): number {
     return this.#view.getUint8(12);
   }
 

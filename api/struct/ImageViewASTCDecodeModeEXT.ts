@@ -53,7 +53,7 @@ export class ImageViewASTCDecodeModeEXT implements BaseStruct {
     this.sType = StructureType.IMAGE_VIEW_ASTC_DECODE_MODE_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class ImageViewASTCDecodeModeEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -69,7 +69,7 @@ export class ImageViewASTCDecodeModeEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get decodeMode() {
+  get decodeMode(): number {
     return this.#view.getUint32(16, LE);
   }
 

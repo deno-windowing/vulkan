@@ -72,7 +72,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.sType = StructureType.RAY_TRACING_PIPELINE_CREATE_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -80,7 +80,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -88,7 +88,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -96,7 +96,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get stageCount() {
+  get stageCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -104,7 +104,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get pStages() {
+  get pStages(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -112,7 +112,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get groupCount() {
+  get groupCount(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -120,7 +120,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get pGroups() {
+  get pGroups(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -128,7 +128,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get maxRecursionDepth() {
+  get maxRecursionDepth(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -136,7 +136,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get layout() {
+  get layout(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -144,7 +144,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get basePipelineHandle() {
+  get basePipelineHandle(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 
@@ -152,7 +152,7 @@ export class RayTracingPipelineCreateInfoNV implements BaseStruct {
     this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 
-  get basePipelineIndex() {
+  get basePipelineIndex(): number {
     return this.#view.getInt32(72, LE);
   }
 

@@ -58,7 +58,7 @@ export class PerformanceOverrideInfoINTEL implements BaseStruct {
     this.sType = StructureType.PERFORMANCE_OVERRIDE_INFO_INTEL;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class PerformanceOverrideInfoINTEL implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class PerformanceOverrideInfoINTEL implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get type() {
+  get type(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -82,7 +82,7 @@ export class PerformanceOverrideInfoINTEL implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get enable() {
+  get enable(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -90,7 +90,7 @@ export class PerformanceOverrideInfoINTEL implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get parameter() {
+  get parameter(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 

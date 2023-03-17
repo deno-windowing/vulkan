@@ -58,7 +58,7 @@ export class DecompressMemoryRegionNV implements BaseStruct {
     }
   }
 
-  get srcAddress() {
+  get srcAddress(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class DecompressMemoryRegionNV implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(value), LE);
   }
 
-  get dstAddress() {
+  get dstAddress(): bigint {
     return this.#view.getBigUint64(8, LE);
   }
 
@@ -74,7 +74,7 @@ export class DecompressMemoryRegionNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(value), LE);
   }
 
-  get compressedSize() {
+  get compressedSize(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
@@ -82,7 +82,7 @@ export class DecompressMemoryRegionNV implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(value), LE);
   }
 
-  get decompressedSize() {
+  get decompressedSize(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -90,7 +90,7 @@ export class DecompressMemoryRegionNV implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get decompressionMethod() {
+  get decompressionMethod(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 

@@ -49,7 +49,7 @@ export class RefreshCycleDurationGOOGLE implements BaseStruct {
     }
   }
 
-  get refreshDuration() {
+  get refreshDuration(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 

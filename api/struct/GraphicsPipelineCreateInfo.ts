@@ -96,7 +96,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.sType = StructureType.GRAPHICS_PIPELINE_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -104,7 +104,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -112,7 +112,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -120,7 +120,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get stageCount() {
+  get stageCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -128,7 +128,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get pStages() {
+  get pStages(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -136,7 +136,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get pVertexInputState() {
+  get pVertexInputState(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -144,7 +144,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get pInputAssemblyState() {
+  get pInputAssemblyState(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -152,7 +152,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get pTessellationState() {
+  get pTessellationState(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 
@@ -160,7 +160,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 
-  get pViewportState() {
+  get pViewportState(): Deno.PointerValue {
     return pointerFromView(this.#view, 56, LE);
   }
 
@@ -168,7 +168,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(56, BigInt(anyPointer(value)), LE);
   }
 
-  get pRasterizationState() {
+  get pRasterizationState(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 
@@ -176,7 +176,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 
-  get pMultisampleState() {
+  get pMultisampleState(): Deno.PointerValue {
     return pointerFromView(this.#view, 72, LE);
   }
 
@@ -184,7 +184,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
 
-  get pDepthStencilState() {
+  get pDepthStencilState(): Deno.PointerValue {
     return pointerFromView(this.#view, 80, LE);
   }
 
@@ -192,7 +192,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(80, BigInt(anyPointer(value)), LE);
   }
 
-  get pColorBlendState() {
+  get pColorBlendState(): Deno.PointerValue {
     return pointerFromView(this.#view, 88, LE);
   }
 
@@ -200,7 +200,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(88, BigInt(anyPointer(value)), LE);
   }
 
-  get pDynamicState() {
+  get pDynamicState(): Deno.PointerValue {
     return pointerFromView(this.#view, 96, LE);
   }
 
@@ -208,7 +208,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(96, BigInt(anyPointer(value)), LE);
   }
 
-  get layout() {
+  get layout(): Deno.PointerValue {
     return pointerFromView(this.#view, 104, LE);
   }
 
@@ -216,7 +216,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(104, BigInt(anyPointer(value)), LE);
   }
 
-  get renderPass() {
+  get renderPass(): Deno.PointerValue {
     return pointerFromView(this.#view, 112, LE);
   }
 
@@ -224,7 +224,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(112, BigInt(anyPointer(value)), LE);
   }
 
-  get subpass() {
+  get subpass(): number {
     return this.#view.getUint32(120, LE);
   }
 
@@ -232,7 +232,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setUint32(120, Number(value), LE);
   }
 
-  get basePipelineHandle() {
+  get basePipelineHandle(): Deno.PointerValue {
     return pointerFromView(this.#view, 128, LE);
   }
 
@@ -240,7 +240,7 @@ export class GraphicsPipelineCreateInfo implements BaseStruct {
     this.#view.setBigUint64(128, BigInt(anyPointer(value)), LE);
   }
 
-  get basePipelineIndex() {
+  get basePipelineIndex(): number {
     return this.#view.getInt32(136, LE);
   }
 

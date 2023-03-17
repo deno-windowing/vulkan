@@ -66,7 +66,7 @@ export class PipelineMultisampleStateCreateInfo implements BaseStruct {
     this.sType = StructureType.PIPELINE_MULTISAMPLE_STATE_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -74,7 +74,7 @@ export class PipelineMultisampleStateCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -82,7 +82,7 @@ export class PipelineMultisampleStateCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -90,7 +90,7 @@ export class PipelineMultisampleStateCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get rasterizationSamples() {
+  get rasterizationSamples(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -98,7 +98,7 @@ export class PipelineMultisampleStateCreateInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get sampleShadingEnable() {
+  get sampleShadingEnable(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -106,7 +106,7 @@ export class PipelineMultisampleStateCreateInfo implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get minSampleShading() {
+  get minSampleShading(): number {
     return this.#view.getFloat32(28, LE);
   }
 
@@ -114,7 +114,7 @@ export class PipelineMultisampleStateCreateInfo implements BaseStruct {
     this.#view.setFloat32(28, Number(value), LE);
   }
 
-  get pSampleMask() {
+  get pSampleMask(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -122,7 +122,7 @@ export class PipelineMultisampleStateCreateInfo implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get alphaToCoverageEnable() {
+  get alphaToCoverageEnable(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -130,7 +130,7 @@ export class PipelineMultisampleStateCreateInfo implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get alphaToOneEnable() {
+  get alphaToOneEnable(): number {
     return this.#view.getUint32(44, LE);
   }
 

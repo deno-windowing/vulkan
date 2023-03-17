@@ -79,7 +79,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.sType = StructureType.IMAGE_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -87,7 +87,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -95,7 +95,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -103,7 +103,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get imageType() {
+  get imageType(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -111,7 +111,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -119,7 +119,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get extent() {
+  get extent(): Extent3D {
     return new Extent3D(this.#data.subarray(28, 28 + Extent3D.size));
   }
 
@@ -130,7 +130,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#data.set(value[BUFFER], 28);
   }
 
-  get mipLevels() {
+  get mipLevels(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -138,7 +138,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get arrayLayers() {
+  get arrayLayers(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -146,7 +146,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get samples() {
+  get samples(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -154,7 +154,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get tiling() {
+  get tiling(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -162,7 +162,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get usage() {
+  get usage(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -170,7 +170,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get sharingMode() {
+  get sharingMode(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -178,7 +178,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get queueFamilyIndexCount() {
+  get queueFamilyIndexCount(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -186,7 +186,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get pQueueFamilyIndices() {
+  get pQueueFamilyIndices(): Deno.PointerValue {
     return pointerFromView(this.#view, 72, LE);
   }
 
@@ -194,7 +194,7 @@ export class ImageCreateInfo implements BaseStruct {
     this.#view.setBigUint64(72, BigInt(anyPointer(value)), LE);
   }
 
-  get initialLayout() {
+  get initialLayout(): number {
     return this.#view.getUint32(80, LE);
   }
 

@@ -79,7 +79,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.sType = StructureType.GENERATED_COMMANDS_INFO_NV;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -87,7 +87,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -95,7 +95,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get pipelineBindPoint() {
+  get pipelineBindPoint(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -103,7 +103,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pipeline() {
+  get pipeline(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -111,7 +111,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get indirectCommandsLayout() {
+  get indirectCommandsLayout(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -119,7 +119,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get streamCount() {
+  get streamCount(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -127,7 +127,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get pStreams() {
+  get pStreams(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 
@@ -135,7 +135,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(anyPointer(value)), LE);
   }
 
-  get sequencesCount() {
+  get sequencesCount(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -143,7 +143,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get preprocessBuffer() {
+  get preprocessBuffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 
@@ -151,7 +151,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 
-  get preprocessOffset() {
+  get preprocessOffset(): bigint {
     return this.#view.getBigUint64(72, LE);
   }
 
@@ -159,7 +159,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(72, BigInt(value), LE);
   }
 
-  get preprocessSize() {
+  get preprocessSize(): bigint {
     return this.#view.getBigUint64(80, LE);
   }
 
@@ -167,7 +167,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(80, BigInt(value), LE);
   }
 
-  get sequencesCountBuffer() {
+  get sequencesCountBuffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 88, LE);
   }
 
@@ -175,7 +175,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(88, BigInt(anyPointer(value)), LE);
   }
 
-  get sequencesCountOffset() {
+  get sequencesCountOffset(): bigint {
     return this.#view.getBigUint64(96, LE);
   }
 
@@ -183,7 +183,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(96, BigInt(value), LE);
   }
 
-  get sequencesIndexBuffer() {
+  get sequencesIndexBuffer(): Deno.PointerValue {
     return pointerFromView(this.#view, 104, LE);
   }
 
@@ -191,7 +191,7 @@ export class GeneratedCommandsInfoNV implements BaseStruct {
     this.#view.setBigUint64(104, BigInt(anyPointer(value)), LE);
   }
 
-  get sequencesIndexOffset() {
+  get sequencesIndexOffset(): bigint {
     return this.#view.getBigUint64(112, LE);
   }
 

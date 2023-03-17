@@ -69,7 +69,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.sType = StructureType.ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_2_ANDROID;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -77,7 +77,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -85,7 +85,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -93,7 +93,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get externalFormat() {
+  get externalFormat(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -101,7 +101,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get formatFeatures() {
+  get formatFeatures(): bigint {
     return this.#view.getBigUint64(32, LE);
   }
 
@@ -109,7 +109,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.#view.setBigUint64(32, BigInt(value), LE);
   }
 
-  get samplerYcbcrConversionComponents() {
+  get samplerYcbcrConversionComponents(): ComponentMapping {
     return new ComponentMapping(this.#data.subarray(40, 40 + ComponentMapping.size));
   }
 
@@ -120,7 +120,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.#data.set(value[BUFFER], 40);
   }
 
-  get suggestedYcbcrModel() {
+  get suggestedYcbcrModel(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -128,7 +128,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get suggestedYcbcrRange() {
+  get suggestedYcbcrRange(): number {
     return this.#view.getUint32(60, LE);
   }
 
@@ -136,7 +136,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.#view.setUint32(60, Number(value), LE);
   }
 
-  get suggestedXChromaOffset() {
+  get suggestedXChromaOffset(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -144,7 +144,7 @@ export class AndroidHardwareBufferFormatProperties2ANDROID implements BaseStruct
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get suggestedYChromaOffset() {
+  get suggestedYChromaOffset(): number {
     return this.#view.getUint32(68, LE);
   }
 

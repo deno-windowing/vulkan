@@ -56,7 +56,7 @@ export class PhysicalDeviceRayTracingMaintenance1FeaturesKHR implements BaseStru
     this.sType = StructureType.PHYSICAL_DEVICE_RAY_TRACING_MAINTENANCE_1_FEATURES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class PhysicalDeviceRayTracingMaintenance1FeaturesKHR implements BaseStru
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -72,7 +72,7 @@ export class PhysicalDeviceRayTracingMaintenance1FeaturesKHR implements BaseStru
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get rayTracingMaintenance1() {
+  get rayTracingMaintenance1(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -80,7 +80,7 @@ export class PhysicalDeviceRayTracingMaintenance1FeaturesKHR implements BaseStru
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get rayTracingPipelineTraceRaysIndirect2() {
+  get rayTracingPipelineTraceRaysIndirect2(): number {
     return this.#view.getUint32(20, LE);
   }
 

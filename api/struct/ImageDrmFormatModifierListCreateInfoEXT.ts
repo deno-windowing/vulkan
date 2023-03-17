@@ -55,7 +55,7 @@ export class ImageDrmFormatModifierListCreateInfoEXT implements BaseStruct {
     this.sType = StructureType.IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class ImageDrmFormatModifierListCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class ImageDrmFormatModifierListCreateInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get drmFormatModifierCount() {
+  get drmFormatModifierCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class ImageDrmFormatModifierListCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pDrmFormatModifiers() {
+  get pDrmFormatModifiers(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

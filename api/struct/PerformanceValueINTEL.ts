@@ -53,7 +53,7 @@ export class PerformanceValueINTEL implements BaseStruct {
     }
   }
 
-  get type() {
+  get type(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class PerformanceValueINTEL implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get data() {
+  get data(): unknown {
     throw new Error(`Unknown type: {"union":["u32","u64","f32","u32","buffer"]}`);
   }
 

@@ -61,7 +61,7 @@ export class StdVideoH265HrdFlags implements BaseStruct {
     }
   }
 
-  get nal_hrd_parameters_present_flag() {
+  get nal_hrd_parameters_present_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -69,7 +69,7 @@ export class StdVideoH265HrdFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get vcl_hrd_parameters_present_flag() {
+  get vcl_hrd_parameters_present_flag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -77,7 +77,7 @@ export class StdVideoH265HrdFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get sub_pic_hrd_params_present_flag() {
+  get sub_pic_hrd_params_present_flag(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -85,7 +85,7 @@ export class StdVideoH265HrdFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get sub_pic_cpb_params_in_pic_timing_sei_flag() {
+  get sub_pic_cpb_params_in_pic_timing_sei_flag(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -93,7 +93,7 @@ export class StdVideoH265HrdFlags implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get fixed_pic_rate_general_flag() {
+  get fixed_pic_rate_general_flag(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -101,7 +101,7 @@ export class StdVideoH265HrdFlags implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get fixed_pic_rate_within_cvs_flag() {
+  get fixed_pic_rate_within_cvs_flag(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -109,7 +109,7 @@ export class StdVideoH265HrdFlags implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get low_delay_hrd_flag() {
+  get low_delay_hrd_flag(): number {
     return this.#view.getUint32(24, LE);
   }
 

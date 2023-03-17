@@ -58,7 +58,7 @@ export class SparseMemoryBind implements BaseStruct {
     }
   }
 
-  get resourceOffset() {
+  get resourceOffset(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class SparseMemoryBind implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(value), LE);
   }
 
-  get size() {
+  get size(): bigint {
     return this.#view.getBigUint64(8, LE);
   }
 
@@ -74,7 +74,7 @@ export class SparseMemoryBind implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(value), LE);
   }
 
-  get memory() {
+  get memory(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -82,7 +82,7 @@ export class SparseMemoryBind implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get memoryOffset() {
+  get memoryOffset(): bigint {
     return this.#view.getBigUint64(24, LE);
   }
 
@@ -90,7 +90,7 @@ export class SparseMemoryBind implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(value), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(32, LE);
   }
 

@@ -56,7 +56,7 @@ export class ViewportSwizzleNV implements BaseStruct {
     }
   }
 
-  get x() {
+  get x(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -64,7 +64,7 @@ export class ViewportSwizzleNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get y() {
+  get y(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -72,7 +72,7 @@ export class ViewportSwizzleNV implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get z() {
+  get z(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -80,7 +80,7 @@ export class ViewportSwizzleNV implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get w() {
+  get w(): number {
     return this.#view.getUint32(12, LE);
   }
 

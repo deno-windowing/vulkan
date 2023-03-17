@@ -72,7 +72,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoEncodeH264SliceHeaderFlags {
     return new StdVideoEncodeH264SliceHeaderFlags(this.#data.subarray(0, 0 + StdVideoEncodeH264SliceHeaderFlags.size));
   }
 
@@ -83,7 +83,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get first_mb_in_slice() {
+  get first_mb_in_slice(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -91,7 +91,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get slice_type() {
+  get slice_type(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -99,7 +99,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get idr_pic_id() {
+  get idr_pic_id(): number {
     return this.#view.getUint16(28, LE);
   }
 
@@ -107,7 +107,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#view.setUint16(28, Number(value), LE);
   }
 
-  get num_ref_idx_l0_active_minus1() {
+  get num_ref_idx_l0_active_minus1(): number {
     return this.#view.getUint8(30);
   }
 
@@ -115,7 +115,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#view.setUint8(30, Number(value));
   }
 
-  get num_ref_idx_l1_active_minus1() {
+  get num_ref_idx_l1_active_minus1(): number {
     return this.#view.getUint8(31);
   }
 
@@ -123,7 +123,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#view.setUint8(31, Number(value));
   }
 
-  get cabac_init_idc() {
+  get cabac_init_idc(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -131,7 +131,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get disable_deblocking_filter_idc() {
+  get disable_deblocking_filter_idc(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -139,7 +139,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get slice_alpha_c0_offset_div2() {
+  get slice_alpha_c0_offset_div2(): number {
     return this.#view.getInt8(40);
   }
 
@@ -147,7 +147,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#view.setInt8(40, Number(value));
   }
 
-  get slice_beta_offset_div2() {
+  get slice_beta_offset_div2(): number {
     return this.#view.getInt8(41);
   }
 
@@ -155,7 +155,7 @@ export class StdVideoEncodeH264SliceHeader implements BaseStruct {
     this.#view.setInt8(41, Number(value));
   }
 
-  get pWeightTable() {
+  get pWeightTable(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 

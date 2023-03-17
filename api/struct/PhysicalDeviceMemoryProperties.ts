@@ -57,7 +57,7 @@ export class PhysicalDeviceMemoryProperties implements BaseStruct {
     }
   }
 
-  get memoryTypeCount() {
+  get memoryTypeCount(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class PhysicalDeviceMemoryProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get memoryTypes() {
+  get memoryTypes(): MemoryType[] {
     const result: MemoryType[] = [];
     for (let i = 0; i < 32; i++) {
       result.push((() => {
@@ -84,7 +84,7 @@ export class PhysicalDeviceMemoryProperties implements BaseStruct {
     }
   }
 
-  get memoryHeapCount() {
+  get memoryHeapCount(): number {
     return this.#view.getUint32(260, LE);
   }
 
@@ -92,7 +92,7 @@ export class PhysicalDeviceMemoryProperties implements BaseStruct {
     this.#view.setUint32(260, Number(value), LE);
   }
 
-  get memoryHeaps() {
+  get memoryHeaps(): MemoryHeap[] {
     const result: MemoryHeap[] = [];
     for (let i = 0; i < 16; i++) {
       result.push((() => {

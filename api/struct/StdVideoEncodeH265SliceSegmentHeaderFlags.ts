@@ -79,7 +79,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     }
   }
 
-  get first_slice_segment_in_pic_flag() {
+  get first_slice_segment_in_pic_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -87,7 +87,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get no_output_of_prior_pics_flag() {
+  get no_output_of_prior_pics_flag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -95,7 +95,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get dependent_slice_segment_flag() {
+  get dependent_slice_segment_flag(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -103,7 +103,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get pic_output_flag() {
+  get pic_output_flag(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -111,7 +111,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get short_term_ref_pic_set_sps_flag() {
+  get short_term_ref_pic_set_sps_flag(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -119,7 +119,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get slice_temporal_mvp_enable_flag() {
+  get slice_temporal_mvp_enable_flag(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -127,7 +127,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get slice_sao_luma_flag() {
+  get slice_sao_luma_flag(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -135,7 +135,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get slice_sao_chroma_flag() {
+  get slice_sao_chroma_flag(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -143,7 +143,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get num_ref_idx_active_override_flag() {
+  get num_ref_idx_active_override_flag(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -151,7 +151,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get mvd_l1_zero_flag() {
+  get mvd_l1_zero_flag(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -159,7 +159,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get cabac_init_flag() {
+  get cabac_init_flag(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -167,7 +167,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get cu_chroma_qp_offset_enabled_flag() {
+  get cu_chroma_qp_offset_enabled_flag(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -175,7 +175,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get deblocking_filter_override_flag() {
+  get deblocking_filter_override_flag(): number {
     return this.#view.getUint32(48, LE);
   }
 
@@ -183,7 +183,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(48, Number(value), LE);
   }
 
-  get slice_deblocking_filter_disabled_flag() {
+  get slice_deblocking_filter_disabled_flag(): number {
     return this.#view.getUint32(52, LE);
   }
 
@@ -191,7 +191,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(52, Number(value), LE);
   }
 
-  get collocated_from_l0_flag() {
+  get collocated_from_l0_flag(): number {
     return this.#view.getUint32(56, LE);
   }
 
@@ -199,7 +199,7 @@ export class StdVideoEncodeH265SliceSegmentHeaderFlags implements BaseStruct {
     this.#view.setUint32(56, Number(value), LE);
   }
 
-  get slice_loop_filter_across_slices_enabled_flag() {
+  get slice_loop_filter_across_slices_enabled_flag(): number {
     return this.#view.getUint32(60, LE);
   }
 

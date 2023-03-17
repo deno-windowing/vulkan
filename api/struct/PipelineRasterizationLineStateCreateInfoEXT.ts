@@ -60,7 +60,7 @@ export class PipelineRasterizationLineStateCreateInfoEXT implements BaseStruct {
     this.sType = StructureType.PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class PipelineRasterizationLineStateCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class PipelineRasterizationLineStateCreateInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get lineRasterizationMode() {
+  get lineRasterizationMode(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -84,7 +84,7 @@ export class PipelineRasterizationLineStateCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get stippledLineEnable() {
+  get stippledLineEnable(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -92,7 +92,7 @@ export class PipelineRasterizationLineStateCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get lineStippleFactor() {
+  get lineStippleFactor(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -100,7 +100,7 @@ export class PipelineRasterizationLineStateCreateInfoEXT implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get lineStipplePattern() {
+  get lineStipplePattern(): number {
     return this.#view.getUint16(28, LE);
   }
 

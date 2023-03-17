@@ -60,7 +60,7 @@ export class PipelineExecutablePropertiesKHR implements BaseStruct {
     this.sType = StructureType.PIPELINE_EXECUTABLE_PROPERTIES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class PipelineExecutablePropertiesKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class PipelineExecutablePropertiesKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get stages() {
+  get stages(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -84,7 +84,7 @@ export class PipelineExecutablePropertiesKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get name() {
+  get name(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 20, 256);
   }
 
@@ -92,7 +92,7 @@ export class PipelineExecutablePropertiesKHR implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 20);
   }
 
-  get description() {
+  get description(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 276, 256);
   }
 
@@ -100,7 +100,7 @@ export class PipelineExecutablePropertiesKHR implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 276);
   }
 
-  get subgroupSize() {
+  get subgroupSize(): number {
     return this.#view.getUint32(532, LE);
   }
 

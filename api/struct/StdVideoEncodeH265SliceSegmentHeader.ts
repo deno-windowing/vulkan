@@ -88,7 +88,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoEncodeH265SliceSegmentHeaderFlags {
     return new StdVideoEncodeH265SliceSegmentHeaderFlags(this.#data.subarray(0, 0 + StdVideoEncodeH265SliceSegmentHeaderFlags.size));
   }
 
@@ -99,7 +99,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get slice_type() {
+  get slice_type(): number {
     return this.#view.getUint32(64, LE);
   }
 
@@ -107,7 +107,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setUint32(64, Number(value), LE);
   }
 
-  get slice_segment_address() {
+  get slice_segment_address(): number {
     return this.#view.getUint32(68, LE);
   }
 
@@ -115,7 +115,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setUint32(68, Number(value), LE);
   }
 
-  get short_term_ref_pic_set_idx() {
+  get short_term_ref_pic_set_idx(): number {
     return this.#view.getUint8(72);
   }
 
@@ -123,7 +123,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setUint8(72, Number(value));
   }
 
-  get collocated_ref_idx() {
+  get collocated_ref_idx(): number {
     return this.#view.getUint8(73);
   }
 
@@ -131,7 +131,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setUint8(73, Number(value));
   }
 
-  get num_ref_idx_l0_active_minus1() {
+  get num_ref_idx_l0_active_minus1(): number {
     return this.#view.getUint8(74);
   }
 
@@ -139,7 +139,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setUint8(74, Number(value));
   }
 
-  get num_ref_idx_l1_active_minus1() {
+  get num_ref_idx_l1_active_minus1(): number {
     return this.#view.getUint8(75);
   }
 
@@ -147,7 +147,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setUint8(75, Number(value));
   }
 
-  get MaxNumMergeCand() {
+  get MaxNumMergeCand(): number {
     return this.#view.getUint8(76);
   }
 
@@ -155,7 +155,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setUint8(76, Number(value));
   }
 
-  get slice_cb_qp_offset() {
+  get slice_cb_qp_offset(): number {
     return this.#view.getInt8(77);
   }
 
@@ -163,7 +163,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setInt8(77, Number(value));
   }
 
-  get slice_cr_qp_offset() {
+  get slice_cr_qp_offset(): number {
     return this.#view.getInt8(78);
   }
 
@@ -171,7 +171,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setInt8(78, Number(value));
   }
 
-  get slice_beta_offset_div2() {
+  get slice_beta_offset_div2(): number {
     return this.#view.getInt8(79);
   }
 
@@ -179,7 +179,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setInt8(79, Number(value));
   }
 
-  get slice_tc_offset_div2() {
+  get slice_tc_offset_div2(): number {
     return this.#view.getInt8(80);
   }
 
@@ -187,7 +187,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setInt8(80, Number(value));
   }
 
-  get slice_act_y_qp_offset() {
+  get slice_act_y_qp_offset(): number {
     return this.#view.getInt8(81);
   }
 
@@ -195,7 +195,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setInt8(81, Number(value));
   }
 
-  get slice_act_cb_qp_offset() {
+  get slice_act_cb_qp_offset(): number {
     return this.#view.getInt8(82);
   }
 
@@ -203,7 +203,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setInt8(82, Number(value));
   }
 
-  get slice_act_cr_qp_offset() {
+  get slice_act_cr_qp_offset(): number {
     return this.#view.getInt8(83);
   }
 
@@ -211,7 +211,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setInt8(83, Number(value));
   }
 
-  get pShortTermRefPicSet() {
+  get pShortTermRefPicSet(): Deno.PointerValue {
     return pointerFromView(this.#view, 88, LE);
   }
 
@@ -219,7 +219,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setBigUint64(88, BigInt(anyPointer(value)), LE);
   }
 
-  get pLongTermRefPics() {
+  get pLongTermRefPics(): Deno.PointerValue {
     return pointerFromView(this.#view, 96, LE);
   }
 
@@ -227,7 +227,7 @@ export class StdVideoEncodeH265SliceSegmentHeader implements BaseStruct {
     this.#view.setBigUint64(96, BigInt(anyPointer(value)), LE);
   }
 
-  get pWeightTable() {
+  get pWeightTable(): Deno.PointerValue {
     return pointerFromView(this.#view, 104, LE);
   }
 

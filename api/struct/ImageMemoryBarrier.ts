@@ -69,7 +69,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.sType = StructureType.IMAGE_MEMORY_BARRIER;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -77,7 +77,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -85,7 +85,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get srcAccessMask() {
+  get srcAccessMask(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -93,7 +93,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get dstAccessMask() {
+  get dstAccessMask(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -101,7 +101,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get oldLayout() {
+  get oldLayout(): number {
     return this.#view.getUint32(24, LE);
   }
 
@@ -109,7 +109,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.#view.setUint32(24, Number(value), LE);
   }
 
-  get newLayout() {
+  get newLayout(): number {
     return this.#view.getUint32(28, LE);
   }
 
@@ -117,7 +117,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.#view.setUint32(28, Number(value), LE);
   }
 
-  get srcQueueFamilyIndex() {
+  get srcQueueFamilyIndex(): number {
     return this.#view.getUint32(32, LE);
   }
 
@@ -125,7 +125,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.#view.setUint32(32, Number(value), LE);
   }
 
-  get dstQueueFamilyIndex() {
+  get dstQueueFamilyIndex(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -133,7 +133,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get image() {
+  get image(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -141,7 +141,7 @@ export class ImageMemoryBarrier implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get subresourceRange() {
+  get subresourceRange(): ImageSubresourceRange {
     return new ImageSubresourceRange(this.#data.subarray(48, 48 + ImageSubresourceRange.size));
   }
 

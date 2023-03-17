@@ -58,7 +58,7 @@ export class PhysicalDeviceGroupProperties implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_GROUP_PROPERTIES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class PhysicalDeviceGroupProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class PhysicalDeviceGroupProperties implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get physicalDeviceCount() {
+  get physicalDeviceCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -82,7 +82,7 @@ export class PhysicalDeviceGroupProperties implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get physicalDevices() {
+  get physicalDevices(): PhysicalDevice[] {
     const result: PhysicalDevice[] = [];
     for (let i = 0; i < 32; i++) {
       result.push((() => {
@@ -98,7 +98,7 @@ export class PhysicalDeviceGroupProperties implements BaseStruct {
     }
   }
 
-  get subsetAllocation() {
+  get subsetAllocation(): number {
     return this.#view.getUint32(280, LE);
   }
 

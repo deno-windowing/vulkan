@@ -79,7 +79,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoH265HrdFlags {
     return new StdVideoH265HrdFlags(this.#data.subarray(0, 0 + StdVideoH265HrdFlags.size));
   }
 
@@ -90,7 +90,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get tick_divisor_minus2() {
+  get tick_divisor_minus2(): number {
     return this.#view.getUint8(28);
   }
 
@@ -98,7 +98,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setUint8(28, Number(value));
   }
 
-  get du_cpb_removal_delay_increment_length_minus1() {
+  get du_cpb_removal_delay_increment_length_minus1(): number {
     return this.#view.getUint8(29);
   }
 
@@ -106,7 +106,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setUint8(29, Number(value));
   }
 
-  get dpb_output_delay_du_length_minus1() {
+  get dpb_output_delay_du_length_minus1(): number {
     return this.#view.getUint8(30);
   }
 
@@ -114,7 +114,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setUint8(30, Number(value));
   }
 
-  get bit_rate_scale() {
+  get bit_rate_scale(): number {
     return this.#view.getUint8(31);
   }
 
@@ -122,7 +122,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setUint8(31, Number(value));
   }
 
-  get cpb_size_scale() {
+  get cpb_size_scale(): number {
     return this.#view.getUint8(32);
   }
 
@@ -130,7 +130,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setUint8(32, Number(value));
   }
 
-  get cpb_size_du_scale() {
+  get cpb_size_du_scale(): number {
     return this.#view.getUint8(33);
   }
 
@@ -138,7 +138,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setUint8(33, Number(value));
   }
 
-  get initial_cpb_removal_delay_length_minus1() {
+  get initial_cpb_removal_delay_length_minus1(): number {
     return this.#view.getUint8(34);
   }
 
@@ -146,7 +146,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setUint8(34, Number(value));
   }
 
-  get au_cpb_removal_delay_length_minus1() {
+  get au_cpb_removal_delay_length_minus1(): number {
     return this.#view.getUint8(35);
   }
 
@@ -154,7 +154,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setUint8(35, Number(value));
   }
 
-  get dpb_output_delay_length_minus1() {
+  get dpb_output_delay_length_minus1(): number {
     return this.#view.getUint8(36);
   }
 
@@ -162,7 +162,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setUint8(36, Number(value));
   }
 
-  get cpb_cnt_minus1() {
+  get cpb_cnt_minus1(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 37, 7);
   }
 
@@ -170,7 +170,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 37);
   }
 
-  get elemental_duration_in_tc_minus1() {
+  get elemental_duration_in_tc_minus1(): Uint16Array {
     return new Uint16Array(this.#data.buffer, this.#data.byteOffset + 44, 7);
   }
 
@@ -178,7 +178,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 44);
   }
 
-  get reserved() {
+  get reserved(): Uint16Array {
     return new Uint16Array(this.#data.buffer, this.#data.byteOffset + 58, 3);
   }
 
@@ -186,7 +186,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 58);
   }
 
-  get pSubLayerHrdParametersNal() {
+  get pSubLayerHrdParametersNal(): Deno.PointerValue {
     return pointerFromView(this.#view, 64, LE);
   }
 
@@ -194,7 +194,7 @@ export class StdVideoH265HrdParameters implements BaseStruct {
     this.#view.setBigUint64(64, BigInt(anyPointer(value)), LE);
   }
 
-  get pSubLayerHrdParametersVcl() {
+  get pSubLayerHrdParametersVcl(): Deno.PointerValue {
     return pointerFromView(this.#view, 72, LE);
   }
 

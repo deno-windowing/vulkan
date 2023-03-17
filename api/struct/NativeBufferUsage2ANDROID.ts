@@ -51,7 +51,7 @@ export class NativeBufferUsage2ANDROID implements BaseStruct {
     }
   }
 
-  get consumer() {
+  get consumer(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 
@@ -59,7 +59,7 @@ export class NativeBufferUsage2ANDROID implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(value), LE);
   }
 
-  get producer() {
+  get producer(): bigint {
     return this.#view.getBigUint64(8, LE);
   }
 

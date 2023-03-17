@@ -53,7 +53,7 @@ export class PipelineShaderStageRequiredSubgroupSizeCreateInfo implements BaseSt
     this.sType = StructureType.PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class PipelineShaderStageRequiredSubgroupSizeCreateInfo implements BaseSt
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -69,7 +69,7 @@ export class PipelineShaderStageRequiredSubgroupSizeCreateInfo implements BaseSt
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get requiredSubgroupSize() {
+  get requiredSubgroupSize(): number {
     return this.#view.getUint32(16, LE);
   }
 

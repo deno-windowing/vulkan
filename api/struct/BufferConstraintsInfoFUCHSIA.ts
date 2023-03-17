@@ -60,7 +60,7 @@ export class BufferConstraintsInfoFUCHSIA implements BaseStruct {
     this.sType = StructureType.BUFFER_CONSTRAINTS_INFO_FUCHSIA;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class BufferConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class BufferConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get createInfo() {
+  get createInfo(): BufferCreateInfo {
     return new BufferCreateInfo(this.#data.subarray(16, 16 + BufferCreateInfo.size));
   }
 
@@ -87,7 +87,7 @@ export class BufferConstraintsInfoFUCHSIA implements BaseStruct {
     this.#data.set(value[BUFFER], 16);
   }
 
-  get requiredFormatFeatures() {
+  get requiredFormatFeatures(): number {
     return this.#view.getUint32(72, LE);
   }
 
@@ -95,7 +95,7 @@ export class BufferConstraintsInfoFUCHSIA implements BaseStruct {
     this.#view.setUint32(72, Number(value), LE);
   }
 
-  get bufferCollectionConstraints() {
+  get bufferCollectionConstraints(): BufferCollectionConstraintsInfoFUCHSIA {
     return new BufferCollectionConstraintsInfoFUCHSIA(this.#data.subarray(76, 76 + BufferCollectionConstraintsInfoFUCHSIA.size));
   }
 

@@ -58,7 +58,7 @@ export class ExportMetalSharedEventInfoEXT implements BaseStruct {
     this.sType = StructureType.EXPORT_METAL_SHARED_EVENT_INFO_EXT;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -66,7 +66,7 @@ export class ExportMetalSharedEventInfoEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -74,7 +74,7 @@ export class ExportMetalSharedEventInfoEXT implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get semaphore() {
+  get semaphore(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -82,7 +82,7 @@ export class ExportMetalSharedEventInfoEXT implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get event() {
+  get event(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 
@@ -90,7 +90,7 @@ export class ExportMetalSharedEventInfoEXT implements BaseStruct {
     this.#view.setBigUint64(24, BigInt(anyPointer(value)), LE);
   }
 
-  get mtlSharedEvent() {
+  get mtlSharedEvent(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

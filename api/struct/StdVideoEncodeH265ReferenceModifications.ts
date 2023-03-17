@@ -58,7 +58,7 @@ export class StdVideoEncodeH265ReferenceModifications implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoEncodeH265ReferenceModificationFlags {
     return new StdVideoEncodeH265ReferenceModificationFlags(this.#data.subarray(0, 0 + StdVideoEncodeH265ReferenceModificationFlags.size));
   }
 
@@ -69,7 +69,7 @@ export class StdVideoEncodeH265ReferenceModifications implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get referenceList0ModificationsCount() {
+  get referenceList0ModificationsCount(): number {
     return this.#view.getUint8(8);
   }
 
@@ -77,7 +77,7 @@ export class StdVideoEncodeH265ReferenceModifications implements BaseStruct {
     this.#view.setUint8(8, Number(value));
   }
 
-  get pReferenceList0Modifications() {
+  get pReferenceList0Modifications(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -85,7 +85,7 @@ export class StdVideoEncodeH265ReferenceModifications implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get referenceList1ModificationsCount() {
+  get referenceList1ModificationsCount(): number {
     return this.#view.getUint8(24);
   }
 
@@ -93,7 +93,7 @@ export class StdVideoEncodeH265ReferenceModifications implements BaseStruct {
     this.#view.setUint8(24, Number(value));
   }
 
-  get pReferenceList1Modifications() {
+  get pReferenceList1Modifications(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 

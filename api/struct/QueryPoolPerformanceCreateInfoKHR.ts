@@ -57,7 +57,7 @@ export class QueryPoolPerformanceCreateInfoKHR implements BaseStruct {
     this.sType = StructureType.QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class QueryPoolPerformanceCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -73,7 +73,7 @@ export class QueryPoolPerformanceCreateInfoKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get queueFamilyIndex() {
+  get queueFamilyIndex(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -81,7 +81,7 @@ export class QueryPoolPerformanceCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get counterIndexCount() {
+  get counterIndexCount(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -89,7 +89,7 @@ export class QueryPoolPerformanceCreateInfoKHR implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get pCounterIndices() {
+  get pCounterIndices(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

@@ -70,7 +70,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoEncodeH265WeightTableFlags {
     return new StdVideoEncodeH265WeightTableFlags(this.#data.subarray(0, 0 + StdVideoEncodeH265WeightTableFlags.size));
   }
 
@@ -81,7 +81,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get luma_log2_weight_denom() {
+  get luma_log2_weight_denom(): number {
     return this.#view.getUint8(8);
   }
 
@@ -89,7 +89,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#view.setUint8(8, Number(value));
   }
 
-  get delta_chroma_log2_weight_denom() {
+  get delta_chroma_log2_weight_denom(): number {
     return this.#view.getInt8(9);
   }
 
@@ -97,7 +97,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#view.setInt8(9, Number(value));
   }
 
-  get delta_luma_weight_l0() {
+  get delta_luma_weight_l0(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 10, 15);
   }
 
@@ -105,7 +105,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 10);
   }
 
-  get luma_offset_l0() {
+  get luma_offset_l0(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 25, 15);
   }
 
@@ -113,7 +113,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 25);
   }
 
-  get delta_chroma_weight_l0() {
+  get delta_chroma_weight_l0(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 40, 30);
   }
 
@@ -121,7 +121,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 40);
   }
 
-  get delta_chroma_offset_l0() {
+  get delta_chroma_offset_l0(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 70, 30);
   }
 
@@ -129,7 +129,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 70);
   }
 
-  get delta_luma_weight_l1() {
+  get delta_luma_weight_l1(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 100, 15);
   }
 
@@ -137,7 +137,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 100);
   }
 
-  get luma_offset_l1() {
+  get luma_offset_l1(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 115, 15);
   }
 
@@ -145,7 +145,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 115);
   }
 
-  get delta_chroma_weight_l1() {
+  get delta_chroma_weight_l1(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 130, 30);
   }
 
@@ -153,7 +153,7 @@ export class StdVideoEncodeH265WeightTable implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 130);
   }
 
-  get delta_chroma_offset_l1() {
+  get delta_chroma_offset_l1(): Int8Array {
     return new Int8Array(this.#data.buffer, this.#data.byteOffset + 160, 30);
   }
 

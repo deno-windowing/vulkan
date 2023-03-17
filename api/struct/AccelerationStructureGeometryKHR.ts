@@ -59,7 +59,7 @@ export class AccelerationStructureGeometryKHR implements BaseStruct {
     this.sType = StructureType.ACCELERATION_STRUCTURE_GEOMETRY_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -67,7 +67,7 @@ export class AccelerationStructureGeometryKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -75,7 +75,7 @@ export class AccelerationStructureGeometryKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get geometryType() {
+  get geometryType(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -83,7 +83,7 @@ export class AccelerationStructureGeometryKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get geometry() {
+  get geometry(): unknown {
     throw new Error(`Unknown type: {"union":[{"struct":["u32","buffer","u32",{"union":["u64","buffer"]},"u64","u32","u32",{"union":["u64","buffer"]},{"union":["u64","buffer"]}]},{"struct":["u32","buffer",{"union":["u64","buffer"]},"u64"]},{"struct":["u32","buffer","u32",{"union":["u64","buffer"]}]}]}`);
   }
 
@@ -91,7 +91,7 @@ export class AccelerationStructureGeometryKHR implements BaseStruct {
     throw new Error(`Unknown type: {"union":[{"struct":["u32","buffer","u32",{"union":["u64","buffer"]},"u64","u32","u32",{"union":["u64","buffer"]},{"union":["u64","buffer"]}]},{"struct":["u32","buffer",{"union":["u64","buffer"]},"u64"]},{"struct":["u32","buffer","u32",{"union":["u64","buffer"]}]}]}`);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(84, LE);
   }
 

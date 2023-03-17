@@ -54,7 +54,7 @@ export class DisplayNativeHdrSurfaceCapabilitiesAMD implements BaseStruct {
     this.sType = StructureType.DISPLAY_NATIVE_HDR_SURFACE_CAPABILITIES_AMD;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class DisplayNativeHdrSurfaceCapabilitiesAMD implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -70,7 +70,7 @@ export class DisplayNativeHdrSurfaceCapabilitiesAMD implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get localDimmingSupport() {
+  get localDimmingSupport(): number {
     return this.#view.getUint32(16, LE);
   }
 

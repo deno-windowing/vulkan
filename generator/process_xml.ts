@@ -274,12 +274,17 @@ export interface Command {
   ffi: any;
 }
 
+export interface Vender {
+  name: string;
+}
+
 export const typedefs: Typedef[] = [];
 export const constants: Constants[] = [];
 export const enums: Enums[] = [];
 export const structs: Struct[] = [];
 export const unions: Union[] = [];
 export const commands: Command[] = [];
+export const vendors: Vender[] = [];
 
 for (const data of api.registry.enums) {
   if (data.$type === "bitmask" || data.$type === "enum") {
@@ -685,4 +690,9 @@ for (const cmd of api.registry.commands.command) {
       result: cmd["#text"]?.endsWith("*") ? "pointer" : typeToFFI(type),
     },
   });
+}
+
+for (const vendor of api.registry.tags.tag) {
+  const name = vendor.$name;
+  vendors.push({ name });
 }

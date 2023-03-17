@@ -53,7 +53,7 @@ export class SpecializationMapEntry implements BaseStruct {
     }
   }
 
-  get constantID() {
+  get constantID(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class SpecializationMapEntry implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get offset() {
+  get offset(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -69,7 +69,7 @@ export class SpecializationMapEntry implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get size() {
+  get size(): bigint {
     return this.#view.getBigUint64(8, LE);
   }
 

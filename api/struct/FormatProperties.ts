@@ -54,7 +54,7 @@ export class FormatProperties implements BaseStruct {
     }
   }
 
-  get linearTilingFeatures() {
+  get linearTilingFeatures(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class FormatProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get optimalTilingFeatures() {
+  get optimalTilingFeatures(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -70,7 +70,7 @@ export class FormatProperties implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get bufferFeatures() {
+  get bufferFeatures(): number {
     return this.#view.getUint32(8, LE);
   }
 

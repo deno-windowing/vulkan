@@ -55,7 +55,7 @@ export class LayerProperties implements BaseStruct {
     }
   }
 
-  get layerName() {
+  get layerName(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 0, 256);
   }
 
@@ -63,7 +63,7 @@ export class LayerProperties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 0);
   }
 
-  get specVersion() {
+  get specVersion(): number {
     return this.#view.getUint32(256, LE);
   }
 
@@ -71,7 +71,7 @@ export class LayerProperties implements BaseStruct {
     this.#view.setUint32(256, Number(value), LE);
   }
 
-  get implementationVersion() {
+  get implementationVersion(): number {
     return this.#view.getUint32(260, LE);
   }
 
@@ -79,7 +79,7 @@ export class LayerProperties implements BaseStruct {
     this.#view.setUint32(260, Number(value), LE);
   }
 
-  get description() {
+  get description(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 264, 256);
   }
 

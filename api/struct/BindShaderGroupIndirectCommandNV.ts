@@ -49,7 +49,7 @@ export class BindShaderGroupIndirectCommandNV implements BaseStruct {
     }
   }
 
-  get groupIndex() {
+  get groupIndex(): number {
     return this.#view.getUint32(0, LE);
   }
 

@@ -60,7 +60,7 @@ export class PhysicalDeviceDriverProperties implements BaseStruct {
     this.sType = StructureType.PHYSICAL_DEVICE_DRIVER_PROPERTIES;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -68,7 +68,7 @@ export class PhysicalDeviceDriverProperties implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -76,7 +76,7 @@ export class PhysicalDeviceDriverProperties implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get driverID() {
+  get driverID(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -84,7 +84,7 @@ export class PhysicalDeviceDriverProperties implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get driverName() {
+  get driverName(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 20, 256);
   }
 
@@ -92,7 +92,7 @@ export class PhysicalDeviceDriverProperties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 20);
   }
 
-  get driverInfo() {
+  get driverInfo(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 276, 256);
   }
 
@@ -100,7 +100,7 @@ export class PhysicalDeviceDriverProperties implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 276);
   }
 
-  get conformanceVersion() {
+  get conformanceVersion(): ConformanceVersion {
     return new ConformanceVersion(this.#data.subarray(532, 532 + ConformanceVersion.size));
   }
 

@@ -57,7 +57,7 @@ export class CoarseSampleOrderCustomNV implements BaseStruct {
     }
   }
 
-  get shadingRate() {
+  get shadingRate(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class CoarseSampleOrderCustomNV implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get sampleCount() {
+  get sampleCount(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -73,7 +73,7 @@ export class CoarseSampleOrderCustomNV implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get sampleLocationCount() {
+  get sampleLocationCount(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -81,7 +81,7 @@ export class CoarseSampleOrderCustomNV implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get pSampleLocations() {
+  get pSampleLocations(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 

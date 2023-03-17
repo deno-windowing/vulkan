@@ -52,7 +52,7 @@ export class MutableDescriptorTypeListEXT implements BaseStruct {
     }
   }
 
-  get descriptorTypeCount() {
+  get descriptorTypeCount(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class MutableDescriptorTypeListEXT implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pDescriptorTypes() {
+  get pDescriptorTypes(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 

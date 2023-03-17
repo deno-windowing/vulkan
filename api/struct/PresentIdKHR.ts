@@ -55,7 +55,7 @@ export class PresentIdKHR implements BaseStruct {
     this.sType = StructureType.PRESENT_ID_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -63,7 +63,7 @@ export class PresentIdKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -71,7 +71,7 @@ export class PresentIdKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get swapchainCount() {
+  get swapchainCount(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -79,7 +79,7 @@ export class PresentIdKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get pPresentIds() {
+  get pPresentIds(): Deno.PointerValue {
     return pointerFromView(this.#view, 24, LE);
   }
 

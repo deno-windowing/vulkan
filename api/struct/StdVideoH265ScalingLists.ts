@@ -59,7 +59,7 @@ export class StdVideoH265ScalingLists implements BaseStruct {
     }
   }
 
-  get ScalingList4x4() {
+  get ScalingList4x4(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 0, 96);
   }
 
@@ -67,7 +67,7 @@ export class StdVideoH265ScalingLists implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 0);
   }
 
-  get ScalingList8x8() {
+  get ScalingList8x8(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 96, 384);
   }
 
@@ -75,7 +75,7 @@ export class StdVideoH265ScalingLists implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 96);
   }
 
-  get ScalingList16x16() {
+  get ScalingList16x16(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 480, 384);
   }
 
@@ -83,7 +83,7 @@ export class StdVideoH265ScalingLists implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 480);
   }
 
-  get ScalingList32x32() {
+  get ScalingList32x32(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 864, 128);
   }
 
@@ -91,7 +91,7 @@ export class StdVideoH265ScalingLists implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 864);
   }
 
-  get ScalingListDCCoef16x16() {
+  get ScalingListDCCoef16x16(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 992, 6);
   }
 
@@ -99,7 +99,7 @@ export class StdVideoH265ScalingLists implements BaseStruct {
     this.#data.set(new Uint8Array(value.buffer), 992);
   }
 
-  get ScalingListDCCoef32x32() {
+  get ScalingListDCCoef32x32(): Uint8Array {
     return new Uint8Array(this.#data.buffer, this.#data.byteOffset + 998, 2);
   }
 

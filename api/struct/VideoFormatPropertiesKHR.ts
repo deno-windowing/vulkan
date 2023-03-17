@@ -65,7 +65,7 @@ export class VideoFormatPropertiesKHR implements BaseStruct {
     this.sType = StructureType.VIDEO_FORMAT_PROPERTIES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -73,7 +73,7 @@ export class VideoFormatPropertiesKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -81,7 +81,7 @@ export class VideoFormatPropertiesKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get format() {
+  get format(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -89,7 +89,7 @@ export class VideoFormatPropertiesKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get componentMapping() {
+  get componentMapping(): ComponentMapping {
     return new ComponentMapping(this.#data.subarray(20, 20 + ComponentMapping.size));
   }
 
@@ -100,7 +100,7 @@ export class VideoFormatPropertiesKHR implements BaseStruct {
     this.#data.set(value[BUFFER], 20);
   }
 
-  get imageCreateFlags() {
+  get imageCreateFlags(): number {
     return this.#view.getUint32(36, LE);
   }
 
@@ -108,7 +108,7 @@ export class VideoFormatPropertiesKHR implements BaseStruct {
     this.#view.setUint32(36, Number(value), LE);
   }
 
-  get imageType() {
+  get imageType(): number {
     return this.#view.getUint32(40, LE);
   }
 
@@ -116,7 +116,7 @@ export class VideoFormatPropertiesKHR implements BaseStruct {
     this.#view.setUint32(40, Number(value), LE);
   }
 
-  get imageTiling() {
+  get imageTiling(): number {
     return this.#view.getUint32(44, LE);
   }
 
@@ -124,7 +124,7 @@ export class VideoFormatPropertiesKHR implements BaseStruct {
     this.#view.setUint32(44, Number(value), LE);
   }
 
-  get imageUsageFlags() {
+  get imageUsageFlags(): number {
     return this.#view.getUint32(48, LE);
   }
 

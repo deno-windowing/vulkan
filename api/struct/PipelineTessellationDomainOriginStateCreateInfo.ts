@@ -53,7 +53,7 @@ export class PipelineTessellationDomainOriginStateCreateInfo implements BaseStru
     this.sType = StructureType.PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -61,7 +61,7 @@ export class PipelineTessellationDomainOriginStateCreateInfo implements BaseStru
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -69,7 +69,7 @@ export class PipelineTessellationDomainOriginStateCreateInfo implements BaseStru
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get domainOrigin() {
+  get domainOrigin(): number {
     return this.#view.getUint32(16, LE);
   }
 

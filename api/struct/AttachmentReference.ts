@@ -52,7 +52,7 @@ export class AttachmentReference implements BaseStruct {
     }
   }
 
-  get attachment() {
+  get attachment(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -60,7 +60,7 @@ export class AttachmentReference implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get layout() {
+  get layout(): number {
     return this.#view.getUint32(4, LE);
   }
 

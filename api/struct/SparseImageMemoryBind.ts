@@ -63,7 +63,7 @@ export class SparseImageMemoryBind implements BaseStruct {
     }
   }
 
-  get subresource() {
+  get subresource(): ImageSubresource {
     return new ImageSubresource(this.#data.subarray(0, 0 + ImageSubresource.size));
   }
 
@@ -74,7 +74,7 @@ export class SparseImageMemoryBind implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get offset() {
+  get offset(): Offset3D {
     return new Offset3D(this.#data.subarray(12, 12 + Offset3D.size));
   }
 
@@ -85,7 +85,7 @@ export class SparseImageMemoryBind implements BaseStruct {
     this.#data.set(value[BUFFER], 12);
   }
 
-  get extent() {
+  get extent(): Extent3D {
     return new Extent3D(this.#data.subarray(24, 24 + Extent3D.size));
   }
 
@@ -96,7 +96,7 @@ export class SparseImageMemoryBind implements BaseStruct {
     this.#data.set(value[BUFFER], 24);
   }
 
-  get memory() {
+  get memory(): Deno.PointerValue {
     return pointerFromView(this.#view, 40, LE);
   }
 
@@ -104,7 +104,7 @@ export class SparseImageMemoryBind implements BaseStruct {
     this.#view.setBigUint64(40, BigInt(anyPointer(value)), LE);
   }
 
-  get memoryOffset() {
+  get memoryOffset(): bigint {
     return this.#view.getBigUint64(48, LE);
   }
 
@@ -112,7 +112,7 @@ export class SparseImageMemoryBind implements BaseStruct {
     this.#view.setBigUint64(48, BigInt(value), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(56, LE);
   }
 

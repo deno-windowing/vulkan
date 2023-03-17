@@ -64,7 +64,7 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements BaseStruct {
     }
   }
 
-  get flags() {
+  get flags(): StdVideoEncodeH264RefMgmtFlags {
     return new StdVideoEncodeH264RefMgmtFlags(this.#data.subarray(0, 0 + StdVideoEncodeH264RefMgmtFlags.size));
   }
 
@@ -75,7 +75,7 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements BaseStruct {
     this.#data.set(value[BUFFER], 0);
   }
 
-  get refList0ModOpCount() {
+  get refList0ModOpCount(): number {
     return this.#view.getUint8(8);
   }
 
@@ -83,7 +83,7 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements BaseStruct {
     this.#view.setUint8(8, Number(value));
   }
 
-  get pRefList0ModOperations() {
+  get pRefList0ModOperations(): Deno.PointerValue {
     return pointerFromView(this.#view, 16, LE);
   }
 
@@ -91,7 +91,7 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements BaseStruct {
     this.#view.setBigUint64(16, BigInt(anyPointer(value)), LE);
   }
 
-  get refList1ModOpCount() {
+  get refList1ModOpCount(): number {
     return this.#view.getUint8(24);
   }
 
@@ -99,7 +99,7 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements BaseStruct {
     this.#view.setUint8(24, Number(value));
   }
 
-  get pRefList1ModOperations() {
+  get pRefList1ModOperations(): Deno.PointerValue {
     return pointerFromView(this.#view, 32, LE);
   }
 
@@ -107,7 +107,7 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements BaseStruct {
     this.#view.setBigUint64(32, BigInt(anyPointer(value)), LE);
   }
 
-  get refPicMarkingOpCount() {
+  get refPicMarkingOpCount(): number {
     return this.#view.getUint8(40);
   }
 
@@ -115,7 +115,7 @@ export class StdVideoEncodeH264RefMemMgmtCtrlOperations implements BaseStruct {
     this.#view.setUint8(40, Number(value));
   }
 
-  get pRefPicMarkingOperations() {
+  get pRefPicMarkingOperations(): Deno.PointerValue {
     return pointerFromView(this.#view, 48, LE);
   }
 

@@ -63,7 +63,7 @@ export class VideoEncodeCapabilitiesKHR implements BaseStruct {
     this.sType = StructureType.VIDEO_ENCODE_CAPABILITIES_KHR;
   }
 
-  get sType() {
+  get sType(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -71,7 +71,7 @@ export class VideoEncodeCapabilitiesKHR implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get pNext() {
+  get pNext(): Deno.PointerValue {
     return pointerFromView(this.#view, 8, LE);
   }
 
@@ -79,7 +79,7 @@ export class VideoEncodeCapabilitiesKHR implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(anyPointer(value)), LE);
   }
 
-  get flags() {
+  get flags(): number {
     return this.#view.getUint32(16, LE);
   }
 
@@ -87,7 +87,7 @@ export class VideoEncodeCapabilitiesKHR implements BaseStruct {
     this.#view.setUint32(16, Number(value), LE);
   }
 
-  get rateControlModes() {
+  get rateControlModes(): number {
     return this.#view.getUint32(20, LE);
   }
 
@@ -95,7 +95,7 @@ export class VideoEncodeCapabilitiesKHR implements BaseStruct {
     this.#view.setUint32(20, Number(value), LE);
   }
 
-  get rateControlLayerCount() {
+  get rateControlLayerCount(): number {
     return this.#view.getUint8(24);
   }
 
@@ -103,7 +103,7 @@ export class VideoEncodeCapabilitiesKHR implements BaseStruct {
     this.#view.setUint8(24, Number(value));
   }
 
-  get qualityLevelCount() {
+  get qualityLevelCount(): number {
     return this.#view.getUint8(25);
   }
 
@@ -111,7 +111,7 @@ export class VideoEncodeCapabilitiesKHR implements BaseStruct {
     this.#view.setUint8(25, Number(value));
   }
 
-  get inputImageDataFillAlignment() {
+  get inputImageDataFillAlignment(): Extent2D {
     return new Extent2D(this.#data.subarray(28, 28 + Extent2D.size));
   }
 

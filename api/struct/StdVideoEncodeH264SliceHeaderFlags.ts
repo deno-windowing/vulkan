@@ -57,7 +57,7 @@ export class StdVideoEncodeH264SliceHeaderFlags implements BaseStruct {
     }
   }
 
-  get direct_spatial_mv_pred_flag() {
+  get direct_spatial_mv_pred_flag(): number {
     return this.#view.getUint32(0, LE);
   }
 
@@ -65,7 +65,7 @@ export class StdVideoEncodeH264SliceHeaderFlags implements BaseStruct {
     this.#view.setUint32(0, Number(value), LE);
   }
 
-  get num_ref_idx_active_override_flag() {
+  get num_ref_idx_active_override_flag(): number {
     return this.#view.getUint32(4, LE);
   }
 
@@ -73,7 +73,7 @@ export class StdVideoEncodeH264SliceHeaderFlags implements BaseStruct {
     this.#view.setUint32(4, Number(value), LE);
   }
 
-  get no_output_of_prior_pics_flag() {
+  get no_output_of_prior_pics_flag(): number {
     return this.#view.getUint32(8, LE);
   }
 
@@ -81,7 +81,7 @@ export class StdVideoEncodeH264SliceHeaderFlags implements BaseStruct {
     this.#view.setUint32(8, Number(value), LE);
   }
 
-  get adaptive_ref_pic_marking_mode_flag() {
+  get adaptive_ref_pic_marking_mode_flag(): number {
     return this.#view.getUint32(12, LE);
   }
 
@@ -89,7 +89,7 @@ export class StdVideoEncodeH264SliceHeaderFlags implements BaseStruct {
     this.#view.setUint32(12, Number(value), LE);
   }
 
-  get no_prior_references_available_flag() {
+  get no_prior_references_available_flag(): number {
     return this.#view.getUint32(16, LE);
   }
 

@@ -54,7 +54,7 @@ export class BufferCopy implements BaseStruct {
     }
   }
 
-  get srcOffset() {
+  get srcOffset(): bigint {
     return this.#view.getBigUint64(0, LE);
   }
 
@@ -62,7 +62,7 @@ export class BufferCopy implements BaseStruct {
     this.#view.setBigUint64(0, BigInt(value), LE);
   }
 
-  get dstOffset() {
+  get dstOffset(): bigint {
     return this.#view.getBigUint64(8, LE);
   }
 
@@ -70,7 +70,7 @@ export class BufferCopy implements BaseStruct {
     this.#view.setBigUint64(8, BigInt(value), LE);
   }
 
-  get size() {
+  get size(): bigint {
     return this.#view.getBigUint64(16, LE);
   }
 
