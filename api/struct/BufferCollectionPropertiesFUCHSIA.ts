@@ -133,56 +133,56 @@ export class BufferCollectionPropertiesFUCHSIA implements BaseStruct {
   }
 
   get sysmemColorSpaceIndex(): SysmemColorSpaceFUCHSIA {
-    return new SysmemColorSpaceFUCHSIA(this.#data.subarray(44, 44 + SysmemColorSpaceFUCHSIA.size));
+    return new SysmemColorSpaceFUCHSIA(this.#data.subarray(48, 48 + SysmemColorSpaceFUCHSIA.size));
   }
 
   set sysmemColorSpaceIndex(value: SysmemColorSpaceFUCHSIA) {
     if (value[BUFFER].byteLength < SysmemColorSpaceFUCHSIA.size) {
       throw new Error("Data buffer too small");
     }
-    this.#data.set(value[BUFFER], 44);
+    this.#data.set(value[BUFFER], 48);
   }
 
   get samplerYcbcrConversionComponents(): ComponentMapping {
-    return new ComponentMapping(this.#data.subarray(68, 68 + ComponentMapping.size));
+    return new ComponentMapping(this.#data.subarray(72, 72 + ComponentMapping.size));
   }
 
   set samplerYcbcrConversionComponents(value: ComponentMapping) {
     if (value[BUFFER].byteLength < ComponentMapping.size) {
       throw new Error("Data buffer too small");
     }
-    this.#data.set(value[BUFFER], 68);
+    this.#data.set(value[BUFFER], 72);
   }
 
   get suggestedYcbcrModel(): number {
-    return this.#view.getUint32(84, LE);
-  }
-
-  set suggestedYcbcrModel(value: SamplerYcbcrModelConversion) {
-    this.#view.setUint32(84, Number(value), LE);
-  }
-
-  get suggestedYcbcrRange(): number {
     return this.#view.getUint32(88, LE);
   }
 
-  set suggestedYcbcrRange(value: SamplerYcbcrRange) {
+  set suggestedYcbcrModel(value: SamplerYcbcrModelConversion) {
     this.#view.setUint32(88, Number(value), LE);
   }
 
-  get suggestedXChromaOffset(): number {
+  get suggestedYcbcrRange(): number {
     return this.#view.getUint32(92, LE);
   }
 
-  set suggestedXChromaOffset(value: ChromaLocation) {
+  set suggestedYcbcrRange(value: SamplerYcbcrRange) {
     this.#view.setUint32(92, Number(value), LE);
   }
 
-  get suggestedYChromaOffset(): number {
+  get suggestedXChromaOffset(): number {
     return this.#view.getUint32(96, LE);
   }
 
-  set suggestedYChromaOffset(value: ChromaLocation) {
+  set suggestedXChromaOffset(value: ChromaLocation) {
     this.#view.setUint32(96, Number(value), LE);
+  }
+
+  get suggestedYChromaOffset(): number {
+    return this.#view.getUint32(100, LE);
+  }
+
+  set suggestedYChromaOffset(value: ChromaLocation) {
+    this.#view.setUint32(100, Number(value), LE);
   }
 }

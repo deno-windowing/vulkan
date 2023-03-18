@@ -88,14 +88,14 @@ export class ComputePipelineCreateInfo implements BaseStruct {
   }
 
   get stage(): PipelineShaderStageCreateInfo {
-    return new PipelineShaderStageCreateInfo(this.#data.subarray(20, 20 + PipelineShaderStageCreateInfo.size));
+    return new PipelineShaderStageCreateInfo(this.#data.subarray(24, 24 + PipelineShaderStageCreateInfo.size));
   }
 
   set stage(value: PipelineShaderStageCreateInfo) {
     if (value[BUFFER].byteLength < PipelineShaderStageCreateInfo.size) {
       throw new Error("Data buffer too small");
     }
-    this.#data.set(value[BUFFER], 20);
+    this.#data.set(value[BUFFER], 24);
   }
 
   get layout(): Deno.PointerValue {

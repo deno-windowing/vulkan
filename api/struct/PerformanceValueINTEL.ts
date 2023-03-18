@@ -20,7 +20,7 @@ export interface InitPerformanceValueINTEL {
 }
 
 export class PerformanceValueINTEL implements BaseStruct {
-  static size = 12;
+  static size = 16;
 
   #data!: Uint8Array;
   #view!: DataView;

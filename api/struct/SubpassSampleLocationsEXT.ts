@@ -19,7 +19,7 @@ export interface InitSubpassSampleLocationsEXT {
 }
 
 export class SubpassSampleLocationsEXT implements BaseStruct {
-  static size = 44;
+  static size = 48;
 
   #data!: Uint8Array;
   #view!: DataView;
@@ -61,13 +61,13 @@ export class SubpassSampleLocationsEXT implements BaseStruct {
   }
 
   get sampleLocationsInfo(): SampleLocationsInfoEXT {
-    return new SampleLocationsInfoEXT(this.#data.subarray(4, 4 + SampleLocationsInfoEXT.size));
+    return new SampleLocationsInfoEXT(this.#data.subarray(8, 8 + SampleLocationsInfoEXT.size));
   }
 
   set sampleLocationsInfo(value: SampleLocationsInfoEXT) {
     if (value[BUFFER].byteLength < SampleLocationsInfoEXT.size) {
       throw new Error("Data buffer too small");
     }
-    this.#data.set(value[BUFFER], 4);
+    this.#data.set(value[BUFFER], 8);
   }
 }

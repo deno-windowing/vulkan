@@ -23,7 +23,7 @@ export interface InitAccelerationStructureGeometryKHR {
 }
 
 export class AccelerationStructureGeometryKHR implements BaseStruct {
-  static size = 88;
+  static size = 192;
 
   #data!: Uint8Array;
   #view!: DataView;
@@ -92,10 +92,10 @@ export class AccelerationStructureGeometryKHR implements BaseStruct {
   }
 
   get flags(): number {
-    return this.#view.getUint32(84, LE);
+    return this.#view.getUint32(128, LE);
   }
 
   set flags(value: GeometryFlagsKHR) {
-    this.#view.setUint32(84, Number(value), LE);
+    this.#view.setUint32(128, Number(value), LE);
   }
 }

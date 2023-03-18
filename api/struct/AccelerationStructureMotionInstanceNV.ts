@@ -22,7 +22,7 @@ export interface InitAccelerationStructureMotionInstanceNV {
 }
 
 export class AccelerationStructureMotionInstanceNV implements BaseStruct {
-  static size = 160;
+  static size = 304;
 
   #data!: Uint8Array;
   #view!: DataView;

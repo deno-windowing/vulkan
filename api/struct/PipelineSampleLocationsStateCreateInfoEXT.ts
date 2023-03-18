@@ -82,13 +82,13 @@ export class PipelineSampleLocationsStateCreateInfoEXT implements BaseStruct {
   }
 
   get sampleLocationsInfo(): SampleLocationsInfoEXT {
-    return new SampleLocationsInfoEXT(this.#data.subarray(20, 20 + SampleLocationsInfoEXT.size));
+    return new SampleLocationsInfoEXT(this.#data.subarray(24, 24 + SampleLocationsInfoEXT.size));
   }
 
   set sampleLocationsInfo(value: SampleLocationsInfoEXT) {
     if (value[BUFFER].byteLength < SampleLocationsInfoEXT.size) {
       throw new Error("Data buffer too small");
     }
-    this.#data.set(value[BUFFER], 20);
+    this.#data.set(value[BUFFER], 24);
   }
 }

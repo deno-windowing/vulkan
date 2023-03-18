@@ -23,7 +23,7 @@ export interface InitGeometryNV {
 }
 
 export class GeometryNV implements BaseStruct {
-  static size = 160;
+  static size = 168;
 
   #data!: Uint8Array;
   #view!: DataView;
@@ -84,21 +84,21 @@ export class GeometryNV implements BaseStruct {
   }
 
   get geometry(): GeometryDataNV {
-    return new GeometryDataNV(this.#data.subarray(20, 20 + GeometryDataNV.size));
+    return new GeometryDataNV(this.#data.subarray(24, 24 + GeometryDataNV.size));
   }
 
   set geometry(value: GeometryDataNV) {
     if (value[BUFFER].byteLength < GeometryDataNV.size) {
       throw new Error("Data buffer too small");
     }
-    this.#data.set(value[BUFFER], 20);
+    this.#data.set(value[BUFFER], 24);
   }
 
   get flags(): number {
-    return this.#view.getUint32(156, LE);
+    return this.#view.getUint32(160, LE);
   }
 
   set flags(value: GeometryFlagsKHR) {
-    this.#view.setUint32(156, Number(value), LE);
+    this.#view.setUint32(160, Number(value), LE);
   }
 }

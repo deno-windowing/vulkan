@@ -5,7 +5,7 @@ import {
   enums,
   Field,
   FileBuilder,
-  getTypeSize,
+  getTypeRequirement,
   isArray,
   isStruct,
   jsify,
@@ -435,7 +435,7 @@ function addImports(types: string[]) {
                     b.block(() => {
                       b.emit(`result.push((() => {`);
                       b.block(() => {
-                        const tysize = getTypeSize(f.ffi.array);
+                        const tysize = getTypeRequirement(f.ffi.array).typeSize;
                         emitFieldGetter({
                           name: f.name,
                           offset: `${f.offset} + i * ${tysize}` as any,
@@ -561,7 +561,7 @@ function addImports(types: string[]) {
                   break;
                 }
                 if (isArray(f.ffi)) {
-                  const tysize = getTypeSize(f.ffi.array);
+                  const tysize = getTypeRequirement(f.ffi.array).typeSize;
                   b.emit(`for (let i = 0; i < ${vname}.length; i++) {`);
                   b.block(() => {
                     emitFieldSetter({

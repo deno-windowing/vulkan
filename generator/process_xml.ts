@@ -335,25 +335,30 @@ export function isArray(type: any) {
   return typeof type === "object" && type !== null && ("array" in type);
 }
 
-export function getAlignSize(
-  type: any,
-  cache?: WeakMap<any, number | null>,
-): number {
-  if (isStruct(type)) {
-    return getAlignSize(type.struct[0], cache);
-  } else if (isUnion(type)) {
-    return getAlignSize(type.union[0], cache);
-  } else if (isArray(type)) {
-    return getAlignSize(type.array, cache);
-  } else {
-    return getTypeSize(type, cache);
-  }
+// export function getAlignSize(
+//   type: any,
+//   cache?: WeakMap<any, number | null>,
+// ): number {
+//   if (isStruct(type)) {
+//     return getAlignSize(type.struct[0], cache);
+//   } else if (isUnion(type)) {
+//     return getAlignSize(type.union[0], cache);
+//   } else if (isArray(type)) {
+//     return getAlignSize(type.array, cache);
+//   } else {
+//     return getTypeSize(type, cache);
+//   }
+// }
+
+interface TypeRequirement {
+  typeSize: number;
+  alignSize: number;
 }
 
-export function getTypeSize(
+export function getTypeRequirement(
   type: any,
-  cache = new WeakMap<any, number | null>(),
-) {
+  cache = new WeakMap<any, TypeRequirement | null>(),
+): TypeRequirement {
   if (isStruct(type)) {
     const cached = cache.get(type);
     if (cached !== undefined) {
@@ -366,15 +371,15 @@ export function getTypeSize(
     let size = 0;
     let alignment = 1;
     for (const field of type.struct) {
-      const fieldSize = getTypeSize(field, cache);
-      const alignSize = getAlignSize(field, cache);
+      const { typeSize, alignSize } = getTypeRequirement(field, cache);
       alignment = Math.max(alignment, alignSize);
       size = Math.ceil(size / alignSize) * alignSize;
-      size += fieldSize;
+      size += typeSize;
     }
     size = Math.ceil(size / alignment) * alignment;
-    cache.set(type, size);
-    return size;
+    const requirement = { typeSize: size, alignSize: alignment };
+    cache.set(type, requirement);
+    return requirement;
   }
 
   if (isArray(type)) {
@@ -389,14 +394,15 @@ export function getTypeSize(
     let size = 0;
     let alignment = 1;
     for (let i = 0; i < type.len; i++) {
-      const fieldSize = getTypeSize(type.array, cache);
-      alignment = Math.max(alignment, fieldSize);
-      size = Math.ceil(size / fieldSize) * fieldSize;
-      size += fieldSize;
+      const { typeSize, alignSize } = getTypeRequirement(type.array, cache);
+      alignment = Math.max(alignment, alignSize);
+      size = Math.ceil(size / typeSize) * typeSize;
+      size += typeSize;
     }
     size = Math.ceil(size / alignment) * alignment;
-    cache.set(type, size);
-    return size;
+    const requirement = { typeSize: size, alignSize: alignment };
+    cache.set(type, requirement);
+    return requirement;
   }
 
   if (isUnion(type)) {
@@ -409,25 +415,29 @@ export function getTypeSize(
     }
     cache.set(type, null);
     let size = 0;
+    let alignment = 1;
     for (const field of type.union) {
-      size = Math.max(size, getTypeSize(field, cache));
+      const { typeSize, alignSize } = getTypeRequirement(field, cache);
+      size = Math.max(size, typeSize);
+      alignment = Math.max(size, alignSize);
     }
-    cache.set(type, size);
-    return size;
+    const requirement = { typeSize: size, alignSize: alignment };
+    cache.set(type, requirement);
+    return requirement;
   }
 
   switch (type) {
     case "bool":
     case "u8":
     case "i8":
-      return 1;
+      return { typeSize: 1, alignSize: 1 };
     case "u16":
     case "i16":
-      return 2;
+      return { typeSize: 2, alignSize: 2 };
     case "u32":
     case "i32":
     case "f32":
-      return 4;
+      return { typeSize: 4, alignSize: 4 };
     case "u64":
     case "i64":
     case "f64":
@@ -436,7 +446,7 @@ export function getTypeSize(
     case "function":
     case "usize":
     case "isize":
-      return 8;
+      return { typeSize: 8, alignSize: 8 };
     default:
       throw new TypeError(`Unsupported type: ${Deno.inspect(type)}`);
   }
@@ -612,14 +622,13 @@ for (const ty of api.registry.types.type) {
         };
       }
 
-      const fieldSize = getTypeSize(field.ffi);
-      const alignSize = getAlignSize(field.ffi);
+      const { typeSize, alignSize } = getTypeRequirement(field.ffi);
       alignment = Math.max(alignment, alignSize);
       size = Math.ceil(size / alignSize) * alignSize;
 
       field.offset = size;
 
-      size += fieldSize;
+      size += typeSize;
       return field;
     });
     size = Math.ceil(size / alignment) * alignment;
@@ -640,9 +649,9 @@ for (const ty of api.registry.types.type) {
       comment: member.$comment,
       text: member["#text"],
     }));
-    union.size = getTypeSize({
+    union.size = getTypeRequirement({
       union: union.types.map((e) => e.text?.endsWith("*") ? "pointer" : e.ffi),
-    });
+    }).typeSize;
   } else if (ty.$name && ty.$alias) {
     typedefs.push({
       name: ty.$name,

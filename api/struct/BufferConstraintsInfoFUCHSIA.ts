@@ -96,13 +96,13 @@ export class BufferConstraintsInfoFUCHSIA implements BaseStruct {
   }
 
   get bufferCollectionConstraints(): BufferCollectionConstraintsInfoFUCHSIA {
-    return new BufferCollectionConstraintsInfoFUCHSIA(this.#data.subarray(76, 76 + BufferCollectionConstraintsInfoFUCHSIA.size));
+    return new BufferCollectionConstraintsInfoFUCHSIA(this.#data.subarray(80, 80 + BufferCollectionConstraintsInfoFUCHSIA.size));
   }
 
   set bufferCollectionConstraints(value: BufferCollectionConstraintsInfoFUCHSIA) {
     if (value[BUFFER].byteLength < BufferCollectionConstraintsInfoFUCHSIA.size) {
       throw new Error("Data buffer too small");
     }
-    this.#data.set(value[BUFFER], 76);
+    this.#data.set(value[BUFFER], 80);
   }
 }

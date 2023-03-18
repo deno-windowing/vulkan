@@ -28,7 +28,7 @@ export interface InitPhysicalDeviceProperties {
 }
 
 export class PhysicalDeviceProperties implements BaseStruct {
-  static size = 784;
+  static size = 792;
 
   #data!: Uint8Array;
   #view!: DataView;
@@ -125,24 +125,24 @@ export class PhysicalDeviceProperties implements BaseStruct {
   }
 
   get limits(): PhysicalDeviceLimits {
-    return new PhysicalDeviceLimits(this.#data.subarray(292, 292 + PhysicalDeviceLimits.size));
+    return new PhysicalDeviceLimits(this.#data.subarray(296, 296 + PhysicalDeviceLimits.size));
   }
 
   set limits(value: PhysicalDeviceLimits) {
     if (value[BUFFER].byteLength < PhysicalDeviceLimits.size) {
       throw new Error("Data buffer too small");
     }
-    this.#data.set(value[BUFFER], 292);
+    this.#data.set(value[BUFFER], 296);
   }
 
   get sparseProperties(): PhysicalDeviceSparseProperties {
-    return new PhysicalDeviceSparseProperties(this.#data.subarray(764, 764 + PhysicalDeviceSparseProperties.size));
+    return new PhysicalDeviceSparseProperties(this.#data.subarray(768, 768 + PhysicalDeviceSparseProperties.size));
   }
 
   set sparseProperties(value: PhysicalDeviceSparseProperties) {
     if (value[BUFFER].byteLength < PhysicalDeviceSparseProperties.size) {
       throw new Error("Data buffer too small");
     }
-    this.#data.set(value[BUFFER], 764);
+    this.#data.set(value[BUFFER], 768);
   }
 }

@@ -22,7 +22,7 @@ export interface InitExternalImageFormatPropertiesNV {
 }
 
 export class ExternalImageFormatPropertiesNV implements BaseStruct {
-  static size = 44;
+  static size = 48;
 
   #data!: Uint8Array;
   #view!: DataView;
