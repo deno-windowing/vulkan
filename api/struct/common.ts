@@ -280,3 +280,5 @@ export * from "./PhysicalDeviceDynamicRenderingFeatures.ts";
 export * from "./CommandBufferInheritanceRenderingInfo.ts";
 export * from "./PhysicalDeviceVariablePointerFeatures.ts";
 export * from "./PhysicalDeviceShaderDrawParameterFeatures.ts";
+export * from "./DebugUtilsMessengerCallbackDataEXT.ts";
+export * from "./DebugUtilsMessengerCreateInfoEXT.ts";

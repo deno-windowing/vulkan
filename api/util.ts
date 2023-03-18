@@ -1,3 +1,5 @@
+import { assert } from "https://deno.land/std@0.179.0/_util/asserts.ts";
+
 export const BUFFER = Symbol("vkStructBuffer");
 export const DATAVIEW = Symbol("vkStructDataView");
 export const LE =
@@ -148,6 +150,12 @@ export class PointerRef extends Uint8Array {
 
   set value(value: Deno.PointerValue) {
     this.#view.setBigUint64(0, BigInt(anyPointer(value)), LE);
+  }
+
+  get checkedValue(): NonNullable<Deno.PointerValue> {
+    const pointer = this.value;
+    assert(pointer !== null);
+    return pointer;
   }
 }
 

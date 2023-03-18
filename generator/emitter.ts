@@ -626,6 +626,10 @@ function addImports(types: string[]) {
       if (name.startsWith("StdVideo")) return false;
       return true;
     });
+    commonStructs.push(
+      "DebugUtilsMessengerCallbackDataEXT",
+      "DebugUtilsMessengerCreateInfoEXT",
+    );
     commonStructs.forEach((name) => b.emit(`export * from "./${name}.ts";`));
     writeFile(`api/struct/common.ts`, b.output());
   }
