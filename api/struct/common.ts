@@ -282,3 +282,7 @@ export * from "./PhysicalDeviceVariablePointerFeatures.ts";
 export * from "./PhysicalDeviceShaderDrawParameterFeatures.ts";
 export * from "./DebugUtilsMessengerCallbackDataEXT.ts";
 export * from "./DebugUtilsMessengerCreateInfoEXT.ts";
+export * from "./SurfaceFormatKHR.ts";
+export * from "./SurfaceCapabilitiesKHR.ts";
+export * from "./SwapchainCreateInfoKHR.ts";
+export * from "./PresentInfoKHR.ts";

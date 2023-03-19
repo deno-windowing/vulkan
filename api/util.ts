@@ -157,6 +157,12 @@ export class PointerRef extends Uint8Array {
     assert(pointer !== null);
     return pointer;
   }
+
+  static ofPointer(pointer: Deno.PointerValue) {
+    const ref = new PointerRef();
+    ref.value = pointer;
+    return ref;
+  }
 }
 
 export class PointerArray extends BigUint64Array {
@@ -175,6 +181,14 @@ export class PointerArray extends BigUint64Array {
   pointer(index: number): Deno.PointerValue {
     if (index < 0 || index > this.length) return null;
     return Deno.UnsafePointer.create(this[index]);
+  }
+
+  toList() {
+    const ret = [] as Deno.PointerValue[];
+    for (let i = 0; i < this.length; i++) {
+      ret.push(this.pointer(i));
+    }
+    return ret;
   }
 }
 

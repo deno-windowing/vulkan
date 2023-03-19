@@ -629,6 +629,10 @@ function addImports(types: string[]) {
     commonStructs.push(
       "DebugUtilsMessengerCallbackDataEXT",
       "DebugUtilsMessengerCreateInfoEXT",
+      "SurfaceFormatKHR",
+      "SurfaceCapabilitiesKHR",
+      "SwapchainCreateInfoKHR",
+      "PresentInfoKHR",
     );
     commonStructs.forEach((name) => b.emit(`export * from "./${name}.ts";`));
     writeFile(`api/struct/common.ts`, b.output());
