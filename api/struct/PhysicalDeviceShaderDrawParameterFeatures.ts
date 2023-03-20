@@ -1,0 +1,2 @@
+  import { PhysicalDeviceShaderDrawParametersFeatures } from "./PhysicalDeviceShaderDrawParametersFeatures.ts";
+  export type PhysicalDeviceShaderDrawParameterFeatures = PhysicalDeviceShaderDrawParametersFeatures;

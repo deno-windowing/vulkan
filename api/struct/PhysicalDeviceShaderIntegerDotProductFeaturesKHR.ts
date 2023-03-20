@@ -1,0 +1,2 @@
+  import { PhysicalDeviceShaderIntegerDotProductFeatures } from "./PhysicalDeviceShaderIntegerDotProductFeatures.ts";
+  export type PhysicalDeviceShaderIntegerDotProductFeaturesKHR = PhysicalDeviceShaderIntegerDotProductFeatures;

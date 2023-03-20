@@ -1,0 +1,2 @@
+  import { PhysicalDeviceUniformBufferStandardLayoutFeatures } from "./PhysicalDeviceUniformBufferStandardLayoutFeatures.ts";
+  export type PhysicalDeviceUniformBufferStandardLayoutFeaturesKHR = PhysicalDeviceUniformBufferStandardLayoutFeatures;

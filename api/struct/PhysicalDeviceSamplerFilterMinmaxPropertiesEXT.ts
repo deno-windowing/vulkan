@@ -1,0 +1,2 @@
+  import { PhysicalDeviceSamplerFilterMinmaxProperties } from "./PhysicalDeviceSamplerFilterMinmaxProperties.ts";
+  export type PhysicalDeviceSamplerFilterMinmaxPropertiesEXT = PhysicalDeviceSamplerFilterMinmaxProperties;

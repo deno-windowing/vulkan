@@ -1,0 +1,2 @@
+  import { MemoryOpaqueCaptureAddressAllocateInfo } from "./MemoryOpaqueCaptureAddressAllocateInfo.ts";
+  export type MemoryOpaqueCaptureAddressAllocateInfoKHR = MemoryOpaqueCaptureAddressAllocateInfo;

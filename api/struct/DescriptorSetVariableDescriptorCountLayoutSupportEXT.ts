@@ -1,0 +1,2 @@
+  import { DescriptorSetVariableDescriptorCountLayoutSupport } from "./DescriptorSetVariableDescriptorCountLayoutSupport.ts";
+  export type DescriptorSetVariableDescriptorCountLayoutSupportEXT = DescriptorSetVariableDescriptorCountLayoutSupport;

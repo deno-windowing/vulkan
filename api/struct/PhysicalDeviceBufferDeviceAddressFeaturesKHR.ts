@@ -1,0 +1,2 @@
+  import { PhysicalDeviceBufferDeviceAddressFeatures } from "./PhysicalDeviceBufferDeviceAddressFeatures.ts";
+  export type PhysicalDeviceBufferDeviceAddressFeaturesKHR = PhysicalDeviceBufferDeviceAddressFeatures;

@@ -1,0 +1,2 @@
+  import { PhysicalDeviceTimelineSemaphoreFeatures } from "./PhysicalDeviceTimelineSemaphoreFeatures.ts";
+  export type PhysicalDeviceTimelineSemaphoreFeaturesKHR = PhysicalDeviceTimelineSemaphoreFeatures;

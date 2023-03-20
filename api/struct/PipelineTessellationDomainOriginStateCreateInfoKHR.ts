@@ -1,0 +1,2 @@
+  import { PipelineTessellationDomainOriginStateCreateInfo } from "./PipelineTessellationDomainOriginStateCreateInfo.ts";
+  export type PipelineTessellationDomainOriginStateCreateInfoKHR = PipelineTessellationDomainOriginStateCreateInfo;

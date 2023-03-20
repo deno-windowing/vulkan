@@ -1,5 +1,6 @@
-import * as vk from "../../api/vk.ts";
-import * as dwm from "https://deno.land/x/dwm@0.2.1/mod.ts";
+import * as vk from "../../api/mod.ts";
+import * as dwm from "https://deno.land/x/dwm@0.3.2/mod.ts";
+import { PointerArray } from "../../api/mod.ts";
 
 export class TriangleApplication {
   window!: dwm.DwmWindow;
@@ -38,16 +39,16 @@ export class TriangleApplication {
   swapChainFormat!: vk.Format;
   oldSwapChain!: vk.SwapchainKHR;
   swapChain!: vk.SwapchainKHR;
-  swapChainImages!: BigUint64Array;
-  swapChainImageViews!: BigUint64Array;
-  swapChainFramebuffers!: BigUint64Array;
+  swapChainImages!: Deno.PointerValue[];
+  swapChainImageViews!: Deno.PointerValue[];
+  swapChainFramebuffers!: Deno.PointerValue[];
 
   renderPass!: vk.RenderPass;
   graphicsPipeline!: vk.Pipeline;
   pipelineLayout!: vk.PipelineLayout;
 
   commandPool!: vk.CommandPool;
-  graphicsCommandBuffers!: BigUint64Array;
+  graphicsCommandBuffers!: Deno.PointerValue[];
 
   graphicsQueueFamily!: number;
   presentQueueFamily!: number;
@@ -79,7 +80,7 @@ export class TriangleApplication {
   }
 
   async setupVulkan() {
-    this.oldSwapChain = 0;
+    this.oldSwapChain = null;
 
     this.createInstance();
     this.createDebugCallback();
@@ -135,7 +136,7 @@ export class TriangleApplication {
       this.device,
       this.commandPool,
       this.graphicsCommandBuffers.length,
-      this.graphicsCommandBuffers,
+      new PointerArray(this.graphicsCommandBuffers),
     );
 
     vk.DestroyPipeline(this.device, this.graphicsPipeline, null);
@@ -474,7 +475,7 @@ export class TriangleApplication {
       0,
       dataOut,
     );
-    vk.getBuffer(dataOut.value, vertices.byteLength, Float32Array).set(
+    vk.getBuffer(dataOut.checkedValue, vertices.byteLength, Float32Array).set(
       vertices,
     );
     vk.UnmapMemory(this.device, vertexBufferMemory);
@@ -557,7 +558,9 @@ export class TriangleApplication {
       0,
       dataOut,
     );
-    vk.getBuffer(dataOut.value, indices.byteLength, Uint16Array).set(indices);
+    vk.getBuffer(dataOut.checkedValue, indices.byteLength, Uint16Array).set(
+      indices,
+    );
     vk.UnmapMemory(this.device, indexBufferMemory);
     vk.BindBufferMemory(
       this.device,
@@ -631,7 +634,7 @@ export class TriangleApplication {
       pCommandBuffers: new vk.PointerArray([copyCommandBuffer]),
     });
 
-    vk.QueueSubmit(this.graphicsQueue, 1, submitInfo, 0);
+    vk.QueueSubmit(this.graphicsQueue, 1, submitInfo, null);
     vk.QueueWaitIdle(this.graphicsQueue);
 
     vk.FreeCommandBuffers(
@@ -733,7 +736,11 @@ export class TriangleApplication {
       0,
       dataOut,
     );
-    vk.getBuffer(dataOut.value, this.uniformBufferData.byteLength, Float32Array)
+    vk.getBuffer(
+      dataOut.checkedValue,
+      this.uniformBufferData.byteLength,
+      Float32Array,
+    )
       .set(this.uniformBufferData);
     vk.UnmapMemory(this.device, this.uniformBufferMemory);
   }
@@ -834,7 +841,7 @@ export class TriangleApplication {
       imageUsage: vk.ImageUsageFlagBits.COLOR_ATTACHMENT,
       imageSharingMode: vk.SharingMode.EXCLUSIVE,
       queueFamilyIndexCount: 0,
-      pQueueFamilyIndices: 0,
+      pQueueFamilyIndices: null,
       preTransform: surfaceTransform,
       compositeAlpha:
         vk.CompositeAlphaFlagBitsKHR.COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
@@ -868,13 +875,14 @@ export class TriangleApplication {
       null,
     );
 
-    this.swapChainImages = new BigUint64Array(actualImageCount[0]);
+    const _imageArray = new PointerArray(actualImageCount[0]);
     vk.GetSwapchainImagesKHR(
       this.device,
       this.swapChain,
       actualImageCount,
-      this.swapChainImages,
+      _imageArray,
     );
+    this.swapChainImages = _imageArray.toList();
   }
 
   chooseSurfaceFormat(availableFormats: vk.SurfaceFormatKHR[]) {
@@ -974,7 +982,7 @@ export class TriangleApplication {
   }
 
   createImageViews() {
-    this.swapChainImageViews = new BigUint64Array(this.swapChainImages.length);
+    this.swapChainImageViews = Array(this.swapChainImages.length).fill(null);
 
     for (let i = 0; i < this.swapChainImages.length; i++) {
       const components = new vk.ComponentMapping({
@@ -1007,14 +1015,12 @@ export class TriangleApplication {
         null,
         imageViewOut,
       );
-      this.swapChainImageViews[i] = BigInt(imageViewOut.value);
+      this.swapChainImageViews[i] = imageViewOut.value;
     }
   }
 
   createFramebuffers() {
-    this.swapChainFramebuffers = new BigUint64Array(
-      this.swapChainImages.length,
-    );
+    this.swapChainFramebuffers = Array(this.swapChainImages.length).fill(null);
 
     for (let i = 0; i < this.swapChainImages.length; i++) {
       const createInfo = new vk.FramebufferCreateInfo({
@@ -1034,7 +1040,7 @@ export class TriangleApplication {
         framebufferOut,
       );
 
-      this.swapChainFramebuffers[i] = BigInt(framebufferOut.value);
+      this.swapChainFramebuffers[i] = framebufferOut.value;
     }
   }
 
@@ -1215,14 +1221,14 @@ export class TriangleApplication {
       layout: this.pipelineLayout,
       renderPass: this.renderPass,
       subpass: 0,
-      basePipelineHandle: 0,
+      basePipelineHandle: null,
       basePipelineIndex: -1,
     });
 
     const pipelineOut = new vk.PointerRef();
     vk.CreateGraphicsPipelines(
       this.device,
-      0,
+      null,
       1,
       pipelineCreateInfo,
       null,
@@ -1295,21 +1301,22 @@ export class TriangleApplication {
   }
 
   createCommandBuffers() {
-    this.graphicsCommandBuffers = new BigUint64Array(
-      this.swapChainImages.length,
-    );
-
+    this.graphicsCommandBuffers = Array(this.swapChainImages.length).fill(null);
     const allocInfo = new vk.CommandBufferAllocateInfo({
       commandPool: this.commandPool,
       level: vk.CommandBufferLevel.PRIMARY,
       commandBufferCount: this.graphicsCommandBuffers.length,
     });
 
+    const _commandBuffers = new PointerArray(
+      this.graphicsCommandBuffers.length,
+    );
     vk.AllocateCommandBuffers(
       this.device,
       allocInfo,
-      this.graphicsCommandBuffers,
+      _commandBuffers,
     );
+    this.graphicsCommandBuffers = _commandBuffers.toList();
 
     const beginInfo = new vk.CommandBufferBeginInfo({
       flags: vk.CommandBufferUsageFlagBits.SIMULTANEOUS_USE,
@@ -1453,7 +1460,7 @@ export class TriangleApplication {
         this.swapChain,
         1000000000,
         this.imageAvailableSemaphore,
-        0,
+        null,
         imageIndex,
       );
       // deno-lint-ignore no-explicit-any
@@ -1480,7 +1487,7 @@ export class TriangleApplication {
       ]),
     });
 
-    vk.QueueSubmit(this.graphicsQueue, 1, submitInfo, 0);
+    vk.QueueSubmit(this.graphicsQueue, 1, submitInfo, null);
 
     const presentInfo = new vk.PresentInfoKHR({
       waitSemaphoreCount: 1,

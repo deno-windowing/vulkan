@@ -1,0 +1,2 @@
+  import { PhysicalDeviceVulkanMemoryModelFeatures } from "./PhysicalDeviceVulkanMemoryModelFeatures.ts";
+  export type PhysicalDeviceVulkanMemoryModelFeaturesKHR = PhysicalDeviceVulkanMemoryModelFeatures;

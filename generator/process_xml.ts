@@ -1,30 +1,44 @@
+// deno-lint-ignore-file no-explicit-any
 const api = JSON.parse(
   Deno.readTextFileSync(new URL("../data/vk.json", import.meta.url)),
 );
 
-let src = `/// This file is auto-generated. Do not edit.\n`;
-let ident = 0;
+type Content = string | Block | (() => void);
+type Block = Content[];
 
-export function output() {
-  return src;
-}
+export class FileBuilder {
+  lines = [] as string[];
+  ident = 0;
 
-export function getIdent() {
-  return ident;
-}
+  output() {
+    return this.lines.join("\n");
+  }
 
-export function newline() {
-  emit("");
-}
+  getIdent() {
+    return this.ident;
+  }
 
-export function emit(line: string, newline = "\n") {
-  src += ("  ".repeat(ident)) + line + newline;
-}
+  newline() {
+    this.lines.push("");
+  }
 
-export function block(fn: CallableFunction) {
-  ident += 1;
-  fn();
-  ident -= 1;
+  emit(content: Content, noIdent = false) {
+    if (Array.isArray(content)) {
+      this.ident += noIdent ? 0 : 1;
+      content.forEach((c) => this.emit(c));
+      this.ident -= noIdent ? 0 : 1;
+    } else if (typeof content == "string") {
+      this.lines.push("  ".repeat(this.ident) + content);
+    } else {
+      content();
+    }
+  }
+
+  block(fn: CallableFunction) {
+    this.ident += 1;
+    fn();
+    this.ident -= 1;
+  }
 }
 
 export function jsify(name: string) {
@@ -54,16 +68,16 @@ const C_TYPES = {
   "uint8_t": "number",
   "uint16_t": "number",
   "uint32_t": "number",
-  "uint64_t": "Deno.PointerValue",
+  "uint64_t": "number | bigint",
   "int8_t": "number",
   "int16_t": "number",
   "int32_t": "number",
-  "int64_t": "Deno.PointerValue",
+  "int64_t": "number | bigint",
   "float": "number",
   "double": "number",
   "char": "number",
-  "size_t": "Deno.PointerValue",
-  "ssize_t": "Deno.PointerValue",
+  "size_t": "number | bigint",
+  "ssize_t": "number | bigint",
   "HINSTANCE": "Deno.PointerValue",
   "HWND": "Deno.PointerValue",
   "Window": "Deno.PointerValue",
@@ -74,7 +88,7 @@ const C_TYPES = {
   "DWORD": "number",
   "LPCWSTR": "Deno.PointerValue",
   "int": "number",
-  "GgpFrameToken": "Deno.PointerValue",
+  "GgpFrameToken": "number | bigint",
   "HMONITOR": "Deno.PointerValue",
   "VisualID": "number",
   "xcb_visualid_t": "number",
@@ -182,6 +196,7 @@ export function typeToFFI(ty: string): any {
 export interface Typedef {
   name: string;
   type: string;
+  alias?: boolean;
   ffi: any;
 }
 
@@ -259,12 +274,17 @@ export interface Command {
   ffi: any;
 }
 
+export interface Vender {
+  name: string;
+}
+
 export const typedefs: Typedef[] = [];
 export const constants: Constants[] = [];
 export const enums: Enums[] = [];
 export const structs: Struct[] = [];
 export const unions: Union[] = [];
 export const commands: Command[] = [];
+export const vendors: Vender[] = [];
 
 for (const data of api.registry.enums) {
   if (data.$type === "bitmask" || data.$type === "enum") {
@@ -315,25 +335,30 @@ export function isArray(type: any) {
   return typeof type === "object" && type !== null && ("array" in type);
 }
 
-export function getAlignSize(
-  type: any,
-  cache?: WeakMap<any, number | null>,
-): number {
-  if (isStruct(type)) {
-    return getAlignSize(type.struct[0], cache);
-  } else if (isUnion(type)) {
-    return getAlignSize(type.union[0], cache);
-  } else if (isArray(type)) {
-    return getAlignSize(type.array, cache);
-  } else {
-    return getTypeSize(type, cache);
-  }
+// export function getAlignSize(
+//   type: any,
+//   cache?: WeakMap<any, number | null>,
+// ): number {
+//   if (isStruct(type)) {
+//     return getAlignSize(type.struct[0], cache);
+//   } else if (isUnion(type)) {
+//     return getAlignSize(type.union[0], cache);
+//   } else if (isArray(type)) {
+//     return getAlignSize(type.array, cache);
+//   } else {
+//     return getTypeSize(type, cache);
+//   }
+// }
+
+interface TypeRequirement {
+  typeSize: number;
+  alignSize: number;
 }
 
-export function getTypeSize(
+export function getTypeRequirement(
   type: any,
-  cache = new WeakMap<any, number | null>(),
-) {
+  cache = new WeakMap<any, TypeRequirement | null>(),
+): TypeRequirement {
   if (isStruct(type)) {
     const cached = cache.get(type);
     if (cached !== undefined) {
@@ -346,15 +371,15 @@ export function getTypeSize(
     let size = 0;
     let alignment = 1;
     for (const field of type.struct) {
-      const fieldSize = getTypeSize(field, cache);
-      const alignSize = getAlignSize(field, cache);
+      const { typeSize, alignSize } = getTypeRequirement(field, cache);
       alignment = Math.max(alignment, alignSize);
       size = Math.ceil(size / alignSize) * alignSize;
-      size += fieldSize;
+      size += typeSize;
     }
     size = Math.ceil(size / alignment) * alignment;
-    cache.set(type, size);
-    return size;
+    const requirement = { typeSize: size, alignSize: alignment };
+    cache.set(type, requirement);
+    return requirement;
   }
 
   if (isArray(type)) {
@@ -369,14 +394,15 @@ export function getTypeSize(
     let size = 0;
     let alignment = 1;
     for (let i = 0; i < type.len; i++) {
-      const fieldSize = getTypeSize(type.array, cache);
-      alignment = Math.max(alignment, fieldSize);
-      size = Math.ceil(size / fieldSize) * fieldSize;
-      size += fieldSize;
+      const { typeSize, alignSize } = getTypeRequirement(type.array, cache);
+      alignment = Math.max(alignment, alignSize);
+      size = Math.ceil(size / typeSize) * typeSize;
+      size += typeSize;
     }
     size = Math.ceil(size / alignment) * alignment;
-    cache.set(type, size);
-    return size;
+    const requirement = { typeSize: size, alignSize: alignment };
+    cache.set(type, requirement);
+    return requirement;
   }
 
   if (isUnion(type)) {
@@ -389,25 +415,29 @@ export function getTypeSize(
     }
     cache.set(type, null);
     let size = 0;
+    let alignment = 1;
     for (const field of type.union) {
-      size = Math.max(size, getTypeSize(field, cache));
+      const { typeSize, alignSize } = getTypeRequirement(field, cache);
+      size = Math.max(size, typeSize);
+      alignment = Math.max(size, alignSize);
     }
-    cache.set(type, size);
-    return size;
+    const requirement = { typeSize: size, alignSize: alignment };
+    cache.set(type, requirement);
+    return requirement;
   }
 
   switch (type) {
     case "bool":
     case "u8":
     case "i8":
-      return 1;
+      return { typeSize: 1, alignSize: 1 };
     case "u16":
     case "i16":
-      return 2;
+      return { typeSize: 2, alignSize: 2 };
     case "u32":
     case "i32":
     case "f32":
-      return 4;
+      return { typeSize: 4, alignSize: 4 };
     case "u64":
     case "i64":
     case "f64":
@@ -416,7 +446,7 @@ export function getTypeSize(
     case "function":
     case "usize":
     case "isize":
-      return 8;
+      return { typeSize: 8, alignSize: 8 };
     default:
       throw new TypeError(`Unsupported type: ${Deno.inspect(type)}`);
   }
@@ -541,7 +571,7 @@ for (const ty of api.registry.types.type) {
     let size = 0;
     let alignment = 1;
     struct.fields = ty.member.map((member: any) => {
-      let field: Field = {
+      const field: Field = {
         name: member.name["#text"],
         type: member.type["#text"],
         offset: size,
@@ -592,14 +622,13 @@ for (const ty of api.registry.types.type) {
         };
       }
 
-      const fieldSize = getTypeSize(field.ffi);
-      const alignSize = getAlignSize(field.ffi);
+      const { typeSize, alignSize } = getTypeRequirement(field.ffi);
       alignment = Math.max(alignment, alignSize);
       size = Math.ceil(size / alignSize) * alignSize;
 
       field.offset = size;
 
-      size += fieldSize;
+      size += typeSize;
       return field;
     });
     size = Math.ceil(size / alignment) * alignment;
@@ -620,13 +649,14 @@ for (const ty of api.registry.types.type) {
       comment: member.$comment,
       text: member["#text"],
     }));
-    union.size = getTypeSize({
+    union.size = getTypeRequirement({
       union: union.types.map((e) => e.text?.endsWith("*") ? "pointer" : e.ffi),
-    });
+    }).typeSize;
   } else if (ty.$name && ty.$alias) {
     typedefs.push({
       name: ty.$name,
       type: ty.$alias,
+      alias: true,
       ffi: typeToFFI(ty.$alias),
     });
   }
@@ -669,4 +699,9 @@ for (const cmd of api.registry.commands.command) {
       result: cmd["#text"]?.endsWith("*") ? "pointer" : typeToFFI(type),
     },
   });
+}
+
+for (const vendor of api.registry.tags.tag) {
+  const name = vendor.$name;
+  vendors.push({ name });
 }

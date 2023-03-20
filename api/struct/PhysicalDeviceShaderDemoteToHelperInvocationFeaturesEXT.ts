@@ -1,0 +1,2 @@
+  import { PhysicalDeviceShaderDemoteToHelperInvocationFeatures } from "./PhysicalDeviceShaderDemoteToHelperInvocationFeatures.ts";
+  export type PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT = PhysicalDeviceShaderDemoteToHelperInvocationFeatures;
